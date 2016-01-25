@@ -1,0 +1,23 @@
+.com-ibm-rqm-adapter-commandline-execution-log {
+	margin: 0.5em 0.5em;
+}
+
+.com-ibm-rqm-adapter-commandline-execution-log .title-row {
+	background-color: #E8EBF0;
+	padding: 0.5em 0.5em;
+}
+
+.com-ibm-rqm-adapter-commandline-execution-log .title {
+	font-size: large;
+}
+
+.com-ibm-rqm-adapter-commandline-execution-log .name-label {
+	padding: 0.5em 0.5em 0.5em 0.5em;
+	font-weight: bold;
+	font-size: small;
+}
+
+.com-ibm-rqm-adapter-commandline-execution-log .value-label {
+	padding: 0.5em 0.5em 0.5em 0.5em;
+	font-size: small;
+}

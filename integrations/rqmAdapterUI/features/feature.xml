@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature id="com.perfectomobile.integration.rqm.ui.feature" label="RQM Adapter Feature" version="2.16.0.30" provider-name="Perfecto Mobile">
+
+   <description url="http://www.perfectomobile.com/description">
+      The Perfecto Mobile / RQM Adapter UI support files.  This package allows specific Perfecto Mobile commands to be integrated into the RQM UI flow for selecting devices, scripts and monitoring Execution
+   </description>
+
+   <copyright url="http://www.perfectomobile.com/copyright">
+      
+   </copyright>
+
+   <license url="http://www.perfectomobile.com/license">
+      
+   </license>
+
+   <plugin id="com.perfectomobile.integration.rqm.ui.plugin" download-size="0" install-size="0" version="2.16.0.30"/>
+
+</feature>

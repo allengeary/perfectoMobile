@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RQM Adapter Plugin
+Bundle-SymbolicName: com.perfectomobile.integration.rqm.ui.plugin;singleton:=true
+Bundle-Version: 2.16.0.30
+Bundle-Vendor: Perfecto Mobile
+Require-Bundle: net.jazz.ajax,com.ibm.team.repository.web,com.ibm.team.process.web,com.ibm.rqm.planning.web,com.ibm.rqm.execution.web,com.ibm.rational.test.lm.web
+Built-By: perfectoMobile
+Build-Jdk: 1.8.0

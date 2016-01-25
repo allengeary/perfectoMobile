@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/com.perfectomobile.rqm.adapter.feature_2.16.0.30.jar" id="com.perfectomobile.rqm.adapter.feature" version="2.16.0.30"/>
+</site>

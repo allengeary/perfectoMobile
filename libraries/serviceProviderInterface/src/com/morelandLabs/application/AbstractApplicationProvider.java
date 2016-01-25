@@ -1,0 +1,15 @@
+package com.morelandLabs.application;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+/**
+ * The Class AbstractApplicationProvider.
+ */
+public abstract class AbstractApplicationProvider implements ApplicationProvider 
+{
+	
+	/** The log. */
+	protected Log log = LogFactory.getLog(ApplicationProvider.class);
+	
+}
