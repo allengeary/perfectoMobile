@@ -107,30 +107,38 @@ public class XMLBeanFactory extends AbstractBeanFactory
 				if ( field.getAnnotation( Bean.FieldDescriptor.class ) != null )
 				{
 					FieldDescriptor fD = field.getAnnotation( Bean.FieldDescriptor.class );
-					String fieldPath = fD.fieldPath();
-					if ( fieldPath == null || fieldPath.isEmpty() )
+
+                                        if ( fD.textContent() )
+                                        {
+                                            field.set( beanInstance, createValue( field, parentNode.getTextContent() ) );
+                                        }
+                                        else
+                                        {
+                                            String fieldPath = fD.fieldPath();
+                                            if ( fieldPath == null || fieldPath.isEmpty() )
 						fieldPath = field.getName();
 					
-					String xPathExpression = DOT + SLASH + fieldPath;
+                                            String xPathExpression = DOT + SLASH + fieldPath;
 					
-					if ( log.isDebugEnabled() )
+                                            if ( log.isDebugEnabled() )
 						log.debug( "Attempting to find field value using [" + xPathExpression + "]" );
 					
-					Node xmlNode = (Node) xPath.evaluate( xPathExpression, parentNode, XPathConstants.NODE );
+                                            Node xmlNode = (Node) xPath.evaluate( xPathExpression, parentNode, XPathConstants.NODE );
 					
-					if ( xmlNode != null )
-					{
+                                            if ( xmlNode != null )
+                                            {
 						if ( Bean.class.isAssignableFrom( field.getType() ) )
 						{
-							field.set( beanInstance, populateBean( xmlNode, (Class<Bean>)field.getType(), xPath ) );
+                                                    field.set( beanInstance, populateBean( xmlNode, (Class<Bean>)field.getType(), xPath ) );
 						}
 						else
 						{
-							if ( log.isDebugEnabled() )
-								log.debug(  "Attempting to parse [" + xmlNode.getTextContent() + "] into a [" + field.getClass().getSimpleName() + "]" );
-							field.set( beanInstance, createValue( field, xmlNode.getTextContent() ) );
+                                                    if ( log.isDebugEnabled() )
+                                                        log.debug(  "Attempting to parse [" + xmlNode.getTextContent() + "] into a [" + field.getClass().getSimpleName() + "]" );
+                                                    field.set( beanInstance, createValue( field, xmlNode.getTextContent() ) );
 						}
-					}
+                                            }
+                                        }
 				}
 				else if ( field.getAnnotation( Bean.FieldCollection.class ) != null )
 				{
