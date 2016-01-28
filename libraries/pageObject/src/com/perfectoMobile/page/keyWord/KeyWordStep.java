@@ -30,6 +30,16 @@ public interface KeyWordStep
 		/** The log ignore. */
 		LOG_IGNORE
 	}
+	
+	/**
+	 * The Enum StepFailure.
+	 */
+	public enum ValidationType
+	{
+		REGEX,
+		EMPTY,
+		NOT_EMPTY;
+	}
 
 	/**
 	 * Gets the link id.
@@ -225,6 +235,14 @@ public interface KeyWordStep
 	public String toError();
 	
 	public String getContext();
+	
+	public String getValidation();
+	
+	public void setValidation( String validation );
+	
+	public ValidationType getValidationType();
+	
+	public void setValidationType( ValidationType validationType );
 	
 	public void setContext( String contextName );
 }

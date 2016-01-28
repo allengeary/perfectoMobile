@@ -56,14 +56,14 @@ public class RESTInvocationHandler implements InvocationHandler
 		
 		urlBuilder.append( serviceDescriptor.serviceName() );
 		
-		String parameterId = null;
+		String parameterId = "";
 		Map parameterMap = null;
 		Map<String,String> derivedMap = new HashMap<String,String>( 10 );
 		
 		for ( int i=0; i<method.getParameterCount(); i++  )
 		{
 			if ( method.getParameters()[ i ].getAnnotation( ResourceID.class ) != null )
-				parameterId = args[ i ] + "";
+				parameterId = parameterId + SLASH + args[ i ] + "";
 			else if ( method.getParameters()[ i ].getAnnotation( ParameterMap.class ) != null )
 				parameterMap = (Map) parameterMap;
 			else if ( method.getParameters()[ i ].getAnnotation( Parameter.class ) != null )
@@ -91,8 +91,8 @@ public class RESTInvocationHandler implements InvocationHandler
 			}
 		}
 		
-		if ( parameterId != null )
-			urlBuilder.append( SLASH ).append( parameterId );
+		if ( !parameterId.isEmpty() )
+			urlBuilder.append( parameterId );
 		
 		Method actualMethod = findMethod( proxy.getClass().getInterfaces()[0], method.getName(), args );
 		
@@ -106,7 +106,11 @@ public class RESTInvocationHandler implements InvocationHandler
 		
 		PerfectoCommand command = actualMethod.getAnnotation( PerfectoCommand.class );
 		if ( command != null )
-			urlBuilder.append( "&command=" ).append( command.commandName() ).append( "&subcommand=" ).append( command.subCommandName() );
+		{
+			urlBuilder.append( "&command=" ).append( command.commandName() );
+			if ( command.subCommandName() != null && !command.subCommandName().isEmpty())
+				urlBuilder.append( "&subcommand=" ).append( command.subCommandName() );
+		}
 		
 		urlBuilder.append( "&responseFormat=" ).append( PerfectoMobile.instance().getResponseMethod() );
 		

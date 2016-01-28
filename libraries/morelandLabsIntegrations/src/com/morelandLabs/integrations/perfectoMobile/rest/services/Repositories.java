@@ -36,4 +36,9 @@ public interface Repositories extends PerfectoService
 	@Operation( operationName="list" )
 	public ItemCollection getRepositorys( @ResourceID RepositoryType rType );
 
+	@Operation( operationName="download" )
+	public byte[] download( @ResourceID RepositoryType rType, @ResourceID String fileKey );
+	
+	
+	
 }

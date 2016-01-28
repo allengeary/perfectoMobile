@@ -22,15 +22,27 @@ public class KWSValue extends AbstractKeyWordStep
 	{
 		if ( pageObject == null )
 			throw new IllegalStateException( "Page Object was not defined" );
-		if ( getParameterList().size() < 1 )
-			throw new IllegalArgumentException( "You must provide a parameter 1 parameter to a step in which the type is Validation" );
+
+		String elementValue = getElement( pageObject, contextMap, webDriver, dataMap ).getValue();
 		
-		Object compareTo = getParameterValue( getParameterList().get( 0 ), contextMap, dataMap );
+		if ( getParameterList().size() == 1 )
+		{
+			Object compareTo = getParameterValue( getParameterList().get( 0 ), contextMap, dataMap );
+			if ( !elementValue.equals( compareTo ) )
+				return false;
+		}
 		
-		if ( log.isDebugEnabled() )
-			log.debug( "Validation value for comparison [" + compareTo + "]" );
+		if ( !validateData( elementValue + "" ) )
+			return false;
 		
-		return getElement( pageObject, contextMap, webDriver, dataMap ).getValue().equals( compareTo );
+		if ( getContext() != null )
+		{
+			if ( log.isDebugEnabled() )
+				log.debug( "Setting Context Data to [" + elementValue + "] for [" + getContext() + "]" );
+			contextMap.put( getContext(), elementValue );
+		}
+		
+		return true;
 	}
 	
 	/* (non-Javadoc)

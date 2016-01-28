@@ -34,10 +34,31 @@ public class KWSReturn extends AbstractKeyWordStep
 		try
 		{
 			Object[] parameterArray = getParameters( contextMap, dataMap );
-			Method method = findMethod( pageObject.getClass(), getName(), new Object[ 0 ] );
-			Object returnValue = method.invoke( pageObject, new Object[ 0 ] );
+			Method method = findMethod( pageObject.getClass(), getName(), parameterArray );
+			Object elementValue = method.invoke( pageObject, parameterArray );
 			
-			return returnValue.equals( compare );
+			if ( elementValue != null )
+			{
+				if ( getParameterList().size() == 1 )
+				{
+					Object compareTo = getParameterValue( getParameterList().get( 0 ), contextMap, dataMap );
+					if ( !elementValue.equals( compareTo ) )
+						return false;
+				}
+				
+				if ( !validateData( elementValue + "" ) )
+					return false;
+				
+				if ( getContext() != null )
+				{
+					if ( log.isDebugEnabled() )
+						log.debug( "Setting Context Data to [" + elementValue + "] for [" + getContext() + "]" );
+					contextMap.put( getContext(), elementValue );
+				}
+			}
+			
+			
+			return true;
 		}
 		catch( Exception e )
 		{

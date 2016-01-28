@@ -22,20 +22,31 @@ public class KWSAttribute extends AbstractKeyWordStep
 	{
 		if ( pageObject == null )
 			throw new IllegalStateException( "Page Object was not defined" );
-		if ( getParameterList().size() < 2 )
-			throw new IllegalArgumentException( "You must provide a parameter to compare against and a paramter for the named attribute" );
 		
-		Object compareTo = getParameterValue( getParameterList().get( 0 ), contextMap, dataMap );
+		String attributeValue = null;
+		Object compareTo = null;
 		
-		if ( log.isDebugEnabled() )
-			log.debug( "Validation value for comparison [" + compareTo + "]" );
+		if ( getParameterList().size() == 1 )
+			attributeValue = getElement( pageObject, contextMap, webDriver, dataMap ).getAttribute( getParameterValue( getParameterList().get( 0 ), contextMap, dataMap ) + "" );
+		else
+		{
+			compareTo = getParameterValue( getParameterList().get( 0 ), contextMap, dataMap );
+			attributeValue = getElement( pageObject, contextMap, webDriver, dataMap ).getAttribute( getParameterValue( getParameterList().get( 1 ), contextMap, dataMap ) + "" );
+			if ( !attributeValue.equals( compareTo ) )
+				return false;
+		}
 		
-		String attributeValue = getElement( pageObject, contextMap, webDriver, dataMap ).getAttribute( getParameterValue( getParameterList().get( 1 ), contextMap, dataMap ) + "" );
-
+		if ( !validateData( attributeValue + "" ) )
+			return false;
+		
 		if ( getContext() != null )
+		{
+			if ( log.isDebugEnabled() )
+				log.debug( "Setting Context Data to [" + attributeValue + "] for [" + getContext() + "]" );
 			contextMap.put( getContext(), attributeValue );
+		}
 		
-		return attributeValue.equals( compareTo );
+		return true;
 	}
 
 }

@@ -79,7 +79,7 @@ public class ConnectedDevice
 	 */
 	public String toString()
 	{
-		return device.toShortString() + " {" + webDriver.getDeviceName() + "}" ;  
+		return device.toShortString();  
 	}
 	
 }

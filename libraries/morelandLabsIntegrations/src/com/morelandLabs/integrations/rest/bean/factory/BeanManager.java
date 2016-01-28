@@ -1,9 +1,18 @@
 package com.morelandLabs.integrations.rest.bean.factory;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 
+import javax.imageio.ImageIO;
+
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
-import com.morelandLabs.integrations.perfectoMobile.rest.services.Executions.TimeType;
+import com.morelandLabs.integrations.perfectoMobile.rest.bean.Execution;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.ImageFormat;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Screen;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.Repositories.RepositoryType;
 import com.morelandLabs.integrations.rest.bean.Bean;
 
 /**
@@ -111,24 +120,27 @@ public class BeanManager
 //		
 //		System.out.println( PerfectoMobile.instance().executions().status( x.getExecutionId() ) );
 		
-		/*Execution x = PerfectoMobile.instance().executions().startExecution();
+		Execution x = PerfectoMobile.instance().executions().startExecution();
 		System.out.println( x.getExecutionId() );
 		
-		PerfectoMobile.instance().device().open( x.getExecutionId(), "FA53XYJ18894" );
-		ApplicationCollection a = PerfectoMobile.instance().application().find( x.getExecutionId(), "FA53XYJ18894" );
+		PerfectoMobile.instance().device().open( x.getExecutionId(), "93C8CC73" );
 		
-		System.out.println( a.getApplications() );
-		//PerfectoMobile.instance().application().uninstallAll( x.getExecutionId(), "FA53XYJ18894" );
+		Thread.sleep( 5000 );
+		PerfectoMobile.instance().imaging().screenShot( x.getExecutionId(), "93C8CC73", "PRIVATE:a.png", Screen.primary, ImageFormat.png, Resolution.high );
 		
-		PerfectoMobile.instance().application().open( x.getExecutionId(), "FA53XYJ18894", "Chrome", "com.android.chrome" );
+		byte[] file = PerfectoMobile.instance().repositories().download( RepositoryType.MEDIA, "PRIVATE:a.png" );
+		System.out.println( file.length );
 		
-		a = PerfectoMobile.instance().application().find( x.getExecutionId(), "FA53XYJ18894" );
+		BufferedImage image = ImageIO.read( new ByteArrayInputStream( file ) );
+		System.out.println( image.getSubimage( 100, 100, 100, 100 ) );
 		
-		System.out.println( a.getApplications() );
+		FileOutputStream os = new FileOutputStream( "c:/tools/a.png" );
+		os.write( file );
+		os.close();
 		
-		PerfectoMobile.instance().device().close(  x.getExecutionId(), "FA53XYJ18894"  );
+		PerfectoMobile.instance().device().close(  x.getExecutionId(), "93C8CC73"  );
 		x = PerfectoMobile.instance().executions().endExecution( x.getExecutionId() );
-		System.out.println( x.getStatus() ); */
+		System.out.println( x.getStatus() ); 
 		
 		//System.out.println( PerfectoMobile.instance().devices().getDevice( "991C4AED" ) );
 		
