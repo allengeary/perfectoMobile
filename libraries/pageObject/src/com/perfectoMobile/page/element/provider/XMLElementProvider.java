@@ -33,7 +33,7 @@ public class XMLElementProvider extends AbstractElementProvider
 	private static final String DESCRIPTOR = "descriptor";
 	private static final String VALUE = "value";
 	private static final String CONTEXT_NAME = "contextName";
-	private static final String FILE_NAME = "import";
+	private static final String FILE_NAME = "fileName";
 
 	private Map<String,Element> elementMap = new HashMap<String,Element>(20);
 	private XPathFactory xPathFactory;
@@ -105,10 +105,33 @@ public class XMLElementProvider extends AbstractElementProvider
 			for ( int i=0; i<nodeList.getLength(); i++ )
 				parseSite( nodeList.item( i ) );
 			
+			nodeList = getNodes( xmlDocument, "//elementDefinition/import");
+			for ( int i=0; i<nodeList.getLength(); i++ )
+				parseImport( nodeList.item( i ) );
 		}
 		catch( Exception e )
 		{
 			log.fatal( "Error reading CSV Element File", e );
+		}
+	}
+	
+	private void parseImport( Node importNode )
+	{
+		Node fileName = importNode.getAttributes().getNamedItem( FILE_NAME );
+
+		if (fileName != null)
+		{
+			try
+			{
+				if (log.isInfoEnabled())
+					log.info( "Attempting to import file [" + fileName.getNodeValue() + "]" );
+
+				readElements( new FileInputStream( fileName.getNodeValue() ) );
+			}
+			catch (FileNotFoundException e)
+			{
+				log.fatal( "Could not read from " + fileName, e );
+			}
 		}
 	}
 	
@@ -132,40 +155,8 @@ public class XMLElementProvider extends AbstractElementProvider
 	private void parsePage( String siteName, Node pageNode )
 	{
 		String pageName = pageNode.getAttributes().getNamedItem( NAME ).getNodeValue();
-		Node fileNode = pageNode.getAttributes().getNamedItem( FILE_NAME );
 		
 		Node parentNode = pageNode;
-		
-		if ( fileNode != null )
-		{
-			String fileName = fileNode.getNodeValue();
-			if ( !fileName.isEmpty() )
-			{
-				InputStream inputStream = null;
-				try
-				{
-					DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-					dbFactory.setNamespaceAware( true );
-					DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-
-					if ( asResource )
-						inputStream = getClass().getClassLoader().getResourceAsStream( fileName );
-					else
-						inputStream = new FileInputStream( fileName );
-					
-					Document xmlDocument = dBuilder.parse( inputStream );
-					parentNode = xmlDocument;
-				}
-				catch( Exception e )
-				{
-					log.warn( "Error reading include file " + (asResource ? " from the classpath" : "" ) + " as " + fileName, e );
-				}
-				finally
-				{
-					try { inputStream.close(); } catch( Exception e ) {}
-				}
-			}
-		}
 		
 		if ( log.isDebugEnabled() )
 			log.debug( "Extracted Page [" + pageName + "]" );

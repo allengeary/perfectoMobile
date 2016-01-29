@@ -62,8 +62,20 @@ public class DeviceManager
 
 	private List<RunListener> runListeners = new ArrayList<RunListener>( 20 );
 	private boolean cachingEnabled = false;
+	private boolean dryRun = false;
 
 	
+	
+	public boolean isDryRun()
+	{
+		return dryRun;
+	}
+
+	public void setDryRun( boolean dryRun )
+	{
+		this.dryRun = dryRun;
+	}
+
 	/**
 	 * Sets the execution id.
 	 *
@@ -197,7 +209,7 @@ public class DeviceManager
 			boolean deviceLocked = true;
 			
 			//
-			// If the locak is a local lock then we will not increment the retry counter.  If it failed 
+			// If the lock is a local lock then we will not increment the retry counter.  If it failed 
 			//
 			while( deviceLocked )
 			{
@@ -246,7 +258,7 @@ public class DeviceManager
 									//
 									deviceLocked = false;
 									
-									if ( attachDevice )
+									if ( attachDevice && !dryRun )
 									{
 
 										

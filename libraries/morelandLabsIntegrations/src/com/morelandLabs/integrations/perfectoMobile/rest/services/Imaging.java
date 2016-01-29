@@ -29,6 +29,27 @@ public interface Imaging extends PerfectoService
 		bounded;
 	}
 	
+	public enum Screen
+	{
+		primary,
+		camera,
+		best;
+	}
+	
+	public enum ImageFormat
+	{
+		jpg,
+		bmp,
+		png;
+	}
+	
+	public enum Resolution
+	{
+		high,
+		medium,
+		low;
+	}
+	
 	/**
 	 * Text exists.
 	 *
@@ -56,5 +77,11 @@ public interface Imaging extends PerfectoService
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="checkpoint", subCommandName = "image" )
 	public ImageExecution imageExists( @ResourceID String executionId, @Parameter String handsetId, @Parameter String content, @Parameter Short timeout, @Parameter MatchMode match );
+	
+	
+
+	@Operation( operationName="command" )
+	@PerfectoCommand( commandName="screen", subCommandName="image" )
+	public ImageExecution screenShot( @ResourceID String executionId, @Parameter String handsetId, @Parameter String key, @Parameter Screen source, @Parameter ImageFormat format, @Parameter( name="report.resolution") Resolution resolution );
 	
 }

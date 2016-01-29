@@ -58,7 +58,7 @@ public interface PerfectoService
 		 *
 		 * @return the string
 		 */
-		String subCommandName();
+		String subCommandName() default "";
 	}
 	
 	/**

@@ -7,20 +7,24 @@ import com.morelandLabs.integrations.perfectoMobile.rest.services.PerfectoServic
  * The Interface Repositories.
  */
 @ServiceDescriptor( serviceName="repositories" )
-    public interface Repositories extends PerfectoService
-    {
+public interface Repositories extends PerfectoService
+{
+	
 	/**
 	 * The Enum RepositoryType.
 	 */
 	public enum RepositoryType
 	{
-            /** The media. */
-            MEDIA,
-            /** The datatables. */
-            DATATABLES,
-            /** The scripts. */
-            SCRIPTS
-         }
+		
+		/** The media. */
+		MEDIA,
+		
+		/** The datatables. */
+		DATATABLES,
+		
+		/** The scripts. */
+		SCRIPTS
+	}
 	
 	
 	/**
@@ -30,6 +34,11 @@ import com.morelandLabs.integrations.perfectoMobile.rest.services.PerfectoServic
 	 * @return the repositorys
 	 */
 	@Operation( operationName="list" )
-        public ItemCollection getRepositorys( @ResourceID RepositoryType rType );
+	public ItemCollection getRepositorys( @ResourceID RepositoryType rType );
 
-    }
+	@Operation( operationName="download" )
+	public byte[] download( @ResourceID RepositoryType rType, @ResourceID String fileKey );
+	
+	
+	
+}

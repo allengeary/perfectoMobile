@@ -45,6 +45,8 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	private boolean fork;
 	private String os;
 	private String context;
+	private String validation;
+	private ValidationType validationType;
 	
 	public String getContext()
 	{
@@ -859,5 +861,54 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 			log.warn( "No Execution ID could be located" );
 		
 		return executionId;
+	}
+	
+	protected boolean validateData( String dataValue )
+	{
+		if ( validationType == null )
+			return true;
+		
+		switch( validationType )
+		{
+			case EMPTY:
+				return dataValue == null || dataValue.isEmpty();
+				
+			case REGEX:
+				if ( dataValue == null )
+				{
+					log.warn( "REGEX validation specified with a blank value" );
+					return true;
+				}
+				else
+				{
+					log.info( "Attempting to analyze [" + dataValue + "] using the Regular Expression [" + validation + "]" );
+					return dataValue.matches( validation );
+				}
+
+			case NOT_EMPTY:
+				return dataValue != null && !dataValue.isEmpty();
+		}
+		
+		return true;
+	}
+
+	public String getValidation()
+	{
+		return validation;
+	}
+
+	public void setValidation( String validation )
+	{
+		this.validation = validation;
+	}
+
+	public ValidationType getValidationType()
+	{
+		return validationType;
+	}
+
+	public void setValidationType( ValidationType validationType )
+	{
+		this.validationType = validationType;
 	}
 }
