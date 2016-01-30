@@ -1,5 +1,6 @@
 package com.perfectoMobile.page.element;
 
+import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -7,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
 import com.perfectoMobile.page.BY;
 import com.perfectoMobile.page.PageManager;
 
@@ -63,6 +65,13 @@ public abstract class AbstractElement implements Element
 	 */
 	protected abstract boolean _isPresent();
 
+	/**
+	 * _is present.
+	 *
+	 * @return true, if successful
+	 */
+	protected abstract Image _getImage( Resolution res );
+	
 	/**
 	 * _wait for visible.
 	 *
@@ -412,6 +421,32 @@ public abstract class AbstractElement implements Element
 		{
 			if ( timed )
 				PageManager.instance().addExecutionTiming( pageName + "." + elementName + ".getAttribute()", System.currentTimeMillis() - startTime );
+		}
+		return returnValue;
+	}
+	
+	@Override
+	public Image getImage( Resolution resolution )
+	{
+		long startTime = System.currentTimeMillis();
+		Image returnValue;
+		boolean success = false;
+		try
+		{
+			returnValue = _getImage( resolution );
+			success = true;
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "elementImage", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success, getKey(), null );
+		}
+		catch( Exception e )
+		{
+			PageManager.instance().setThrowable( e );
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "elementImage", System.currentTimeMillis(), System.currentTimeMillis() - startTime, false, getKey(), e );
+			throw new IllegalStateException( e );
+		}
+		finally
+		{
+			if ( timed )
+				PageManager.instance().addExecutionTiming( pageName + "." + elementName + ".getImage()", System.currentTimeMillis() - startTime );
 		}
 		return returnValue;
 	}

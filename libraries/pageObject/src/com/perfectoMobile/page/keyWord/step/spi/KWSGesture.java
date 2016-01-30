@@ -20,28 +20,7 @@ import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 public class KWSGesture extends AbstractKeyWordStep
 {
 
-	private Point createPoint( String pointValue )
-	{
-		Point x = null;
-		
-		try
-		{
-			String[] coors = pointValue.split( "," );
-			
-			if ( coors.length == 2 )
-			{
-				x = new Point( Integer.parseInt( coors[ 0 ].trim() ), Integer.parseInt( coors[ 1 ].trim() ) );
-				return x;
-			}
-		}
-		catch( Exception e )
-		{
-			log.warn( "Could not parse coordinates " +  pointValue + " due to " + e.getMessage() );
-		}
-		
-		return null;
-		
-	}
+	
 	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep#_executeStep(com.perfectoMobile.page.Page, org.openqa.selenium.WebDriver, java.util.Map, java.util.Map)

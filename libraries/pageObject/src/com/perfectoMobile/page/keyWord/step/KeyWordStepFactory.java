@@ -11,7 +11,9 @@ import com.perfectoMobile.page.keyWord.KeyWordStep.StepFailure;
 import com.perfectoMobile.page.keyWord.step.spi.KWSAttribute;
 import com.perfectoMobile.page.keyWord.step.spi.KWSBreak;
 import com.perfectoMobile.page.keyWord.step.spi.KWSCall;
+import com.perfectoMobile.page.keyWord.step.spi.KWSCheckColor;
 import com.perfectoMobile.page.keyWord.step.spi.KWSClick;
+import com.perfectoMobile.page.keyWord.step.spi.KWSContrastRatio;
 import com.perfectoMobile.page.keyWord.step.spi.KWSDevice;
 import com.perfectoMobile.page.keyWord.step.spi.KWSExists;
 import com.perfectoMobile.page.keyWord.step.spi.KWSFork;
@@ -60,6 +62,8 @@ public class KeyWordStepFactory
 		addKeyWord( "DEVICE", KWSDevice.class );
 		addKeyWord( "FORK", KWSFork.class );
 		addKeyWord( "VISIBLE", KWSVisible.class );
+		addKeyWord( "VERIFY_COLOR", KWSCheckColor.class );
+		addKeyWord( "VERIFY_CONTRAST", KWSContrastRatio.class );
 	}
 	
 	/**
@@ -73,7 +77,7 @@ public class KeyWordStepFactory
 		if ( stepMap.containsKey( keyWord ) )
 			log.warn( "Overwriting Keyword [" + keyWord + "] of type [" + stepMap.get( keyWord ).getClass().getSimpleName() + "] with [" + kwImpl.getClass().getSimpleName() );
 		
-		stepMap.put( keyWord, kwImpl );
+		stepMap.put( keyWord.toUpperCase(), kwImpl );
 	}
 	/**
 	 * Creates a new KeyWordStep object.
@@ -91,7 +95,7 @@ public class KeyWordStepFactory
 	public KeyWordStep createStep( String name, String pageName, boolean active, String type, String linkId, boolean timed, StepFailure sFailure, boolean inverse, String os )
 	{
 		
-		Class kwImpl = stepMap.get( type );
+		Class kwImpl = stepMap.get( type.toUpperCase() );
 		
 		if ( kwImpl == null )
 			throw new IllegalArgumentException( "Unknown KeyWord [" + type + "]" );

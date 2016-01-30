@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.HasCapabilities;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 
 import com.morelandLabs.spi.PropertyProvider;
@@ -76,6 +77,29 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	 */
 	protected abstract boolean _executeStep( Page pageObject, WebDriver webDriver, Map<String, Object> contextMap, Map<String, PageData> dataMap ) throws Exception;
 
+	
+	protected Point createPoint( String pointValue )
+	{
+		Point x = null;
+		
+		try
+		{
+			String[] coors = pointValue.split( "," );
+			
+			if ( coors.length == 2 )
+			{
+				x = new Point( Integer.parseInt( coors[ 0 ].trim() ), Integer.parseInt( coors[ 1 ].trim() ) );
+				return x;
+			}
+		}
+		catch( Exception e )
+		{
+			log.warn( "Could not parse coordinates " +  pointValue + " due to " + e.getMessage() );
+		}
+		
+		return null;
+		
+	}
 	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#toError()
@@ -882,7 +906,12 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 				else
 				{
 					log.info( "Attempting to analyze [" + dataValue + "] using the Regular Expression [" + validation + "]" );
-					return dataValue.matches( validation );
+					if ( !dataValue.matches( validation ) )
+					{
+						log.error( "Validation failed for [" + dataValue + "] using the Regular Expression [" + validation + "]" );
+						return false;
+					}
+					return true;
 				}
 
 			case NOT_EMPTY:

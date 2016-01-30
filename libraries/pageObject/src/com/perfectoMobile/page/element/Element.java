@@ -1,7 +1,10 @@
 package com.perfectoMobile.page.element;
 
-import java.util.HashMap;
+import java.awt.Image;
 import java.util.concurrent.TimeUnit;
+
+import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
+
 
 /**
  * The Interface Element.
@@ -199,4 +202,13 @@ public interface Element
 	 * @return the element
 	 */
 	public Element cloneElement();
+	
+	
+	/**
+	 * Locates an element and extracts it as an image given the element 
+	 * had specified coordinates and size
+	 *
+	 * @return the element
+	 */
+	public Image getImage( Resolution imageResolution );
 }

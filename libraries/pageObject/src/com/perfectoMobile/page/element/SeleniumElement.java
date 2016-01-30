@@ -1,9 +1,12 @@
 package com.perfectoMobile.page.element;
 
-import java.util.HashMap;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,13 +16,15 @@ import org.openqa.selenium.ContextAware;
 import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.ExecuteMethod;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
-import com.morelandLabs.integrations.perfectoMobile.rest.bean.ImageExecution;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.ImageFormat;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.MatchMode;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Screen;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.Repositories.RepositoryType;
 import com.morelandLabs.spi.PropertyProvider;
 import com.morelandLabs.spi.driver.NativeDriverProvider;
 import com.morelandLabs.spi.driver.VisualDriverProvider;
@@ -73,6 +78,41 @@ public class SeleniumElement extends AbstractElement
 		this.index = index;
 	}
 
+	@Override
+	public Image _getImage( Resolution imageResolution )
+	{
+		WebElement imageElement = getElement();
+		
+		if ( imageElement != null )
+		{
+			if ( imageElement.getLocation() != null && imageElement.getSize() != null && imageElement.getSize().getWidth() > 0 && imageElement.getSize().getHeight() > 0 )
+			{
+				String fileKey = "PRIVATE:" + getDeviceName() + ".png";
+				PerfectoMobile.instance().imaging().screenShot( getExecutionId(), getDeviceName(), fileKey, Screen.primary, ImageFormat.png, imageResolution );
+				byte[] imageData = PerfectoMobile.instance().repositories().download( RepositoryType.MEDIA, fileKey );
+				if ( imageData != null && imageData.length > 0 )
+				{
+					try
+					{
+						BufferedImage fullImage = ImageIO.read( new ByteArrayInputStream( imageData ) );
+						return fullImage.getSubimage( imageElement.getLocation().getX(), imageElement.getLocation().getY(), imageElement.getSize().getWidth(), imageElement.getSize().getHeight() );
+					}
+					catch( Exception e )
+					{
+						log.error( "Error extracting image data", e );
+					}
+				}
+				else
+					log.warn( "No image data could be retrieved for [" + fileKey + "]" );
+				
+			}
+			else
+				log.warn( "The element returned via " + getKey() + " did not contain a location or size" );
+		}
+		
+		return null;
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.element.Element#setDriver(java.lang.Object)
 	 */
