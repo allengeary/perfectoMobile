@@ -3,10 +3,8 @@ package com.perfectoMobile.page.keyWord.step.spi;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 
-import com.morelandLabs.imaging.ImagingUtilities;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.data.PageData;
