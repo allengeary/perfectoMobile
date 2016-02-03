@@ -16,6 +16,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/imagingExtensions"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

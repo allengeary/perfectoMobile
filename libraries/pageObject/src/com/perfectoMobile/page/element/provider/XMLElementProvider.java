@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +20,6 @@ import org.w3c.dom.NodeList;
 
 import com.perfectoMobile.page.BY;
 import com.perfectoMobile.page.ElementDescriptor;
-import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.element.ElementFactory;
@@ -123,8 +123,10 @@ public class XMLElementProvider extends AbstractElementProvider
 		{
 			try
 			{
+				
+				
 				if (log.isInfoEnabled())
-					log.info( "Attempting to import file [" + fileName.getNodeValue() + "]" );
+					log.info( "Attempting to import file [" + Paths.get(".").toAbsolutePath().normalize().toString() + fileName.getNodeValue() + "]" );
 
 				readElements( new FileInputStream( fileName.getNodeValue() ) );
 			}
