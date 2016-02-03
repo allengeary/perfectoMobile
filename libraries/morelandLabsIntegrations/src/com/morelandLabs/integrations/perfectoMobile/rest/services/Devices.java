@@ -35,7 +35,7 @@ public interface Devices extends PerfectoService
 	 * @return the devices
 	 */
 	@Operation( operationName="list" )
-	public HandsetCollection getDevices( String manufacturer );
+	public HandsetCollection getDevices( @NameOverride( name="manufacturer" ) String manufacturer );
 	
 	/**
 	 * Gets the my devices.
@@ -44,7 +44,7 @@ public interface Devices extends PerfectoService
 	 * @return the my devices
 	 */
 	@Operation( operationName="list" )
-	public HandsetCollection getMyDevices( String reservedTo );
+	public HandsetCollection getMyDevices( @NameOverride( name="reservedTo" ) String reservedTo );
 	
 	/**
 	 * Gets the devices.
@@ -53,5 +53,5 @@ public interface Devices extends PerfectoService
 	 * @return the devices
 	 */
 	@Operation( operationName="list" )
-	public HandsetCollection getDevices( boolean inUse );
+	public HandsetCollection getDevices( @NameOverride( name="inUse" ) boolean inUse );
 }

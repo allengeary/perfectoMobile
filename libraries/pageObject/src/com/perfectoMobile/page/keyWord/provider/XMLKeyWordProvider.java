@@ -60,7 +60,6 @@ public class XMLKeyWordProvider implements KeyWordProvider
 	private File fileName;
 	private String resourceName;
 	private boolean asResource = false;
-	private KeyWordStepFactory kFactory = new KeyWordStepFactory();
 
 	/**
 	 * Instantiates a new XML key word provider.
@@ -391,7 +390,7 @@ public class XMLKeyWordProvider implements KeyWordProvider
 				if (sFailureNode != null)
 					sFailure = StepFailure.valueOf( sFailureNode.getNodeValue() );
 
-				KeyWordStep step = kFactory.createStep( name.getNodeValue(), usePage, active == null ? true : Boolean.parseBoolean( active.getNodeValue() ), type.getNodeValue().toUpperCase(), linkIdString, timed, sFailure, inverse, osString );
+				KeyWordStep step = KeyWordStepFactory.instance().createStep( name.getNodeValue(), usePage, active == null ? true : Boolean.parseBoolean( active.getNodeValue() ), type.getNodeValue().toUpperCase(), linkIdString, timed, sFailure, inverse, osString );
 
 				KeyWordParameter[] params = parseParameters( nodeList.item( i ), testName, name.getNodeValue(), typeName );
 

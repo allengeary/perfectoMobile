@@ -95,5 +95,10 @@
          <artifactId>serviceProviderInterface</artifactId>
          <version>1.0.0</version>
       </dependency>
+      <dependency>
+         <groupId>perfectoMobile</groupId>
+         <artifactId>imagingExtensions</artifactId>
+         <version>1.0.0</version>
+      </dependency>
    </dependencies>
 </project>

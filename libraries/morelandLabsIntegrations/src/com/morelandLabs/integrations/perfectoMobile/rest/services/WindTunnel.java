@@ -50,7 +50,7 @@ public interface WindTunnel extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="status", subCommandName = "event" )
-	public Execution addPointOfInterest( @ResourceID String executionId, @Parameter String description, @Parameter boolean status );
+	public Execution addPointOfInterest( @ResourceID String executionId, @Parameter( name="description" ) String description, @Parameter( name="status" ) boolean status );
 	
 	/**
 	 * Adds the timer report.
@@ -64,7 +64,7 @@ public interface WindTunnel extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="status", subCommandName = "event" )
-	public Execution addTimerReport( @ResourceID String executionId, @Parameter String name, @Parameter int result, @Parameter boolean status, @Parameter String description );
+	public Execution addTimerReport( @ResourceID String executionId, @Parameter( name="name" ) String name, @Parameter( name="result" ) int result, @Parameter( name="status" ) boolean status, @Parameter( name="description" ) String description );
 	
 	/**
 	 * Gets the network setting.
@@ -76,7 +76,7 @@ public interface WindTunnel extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="status", subCommandName = "event" )
-	public Execution getNetworkSetting( @ResourceID String executionId, @Parameter String handsetId, @Parameter Network property );
+	public Execution getNetworkSetting( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="property" ) Network property );
 	
 	/**
 	 * Configure network.
@@ -89,7 +89,7 @@ public interface WindTunnel extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="status", subCommandName = "event" )
-	public Execution configureNetwork( @ResourceID String executionId, @Parameter String handsetId, @Parameter boolean wifi, @Parameter boolean data );
+	public Execution configureNetwork( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="wifi" ) boolean wifi, @Parameter( name="data" ) boolean data );
 	
 	/**
 	 * Start network virtualization.
@@ -107,7 +107,7 @@ public interface WindTunnel extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="status", subCommandName = "event" )
-	public Execution startNetworkVirtualization( @ResourceID String executionId, @Parameter String handsetId, @Parameter int latency, @Parameter int packetLoss, @Parameter int packetCorruption, @Parameter int packetReordering, @Parameter int packetDuplication, @Parameter int delayJitter, @Parameter int correlation  );
+	public Execution startNetworkVirtualization( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="latency" ) int latency, @Parameter( name="packetLoss" ) int packetLoss, @Parameter( name="packetCorruption" ) int packetCorruption, @Parameter( name="packetReordering" ) int packetReordering, @Parameter( name="packetDuplication" ) int packetDuplication, @Parameter( name="delayJitter" ) int delayJitter, @Parameter( name="correlation" ) int correlation  );
 	
 	/**
 	 * Stop network virtualization.
@@ -118,7 +118,7 @@ public interface WindTunnel extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="status", subCommandName = "event" )
-	public Execution stopNetworkVirtualization( @ResourceID String executionId, @Parameter String handsetId );
+	public Execution stopNetworkVirtualization( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId );
 	
 	/**
 	 * Start timer.
@@ -130,7 +130,7 @@ public interface WindTunnel extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="timer", subCommandName = "start" )
-	public Execution startTimer( @ResourceID String executionId, @Parameter String timerId, @Parameter TimerPolicy initPolicy );
+	public Execution startTimer( @ResourceID String executionId, @Parameter( name="timerId" ) String timerId, @Parameter( name="initPolicy" ) TimerPolicy initPolicy );
 	
 	/**
 	 * Stop timer.
@@ -141,7 +141,7 @@ public interface WindTunnel extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="timer", subCommandName = "stop" )
-	public Execution stopTimer( @ResourceID String executionId, @Parameter String timerId );
+	public Execution stopTimer( @ResourceID String executionId, @Parameter( name="timerId" ) String timerId );
 	
 	/**
 	 * Start vitals.
@@ -153,5 +153,5 @@ public interface WindTunnel extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="monitor", subCommandName = "start" )
-	public Execution startVitals( @ResourceID String executionId, @Parameter String handsetId, @Parameter String timerId );
+	public Execution startVitals( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="timerId" ) String timerId );
 }

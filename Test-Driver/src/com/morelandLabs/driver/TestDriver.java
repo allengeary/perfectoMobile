@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import org.testng.TestNG;
 
+import com.morelandLabs.Initializable;
 import com.morelandLabs.application.ApplicationRegistry;
 import com.morelandLabs.application.CSVApplicationProvider;
 import com.morelandLabs.application.ExcelApplicationProvider;
@@ -84,12 +85,14 @@ public class TestDriver
 		{
 			DeviceActionManager.instance().setDeviceActionFactory( new PerfectoDeviceActionFactory() );
 			configProperties.load( new FileInputStream( configFile ) );
-			
+
 			System.out.println( "Reading Cloud Configuration" );
 			configureCloudRegistry( configProperties );
 			
 			System.out.println( "Reading Application Configuration" );
 			configureApplicationRegistry( configProperties );
+			
+			configureThirdParty( configProperties );
 			
 			System.out.println( "Reading Artifact Configuration" );
 			configureArtifacts( configProperties );
@@ -105,6 +108,7 @@ public class TestDriver
 			
 			GestureManager.instance().setGestureFactory( new PerfectoGestureFactory() );
 			
+			
 			switch( configProperties.getProperty( DRIVER[ 0 ] ).toUpperCase() )
 			{
 				case "XML":
@@ -119,13 +123,26 @@ public class TestDriver
 			}
 			
 			
+			
+			
 		}
 		catch( Exception e )
 		{
 			e.printStackTrace();
 		}
 		
-		System.out.println( "Executing Test Case" );
+		boolean dryRun = false;
+		String validateConfiguration = configProperties.getProperty( "driver.validateConfiguration" );
+		if ( validateConfiguration != null )
+			dryRun = Boolean.parseBoolean( validateConfiguration );
+		
+		DeviceManager.instance().setDryRun( dryRun );
+		
+		if ( dryRun )
+			System.out.println( "Performing Dry Run" );
+		else
+			System.out.println( "Executing Test Cases" );
+		
 		switch( configProperties.getProperty( DRIVER[ 0 ] ).toUpperCase() )
 		{
 			case "XML":
@@ -171,6 +188,31 @@ public class TestDriver
 		PerfectoMobile.instance().setPassword( CloudRegistry.instance().getCloud().getPassword() );
 		PerfectoMobile.instance().setBaseUrl( "https://" + CloudRegistry.instance().getCloud().getHostName() );
 		
+	}
+	
+	private static void configureThirdParty( Properties configProperties )
+	{
+		String thirdParty = configProperties.getProperty( "integrations.import" );
+		if ( thirdParty != null && !thirdParty.isEmpty() )
+		{
+			String[] partyArray = thirdParty.split( "," );
+			for ( String party : partyArray )
+			{
+				String className = configProperties.getProperty( party + ".initialization" );
+				try
+				{
+					System.out.println( "Configuring Third Party support for " + party + " as " + className );
+					
+					Initializable newExtension = (Initializable) Class.forName( className ).newInstance();
+					newExtension.initialize( party, configProperties );
+					
+				}
+				catch( Exception e )
+				{
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	private static void configureApplicationRegistry( Properties configProperties )
