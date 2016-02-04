@@ -61,7 +61,7 @@ public interface Imaging extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="checkpoint", subCommandName = "text" )
-	public ImageExecution textExists( @ResourceID String executionId, @Parameter String handsetId, @Parameter String content, @Parameter Short timeout  );
+	public ImageExecution textExists( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="content" ) String content, @Parameter( name="timeout" ) Short timeout  );
 	
 	
 	/**
@@ -76,12 +76,12 @@ public interface Imaging extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="checkpoint", subCommandName = "image" )
-	public ImageExecution imageExists( @ResourceID String executionId, @Parameter String handsetId, @Parameter String content, @Parameter Short timeout, @Parameter MatchMode match );
+	public ImageExecution imageExists( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="content" ) String content, @Parameter( name="timeout" ) Short timeout, @Parameter( name="match" ) MatchMode match );
 	
 	
 
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="screen", subCommandName="image" )
-	public ImageExecution screenShot( @ResourceID String executionId, @Parameter String handsetId, @Parameter String key, @Parameter Screen source, @Parameter ImageFormat format, @Parameter( name="report.resolution") Resolution resolution );
+	public ImageExecution screenShot( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="key" ) String key, @Parameter( name="source" ) Screen source, @Parameter( name="format" ) ImageFormat format, @Parameter( name="report.resolution") Resolution resolution );
 	
 }

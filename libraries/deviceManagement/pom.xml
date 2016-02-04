@@ -25,7 +25,7 @@
 		<repository>
 			<id>internal.repo</id>
 			<name>Temporary Staging Repository</name>
-			<url>file://c:/users/allen/git/maven-repo</url>
+			<url>file:../../../maven-repo</url>
 		</repository>
 	</distributionManagement>
 	<build>
@@ -41,7 +41,7 @@
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>2.8.1</version>
 				<configuration>
-					<altDeploymentRepository>internal.repo::default::file://c:/users/allen/git/maven-repo</altDeploymentRepository>
+					<altDeploymentRepository>internal.repo::default::file:../../../maven-repo</altDeploymentRepository>
 				</configuration>
 			</plugin>
 			<plugin>

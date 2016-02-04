@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +61,6 @@ public class XMLKeyWordProvider implements KeyWordProvider
 	private File fileName;
 	private String resourceName;
 	private boolean asResource = false;
-	private KeyWordStepFactory kFactory = new KeyWordStepFactory();
 
 	/**
 	 * Instantiates a new XML key word provider.
@@ -108,9 +108,10 @@ public class XMLKeyWordProvider implements KeyWordProvider
 					log.info( "Reading from FILE SYSTEM as [" + fileName + "]" );
 				readElements( new FileInputStream( fileName ), true, true );
 			}
-			catch (FileNotFoundException e)
+			catch (Exception e)
 			{
 				log.fatal( "Could not read from " + fileName, e );
+				System.exit( -1 );
 			}
 		}
 	}
@@ -178,6 +179,10 @@ public class XMLKeyWordProvider implements KeyWordProvider
 			parseImports( xmlDocument );
 
 		}
+		catch( IllegalStateException e )
+		{
+			throw e;
+		}
 		catch (Exception e)
 		{
 			log.fatal( "Error reading XML Element File", e );
@@ -205,13 +210,14 @@ public class XMLKeyWordProvider implements KeyWordProvider
 				try
 				{
 					if (log.isInfoEnabled())
-						log.info( "Attempting to import file [" + fileName.getNodeValue() + "]" );
+						log.info( "Attempting to import file [" + Paths.get(".").toAbsolutePath().normalize().toString() + fileName.getNodeValue() + "]" );
 
 					readElements( new FileInputStream( fileName.getNodeValue() ), includeTests, includeFunctions );
 				}
 				catch (FileNotFoundException e)
 				{
 					log.fatal( "Could not read from " + fileName, e );
+					throw new IllegalStateException( e );
 				}
 			}
 		}
@@ -388,10 +394,10 @@ public class XMLKeyWordProvider implements KeyWordProvider
 
 				StepFailure sFailure = StepFailure.ERROR;
 				Node sFailureNode = nodeList.item( i ).getAttributes().getNamedItem( FAILURE_MODE );
-				if (sFailureNode != null)
+				if (sFailureNode != null && !sFailureNode.getNodeValue().isEmpty() )
 					sFailure = StepFailure.valueOf( sFailureNode.getNodeValue() );
 
-				KeyWordStep step = kFactory.createStep( name.getNodeValue(), usePage, active == null ? true : Boolean.parseBoolean( active.getNodeValue() ), type.getNodeValue().toUpperCase(), linkIdString, timed, sFailure, inverse, osString );
+				KeyWordStep step = KeyWordStepFactory.instance().createStep( name.getNodeValue(), usePage, active == null ? true : Boolean.parseBoolean( active.getNodeValue() ), type.getNodeValue().toUpperCase(), linkIdString, timed, sFailure, inverse, osString );
 
 				KeyWordParameter[] params = parseParameters( nodeList.item( i ), testName, name.getNodeValue(), typeName );
 

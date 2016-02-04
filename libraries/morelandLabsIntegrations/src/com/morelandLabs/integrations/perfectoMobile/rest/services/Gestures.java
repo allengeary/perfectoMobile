@@ -23,7 +23,7 @@ public interface Gestures extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="touch", subCommandName = "swipe" )
-	public Execution swipe( @ResourceID String executionId, @Parameter String handsetId, @Parameter PercentagePoint start, @Parameter PercentagePoint end  );
+	public Execution swipe( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="start" ) PercentagePoint start, @Parameter( name="end" ) PercentagePoint end  );
 	
 	/**
 	 * Zoom.
@@ -36,7 +36,7 @@ public interface Gestures extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="touch", subCommandName = "gesture" )
-	public Execution zoom( @ResourceID String executionId, @Parameter String handsetId, @Parameter PercentagePoint start, @Parameter PercentagePoint end  );
+	public Execution zoom( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="start" ) PercentagePoint start, @Parameter( name="end" ) PercentagePoint end  );
 
 	/**
 	 * Pinch.
@@ -49,6 +49,6 @@ public interface Gestures extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="touch", subCommandName = "gesture" )
-	public Execution pinch( @ResourceID String executionId, @Parameter String handsetId, @Parameter PercentagePoint start, @Parameter PercentagePoint end  );
+	public Execution pinch( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="start" ) PercentagePoint start, @Parameter( name="end" ) PercentagePoint end  );
 	
 }

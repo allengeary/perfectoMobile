@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 
+import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.ng.AbstractSeleniumTest;
 import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.keyWord.KeyWordDriver;
@@ -24,6 +25,12 @@ public class XMLTestDriver extends AbstractSeleniumTest
 		{
 			if ( !deviceOs.toUpperCase().equals(  test.getOs().toUpperCase() ) )
 				throw new SkipException( "This test is not designed to work on a device with [" + deviceOs + "]  It needs [" + test.getOs() + "]" );
+		}
+		
+		if ( DeviceManager.instance().isDryRun() )
+		{
+			log.info( "This would hve executed " +  testName.getTestName() );
+			return;
 		}
 		
 		boolean returnValue = KeyWordDriver.instance().executeTest( testName.getTestName(), getWebDriver() );

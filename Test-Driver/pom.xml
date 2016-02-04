@@ -37,10 +37,8 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.3</version>
             <configuration>
-               <compilerArgument>-parameters</compilerArgument>
-               <testCompilerArgument>-parameters</testCompilerArgument>
-               <source>1.8</source>
-               <target>1.8</target>
+               <source>1.7</source>
+               <target>1.7</target>
             </configuration>
          </plugin>
          <plugin>
@@ -93,6 +91,11 @@
       <dependency>
          <groupId>perfectoMobile</groupId>
          <artifactId>serviceProviderInterface</artifactId>
+         <version>1.0.0</version>
+      </dependency>
+      <dependency>
+         <groupId>perfectoMobile</groupId>
+         <artifactId>imagingExtensions</artifactId>
          <version>1.0.0</version>
       </dependency>
    </dependencies>

@@ -34,7 +34,7 @@ public interface Device extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="device", subCommandName = "rotate" )
-	public Execution rotate( @ResourceID String executionId, @Parameter String handsetId, @Parameter ScreenOrientation state );
+	public Execution rotate( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="state" ) ScreenOrientation state );
 	
 	/**
 	 * Reboot.
@@ -45,7 +45,7 @@ public interface Device extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="device", subCommandName = "reboot" )
-	public Execution reboot( @ResourceID String executionId, @Parameter String handsetId );
+	public Execution reboot( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId );
 	
 	/**
 	 * Recover.
@@ -56,7 +56,7 @@ public interface Device extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="device", subCommandName = "recover" )
-	public Execution recover( @ResourceID String executionId, @Parameter String handsetId );
+	public Execution recover( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId );
 	
 	/**
 	 * Open.
@@ -67,7 +67,7 @@ public interface Device extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="device", subCommandName = "open" )
-	public Execution open( @ResourceID String executionId, @Parameter String handsetId );
+	public Execution open( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId );
 	
 	/**
 	 * Close.
@@ -78,7 +78,7 @@ public interface Device extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="device", subCommandName = "close" )
-	public Execution close( @ResourceID String executionId, @Parameter String handsetId );
+	public Execution close( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId );
 	
 	/**
 	 * Sets the location.
@@ -90,5 +90,5 @@ public interface Device extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="location", subCommandName = "set" )
-	public Execution setLocation( @ResourceID String executionId, @Parameter String handsetId, @Parameter Location coordinates );
+	public Execution setLocation( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="coordinates" ) Location coordinates );
 }

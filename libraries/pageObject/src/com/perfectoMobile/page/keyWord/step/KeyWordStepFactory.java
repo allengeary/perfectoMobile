@@ -32,13 +32,20 @@ import com.perfectoMobile.page.keyWord.step.spi.KWSWaitFor;
  */
 public class KeyWordStepFactory
 {
+	private static KeyWordStepFactory singleton = new KeyWordStepFactory();
+
+	public static KeyWordStepFactory instance()
+	{
+		return singleton;
+	}
+	
 	private Map<String,Class>stepMap = new HashMap<String,Class>( 20 );
 	private Log log = LogFactory.getLog( KeyWordStepFactory.class );
 	
 	/**
 	 * Instantiates a new key word step factory.
 	 */
-	public KeyWordStepFactory()
+	private KeyWordStepFactory()
 	{
 		initializeDefaults();
 	}

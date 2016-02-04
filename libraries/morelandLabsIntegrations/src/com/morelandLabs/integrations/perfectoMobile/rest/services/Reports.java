@@ -37,6 +37,6 @@ public interface Reports extends PerfectoService
 	 * @return the execution report
 	 */
 	@Operation( operationName="download" )
-	public ExecutionReport download( @ResourceID String reportKey, ReportFormat format );
+	public ExecutionReport download( @ResourceID String reportKey, @NameOverride( name="format" )ReportFormat format );
 	
 }
