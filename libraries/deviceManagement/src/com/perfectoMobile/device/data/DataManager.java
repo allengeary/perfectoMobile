@@ -106,6 +106,7 @@ public class DataManager
 	 */
 	public void setReportFolder( File reportFolder )
 	{
+		System.setProperty( "__outputFolder", reportFolder.getAbsolutePath() );
 		this.reportFolder = reportFolder;
 	}
 

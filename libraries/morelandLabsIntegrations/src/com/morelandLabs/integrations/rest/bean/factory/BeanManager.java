@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.perfectoMobile.rest.bean.Execution;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.ImageFormat;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.MatchMode;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Screen;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Repositories.RepositoryType;
@@ -124,6 +125,8 @@ public class BeanManager
 		System.out.println( x.getExecutionId() );
 		
 		PerfectoMobile.instance().device().open( x.getExecutionId(), "93C8CC73" );
+		
+		PerfectoMobile.instance().imaging().imageExists("exe", "hset", "PRIVATE:logo.png", (short) 20, MatchMode.bounded );
 		
 		Thread.sleep( 5000 );
 		PerfectoMobile.instance().imaging().screenShot( x.getExecutionId(), "93C8CC73", "PRIVATE:a.png", Screen.primary, ImageFormat.png, Resolution.high );
