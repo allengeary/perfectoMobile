@@ -50,9 +50,9 @@ public class XMLBeanFactory extends AbstractBeanFactory
 	protected Bean _createBean( Class returnType, InputStream inputStream ) throws Exception
 	{
 		InputStream useStream = inputStream;
-		if ( log.isDebugEnabled() )
+		if ( log.isInfoEnabled() )
 		{
-			log.debug( "Parsing XML Document into " + returnType.getName() );
+			log.info( "Parsing XML Document into " + returnType.getName() );
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			byte[] buffer = new byte[ 2048 ];
 			int bytesRead;
@@ -62,7 +62,7 @@ public class XMLBeanFactory extends AbstractBeanFactory
 				outputStream.write( buffer, 0, bytesRead );
 			}
 			
-			log.debug( new String( outputStream.toByteArray() ) );
+			log.info( new String( outputStream.toByteArray() ) );
 			
 			useStream = new ByteArrayInputStream( outputStream.toByteArray() );
 		}

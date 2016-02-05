@@ -3,6 +3,7 @@ package com.morelandLabs.integrations.perfectoMobile.rest.services;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -60,19 +61,21 @@ public class RESTInvocationHandler implements InvocationHandler
 		Map parameterMap = null;
 		Map<String,String> derivedMap = new HashMap<String,String>( 10 );
 		
-		for ( int i=0; i<method.getParameterCount(); i++  )
+		Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+		
+		for ( int i=0; i<method.getParameterTypes().length; i++  )
 		{
-			if ( method.getParameters()[ i ].getAnnotation( ResourceID.class ) != null )
+			if ( getAnnotation( parameterAnnotations[ i ], ResourceID.class ) != null )
 				parameterId = parameterId + SLASH + args[ i ] + "";
-			else if ( method.getParameters()[ i ].getAnnotation( ParameterMap.class ) != null )
+			else if ( getAnnotation( parameterAnnotations[ i ], ParameterMap.class ) != null )
 				parameterMap = (Map) parameterMap;
-			else if ( method.getParameters()[ i ].getAnnotation( Parameter.class ) != null )
+			else if ( getAnnotation( parameterAnnotations[ i ], Parameter.class ) != null )
 			{
 				if ( args[ i ] != null )
 				{
-					Parameter paramAnnotation = method.getParameters()[ i ].getAnnotation( Parameter.class );
-					if ( paramAnnotation.name().isEmpty() )
-						derivedMap.put( PARAM + method.getParameters()[ i ].getName(), args[ i ] + "" );
+					Parameter paramAnnotation = (Parameter) getAnnotation( parameterAnnotations[ i ], Parameter.class );
+					if ( !paramAnnotation.name().isEmpty() )
+						derivedMap.put( PARAM + method.getParameterTypes()[ i ].getName(), args[ i ] + "" );
 					else
 						derivedMap.put( PARAM + paramAnnotation.name(), args[ i ] + "" );
 				}
@@ -81,8 +84,8 @@ public class RESTInvocationHandler implements InvocationHandler
 			{
 				if ( args[ i ] != null )
 				{
-					String parameterName = method.getParameters()[ i ].getName();
-					NameOverride namedParameter = method.getParameters()[ i ].getAnnotation( NameOverride.class );
+					String parameterName = method.getParameterTypes()[ i ].getName();
+					NameOverride namedParameter = (NameOverride) getAnnotation( parameterAnnotations[ i ], NameOverride.class );
 					if ( namedParameter != null && !namedParameter.name().isEmpty() ) 
 						parameterName = namedParameter.name();
 
@@ -158,6 +161,17 @@ public class RESTInvocationHandler implements InvocationHandler
 		}
 		
 		
+	}
+	
+	private Annotation getAnnotation( Annotation[] annotationArray, Class annotationType )
+	{
+		for ( Annotation ant : annotationArray )
+		{
+			if ( annotationType.isAssignableFrom( ant.getClass() ) )
+				return ant;
+		}
+		
+		return null;
 	}
 	
 	/**

@@ -17,7 +17,7 @@ import com.perfectoMobile.gesture.device.action.DeviceAction;
 /**
  * The Class InstallApplicationAction.
  */
-public class ScreenshotAction extends AbstractDefaultAction implements DeviceAction
+public class DumpStateAction extends AbstractDefaultAction implements DeviceAction
 {
 	
 	/* (non-Javadoc)
@@ -29,13 +29,16 @@ public class ScreenshotAction extends AbstractDefaultAction implements DeviceAct
 		String executionId = getExecutionId( webDriver );
 		String deviceName = getDeviceName( webDriver );
 		
+		long timeKey = System.currentTimeMillis();
+		
 		Resolution resolution = Resolution.valueOf( ( (String) parameterList.get( 0 )  ).toLowerCase() );
 		String rootFolder = System.getProperty( "__outputFolder" );
 		
 		if ( parameterList.size() > 1 )
 			rootFolder = (String) parameterList.get( 1 ); 
 		
-		File outputFile = new File( new File( rootFolder, executionId ), System.currentTimeMillis() + ".png" );
+		File outputFile = new File( new File( rootFolder, executionId ), timeKey + ".png" );
+		File DOMFile = new File( new File( rootFolder, executionId ), timeKey + ".xml" );
 		String fileKey = "PRIVATE:" + deviceName + ".png";
 		
 		PerfectoMobile.instance().imaging().screenShot( executionId, deviceName, fileKey, Screen.primary, ImageFormat.png, resolution );
@@ -47,12 +50,20 @@ public class ScreenshotAction extends AbstractDefaultAction implements DeviceAct
 			outputStream.write( imageData );
 			outputStream.flush();
 			outputStream.close();
+			
+			outputStream = new FileOutputStream( DOMFile );
+			outputStream.write( webDriver.getPageSource().getBytes() );
+			outputStream.flush();
+			outputStream.close();
 			return true;
 		}
 		catch( Exception e )
 		{
 			throw new IllegalArgumentException( "Could not write to file", e );
 		}
+		
+		
+		
 	}
 
 }

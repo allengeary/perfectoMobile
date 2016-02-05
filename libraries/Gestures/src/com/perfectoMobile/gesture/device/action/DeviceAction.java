@@ -52,6 +52,9 @@ public interface DeviceAction
 		/** switch the context */
 		CONTEXT,
 		
+		DUMP_STATE,
+		
+		
 		/** The location. */
 		LOCATION;
 	}

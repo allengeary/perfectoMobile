@@ -304,7 +304,21 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 			if (log.isInfoEnabled())
 				log.info( "*** Executing Step " + name + " of type " + getClass().getSimpleName() + ( linkId != null ? " linked to " + linkId : "" ) );
 
-			boolean returnValue = _executeStep( pageObject, webDriver, contextMap, dataMap );
+			Exception stepException = null;
+			boolean returnValue = false;
+			try
+			{
+				returnValue = _executeStep( pageObject, webDriver, contextMap, dataMap );
+			}
+			catch( KWSLoopBreak lb )
+			{
+				throw lb;
+			}
+			catch( Exception e )
+			{
+				stepException = e;
+				returnValue = false;
+			}
 
 			if (inverse)
 				returnValue = !returnValue;
@@ -316,10 +330,29 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 			//
 			if ( !fork && getStepList() != null && !getStepList().isEmpty() && returnValue)
 			{
+				boolean subReturnValue = false;
 				for (KeyWordStep step : getStepList())
-				{
+				{					
 					passedIgnore = true;
-					step.executeStep( pageObject, webDriver, contextMap, dataMap );
+					try
+					{
+						subReturnValue = step.executeStep( pageObject, webDriver, contextMap, dataMap );
+					}
+					catch( Exception e )
+					{
+						stepException = e;
+						subReturnValue = false;
+					}
+					
+					if ( step.isInverse() )
+						subReturnValue = !subReturnValue;
+					
+					if ( !subReturnValue )
+					{
+						returnValue = false;
+						break;
+					}
+					
 				}
 			}
 
@@ -331,7 +364,14 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 				switch (sFailure)
 				{
 					case ERROR:
-						throw new IllegalStateException( toError() );
+						if ( stepException == null )
+							stepException = new IllegalArgumentException( toError() );
+
+						PageManager.instance().setThrowable( stepException );						
+						PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, false, stepException.getMessage(), stepException );
+						
+						log.error( "***** Step " + name + " on page " + pageName + " failed" );
+						return false;
 
 					case IGNORE:
 						return true;
@@ -348,45 +388,6 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 		catch( KWSLoopBreak lb )
 		{
 			throw lb;
-		}
-		catch (Exception e)
-		{
-			switch (sFailure)
-			{
-				case ERROR:
-					PageManager.instance().setThrowable( e );
-					PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, false, e.getMessage(), e );
-					log.error( "***** Step " + name + " on page " + pageName + " failed due to " + e.getMessage() );
-					
-					if ( inverse )
-					{
-						log.info( "We expected this error - " + e.getMessage() );
-						return true;
-					}
-					else
-						throw e;
-
-				case IGNORE:
-					if ( passedIgnore && !inverse )
-					{
-						PageManager.instance().setThrowable( e );
-						PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, false, e.getMessage(), e );
-						log.error( "***** Step " + name + " on page " + pageName + " failed due to " + e.getMessage() );
-						throw e;
-					}
-					else
-					{
-						PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, false, e.getMessage(), null );
-						return true;
-					}
-
-				case LOG_IGNORE:
-					PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, false, e.getMessage(), null );
-					log.warn( "Step " + name + " failed due to " + e.getMessage() + " but was marked to log and ignore" );
-					return true;
-			}
-
-			return false;
 		}
 	}
 
