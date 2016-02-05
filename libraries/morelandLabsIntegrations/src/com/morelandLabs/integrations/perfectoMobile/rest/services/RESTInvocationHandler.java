@@ -74,7 +74,7 @@ public class RESTInvocationHandler implements InvocationHandler
 				if ( args[ i ] != null )
 				{
 					Parameter paramAnnotation = (Parameter) getAnnotation( parameterAnnotations[ i ], Parameter.class );
-					if ( !paramAnnotation.name().isEmpty() )
+					if ( paramAnnotation.name().isEmpty() )
 						derivedMap.put( PARAM + method.getParameterTypes()[ i ].getName(), args[ i ] + "" );
 					else
 						derivedMap.put( PARAM + paramAnnotation.name(), args[ i ] + "" );
