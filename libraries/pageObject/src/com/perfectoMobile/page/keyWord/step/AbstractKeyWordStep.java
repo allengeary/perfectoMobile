@@ -357,10 +357,17 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 					PageManager.instance().setThrowable( e );
 					PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, false, e.getMessage(), e );
 					log.error( "***** Step " + name + " on page " + pageName + " failed due to " + e.getMessage() );
-					throw e;
+					
+					if ( inverse )
+					{
+						log.info( "We expected this error - " + e.getMessage() );
+						return true;
+					}
+					else
+						throw e;
 
 				case IGNORE:
-					if ( passedIgnore )
+					if ( passedIgnore && !inverse )
 					{
 						PageManager.instance().setThrowable( e );
 						PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, false, e.getMessage(), e );
