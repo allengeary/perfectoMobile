@@ -15,7 +15,7 @@ public class Execution extends AbstractBean
 	@FieldDescriptor ( )
 	private String reportKey;
 
-	@FieldDescriptor ( )
+	@FieldDescriptor ( fieldPath = "description" )
 	private String status;
 
 	/**
