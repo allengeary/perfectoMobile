@@ -37,7 +37,7 @@ public class ServicesTest
     // Test Data
     //
 
-    private static final String DEFAULT_DEVICE = "0815F883325E0704";
+    private static final String DEFAULT_DEVICE = "3219D3B1";
     private String device = null;
     private static final String DEFAULT_SCRIPT = "GROUP:cameraTest.xml";
     
@@ -200,12 +200,18 @@ public class ServicesTest
     		Assert.assertTrue( ( execId != null ), "Have an exec id: " + execId );
 
     		Execution result = PerfectoMobile.instance().device().open( execId, getTestDevice() );
+    		
+    		System.out.println( "zoom: " + result );
 
     		Assert.assertTrue( ( result.getStatus().equals( "Success" ) ), "Open Succeeded: " + result.getStatus() );
 
     		result = PerfectoMobile.instance().device().rotate( execId, getTestDevice(), Device.ScreenOrientation.landscape );
 
     		Assert.assertTrue( ( result.getStatus().equals( "Success" ) ), "Rotate Succeeded: " + result.getStatus() );
+    	}
+    	catch ( Throwable e)
+    	{
+    		e.printStackTrace();
     	}
     	finally
     	{
@@ -214,9 +220,6 @@ public class ServicesTest
     		Assert.assertTrue( ( result.getStatus().equals( "Success" ) ), "Close Succeeded: " + result.getStatus() );
 
     		result = PerfectoMobile.instance().executions().endExecution( execId );
-
-    		Assert.assertTrue( ( result.getStatus().equals( "Success" ) ), "End execution Succeeded: " + result.getStatus() );
-    
     	}
     }
 
