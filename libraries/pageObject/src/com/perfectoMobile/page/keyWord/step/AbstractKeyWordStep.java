@@ -338,6 +338,10 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 					{
 						subReturnValue = step.executeStep( pageObject, webDriver, contextMap, dataMap );
 					}
+					catch( KWSLoopBreak e )
+					{
+						throw e;
+					}
 					catch( Exception e )
 					{
 						stepException = e;
@@ -364,13 +368,15 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 				switch (sFailure)
 				{
 					case ERROR:
-						if ( stepException == null )
-							stepException = new IllegalArgumentException( toError() );
-
-						PageManager.instance().setThrowable( stepException );						
-						PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, false, stepException.getMessage(), stepException );
-						
-						log.error( "***** Step " + name + " on page " + pageName + " failed" );
+						if ( PageManager.instance().getThrowable() == null )
+						{
+							if ( stepException == null )
+								stepException = new IllegalArgumentException( toError() );
+	
+							PageManager.instance().setThrowable( stepException );						
+							PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, false, stepException.getMessage(), stepException );
+						}
+						log.error( "***** Step " + name + " on page " + pageName + " failed as " + PageManager.instance().getThrowable().getMessage() );
 						return false;
 
 					case IGNORE:

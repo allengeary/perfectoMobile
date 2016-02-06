@@ -51,7 +51,7 @@ public abstract class AbstractPageDataProvider implements PageDataProvider
 		}
 		catch( Exception e )
 		{
-			log.error( "Error acquiring page data", e );
+			log.error( "Error acquiring page data [" + recordType + "] - " + e.getMessage() );
 			return null;
 		}
 	}
@@ -81,9 +81,12 @@ public abstract class AbstractPageDataProvider implements PageDataProvider
 	 */
 	public void putRecord( PageData pageData )
 	{
-		Deque<PageData> dataList = recordMap.get( pageData.getType() );
-		if ( dataList instanceof LinkedBlockingDeque )
-			dataList.offer( pageData );
+		if ( pageData != null )
+		{
+			Deque<PageData> dataList = recordMap.get( pageData.getType() );
+			if ( dataList instanceof LinkedBlockingDeque )
+				dataList.offer( pageData );
+		}
 	}
 	
 	/**

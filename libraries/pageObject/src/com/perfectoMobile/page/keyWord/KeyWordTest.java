@@ -205,7 +205,11 @@ public class KeyWordTest
 				if ( timed )
 					PageManager.instance().addExecutionTiming( getName(), System.currentTimeMillis() - startTime );
 				
-				throw new IllegalStateException( step.toError() );
+				if ( PageManager.instance().getThrowable() == null )
+					PageManager.instance().setThrowable( new IllegalStateException( step.toError() ) );
+				
+				return false;
+
 			}	
 			
 			if ( step.isTimed() )

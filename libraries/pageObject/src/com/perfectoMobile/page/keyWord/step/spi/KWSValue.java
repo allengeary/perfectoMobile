@@ -29,11 +29,11 @@ public class KWSValue extends AbstractKeyWordStep
 		{
 			Object compareTo = getParameterValue( getParameterList().get( 0 ), contextMap, dataMap );
 			if ( !elementValue.equals( compareTo ) )
-				return false;
+				throw new IllegalStateException( "GET Expected [" + compareTo + "] but found [" + elementValue + "]" );
 		}
 		
 		if ( !validateData( elementValue + "" ) )
-			return false;
+			throw new IllegalStateException( "GET Expected a format of [" + getValidationType() + "(" + getValidation() + ") for [" + elementValue + "]" );
 		
 		if ( getContext() != null )
 		{

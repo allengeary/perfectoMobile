@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.WebDriver;
 
 import com.perfectoMobile.page.Page;
+import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.data.PageDataManager;
 import com.perfectoMobile.page.keyWord.provider.KeyWordProvider;
@@ -232,6 +233,10 @@ public class KeyWordDriver
 				for (String dataProvider : test.getDataProviders())
 				{
 					PageData pageData = PageDataManager.instance().getPageData( dataProvider );
+					
+					if ( pageData == null )
+						throw new IllegalArgumentException( "Invalid page data value specified.  Ensure that [" + dataProvider + "] exists in your page data definition");
+					
 					if (log.isInfoEnabled())
 						log.info( "Adding " + dataProvider + " as " + pageData );
 					dataMap.put( dataProvider, pageData );
@@ -262,7 +267,10 @@ public class KeyWordDriver
 		}
 		catch (Throwable e)
 		{
-			log.error( "Error executing Test " + testName, e );
+			if ( PageManager.instance().getThrowable() == null )
+				PageManager.instance().setThrowable( e );
+			
+			log.error( "Error executing Test " + testName, PageManager.instance().getThrowable() );
 			return false;
 		}
 		finally
