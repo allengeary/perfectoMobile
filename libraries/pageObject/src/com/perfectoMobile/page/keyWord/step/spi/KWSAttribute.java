@@ -33,11 +33,11 @@ public class KWSAttribute extends AbstractKeyWordStep
 			compareTo = getParameterValue( getParameterList().get( 0 ), contextMap, dataMap );
 			attributeValue = getElement( pageObject, contextMap, webDriver, dataMap ).getAttribute( getParameterValue( getParameterList().get( 1 ), contextMap, dataMap ) + "" );
 			if ( !attributeValue.equals( compareTo ) )
-				return false;
+				throw new IllegalStateException( "ATTRIBUTE Expected [" + compareTo + "] but found [" + attributeValue + "]" );
 		}
 		
 		if ( !validateData( attributeValue + "" ) )
-			return false;
+			throw new IllegalStateException( "GET Expected a format of [" + getValidationType() + "(" + getValidation() + ") for [" + attributeValue + "]" );
 		
 		if ( getContext() != null )
 		{
