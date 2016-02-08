@@ -105,7 +105,10 @@ public class KeyWordStepFactory
 		Class kwImpl = stepMap.get( type.toUpperCase() );
 		
 		if ( kwImpl == null )
-			throw new IllegalArgumentException( "Unknown KeyWord [" + type + "]" );
+		{
+			log.error( "Unknown KeyWord [" + type + "]" );
+			System.exit( -1 );
+		}
 		try
 		{
 			KeyWordStep returnValue = (KeyWordStep) kwImpl.newInstance();

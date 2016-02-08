@@ -7,6 +7,7 @@ import java.io.Writer;
 
 import com.perfectoMobile.page.ExecutionRecord;
 import com.perfectoMobile.page.ExecutionRecordWriter;
+import com.perfectoMobile.page.PageManager.StepStatus;
 
 /**
  * The Class HTMLExecutionRecordWriter.
@@ -71,7 +72,7 @@ public class HTMLExecutionRecordWriter implements ExecutionRecordWriter
 	{
 		try
 		{
-			success = executionRecord.isStatus();
+			success = executionRecord.getStatus().equals( StepStatus.SUCCESS );
 			if ( outputWriter != null )
 				outputWriter.write( executionRecord.toHTML() );
 		}

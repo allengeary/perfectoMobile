@@ -20,6 +20,7 @@ import com.perfectoMobile.content.ContentManager;
 import com.perfectoMobile.page.ElementDescriptor;
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.PageManager;
+import com.perfectoMobile.page.PageManager.StepStatus;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.keyWord.KeyWordParameter;
@@ -277,6 +278,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	 */
 	public boolean executeStep( Page pageObject, WebDriver webDriver, Map<String, Object> contextMap, Map<String, PageData> dataMap ) throws Exception
 	{
+		PageManager.instance().setThrowable( null );
 		long startTime = System.currentTimeMillis();
 		boolean passedIgnore = false;
 		try
@@ -361,7 +363,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 			}
 
 			if ( isRecordable() )
-				PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, returnValue, "", null );
+				PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, "", null );
 			
 			if (!returnValue)
 			{
@@ -374,17 +376,26 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 								stepException = new IllegalArgumentException( toError() );
 	
 							PageManager.instance().setThrowable( stepException );						
-							PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, false, stepException.getMessage(), stepException );
+							PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, StepStatus.FAILURE, stepException.getMessage(), stepException );
 						}
 						log.error( "***** Step " + name + " on page " + pageName + " failed as " + PageManager.instance().getThrowable().getMessage() );
 						return false;
-
-					case IGNORE:
-						return true;
-
+						
 					case LOG_IGNORE:
 						log.warn( "Step " + name + " failed but was marked to log and ignore" );
+						
+					case IGNORE:
+						if ( PageManager.instance().getThrowable() == null )
+						{
+							if ( stepException == null )
+								stepException = new IllegalArgumentException( toError() );
+	
+							PageManager.instance().setThrowable( stepException );						
+							PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, StepStatus.FAILURE_IGNORED, stepException.getMessage(), stepException );
+						}
 						return true;
+
+					
 				}
 			}
 

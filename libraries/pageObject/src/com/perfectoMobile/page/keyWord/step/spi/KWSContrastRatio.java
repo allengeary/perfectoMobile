@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
 import com.perfectoMobile.page.Page;
+import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
@@ -28,15 +29,16 @@ public class KWSContrastRatio extends AbstractKeyWordStep
 		if (getParameterList().size() < 2 )
 			throw new IllegalArgumentException( "Verify Color must have 3 parameters - Resolution, location(x, y) and color" );
 		
-		
+		long fileKey = System.currentTimeMillis();
 		Resolution resolution = Resolution.valueOf( ( getParameterValue( getParameterList().get( 0 ), contextMap, dataMap ) + "" ).toLowerCase() );
 		double minContrast = Double.parseDouble( getParameterValue( getParameterList().get( 1 ), contextMap, dataMap ) + "" );
 		double maxContrast = Double.parseDouble( getParameterValue( getParameterList().get( 2 ), contextMap, dataMap ) + "" );
 		
 		
 		BufferedImage elementValue = (BufferedImage)getElement( pageObject, contextMap, webDriver, dataMap ).getImage( resolution );
-		
-		//int[][] pixelArray = ImagingUtilities.extractAsArray( elementValue );
+		if ( elementValue != null && PageManager.instance().isStoreImages() )
+			PageManager.instance().writeImage( elementValue, fileKey + "-" + getName() + ".png" );
+
 		
 		int minColor = 0;
 		double minLumens = 255;
@@ -64,10 +66,9 @@ public class KWSContrastRatio extends AbstractKeyWordStep
 		}
 		
 		double contrastRatio = (maxLumens + 0.05) / (minLumens + 0.05 );
-		System.out.println( contrastRatio );
 		if ( contrastRatio < minContrast || contrastRatio > maxContrast )
 		{
-			throw new IllegalArgumentException( "The contrast between [#" + Integer.toHexString( minColor ) + "] and [" + Integer.toHexString( maxColor ) + "] was [" + contrastRatio + "] and fell outside of the expected range" );
+			throw new IllegalArgumentException( "The contrast for [" + getName() + "] should be between [#" + Integer.toHexString( minColor ) + "] and [" + Integer.toHexString( maxColor ) + "] was [" + contrastRatio + "] and fell outside of the expected range" );
 		}
 		
 		if ( getContext() != null )
@@ -79,16 +80,7 @@ public class KWSContrastRatio extends AbstractKeyWordStep
 		
 		return true;
 	}
-	
 
-	/* (non-Javadoc)
-	 * @see com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep#isRecordable()
-	 */
-	public boolean isRecordable()
-	{
-		return false;
-	}
-	
 	private static double calculateLuminance( int[] rgb )
 	{
 		double[] dRGB = new double[3];

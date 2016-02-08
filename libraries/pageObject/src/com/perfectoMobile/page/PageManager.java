@@ -5,11 +5,15 @@
 
 package com.perfectoMobile.page;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import com.perfectoMobile.page.element.provider.ElementProvider;
 import com.perfectoMobile.page.factory.DefaultPageFactory;
@@ -36,6 +40,53 @@ public class PageManager
     private ExecutionRecordWriter recordWriter = null;
     
     private PageFactory pageFactory = new DefaultPageFactory();
+    
+    private boolean storeImages = false;
+    private String imageLocation;
+
+	public boolean isStoreImages() {
+		return storeImages;
+	}
+
+	public void setStoreImages(boolean storeImages) {
+		this.storeImages = storeImages;
+	}
+    
+    public String getImageLocation() {
+		return imageLocation;
+	}
+
+	public void setImageLocation(String imageLocation) {
+		this.imageLocation = imageLocation;
+	}
+	
+	public void writeImage( BufferedImage image, String fileName )
+	{
+		try
+		{
+			File outputFile = null;
+			if ( imageLocation != null )
+				outputFile = new File( imageLocation, fileName );
+			else
+				outputFile = new File( fileName );
+			
+			ImageIO.write( image, "png", outputFile );
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+		}
+		
+	}
+
+
+
+	public enum StepStatus
+    {
+    	SUCCESS,
+    	FAILURE,
+    	FAILURE_IGNORED;
+    }
 
     /**
      * Instance to the Page Manager singleton.
@@ -195,7 +246,7 @@ public class PageManager
      * @param detail the detail
      * @param t the t
      */
-    public void addExecutionLog( String executionId, String deviceName, String group, String name, String type, long timestamp, long runLength, boolean status, String detail, Throwable t )
+    public void addExecutionLog( String executionId, String deviceName, String group, String name, String type, long timestamp, long runLength, StepStatus status, String detail, Throwable t )
     {
     	String keyName = new String( executionId + "-" + deviceName );
     	

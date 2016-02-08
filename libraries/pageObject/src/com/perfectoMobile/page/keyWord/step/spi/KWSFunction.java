@@ -30,15 +30,11 @@ public class KWSFunction extends AbstractKeyWordStep
 			Object[] parameterArray = getParameters( contextMap, dataMap );
 			Method method = findMethod( pageObject.getClass(), getName(), parameterArray );
 			method.invoke( pageObject, parameterArray );
-			PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), "FUNCTION", System.currentTimeMillis(), System.currentTimeMillis() - startTime, true, "", null );
-			
 			return true;
 		}
 		catch( Exception e )
 		{
-			PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), "FUNCTION", System.currentTimeMillis(), System.currentTimeMillis() - startTime, false, e.getMessage(), e );
-			log.error( "Error executing function [" + getName() + "] on page [" + getPageName() + "]", e );
-			return false;
+			throw new IllegalStateException( "Function Call Failed ", e );
 		}
 	}
 

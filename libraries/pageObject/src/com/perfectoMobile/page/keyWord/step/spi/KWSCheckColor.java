@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
 import com.perfectoMobile.page.Page;
+import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
@@ -29,7 +30,7 @@ public class KWSCheckColor extends AbstractKeyWordStep
 		if (getParameterList().size() < 2 )
 			throw new IllegalArgumentException( "Verify Color must have 3 parameters - Resolution, location(x, y) and color" );
 		
-		
+		long fileKey = System.currentTimeMillis();
 		Resolution resolution = Resolution.valueOf( ( getParameterValue( getParameterList().get( 0 ), contextMap, dataMap ) + "" ).toLowerCase() );
 		Point location = createPoint( getParameterValue( getParameterList().get( 1 ), contextMap, dataMap ) + "" );
 		int percentDeviation = 0;
@@ -44,6 +45,9 @@ public class KWSCheckColor extends AbstractKeyWordStep
 		}
 		
 		BufferedImage elementValue = (BufferedImage)getElement( pageObject, contextMap, webDriver, dataMap ).getImage( resolution );
+		if ( elementValue != null && PageManager.instance().isStoreImages() )
+			PageManager.instance().writeImage( elementValue, fileKey + "-" + getName() + ".png" );
+		
 		
 		int elementColor = elementValue.getRGB( location.getX(), location.getY() );
 		
@@ -66,7 +70,7 @@ public class KWSCheckColor extends AbstractKeyWordStep
 			if ( ( ( redChange + greenChange + blueChange ) / 3 ) > percentDeviation )
 			{
 				StringBuilder stringBuilder = new StringBuilder();
-				stringBuilder.append( "The COLOR value was off by " + ( ( redChange + greenChange + blueChange ) / 3 ) + "% - Here is the break down - " );
+				stringBuilder.append( "The COLOR value for [" + getName() + "] was off by " + ( ( redChange + greenChange + blueChange ) / 3 ) + "% - Here is the break down - " );
 				if ( redChange > 0 )
 					stringBuilder.append( "The RED channel was off by " + redChange + "% " );
 				if ( greenChange > 0 )
@@ -85,6 +89,9 @@ public class KWSCheckColor extends AbstractKeyWordStep
 	{
 		double difference = 0;
 		
+		colorOne++;
+		colorTwo++;
+		
 		if ( colorOne > colorTwo )
 			difference = (double) ((double)colorTwo / (double)colorOne);
 		else
@@ -98,15 +105,7 @@ public class KWSCheckColor extends AbstractKeyWordStep
 		return (int) (100*difference);
 		
 	}
-	/* (non-Javadoc)
-	 * @see com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep#isRecordable()
-	 */
-	public boolean isRecordable()
-	{
-		return false;
-	}
-	
-	
+
 	
 	public int[] extractColors( String colorValue )
 	{

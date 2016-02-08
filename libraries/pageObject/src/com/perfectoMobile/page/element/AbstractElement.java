@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
 import com.perfectoMobile.page.BY;
 import com.perfectoMobile.page.PageManager;
+import com.perfectoMobile.page.PageManager.StepStatus;
 
 /**
  * The Class AbstractElement.
@@ -261,12 +262,10 @@ public abstract class AbstractElement implements Element
 		try
 		{
 			returnValue = _getValue();
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "get", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success, getKey(), null );
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "get", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null );
 		}
 		catch( Exception e )
 		{
-			PageManager.instance().setThrowable( e );
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "get", System.currentTimeMillis(), System.currentTimeMillis() - startTime, false, getKey(), e );
 			throw new IllegalStateException( e );
 		}
 		finally
@@ -288,12 +287,10 @@ public abstract class AbstractElement implements Element
 		try
 		{
 			returnValue = _isVisible();
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "visible", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue, getKey(), null );
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "visible", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null );
 		}
 		catch( Exception e )
 		{
-			PageManager.instance().setThrowable( e );
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "visible", System.currentTimeMillis(), System.currentTimeMillis() - startTime, false, getKey(), e );
 			throw new IllegalStateException( e );
 		}
 		finally
@@ -315,12 +312,10 @@ public abstract class AbstractElement implements Element
 		try
 		{
 			returnValue = _isPresent();
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "present", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue, getKey(), null );
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "present", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null );
 		}
 		catch( Exception e )
 		{
-			PageManager.instance().setThrowable( e );
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "present", System.currentTimeMillis(), System.currentTimeMillis() - startTime, false, getKey(), e );
 			throw new IllegalStateException( e );
 		}
 		finally
@@ -342,12 +337,10 @@ public abstract class AbstractElement implements Element
 		try
 		{
 			returnValue = _waitForVisible( timeOut, timeUnit );
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "waitForVisible", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue, getKey(), null );
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "waitForVisible", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null );
 		}
 		catch( Exception e )
 		{
-			PageManager.instance().setThrowable( e );
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "waitForVisible", System.currentTimeMillis(), System.currentTimeMillis() - startTime, false, getKey(), e );
 			throw new IllegalStateException( e );
 		}
 		finally
@@ -371,12 +364,10 @@ public abstract class AbstractElement implements Element
 		try
 		{
 			returnValue = _waitForPresent( timeOut, timeUnit );
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "waitForPresent", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue, getKey(), null );
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "waitForPresent", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null );
 		}
 		catch( Exception e )
 		{
-			PageManager.instance().setThrowable( e );
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "waitForPresent", System.currentTimeMillis(), System.currentTimeMillis() - startTime, false, getKey(), e );
 			throw new IllegalStateException( e );
 		}
 		finally
@@ -409,12 +400,10 @@ public abstract class AbstractElement implements Element
 		{
 			returnValue = _getAttribute( attributeName );
 			success = true;
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "attribute", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success, getKey(), null );
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "attribute", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null );
 		}
 		catch( Exception e )
 		{
-			PageManager.instance().setThrowable( e );
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "attribute", System.currentTimeMillis(), System.currentTimeMillis() - startTime, false, getKey(), e );
 			throw new IllegalStateException( e );
 		}
 		finally
@@ -435,12 +424,10 @@ public abstract class AbstractElement implements Element
 		{
 			returnValue = _getImage( resolution );
 			success = true;
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "elementImage", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success, getKey(), null );
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "elementImage", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null );
 		}
 		catch( Exception e )
 		{
-			PageManager.instance().setThrowable( e );
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "elementImage", System.currentTimeMillis(), System.currentTimeMillis() - startTime, false, getKey(), e );
 			throw new IllegalStateException( e );
 		}
 		finally
@@ -463,12 +450,10 @@ public abstract class AbstractElement implements Element
 		{
 			_setValue( currentValue );
 			success = true;
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "set", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success, getKey(), null );
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "set", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null );
 		}
 		catch( Exception e )
 		{
-			PageManager.instance().setThrowable( e );
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "set", System.currentTimeMillis(), System.currentTimeMillis() - startTime, false, getKey(), e );
 			throw new IllegalStateException( e );
 		}
 		finally
@@ -491,12 +476,10 @@ public abstract class AbstractElement implements Element
 		{
 			_click();
 			success = true;
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "click", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success, getKey(), null );
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "click", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null );
 		}
 		catch( Exception e )
 		{
-			PageManager.instance().setThrowable( e );
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "click", System.currentTimeMillis(), System.currentTimeMillis() - startTime, false, getKey(), e );
 			throw new IllegalStateException( e );
 		}
 		finally

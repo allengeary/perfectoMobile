@@ -250,6 +250,13 @@ public class TestDriver
 		}
 		
 		DataManager.instance().setReportFolder( new File( configProperties.getProperty( ARTIFACT[ 1 ] ) ) );
+		String storeImages = configProperties.getProperty( "artifactProducer.storeImages" );
+		if ( storeImages != null && !storeImages.isEmpty() )
+			PageManager.instance().setStoreImages( Boolean.parseBoolean( storeImages ) );
+		
+		String imageLocation = configProperties.getProperty( "artifactProducer.imageLocation" );
+		if ( imageLocation != null && !imageLocation.isEmpty() )
+			PageManager.instance().setImageLocation( imageLocation );
 		
 		String automated = configProperties.getProperty( "artifactProducer.automated" );
 		if ( automated != null && !automated.isEmpty() )

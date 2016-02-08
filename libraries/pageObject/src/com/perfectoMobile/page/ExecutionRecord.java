@@ -1,5 +1,7 @@
 package com.perfectoMobile.page;
 
+import com.perfectoMobile.page.PageManager.StepStatus;
+
 /**
  * The Class ExecutionRecord.
  */
@@ -10,7 +12,7 @@ public class ExecutionRecord
 	private String type;
 	private long timeStamp;
 	private long runTime;
-	private boolean status;
+	private StepStatus status;
 	private Throwable t;
 	
 	/**
@@ -25,7 +27,7 @@ public class ExecutionRecord
 	 * @param detail the detail
 	 * @param t the t
 	 */
-	public ExecutionRecord( String group, String name, String type, long timeStamp, long runTime, boolean status, String detail, Throwable t )
+	public ExecutionRecord( String group, String name, String type, long timeStamp, long runTime, StepStatus status, String detail, Throwable t )
 	{
 		super();
 		this.group = group;
@@ -63,7 +65,7 @@ public class ExecutionRecord
 	 *
 	 * @return true, if is status
 	 */
-	public boolean isStatus()
+	public StepStatus getStatus()
 	{
 		return status;
 	}
@@ -73,7 +75,7 @@ public class ExecutionRecord
 	 *
 	 * @param status the new status
 	 */
-	public void setStatus( boolean status )
+	public void setStatus( StepStatus status )
 	{
 		this.status = status;
 	}
@@ -216,10 +218,22 @@ public class ExecutionRecord
 	public String toHTML()
 	{
 		StringBuffer stringBuffer = new StringBuffer();
-		if ( status )
-			stringBuffer.append( "<tr bgcolor='#66FF99'>" );
-		else
-			stringBuffer.append( "<tr bgcolor='#ff3333'>" );
+		
+		switch( status )
+		{
+			case FAILURE:
+				stringBuffer.append( "<tr bgcolor='#ff3333'>" );
+				break;
+			case FAILURE_IGNORED:
+				stringBuffer.append( "<tr bgcolor='#F5DEB3'>" );
+				break;
+				
+			case SUCCESS:
+				stringBuffer.append( "<tr bgcolor='#66FF99'>" );
+				break;
+		}
+		
+			
 		stringBuffer.append( "<td>" ).append( group ).append( "</td>" );
 		stringBuffer.append( "<td>" ).append( name ).append( "</td>" );
 		stringBuffer.append( "<td>" ).append( type ).append( "</td>" );
@@ -227,12 +241,28 @@ public class ExecutionRecord
 		stringBuffer.append( "<td>" ).append( runTime ).append( "</td>" );
 		stringBuffer.append( "<td>" ).append( status ).append( "</td>" );
 		stringBuffer.append( "</tr>" );
-		if ( !status && detail != null && !detail.isEmpty() )
+		if ( !status.equals( StepStatus.SUCCESS ) && detail != null && !detail.isEmpty() )
 		{
-			stringBuffer.append( "<tr><td></td><td colSpan='5' color='#ff3333'><font size='1'>" ).append( detail ).append( "</font></td></tr>");
+			String backgroundColor = null;
+			switch( status )
+			{
+				case FAILURE:
+					backgroundColor = "#ff3333";
+					break;
+				case FAILURE_IGNORED:
+					backgroundColor = "#F5DEB3";
+					break;
+					
+				case SUCCESS:
+					backgroundColor = "#66FF99";
+					break;
+			}
+			
+			
+			stringBuffer.append( "<tr><td></td><td colSpan='5' color='" + backgroundColor + "'><font size='1'>" ).append( detail ).append( "</font></td></tr>");
 			if ( t != null )
 			{
-				stringBuffer.append( "<tr><td></td><td colSpan='5' color='#ff3333'><b><font size='1'>" );
+				stringBuffer.append( "<tr><td></td><td colSpan='5' color='" + backgroundColor + "'><b><font size='1'>" );
 				
 				stringBuffer.append( t.getMessage() ).append( "<br/>");
 				t.fillInStackTrace();
