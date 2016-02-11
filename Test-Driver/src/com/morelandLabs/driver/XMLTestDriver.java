@@ -1,10 +1,14 @@
 package com.morelandLabs.driver;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import com.perfectoMobile.device.DeviceManager;
+import com.perfectoMobile.device.factory.DeviceWebDriver;
 import com.perfectoMobile.device.ng.AbstractSeleniumTest;
 import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.keyWord.KeyWordDriver;
@@ -34,7 +38,13 @@ public class XMLTestDriver extends AbstractSeleniumTest
 		}
 		
 		boolean returnValue = KeyWordDriver.instance().executeTest( testName.getTestName(), getWebDriver() );
-		PageManager.instance().writeExecutionRecords();
+		
+		Map<String,String> additionalUrls = new HashMap<String,String>( 10 );
+		String wtUrl = ( (DeviceWebDriver) getWebDriver() ).getWindTunnelReport();
+		if ( wtUrl != null && !wtUrl.isEmpty() )
+			additionalUrls.put( "Wind Tunnel Report", wtUrl );
+		
+		PageManager.instance().writeExecutionRecords( additionalUrls );
 		PageManager.instance().writeExecutionTimings();
 		
 		if ( returnValue )

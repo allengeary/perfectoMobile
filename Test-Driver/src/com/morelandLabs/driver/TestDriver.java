@@ -108,6 +108,12 @@ public class TestDriver
 			
 			GestureManager.instance().setGestureFactory( new PerfectoGestureFactory() );
 			
+			String personaNames = configProperties.getProperty( "driver.personas" );
+			if ( personaNames != null && !personaNames.isEmpty() )
+			{
+				DataManager.instance().setPersonas( personaNames );
+				PageManager.instance().setWindTunnelEnabled( true );
+			}
 			
 			switch( configProperties.getProperty( DRIVER[ 0 ] ).toUpperCase() )
 			{
