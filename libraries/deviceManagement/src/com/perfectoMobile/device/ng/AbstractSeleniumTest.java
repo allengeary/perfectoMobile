@@ -46,6 +46,7 @@ public abstract class AbstractSeleniumTest
 	{
 		private String testName;
 		private String fullName;
+		private String personaName;
 
 		/**
 		 * Gets the full name.
@@ -65,6 +66,18 @@ public abstract class AbstractSeleniumTest
 		public void setFullName( String fullName )
 		{
 			this.fullName = fullName;
+		}
+		
+		
+
+		public String getPersonaName() 
+		{
+			return personaName;
+		}
+
+		public void setPersonaName(String personaName) 
+		{
+			this.personaName = personaName;
 		}
 
 		/**
@@ -139,12 +152,19 @@ public abstract class AbstractSeleniumTest
 		List<Device> deviceList = DeviceManager.instance().getDevices();
 
 		int testCount = 0;
+		boolean hasPersonas = false;
 
 		if (DataManager.instance().getTests() != null && DataManager.instance().getTests().length > 0)
 			testCount = deviceList.size() * DataManager.instance().getTests().length;
 		else
 			testCount = deviceList.size();
 
+		if ( DataManager.instance().getPersonas() != null && DataManager.instance().getPersonas().length > 0 )
+		{
+			hasPersonas = true;
+			testCount = testCount * DataManager.instance().getPersonas().length;
+		}
+		
 		Object[][] newArray = new Object[testCount][1];
 
 		int currentPosition = 0;
@@ -155,11 +175,33 @@ public abstract class AbstractSeleniumTest
 			{
 				for (int i = 0; i < DataManager.instance().getTests().length; i++)
 				{
-					newArray[currentPosition++][0] = new TestName( DataManager.instance().getTests()[i] );
+					if ( hasPersonas )
+					{
+						for ( int j=0; j<DataManager.instance().getPersonas().length; j++ )
+						{
+							TestName testName = new TestName( DataManager.instance().getTests()[i] );
+							testName.setPersonaName( DataManager.instance().getPersonas()[ j ] );
+							newArray[currentPosition++][0] = testName;
+						}
+					}
+					else
+						newArray[currentPosition++][0] = new TestName( DataManager.instance().getTests()[i] );
 				}
 			}
 			else
-				newArray[currentPosition++][0] = new TestName();
+			{
+				if ( hasPersonas )
+				{
+					for ( int j=0; j<DataManager.instance().getPersonas().length; j++ )
+					{
+						TestName testName = new TestName();
+						testName.setPersonaName( DataManager.instance().getPersonas()[ j ] );
+						newArray[currentPosition++][0] = testName;
+					}
+				}
+				else
+					newArray[currentPosition++][0] = new TestName();
+			}
 		}
 
 		return newArray;
@@ -213,7 +255,7 @@ public abstract class AbstractSeleniumTest
 		if (log.isInfoEnabled())
 			log.info( "Attempting to acquire device for " + currentMethod.getName() );
 
-		ConnectedDevice connectedDevice = DeviceManager.instance().getDevice( currentMethod, ( ( TestName ) testArgs[0] ).getTestName(), true );
+		ConnectedDevice connectedDevice = DeviceManager.instance().getDevice( currentMethod, ( ( TestName ) testArgs[0] ).getTestName(), true, ( ( TestName ) testArgs[0] ).getPersonaName() );
 
 		if (connectedDevice != null)
 		{
@@ -338,7 +380,7 @@ public abstract class AbstractSeleniumTest
 		Device currentDevice = getDevice();
 		if (currentDevice != null)
 		{
-			DeviceManager.instance().addRun( currentDevice, currentMethod, ( ( TestName ) testArgs[0] ).getTestName(), testResult.isSuccess() );
+			DeviceManager.instance().addRun( currentDevice, currentMethod, ( ( TestName ) testArgs[0] ).getTestName(), testResult.isSuccess(), threadDevice.get().getPersona() );
 			DeviceManager.instance().releaseDevice( currentDevice );
 		}
 	}

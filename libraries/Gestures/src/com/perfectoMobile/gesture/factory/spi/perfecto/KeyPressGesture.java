@@ -3,6 +3,7 @@ package com.perfectoMobile.gesture.factory.spi.perfecto;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.spi.driver.NativeDriverProvider;
 import com.perfectoMobile.gesture.AbstractKeyPressGesture;
 
@@ -18,19 +19,9 @@ public class KeyPressGesture extends AbstractKeyPressGesture
 	@Override
 	protected boolean _executeGesture( WebDriver webDriver )
 	{
-		RemoteWebDriver remoteDriver = null;
-		
-		if ( webDriver instanceof RemoteWebDriver )
-			remoteDriver = (RemoteWebDriver) webDriver;
-		else if ( webDriver instanceof NativeDriverProvider )
-		{
-			NativeDriverProvider nativeProvider = (NativeDriverProvider) webDriver;
-			if ( nativeProvider.getNativeDriver() instanceof RemoteWebDriver )
-				remoteDriver = (RemoteWebDriver) nativeProvider.getNativeDriver();
-			else
-				throw new IllegalArgumentException( "Unsupported Driver Type " + webDriver );
-		}
-		
+		String executionId = getExecutionId( webDriver );
+		String deviceName = getDeviceName( webDriver );
+		PerfectoMobile.instance().gestures().sendKey(executionId, deviceName, getKeyCode(), getMetaState() );
 		return true;
 	}
 

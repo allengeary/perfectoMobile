@@ -6,6 +6,8 @@ import com.morelandLabs.spi.driver.NativeDriverProvider;
 import com.perfectoMobile.gesture.AbstractKeyPressGesture;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 
 /**
  * The Class KeyPressGesture.
@@ -31,6 +33,18 @@ public class KeyPressGesture extends AbstractKeyPressGesture
 			else
 				throw new IllegalArgumentException( "Unsupported Driver Type " + webDriver );
 		}
+		
+		if ( appiumDriver == null )
+			return false;
+		
+		if ( appiumDriver instanceof AndroidDriver )
+			( (AndroidDriver) appiumDriver ).pressKeyCode( getKeyCode(), getMetaState() );
+		else
+		{
+			log.error( "Key Press is not supported for " + appiumDriver.getClass().getName() );
+			return false;
+		}
+			
 		
 		
 		

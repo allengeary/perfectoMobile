@@ -51,4 +51,18 @@ public interface Gestures extends PerfectoService
 	@PerfectoCommand( commandName="touch", subCommandName = "gesture" )
 	public Execution pinch( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="start" ) PercentagePoint start, @Parameter( name="end" ) PercentagePoint end  );
 	
+	/**
+	 * Swipe.
+	 *
+	 * @param executionId the execution id
+	 * @param handsetId the handset id
+	 * @param start the start
+	 * @param end the end
+	 * @return the execution
+	 */
+	@Operation( operationName="command" )
+	@PerfectoCommand( commandName="key", subCommandName = "event" )
+	public Execution sendKey( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="key" ) Integer key, @Parameter( name="metastate" ) Integer metastate  );
+	
+	
 }

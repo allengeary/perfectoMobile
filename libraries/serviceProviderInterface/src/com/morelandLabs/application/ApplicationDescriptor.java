@@ -1,5 +1,7 @@
 package com.morelandLabs.application;
 
+import java.util.Map;
+
 import com.morelandLabs.spi.Device;
 
 /**
@@ -14,7 +16,16 @@ public class ApplicationDescriptor
 	private String url;
 	private String iosInstallation;
 	private String androidInstallation;
+	private Map<String,String> capabilities;
 
+
+	public Map<String, String> getCapabilities() {
+		return capabilities;
+	}
+
+	public void setCapabilities(Map<String, String> capabilities) {
+		this.capabilities = capabilities;
+	}
 
 	/**
 	 * Gets the ios installation.
@@ -89,7 +100,7 @@ public class ApplicationDescriptor
 	 * @param iosInstallation the ios installation
 	 * @param androidInstallation the android installation
 	 */
-	public ApplicationDescriptor( String name, String description, String androidIdentifier, String appleIdentifier, String url, String iosInstallation, String androidInstallation )
+	public ApplicationDescriptor( String name, String description, String androidIdentifier, String appleIdentifier, String url, String iosInstallation, String androidInstallation, Map<String,String> capabilities )
 	{
 		super();
 		this.name = name;
@@ -99,6 +110,7 @@ public class ApplicationDescriptor
 		this.url = url;
 		this.iosInstallation = iosInstallation;
 		this.androidInstallation = androidInstallation;
+		this.capabilities = capabilities;
 	}
 	
 	/**

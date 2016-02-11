@@ -12,7 +12,7 @@ public class ExecutionTiming
 	
 	/** The run list. */
 	public List<Long> runList = new ArrayList<Long>( 10 );
-	
+	private long executionTime = 0;
 	private long minimumRun = Long.MAX_VALUE;
 	private long maximumRun = 0;
 	private long averageRun = 0;
@@ -33,7 +33,7 @@ public class ExecutionTiming
 	@Override
 	public String toString()
 	{
-		return methodName + "," + minimumRun + "," + maximumRun + "," + averageRun + "," + runList.size();
+		return methodName + "," + executionTime + "," + minimumRun + "," + maximumRun + "," + averageRun + "," + runList.size();
 	}
 
 	/**
@@ -43,6 +43,7 @@ public class ExecutionTiming
 	 */
 	public void addRun( long runLength )
 	{
+		executionTime = System.currentTimeMillis();
 		runList.add( runLength );
 		
 		if ( runLength < minimumRun )
@@ -108,4 +109,10 @@ public class ExecutionTiming
 	{
 		return methodName;
 	}
+
+	public long getExecutionTime() {
+		return executionTime;
+	}
+	
+	
 }

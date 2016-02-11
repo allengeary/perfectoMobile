@@ -1,7 +1,5 @@
 package com.perfectoMobile.device;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +13,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.PrettyXmlSerializer;
 import org.htmlcleaner.TagNode;
@@ -201,7 +198,7 @@ public class DeviceManager
 	 * @param attachDevice the attach device
 	 * @return The next available device or null if no device are available
 	 */
-	public ConnectedDevice getDevice( Method currentMethod, String testContext, boolean attachDevice )
+	public ConnectedDevice getDevice( Method currentMethod, String testContext, boolean attachDevice, String personaName )
 	{
 		
 		for ( int i=0; i<retryCount; i++ )
@@ -220,6 +217,8 @@ public class DeviceManager
 				try
 				{
 					String runKey = currentMethod.getDeclaringClass().getSimpleName() + "." + currentMethod.getName() + ( testContext != null ? ( "." + testContext ) : "" );
+					if ( personaName != null && !personaName.isEmpty() )
+						runKey = runKey + "." + personaName;
 					
 					for (Device currentDevice : deviceList)
 					{
@@ -271,6 +270,9 @@ public class DeviceManager
 											if ( log.isDebugEnabled() )
 												log.debug( "Attempting to create WebDriver instance for " + currentDevice );
 											
+											if ( personaName != null && !personaName.isEmpty() )
+												currentDevice.addCapability("windTunnelPersona", personaName);
+											
 											webDriver = DriverManager.instance().getDriverFactory( currentDevice.getDriverType() ).createDriver( currentDevice );
 											
 											if ( webDriver != null )
@@ -280,7 +282,7 @@ public class DeviceManager
 												
 												activeRuns.put( currentDevice.getKey() + "." + runKey , true );
 												
-												return new ConnectedDevice( webDriver, currentDevice );
+												return new ConnectedDevice( webDriver, currentDevice, personaName );
 											}
 										}
 										catch( Exception e )
@@ -301,7 +303,7 @@ public class DeviceManager
 									else
 									{
 										activeRuns.put( currentDevice.getKey() + "." + runKey , true );
-										return new ConnectedDevice( null, currentDevice );
+										return new ConnectedDevice( null, currentDevice, personaName );
 									}
 								}
 									
@@ -370,14 +372,18 @@ public class DeviceManager
 	 * @param testContext the test context
 	 * @param success the success
 	 */
-	public void addRun( Device currentDevice, Method currentMethod, String testContext, boolean success )
+	public void addRun( Device currentDevice, Method currentMethod, String testContext, boolean success, String personaName )
 	{
+		
+		
 		if (log.isDebugEnabled())
 			log.debug( Thread.currentThread().getName() + ": Acquiring Device Manager Lock" );
 		managerLock.lock();
 		try
 		{
 			String runKey = currentMethod.getDeclaringClass().getSimpleName() + "." + currentMethod.getName() + ( testContext != null ? ( "." + testContext ) : "" );
+			if ( personaName != null && !personaName.isEmpty() )
+				runKey = runKey + "." + personaName;
 			
 			if (log.isInfoEnabled())
 				log.info( Thread.currentThread().getName() + ": Adding run [" + runKey + "] to device " + currentDevice );

@@ -1,5 +1,7 @@
 package com.perfectoMobile.device;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Semaphore;
 
 import com.morelandLabs.spi.Device;
@@ -22,6 +24,7 @@ public class SimpleDevice implements Device
 	private String driverType;
 	private String deviceName;
 	private boolean active;
+	private Map<String,String> capabilities = new HashMap<String,String>( 10 );
 	
 	/* (non-Javadoc)
 	 * @see com.morelandLabs.spi.Device#isActive()
@@ -31,6 +34,7 @@ public class SimpleDevice implements Device
 		return active;
 	}
 
+	
 
 	private String cachedString;
 	
@@ -81,6 +85,11 @@ public class SimpleDevice implements Device
 		deviceLock = new Semaphore( availableDevices );
 		
 		cachedString = manufacturer + " " + model + " [" + key + "] --> ";
+	}
+	
+	public void addCapability( String capabilityName, String capabilityValue )
+	{
+		capabilities.put( capabilityName,capabilityValue);
 	}
 	
 	
@@ -193,5 +202,11 @@ public class SimpleDevice implements Device
 	public Semaphore getLock()
 	{
 		return deviceLock;
+	}
+	
+	@Override
+	public Map<String,String> getCabilities() 
+	{
+		return capabilities;
 	}
 }

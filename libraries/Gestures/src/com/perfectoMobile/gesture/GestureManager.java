@@ -135,9 +135,9 @@ public class GestureManager
 	 * @param keyCode the key code
 	 * @return the gesture
 	 */
-	public Gesture createKeyPress( int keyCode )
+	public Gesture createKeyPress( int keyCode, int metaState )
 	{
-		return gestureFactory.createGesture( GestureType.KEYPRESS, new Object[] { keyCode } );
+		return gestureFactory.createGesture( GestureType.KEYPRESS, new Object[] { keyCode, metaState } );
 	}
 	
 	/**

@@ -99,7 +99,7 @@ public class KeyWordStepFactory
 	 * @param inverse the inverse
 	 * @return the key word step
 	 */
-	public KeyWordStep createStep( String name, String pageName, boolean active, String type, String linkId, boolean timed, StepFailure sFailure, boolean inverse, String os )
+	public KeyWordStep createStep( String name, String pageName, boolean active, String type, String linkId, boolean timed, StepFailure sFailure, boolean inverse, String os, String poi, int threshold, String description )
 	{
 		
 		Class kwImpl = stepMap.get( type.toUpperCase() );
@@ -120,6 +120,9 @@ public class KeyWordStepFactory
 			returnValue.setFailure( sFailure );
 			returnValue.setInverse( inverse );
 			returnValue.setOs( os );
+			returnValue.setPoi( poi );
+			returnValue.setThreshold( threshold );
+			returnValue.setDescription(description);
 			
 			return returnValue;
 		}

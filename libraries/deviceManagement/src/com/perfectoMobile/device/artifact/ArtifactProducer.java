@@ -39,6 +39,9 @@ public interface ArtifactProducer
 		/** The failure source. */
 		FAILURE_SOURCE( ArtifactTime.ON_FAILURE ),
 		
+		/** The execution report. */
+		WIND_TUNNEL_REPORT ( ArtifactTime.AFTER_TEST ),
+		
 		/** The device log. */
 		DEVICE_LOG( ArtifactTime.ON_FAILURE );
 		

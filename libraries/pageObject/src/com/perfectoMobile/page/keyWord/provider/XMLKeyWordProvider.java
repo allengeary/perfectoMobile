@@ -48,6 +48,8 @@ public class XMLKeyWordProvider implements KeyWordProvider
 	private static final String LINK = "linkId";
 	private static final String TIMED = "timed";
 	private static final String INVERT = "inverse";
+	private static final String POI = "poi";
+	private static final String THRESHOLD = "threshold";
 	private static final String OS = "os";
 	private static final String FAILURE_MODE = "failureMode";
 	private static final String DATA_PROVIDER = "dataProvider";
@@ -309,6 +311,7 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		String data = null;
 		String dataDriver = null;
 		String linkId = null;
+		int threshold = 0;
 		Node pData = useNode.getAttributes().getNamedItem( DATA_PROVIDER );
 		if (pData != null)
 			data = pData.getNodeValue();
@@ -324,6 +327,10 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		pData = useNode.getAttributes().getNamedItem( TIMED );
 		if (pData != null)
 			timed = Boolean.parseBoolean( pData.getNodeValue() );
+		
+		pData = useNode.getAttributes().getNamedItem( THRESHOLD );
+		if (pData != null)
+			threshold = Integer.parseInt( pData.getNodeValue() );
 
 		if (useNode.getAttributes().getNamedItem( ACTIVE ) != null)
 			active = Boolean.parseBoolean( useNode.getAttributes().getNamedItem( ACTIVE ).getNodeValue() );
@@ -336,8 +343,8 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		if (log.isDebugEnabled())
 			log.debug( "Extracted Test [" + testName + "]" );
 
-		KeyWordTest test = new KeyWordTest( testName, active, data, dataDriver, timed, linkId, osString );
-
+		KeyWordTest test = new KeyWordTest( testName, active, data, dataDriver, timed, linkId, osString, threshold, useNode.getTextContent() );
+		
 		KeyWordStep[] steps = parseSteps( useNode, testName, typeName );
 
 		for (KeyWordStep step : steps)
@@ -381,6 +388,16 @@ public class XMLKeyWordProvider implements KeyWordProvider
 				Node os = nodeList.item( i ).getAttributes().getNamedItem( OS );
 				if (os != null)
 					osString = os.getNodeValue();
+				
+				String poiString = null;
+				Node poi = nodeList.item( i ).getAttributes().getNamedItem( POI );
+				if (poi != null)
+					poiString = poi.getNodeValue();
+				
+				int tInt = 0;
+				Node t = nodeList.item( i ).getAttributes().getNamedItem( THRESHOLD );
+				if (t != null)
+					tInt = Integer.parseInt( t.getNodeValue() );
 
 				boolean timed = false;
 				Node timedCall = nodeList.item( i ).getAttributes().getNamedItem( TIMED );
@@ -397,7 +414,7 @@ public class XMLKeyWordProvider implements KeyWordProvider
 				if (sFailureNode != null && !sFailureNode.getNodeValue().isEmpty() )
 					sFailure = StepFailure.valueOf( sFailureNode.getNodeValue() );
 
-				KeyWordStep step = KeyWordStepFactory.instance().createStep( name.getNodeValue(), usePage, active == null ? true : Boolean.parseBoolean( active.getNodeValue() ), type.getNodeValue().toUpperCase(), linkIdString, timed, sFailure, inverse, osString );
+				KeyWordStep step = KeyWordStepFactory.instance().createStep( name.getNodeValue(), usePage, active == null ? true : Boolean.parseBoolean( active.getNodeValue() ), type.getNodeValue().toUpperCase(), linkIdString, timed, sFailure, inverse, osString, poiString, tInt, nodeList.item( i ).getTextContent() );
 
 				KeyWordParameter[] params = parseParameters( nodeList.item( i ), testName, name.getNodeValue(), typeName );
 

@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.PageManager;
+import com.perfectoMobile.page.PageManager.StepStatus;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.data.PageDataManager;
 import com.perfectoMobile.page.keyWord.step.spi.KWSLoopBreak;
@@ -29,6 +30,8 @@ public class KeyWordTest
 	private boolean timed;
 	private String linkId;
 	private String os;
+	private String description;
+	private int threshold;
 	
 	private List<KeyWordStep> stepList = new ArrayList<KeyWordStep>( 10 );
 	
@@ -42,7 +45,7 @@ public class KeyWordTest
 	 * @param timed the timed
 	 * @param linkId the link id
 	 */
-	public KeyWordTest( String name, boolean active, String dataProviders, String dataDriver, boolean timed, String linkId, String os )
+	public KeyWordTest( String name, boolean active, String dataProviders, String dataDriver, boolean timed, String linkId, String os, int threshold, String description )
 	{
 		this.name = name;
 		this.active = active;
@@ -52,6 +55,8 @@ public class KeyWordTest
 		this.timed = timed;
 		this.linkId = linkId;
 		this.os = os;
+		this.threshold = threshold;
+		this.description = description;
 	}
 
 	/**
@@ -62,7 +67,7 @@ public class KeyWordTest
 	 */
 	public KeyWordTest copyTest( String testName )
 	{
-		KeyWordTest newTest = new KeyWordTest( testName, active, null, dataDriver, timed, linkId, os );
+		KeyWordTest newTest = new KeyWordTest( testName, active, null, dataDriver, timed, linkId, os, threshold, description );
 		newTest.dataProviders = dataProviders;
 		newTest.stepList = stepList;
 		return newTest;
@@ -177,6 +182,9 @@ public class KeyWordTest
 		boolean stepSuccess = true;
 		Exception stepException = null;
 		
+		String executionId = PageManager.instance().getExecutionId(webDriver);
+		String deviceName = PageManager.instance().getDeviceName(webDriver);
+		
 		for( KeyWordStep step : stepList )
 		{
 			if ( log.isDebugEnabled() )
@@ -194,16 +202,15 @@ public class KeyWordTest
 			
 			stepSuccess = step.executeStep( page, webDriver, contextMap, dataMap );
 			
+			
+			
 			if ( !stepSuccess )
 			{
 				if ( log.isWarnEnabled() )
 					log.warn( "***** Step [" + step.getName() + "] Failed" );
 				
-				if ( step.isTimed() )
-					PageManager.instance().addExecutionTiming( getName() + "." + step.getPageName() + "." + step.getName() + "." + step.getClass().getSimpleName(), System.currentTimeMillis() - stepStart );
-				
 				if ( timed )
-					PageManager.instance().addExecutionTiming( getName(), System.currentTimeMillis() - startTime );
+					PageManager.instance().addExecutionTiming( executionId, deviceName, getName(), System.currentTimeMillis() - startTime, StepStatus.FAILURE, description, threshold );
 				
 				if ( PageManager.instance().getThrowable() == null )
 					PageManager.instance().setThrowable( new IllegalStateException( step.toError() ) );
@@ -212,12 +219,10 @@ public class KeyWordTest
 
 			}	
 			
-			if ( step.isTimed() )
-				PageManager.instance().addExecutionTiming( getName() + "." + step.getPageName() + "." + step.getName(), System.currentTimeMillis() - stepStart );
 		}
 		
 		if ( timed )
-			PageManager.instance().addExecutionTiming( getName(), System.currentTimeMillis() - startTime );
+			PageManager.instance().addExecutionTiming( executionId, deviceName, getName(), System.currentTimeMillis() - startTime, StepStatus.SUCCESS, description, threshold );
 		
 		return stepSuccess;
 	}

@@ -39,6 +39,16 @@ public interface WindTunnel extends PerfectoService
 		noreset;
 	}
 	
+	/**
+	 * The Enum TimerPolicy.
+	 */
+	public enum Status
+	{
+		
+		success,
+		failure;
+	}
+	
 	
 	/**
 	 * Adds the point of interest.
@@ -50,7 +60,7 @@ public interface WindTunnel extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="status", subCommandName = "event" )
-	public Execution addPointOfInterest( @ResourceID String executionId, @Parameter( name="description" ) String description, @Parameter( name="status" ) boolean status );
+	public Execution addPointOfInterest( @ResourceID String executionId, @Parameter( name="description" ) String description, @Parameter( name="status" ) Status status );
 	
 	/**
 	 * Adds the timer report.
@@ -63,8 +73,8 @@ public interface WindTunnel extends PerfectoService
 	 * @return the execution
 	 */
 	@Operation( operationName="command" )
-	@PerfectoCommand( commandName="status", subCommandName = "event" )
-	public Execution addTimerReport( @ResourceID String executionId, @Parameter( name="name" ) String name, @Parameter( name="result" ) int result, @Parameter( name="status" ) boolean status, @Parameter( name="description" ) String description );
+	@PerfectoCommand( commandName="status", subCommandName = "timer" )
+	public Execution addTimerReport( @ResourceID String executionId, @Parameter( name="name" ) String name, @Parameter( name="result" ) int result, @Parameter( name="status" ) Status status, @Parameter( name="description" ) String description, @Parameter( name="threshold" ) int threshold );
 	
 	/**
 	 * Gets the network setting.

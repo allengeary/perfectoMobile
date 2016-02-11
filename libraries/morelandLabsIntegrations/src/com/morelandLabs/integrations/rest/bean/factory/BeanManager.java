@@ -126,20 +126,23 @@ public class BeanManager
 		
 		PerfectoMobile.instance().device().open( x.getExecutionId(), "93C8CC73" );
 		
-		PerfectoMobile.instance().imaging().imageExists("exe", "hset", "PRIVATE:logo.png", (short) 20, MatchMode.bounded );
+		//PerfectoMobile.instance().imaging().imageExists("exe", "hset", "PRIVATE:logo.png", (short) 20, MatchMode.bounded );
+		
+		//Thread.sleep( 5000 );
+		//PerfectoMobile.instance().imaging().screenShot( x.getExecutionId(), "93C8CC73", "PRIVATE:a.png", Screen.primary, ImageFormat.png, Resolution.high );
+		
+		//byte[] file = PerfectoMobile.instance().repositories().download( RepositoryType.MEDIA, "PRIVATE:a.png" );
+		//System.out.println( file.length );
+		
+		//BufferedImage image = ImageIO.read( new ByteArrayInputStream( file ) );
+		//System.out.println( image.getSubimage( 100, 100, 100, 100 ) );
+		
+		//FileOutputStream os = new FileOutputStream( "c:/tools/a.png" );
+		//os.write( file );
+		//os.close();
+		PerfectoMobile.instance().gestures().sendKey(x.getExecutionId(), "93C8CC73", 3, 0 );
 		
 		Thread.sleep( 5000 );
-		PerfectoMobile.instance().imaging().screenShot( x.getExecutionId(), "93C8CC73", "PRIVATE:a.png", Screen.primary, ImageFormat.png, Resolution.high );
-		
-		byte[] file = PerfectoMobile.instance().repositories().download( RepositoryType.MEDIA, "PRIVATE:a.png" );
-		System.out.println( file.length );
-		
-		BufferedImage image = ImageIO.read( new ByteArrayInputStream( file ) );
-		System.out.println( image.getSubimage( 100, 100, 100, 100 ) );
-		
-		FileOutputStream os = new FileOutputStream( "c:/tools/a.png" );
-		os.write( file );
-		os.close();
 		
 		PerfectoMobile.instance().device().close(  x.getExecutionId(), "93C8CC73"  );
 		x = PerfectoMobile.instance().executions().endExecution( x.getExecutionId() );

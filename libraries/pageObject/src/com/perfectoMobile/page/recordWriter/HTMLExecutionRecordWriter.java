@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
+import java.util.Map;
 
 import com.perfectoMobile.page.ExecutionRecord;
 import com.perfectoMobile.page.ExecutionRecordWriter;
@@ -86,7 +87,7 @@ public class HTMLExecutionRecordWriter implements ExecutionRecordWriter
 	 * @see com.perfectoMobile.page.ExecutionRecordWriter#stopWriting(java.lang.String)
 	 */
 	@Override
-	public void stopWriting( String keyName )
+	public void stopWriting( String keyName, Map<String,String> additionalUrls )
 	{
 		try
 		{
@@ -97,6 +98,10 @@ public class HTMLExecutionRecordWriter implements ExecutionRecordWriter
 				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='" + keyName + "/EXECUTION_REPORT_PDF.pdf'>Exeuction Report</a></td></tr>" );
 				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='testNg/index.html'>Test NG Results</a></td></tr>" );
 				outputWriter.write( "<tr><td colSpan='6' align='center'><img height='500' src='" + keyName + "-screenshot.png'/></td></tr>" );
+				
+				for ( String key : additionalUrls.keySet() )
+					outputWriter.write( "<tr><td colSpan='6' align='center'><a href='" + additionalUrls.get(key) + "'>" + key + "</a></td></tr>" );
+				
 			}
 			
 			outputWriter.write( "</TABLE></BODY></HTML>" );

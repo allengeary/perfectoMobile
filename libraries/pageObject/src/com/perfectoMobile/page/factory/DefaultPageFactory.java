@@ -128,8 +128,8 @@ public class DefaultPageFactory extends LocalPageFactory implements InvocationHa
 			Object returnValue = methodImplemenation.invoke( currentService, args );
 			long runLength = System.currentTimeMillis() - startTime;
 			
-			if ( method.getAnnotation( Page.TimeMethod.class ) != null )
-				PageManager.instance().addExecutionTiming( methodKeyName, runLength );
+			//if ( method.getAnnotation( Page.TimeMethod.class ) != null )
+			//	PageManager.instance().addExecutionTiming( methodKeyName, runLength );
 				
 			PageManager.instance().afterExecution( methodKeyName, runLength );
 			

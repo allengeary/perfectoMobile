@@ -1,6 +1,7 @@
 package com.perfectoMobile.page;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * The Interface ExecutionTimingWriter responsible for writing out timed executions on completion.
@@ -34,5 +35,5 @@ public interface ExecutionRecordWriter
 	 *
 	 * @param keyName the key name
 	 */
-	public void stopWriting( String keyName );
+	public void stopWriting( String keyName, Map<String,String> additionalUrls );
 }

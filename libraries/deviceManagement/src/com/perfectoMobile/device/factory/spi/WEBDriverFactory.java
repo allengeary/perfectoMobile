@@ -101,6 +101,12 @@ public class WEBDriverFactory extends AbstractDriverFactory
 			if (currentDevice.getModel() != null && !currentDevice.getModel().isEmpty())
 				dc.setCapability( MODEL, currentDevice.getManufacturer() );
 			
+			for ( String name : currentDevice.getCabilities().keySet() )
+				dc.setCapability( name, currentDevice.getCabilities().get( name ) );
+			
+			for ( String name : ApplicationRegistry.instance().getAUT().getCapabilities().keySet() )
+				dc.setCapability( name, currentDevice.getCabilities().get( name ) );
+			
 			if ( log.isInfoEnabled() )
 				log.info( "Acquiring Device as: \r\n" + capabilitiesToString( dc ) );
 			
@@ -176,6 +182,7 @@ public class WEBDriverFactory extends AbstractDriverFactory
 			webDriver.setExecutionId( caps.getCapability( "executionId" ).toString() );
 			webDriver.setReportKey( caps.getCapability( "reportKey" ).toString() );
 			webDriver.setDeviceName( caps.getCapability( "deviceName" ).toString() );
+			webDriver.setWindTunnelReport( caps.getCapability( "windTunnelReportUrl" ).toString() );
 
 			if (ApplicationRegistry.instance().getAUT().getUrl() != null)
 				webDriver.get( ApplicationRegistry.instance().getAUT().getUrl() );

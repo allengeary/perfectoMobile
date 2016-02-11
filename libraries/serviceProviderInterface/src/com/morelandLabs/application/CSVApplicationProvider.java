@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 /**
  * The Class CSVApplicationProvider.
@@ -77,7 +78,7 @@ public class CSVApplicationProvider extends AbstractApplicationProvider
 				
 				String[] lineData = currentLine.split( "," );
 				
-				ApplicationRegistry.instance().addApplicationDescriptor( new ApplicationDescriptor( lineData[ 0 ], lineData[ 1 ], lineData[ 2 ], lineData[ 3 ], lineData[ 4 ], lineData[ 5 ], lineData[ 6 ] ) );
+				ApplicationRegistry.instance().addApplicationDescriptor( new ApplicationDescriptor( lineData[ 0 ], lineData[ 1 ], lineData[ 2 ], lineData[ 3 ], lineData[ 4 ], lineData[ 5 ], lineData[ 6 ], new HashMap<String,String>( 0 ) ) );
 			}
 		}
 		catch( Exception e )

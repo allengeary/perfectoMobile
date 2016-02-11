@@ -3,9 +3,9 @@ package com.perfectoMobile.device.factory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import com.morelandLabs.spi.Device;
-import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.data.DataManager;
 
 /**
@@ -57,6 +57,14 @@ public abstract class AbstractDriverFactory implements DriverFactory
 		}
 		
 		return capData.toString();
+	}
+	
+	protected void addDeviceCapabilities( Device currentDevice, DesiredCapabilities caps )
+	{
+		for ( String name : currentDevice.getCabilities().keySet() )
+			caps.setCapability( name, currentDevice.getCabilities().get( name ) );
+		
+		
 	}
 
 }

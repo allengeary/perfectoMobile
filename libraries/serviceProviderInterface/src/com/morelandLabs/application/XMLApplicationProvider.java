@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -11,6 +13,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 
+import org.apache.http.impl.io.SocketOutputBuffer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -96,6 +99,7 @@ public class XMLApplicationProvider extends AbstractApplicationProvider
 			NodeList nodeList = getNodes( xmlDocument, "//applicationRegistry/application");
 			for ( int i=0; i<nodeList.getLength(); i++ )
 				parseApplication( nodeList.item( i ) );
+
 			
 		}
 		catch( Exception e )
@@ -121,10 +125,20 @@ public class XMLApplicationProvider extends AbstractApplicationProvider
 		if ( androidNode != null )
 			androidInstall = androidNode.getNodeValue();
 		
+		Map<String,String> capabilities = new HashMap<String,String>( 10 );
+		
+		for ( int i=0; i<appNode.getChildNodes().getLength(); i++ )
+		{
+			Node currentNode = appNode.getChildNodes().item( i );
+			if ( currentNode.getNodeType() == Node.ELEMENT_NODE && currentNode.getNodeName().toLowerCase().equals( "capability" ) )
+				capabilities.put( currentNode.getAttributes().getNamedItem( "name" ).getNodeValue(), currentNode.getTextContent() );
+		}
+		
+		
 		
 		String description = appNode.getTextContent();
 		
-		ApplicationRegistry.instance().addApplicationDescriptor( new ApplicationDescriptor( appName, description, appNode.getAttributes().getNamedItem( APP_PACKAGE ).getNodeValue(), appNode.getAttributes().getNamedItem( BUNDLE_ID ).getNodeValue(), appNode.getAttributes().getNamedItem( URL ).getNodeValue(), iosInstall, androidInstall ) );
+		ApplicationRegistry.instance().addApplicationDescriptor( new ApplicationDescriptor( appName, description, appNode.getAttributes().getNamedItem( APP_PACKAGE ).getNodeValue(), appNode.getAttributes().getNamedItem( BUNDLE_ID ).getNodeValue(), appNode.getAttributes().getNamedItem( URL ).getNodeValue(), iosInstall, androidInstall, capabilities ) );
 	}
 	
 	private  NodeList getNodes( Document xmlDocument, String xPathExpression )

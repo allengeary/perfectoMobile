@@ -53,6 +53,7 @@ public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, 
 	protected WebDriver webDriver;
 	private String executionId;
 	private String reportKey;
+	private String windTunnelReport;
 	private String deviceName;
 	private Device currentDevice;
 	private String currentContext;
@@ -71,6 +72,7 @@ public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, 
 	private static final String EXECUTION_ID = "EXECUTION_ID";
 	private static final String REPORT_KEY = "REPORT_KEY";
 	private static final String DEVICE_NAME = "DEVICE_NAME";
+	private static final String WIND_TUNNEL = "WIND_TUNNEL";
 	
 	@Override
 	public Device getDevice()
@@ -170,6 +172,18 @@ public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, 
 	public void setReportKey( String reportKey )
 	{
 		this.reportKey = reportKey;
+	}
+	
+	
+
+	public String getWindTunnelReport() 
+	{
+		return windTunnelReport;
+	}
+
+	public void setWindTunnelReport(String windTunnelReport) 
+	{
+		this.windTunnelReport = windTunnelReport;
 	}
 
 	/**
@@ -289,7 +303,6 @@ public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, 
 				XPath xPath = xPathFactory.newXPath();
 				String path = by.toString();
 				path = path.substring( path.indexOf( ": " ) + 2 );
-				System.out.println( path );
 				Node node = ( Node ) xPath.evaluate( path, cachedDocument, XPathConstants.NODE );
 
 				return new CachedWebElement( webDriver, by, node );
@@ -487,7 +500,8 @@ public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, 
 			Map<String,String> parameterMap = new HashMap<String,String>( 3 );
 			parameterMap.put( EXECUTION_ID, executionId );
 			parameterMap.put( REPORT_KEY, reportKey );
-			parameterMap.put(  DEVICE_NAME, deviceName );
+			parameterMap.put( DEVICE_NAME, deviceName );
+			parameterMap.put( WIND_TUNNEL, windTunnelReport );
 			return artifactProducer.getArtifact( webDriver, aType, parameterMap, connectedDevice );
 		}
 		else
@@ -506,7 +520,8 @@ public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, 
 			
 			parameterMap.put( EXECUTION_ID, executionId );
 			parameterMap.put( REPORT_KEY, reportKey );
-			parameterMap.put(  DEVICE_NAME, deviceName );
+			parameterMap.put( DEVICE_NAME, deviceName );
+			parameterMap.put( WIND_TUNNEL, windTunnelReport );
 			
 			return artifactProducer.getArtifact( webDriver, aType, parameterMap, connectedDevice );
 		}

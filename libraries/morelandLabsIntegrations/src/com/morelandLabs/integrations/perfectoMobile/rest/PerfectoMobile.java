@@ -12,6 +12,7 @@ import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.RESTInvocationHandler;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Reports;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Repositories;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.WindTunnel;
 
 /**
  * The Class PerfectoMobile.
@@ -79,6 +80,16 @@ public class PerfectoMobile
 	public Imaging imaging()
 	{
 		return (Imaging) Proxy.newProxyInstance( this.getClass().getClassLoader(), new Class[] { Imaging.class }, (InvocationHandler)invocationHandler );
+	}
+	
+	/**
+	 * Imaging.
+	 *
+	 * @return the imaging
+	 */
+	public WindTunnel windTunnel()
+	{
+		return (WindTunnel) Proxy.newProxyInstance( this.getClass().getClassLoader(), new Class[] { WindTunnel.class }, (InvocationHandler)invocationHandler );
 	}
 	
 	/**

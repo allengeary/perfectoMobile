@@ -47,6 +47,13 @@ public class IOSDriverFactory extends AbstractDriverFactory
 			
 			dc.setCapability( USER_NAME, CloudRegistry.instance().getCloud().getUserName() );
 			dc.setCapability( PASSWORD, CloudRegistry.instance().getCloud().getPassword() );
+			
+			for ( String name : currentDevice.getCabilities().keySet() )
+				dc.setCapability( name, currentDevice.getCabilities().get( name ) );
+			
+			for ( String name : ApplicationRegistry.instance().getAUT().getCapabilities().keySet() )
+				dc.setCapability( name, currentDevice.getCabilities().get( name ) );
+			
 			dc.setCapability( AUTOMATION_NAME, "Appium" );
 			if( ApplicationRegistry.instance().getAUT().getAppleIdentifier() != null && !ApplicationRegistry.instance().getAUT().getAppleIdentifier().isEmpty() )
 				dc.setCapability( BUNDLE_ID, ApplicationRegistry.instance().getAUT().getAppleIdentifier() );
@@ -63,6 +70,7 @@ public class IOSDriverFactory extends AbstractDriverFactory
 			webDriver.setExecutionId( caps.getCapability( "executionId" ).toString() );
 			webDriver.setReportKey( caps.getCapability( "reportKey" ).toString() );
 			webDriver.setDeviceName( caps.getCapability( "deviceName" ).toString() );
+			webDriver.setWindTunnelReport( caps.getCapability( "windTunnelReportUrl" ).toString() );
 			
 			return webDriver;
 		}

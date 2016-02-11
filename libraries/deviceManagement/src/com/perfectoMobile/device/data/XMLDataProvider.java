@@ -152,6 +152,14 @@ public class XMLDataProvider implements DataProvider
 		}
 		
 		Device currentDevice = new SimpleDevice( name, manufacturer, model, os, osVersion, browserName, null, availableDevices, driverName, active, id );
+		
+		for ( int i=0; i<deviceNode.getChildNodes().getLength(); i++ )
+		{
+			Node currentNode =deviceNode.getChildNodes().item( i );
+			if ( currentNode.getNodeType() == Node.ELEMENT_NODE && currentNode.getNodeName().toLowerCase().equals( "capability" ) )
+				currentDevice.addCapability( currentNode.getAttributes().getNamedItem( "name" ).getNodeValue(), currentNode.getTextContent() );
+		}
+		
 
 		if ( currentDevice.isActive() )
 		{				

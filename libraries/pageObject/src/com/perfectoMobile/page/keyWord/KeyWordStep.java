@@ -245,4 +245,16 @@ public interface KeyWordStep
 	public void setValidationType( ValidationType validationType );
 	
 	public void setContext( String contextName );
+	
+	public void setThreshold( int threshold );
+	
+	public int getThreshold();
+	
+	public void setDescription( String description );
+	
+	public String getDescription();
+	
+	public void setPoi( String poi );
+	
+	public String getPoi();
 }

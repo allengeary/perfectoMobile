@@ -1,5 +1,6 @@
 package com.morelandLabs.spi;
 
+import java.util.Map;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -7,7 +8,8 @@ import java.util.concurrent.Semaphore;
  */
 public interface Device
 {
-	
+	void addCapability( String capabilityName, String capabilityValue );
+	Map<String,String> getCabilities();
 	/**
 	 * Gets the manufacturer.
 	 *

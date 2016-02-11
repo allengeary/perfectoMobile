@@ -47,7 +47,15 @@ public class ANDROIDDriverFactory extends AbstractDriverFactory
 			
 			dc.setCapability( USER_NAME, CloudRegistry.instance().getCloud().getUserName() );
 			dc.setCapability( PASSWORD, CloudRegistry.instance().getCloud().getPassword() );
+			
+			for ( String name : currentDevice.getCabilities().keySet() )
+				dc.setCapability( name, currentDevice.getCabilities().get( name ) );
+			
+			for ( String name : ApplicationRegistry.instance().getAUT().getCapabilities().keySet() )
+				dc.setCapability( name, ApplicationRegistry.instance().getAUT().getCapabilities().get( name ) );
+			
 			dc.setCapability( AUTOMATION_NAME, "Appium" );
+			
 			if( ApplicationRegistry.instance().getAUT().getAndroidIdentifier() != null && !ApplicationRegistry.instance().getAUT().getAndroidIdentifier().isEmpty() )
 				dc.setCapability( APPLICATION_PACKAGE, ApplicationRegistry.instance().getAUT().getAndroidIdentifier() );
 			
@@ -62,6 +70,7 @@ public class ANDROIDDriverFactory extends AbstractDriverFactory
 			webDriver.setExecutionId( caps.getCapability( "executionId" ).toString() );
 			webDriver.setReportKey( caps.getCapability( "reportKey" ).toString() );
 			webDriver.setDeviceName( caps.getCapability( "deviceName" ).toString() );
+			webDriver.setWindTunnelReport( caps.getCapability( "windTunnelReportUrl" ).toString() );
 			
 			return webDriver;
 		}

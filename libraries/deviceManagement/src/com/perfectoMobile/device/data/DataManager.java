@@ -32,6 +32,7 @@ public class DataManager
 	
 	private Log log = LogFactory.getLog( DataManager.class );
 	private String[] testNames;
+	private String[] personaNames;
 	private ArtifactProducer artifactProducer;
 	private File reportFolder;
 	private ArtifactType[] automaticDownloads;
@@ -56,6 +57,23 @@ public class DataManager
 		return testNames;
 	}
 	
+	
+	
+	public String[] getPersonas() 
+	{
+		return personaNames;
+	}
+
+	public void setPersonas(String[] personaNames) 
+	{
+		this.personaNames = personaNames;
+	}
+	
+	public void setPersonas(String personaNames) 
+	{
+		this.personaNames = personaNames.split( "," );
+	}
+
 	/**
 	 * Read data.
 	 *

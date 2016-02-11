@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -107,7 +108,7 @@ public class ExcelApplicationProvider extends AbstractApplicationProvider
 				if ( getCellValue( currentRow.getCell( 0 ) ) == null || getCellValue( currentRow.getCell( 0 ) ).isEmpty() )
 					break;
 				
-				ApplicationRegistry.instance().addApplicationDescriptor( new ApplicationDescriptor( getCellValue( currentRow.getCell( 0 ) ), getCellValue( currentRow.getCell( 4 ) ), getCellValue( currentRow.getCell( 1 ) ), getCellValue( currentRow.getCell( 2 ) ), getCellValue( currentRow.getCell( 3 ) ), getCellValue( currentRow.getCell( 5 ) ), getCellValue( currentRow.getCell( 6 ) ) ) );
+				ApplicationRegistry.instance().addApplicationDescriptor( new ApplicationDescriptor( getCellValue( currentRow.getCell( 0 ) ), getCellValue( currentRow.getCell( 4 ) ), getCellValue( currentRow.getCell( 1 ) ), getCellValue( currentRow.getCell( 2 ) ), getCellValue( currentRow.getCell( 3 ) ), getCellValue( currentRow.getCell( 5 ) ), getCellValue( currentRow.getCell( 6 ) ), new HashMap<String,String>( 0 ) ) );
 				
 			}
 

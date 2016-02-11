@@ -21,6 +21,7 @@ public class PerfectoArtifactProducer extends AbstractArtifactProducer
 {
 
 	private static final String REPORT_KEY = "REPORT_KEY";
+	private static final String WIND_TUNNEL = "WIND_TUNNEL";
 	private static final String FORMAT = "format";
 	private static final String DEFAULT_FORMAT = "pdf";
 
@@ -103,6 +104,17 @@ public class PerfectoArtifactProducer extends AbstractArtifactProducer
 				operation = "download";
 				reportFormat = "xml";
 				break;
+				
+			case WIND_TUNNEL_REPORT:
+				try
+				{
+					return new Artifact( rootFolder + "windTunnel.html", getUrl( new URL( parameterMap.get( WIND_TUNNEL ) + "" ) ) );
+				}
+				catch( Exception e )
+				{
+					log.error( "Error download artifact data", e );
+					return null;
+				}
 				
 			default:
 				operation = "download";

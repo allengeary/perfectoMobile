@@ -12,6 +12,7 @@ public class ConnectedDevice
 {
 	private DeviceWebDriver webDriver;
 	private Device device;
+	private String persona;
 	
 	/**
 	 * Instantiates a new connected device.
@@ -19,11 +20,20 @@ public class ConnectedDevice
 	 * @param webDriver the web driver
 	 * @param device the device
 	 */
-	public ConnectedDevice( DeviceWebDriver webDriver, Device device )
+	public ConnectedDevice( DeviceWebDriver webDriver, Device device, String persona )
 	{
 		super();
 		this.webDriver = webDriver;
 		this.device = device;
+		this.persona = persona;
+	}
+
+	public String getPersona() {
+		return persona;
+	}
+
+	public void setPersona(String persona) {
+		this.persona = persona;
 	}
 
 	/**

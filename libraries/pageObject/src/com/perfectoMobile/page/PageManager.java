@@ -15,6 +15,17 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.HasCapabilities;
+import org.openqa.selenium.WebDriver;
+
+import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.WindTunnel.Status;
+import com.morelandLabs.spi.PropertyProvider;
+import com.morelandLabs.spi.driver.DeviceProvider;
+import com.morelandLabs.spi.driver.NativeDriverProvider;
 import com.perfectoMobile.page.element.provider.ElementProvider;
 import com.perfectoMobile.page.factory.DefaultPageFactory;
 import com.perfectoMobile.page.factory.PageFactory;
@@ -27,6 +38,9 @@ import com.perfectoMobile.page.listener.ExecutionListener;
  */
 public class PageManager
 {
+	private Log log = LogFactory.getLog( PageManager.class );
+	private static final String EXECUTION_ID = "EXECUTION_ID";
+	private static final String DEVICE_NAME = "DEVICE_NAME";
     private static PageManager singleton = new PageManager();
     private String siteName;
     private ElementProvider elementProvider;
@@ -41,8 +55,20 @@ public class PageManager
     
     private PageFactory pageFactory = new DefaultPageFactory();
     
+    private boolean windTunnelEnabled = false;
+    
     private boolean storeImages = false;
     private String imageLocation;
+
+    
+    
+	public boolean isWindTunnelEnabled() {
+		return windTunnelEnabled;
+	}
+
+	public void setWindTunnelEnabled(boolean windTunnelEnabled) {
+		this.windTunnelEnabled = windTunnelEnabled;
+	}
 
 	public boolean isStoreImages() {
 		return storeImages;
@@ -220,13 +246,18 @@ public class PageManager
      * @param methodName the method name
      * @param runLength the run length
      */
-    public void addExecutionTiming( String methodName, long runLength )
+    public void addExecutionTiming( String executionId, String deviceName, String methodName, long runLength, StepStatus status, String description, int threshold )
     {
     	ExecutionTiming eTime = timingMap.get(  methodName  );
     	if ( eTime == null )
     	{
     		eTime = new ExecutionTiming( methodName );
     		timingMap.put( methodName, eTime );
+    	}
+    	
+    	if ( isWindTunnelEnabled() )
+    	{
+    		PerfectoMobile.instance().windTunnel().addTimerReport( executionId, methodName, (int)runLength, ( ( status.equals( StepStatus.SUCCESS ) || ( status.equals( StepStatus.FAILURE_IGNORED ) ) ) ? Status.success : Status.failure ), description, threshold );
     	}
     	
     	eTime.addRun( runLength );
@@ -246,8 +277,9 @@ public class PageManager
      * @param detail the detail
      * @param t the t
      */
-    public void addExecutionLog( String executionId, String deviceName, String group, String name, String type, long timestamp, long runLength, StepStatus status, String detail, Throwable t )
+    public void addExecutionLog( String executionId, String deviceName, String group, String name, String type, long timestamp, long runLength, StepStatus status, String detail, Throwable t, int threshold, String description )
     {
+    	
     	String keyName = new String( executionId + "-" + deviceName );
     	
     	List<ExecutionRecord> recordList = executionLog.get( keyName );
@@ -319,7 +351,7 @@ public class PageManager
     /**
      * Write execution timings.
      */
-    public void writeExecutionRecords()
+    public void writeExecutionRecords( Map<String,String> additionalUrls )
     {
     	if ( recordWriter != null )
     	{
@@ -328,7 +360,7 @@ public class PageManager
     			recordWriter.startWriting( keyName );
         		for ( ExecutionRecord e : executionLog.get( keyName ) )
         			recordWriter.writeRecord( e );
-        		recordWriter.stopWriting( keyName );
+        		recordWriter.stopWriting( keyName, additionalUrls );
     		}
     	}
     }
@@ -352,4 +384,133 @@ public class PageManager
     {
     	return localException.get();
     }
+    
+    /**
+	 * Gets the execution id.
+	 *
+	 * @param webDriver the web driver
+	 * @return the execution id
+	 */
+	public String getExecutionId( WebDriver webDriver )
+	{
+		String executionId = null;
+		
+		if ( webDriver instanceof PropertyProvider )
+		{
+			executionId = ( (PropertyProvider) webDriver ).getProperty( EXECUTION_ID );
+		}
+		
+		if ( executionId == null )
+		{
+			if ( webDriver instanceof HasCapabilities )
+			{
+				Capabilities caps = ( (HasCapabilities) webDriver ).getCapabilities();
+				executionId = caps.getCapability( "executionId" ).toString();
+			}
+		}
+		
+		if ( executionId == null )
+		{
+			if ( webDriver instanceof NativeDriverProvider )
+			{
+				WebDriver nativeDriver = ( (NativeDriverProvider) webDriver ).getNativeDriver();
+				if ( nativeDriver instanceof HasCapabilities )
+				{
+					Capabilities caps = ( (HasCapabilities) webDriver ).getCapabilities();
+					executionId = caps.getCapability( "executionId" ).toString();
+				}
+			}
+		}
+		
+		if ( executionId == null )
+			log.warn( "No Execution ID could be located" );
+		
+		return executionId;
+	}
+	
+	/**
+	 * Gets the execution id.
+	 *
+	 * @param webDriver the web driver
+	 * @return the execution id
+	 */
+	public String getDeviceOs( WebDriver webDriver )
+	{
+		String os = null;
+		
+		if ( webDriver instanceof DeviceProvider )
+		{
+			os = ( (DeviceProvider) webDriver ).getDevice().getOs().toUpperCase();
+		}
+		
+		if ( os == null )
+		{
+			if ( webDriver instanceof HasCapabilities )
+			{
+				Capabilities caps = ( (HasCapabilities) webDriver ).getCapabilities();
+				os = caps.getCapability( "os" ).toString();
+			}
+		}
+		
+		if ( os == null )
+		{
+			if ( webDriver instanceof NativeDriverProvider )
+			{
+				WebDriver nativeDriver = ( (NativeDriverProvider) webDriver ).getNativeDriver();
+				if ( nativeDriver instanceof HasCapabilities )
+				{
+					Capabilities caps = ( (HasCapabilities) webDriver ).getCapabilities();
+					os = caps.getCapability( "os" ).toString();
+				}
+			}
+		}
+		
+		if ( os == null )
+			log.warn( "No OS could be located" );
+		
+		return os;
+	}
+	
+	/**
+	 * Gets the device name.
+	 *
+	 * @param webDriver the web driver
+	 * @return the device name
+	 */
+	public String getDeviceName( WebDriver webDriver )
+	{
+		String executionId = null;
+		
+		if ( webDriver instanceof PropertyProvider )
+		{
+			executionId = ( (PropertyProvider) webDriver ).getProperty( DEVICE_NAME );
+		}
+		
+		if ( executionId == null )
+		{
+			if ( webDriver instanceof HasCapabilities )
+			{
+				Capabilities caps = ( (HasCapabilities) webDriver ).getCapabilities();
+				executionId = caps.getCapability( "deviceName" ).toString();
+			}
+		}
+		
+		if ( executionId == null )
+		{
+			if ( webDriver instanceof NativeDriverProvider )
+			{
+				WebDriver nativeDriver = ( (NativeDriverProvider) webDriver ).getNativeDriver();
+				if ( nativeDriver instanceof HasCapabilities )
+				{
+					Capabilities caps = ( (HasCapabilities) webDriver ).getCapabilities();
+					executionId = caps.getCapability( "deviceName" ).toString();
+				}
+			}
+		}
+		
+		if ( executionId == null )
+			log.warn( "No Execution ID could be located" );
+		
+		return executionId;
+	}
 }

@@ -13,6 +13,8 @@ import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 
+import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.WindTunnel.Status;
 import com.morelandLabs.spi.PropertyProvider;
 import com.morelandLabs.spi.driver.DeviceProvider;
 import com.morelandLabs.spi.driver.NativeDriverProvider;
@@ -33,8 +35,6 @@ import com.perfectoMobile.page.keyWord.step.spi.KWSLoopBreak;
  */
 public abstract class AbstractKeyWordStep implements KeyWordStep
 {
-	private static final String EXECUTION_ID = "EXECUTION_ID";
-	private static final String DEVICE_NAME = "DEVICE_NAME";
 
 	private String name;
 	private String pageName;
@@ -48,8 +48,19 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	private String os;
 	private String context;
 	private String validation;
+	private int threshold;
+	private String description;
 	private ValidationType validationType;
+	private String poi;
 	
+	public String getPoi() {
+		return poi;
+	}
+
+	public void setPoi(String poi) {
+		this.poi = poi;
+	}
+
 	public String getContext()
 	{
 		return context;
@@ -130,6 +141,22 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 		this.os = os != null ? os.toUpperCase() : os;
 	}
 	
+	public int getThreshold() {
+		return threshold;
+	}
+
+	public void setThreshold(int threshold) {
+		this.threshold = threshold;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	/**
 	 * Checks if is recordable.
 	 *
@@ -280,7 +307,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	{
 		PageManager.instance().setThrowable( null );
 		long startTime = System.currentTimeMillis();
-		boolean passedIgnore = false;
+
 		try
 		{
 			//
@@ -335,7 +362,6 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 				boolean subReturnValue = false;
 				for (KeyWordStep step : getStepList())
 				{					
-					passedIgnore = true;
 					try
 					{
 						subReturnValue = step.executeStep( pageObject, webDriver, contextMap, dataMap );
@@ -363,7 +389,14 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 			}
 
 			if ( isRecordable() )
-				PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, "", null );
+			{
+				PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, "", null, getThreshold(), getDescription() );
+				if ( isTimed() )
+					PageManager.instance().addExecutionTiming(getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName() + "." + getName() + "." + getClass().getSimpleName(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, description, threshold);
+			}
+			
+			if ( PageManager.instance().isWindTunnelEnabled() && getPoi() != null && !getPoi().isEmpty() )
+				PerfectoMobile.instance().windTunnel().addPointOfInterest( getExecutionId( webDriver ), getPoi() + "(" + getPageName() + "." + getName() + ")", returnValue ? Status.success :Status.failure);
 			
 			if (!returnValue)
 			{
@@ -376,7 +409,13 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 								stepException = new IllegalArgumentException( toError() );
 	
 							PageManager.instance().setThrowable( stepException );						
-							PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, StepStatus.FAILURE, stepException.getMessage(), stepException );
+							PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, StepStatus.FAILURE, stepException.getMessage(), stepException, getThreshold(), getDescription() );
+							
+							if ( isTimed() )
+								PageManager.instance().addExecutionTiming(getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName() + "." + getName() + "." + getClass().getSimpleName(), System.currentTimeMillis() - startTime, StepStatus.FAILURE, description, threshold);
+							
+							if ( PageManager.instance().isWindTunnelEnabled() && getPoi() != null && !getPoi().isEmpty() )
+								PerfectoMobile.instance().windTunnel().addPointOfInterest( getExecutionId( webDriver ), getPoi() + "(" + getPageName() + "." + getName() + ")", Status.failure);
 						}
 						log.error( "***** Step " + name + " on page " + pageName + " failed as " + PageManager.instance().getThrowable().getMessage() );
 						return false;
@@ -391,7 +430,13 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 								stepException = new IllegalArgumentException( toError() );
 	
 							PageManager.instance().setThrowable( stepException );						
-							PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, StepStatus.FAILURE_IGNORED, stepException.getMessage(), stepException );
+							PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, StepStatus.FAILURE_IGNORED, stepException.getMessage(), stepException, getThreshold(), getDescription() );
+							
+							if ( isTimed() )
+								PageManager.instance().addExecutionTiming(getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName() + "." + getName() + "." + getClass().getSimpleName(), System.currentTimeMillis() - startTime, StepStatus.FAILURE, description, threshold);
+							
+							if ( PageManager.instance().isWindTunnelEnabled() && getPoi() != null && !getPoi().isEmpty() )
+								PerfectoMobile.instance().windTunnel().addPointOfInterest( getExecutionId( webDriver ), getPoi() + "(" + getPageName() + "." + getName() + ")", Status.failure);
 						}
 						return true;
 
@@ -791,39 +836,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	 */
 	public String getExecutionId( WebDriver webDriver )
 	{
-		String executionId = null;
-		
-		if ( webDriver instanceof PropertyProvider )
-		{
-			executionId = ( (PropertyProvider) webDriver ).getProperty( EXECUTION_ID );
-		}
-		
-		if ( executionId == null )
-		{
-			if ( webDriver instanceof HasCapabilities )
-			{
-				Capabilities caps = ( (HasCapabilities) webDriver ).getCapabilities();
-				executionId = caps.getCapability( "executionId" ).toString();
-			}
-		}
-		
-		if ( executionId == null )
-		{
-			if ( webDriver instanceof NativeDriverProvider )
-			{
-				WebDriver nativeDriver = ( (NativeDriverProvider) webDriver ).getNativeDriver();
-				if ( nativeDriver instanceof HasCapabilities )
-				{
-					Capabilities caps = ( (HasCapabilities) webDriver ).getCapabilities();
-					executionId = caps.getCapability( "executionId" ).toString();
-				}
-			}
-		}
-		
-		if ( executionId == null )
-			log.warn( "No Execution ID could be located" );
-		
-		return executionId;
+		return PageManager.instance().getExecutionId(webDriver);
 	}
 	
 	/**
@@ -834,39 +847,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	 */
 	public String getDeviceOs( WebDriver webDriver )
 	{
-		String os = null;
-		
-		if ( webDriver instanceof DeviceProvider )
-		{
-			os = ( (DeviceProvider) webDriver ).getDevice().getOs().toUpperCase();
-		}
-		
-		if ( os == null )
-		{
-			if ( webDriver instanceof HasCapabilities )
-			{
-				Capabilities caps = ( (HasCapabilities) webDriver ).getCapabilities();
-				os = caps.getCapability( "os" ).toString();
-			}
-		}
-		
-		if ( os == null )
-		{
-			if ( webDriver instanceof NativeDriverProvider )
-			{
-				WebDriver nativeDriver = ( (NativeDriverProvider) webDriver ).getNativeDriver();
-				if ( nativeDriver instanceof HasCapabilities )
-				{
-					Capabilities caps = ( (HasCapabilities) webDriver ).getCapabilities();
-					os = caps.getCapability( "os" ).toString();
-				}
-			}
-		}
-		
-		if ( os == null )
-			log.warn( "No OS could be located" );
-		
-		return os;
+		return PageManager.instance().getDeviceOs(webDriver);
 	}
 	
 	/**
@@ -877,39 +858,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	 */
 	public String getDeviceName( WebDriver webDriver )
 	{
-		String executionId = null;
-		
-		if ( webDriver instanceof PropertyProvider )
-		{
-			executionId = ( (PropertyProvider) webDriver ).getProperty( DEVICE_NAME );
-		}
-		
-		if ( executionId == null )
-		{
-			if ( webDriver instanceof HasCapabilities )
-			{
-				Capabilities caps = ( (HasCapabilities) webDriver ).getCapabilities();
-				executionId = caps.getCapability( "deviceName" ).toString();
-			}
-		}
-		
-		if ( executionId == null )
-		{
-			if ( webDriver instanceof NativeDriverProvider )
-			{
-				WebDriver nativeDriver = ( (NativeDriverProvider) webDriver ).getNativeDriver();
-				if ( nativeDriver instanceof HasCapabilities )
-				{
-					Capabilities caps = ( (HasCapabilities) webDriver ).getCapabilities();
-					executionId = caps.getCapability( "deviceName" ).toString();
-				}
-			}
-		}
-		
-		if ( executionId == null )
-			log.warn( "No Execution ID could be located" );
-		
-		return executionId;
+		return PageManager.instance().getDeviceName(webDriver);
 	}
 	
 	protected boolean validateData( String dataValue )
