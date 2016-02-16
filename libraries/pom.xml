@@ -9,6 +9,11 @@
 	<modules>
 		<module>integrations</module>
 		<module>pageManagement</module>
+		<module>gestures</module>
+		<module>serviceProviderInterface</module>
+		<module>deviceFramework</module>
+		<module>deviceMaintenance</module>
+		<module>imagingExtension</module>
 	</modules>
 	
 	<repositories>
