@@ -12,6 +12,7 @@ import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class KWSValue.
  */
@@ -85,6 +86,13 @@ public class KWSCheckColor extends AbstractKeyWordStep
 		return true;
 	}
 	
+	/**
+	 * Compare color.
+	 *
+	 * @param colorOne the color one
+	 * @param colorTwo the color two
+	 * @return the int
+	 */
 	private static int compareColor( int colorOne, int colorTwo )
 	{
 		double difference = 0;
@@ -107,6 +115,12 @@ public class KWSCheckColor extends AbstractKeyWordStep
 	}
 
 	
+	/**
+	 * Extract colors.
+	 *
+	 * @param colorValue the color value
+	 * @return the int[]
+	 */
 	public int[] extractColors( String colorValue )
 	{
 		int colorData = 0;

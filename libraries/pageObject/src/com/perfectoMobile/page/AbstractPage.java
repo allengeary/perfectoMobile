@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.perfectoMobile.page.element.Element;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractPage.
  *
@@ -21,8 +22,10 @@ public abstract class AbstractPage implements Page
     /** The log. */
     protected Log log = LogFactory.getLog( Page.class );
 
+    /** The element cache. */
     private HashMap<String,Element> elementCache = new HashMap<String,Element>( 20 );
     
+    /** The element list. */
     private List<Element> elementList = new ArrayList<Element>( 10 );
     
     /** The web driver. */

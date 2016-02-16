@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface Element.
  */
@@ -153,6 +154,7 @@ public interface Element
 		/** The img. */
 		IMG ( "img" );
 		
+		/** The tag name. */
 		private String tagName;
 		
 		/**
@@ -206,8 +208,9 @@ public interface Element
 	
 	/**
 	 * Locates an element and extracts it as an image given the element 
-	 * had specified coordinates and size
+	 * had specified coordinates and size.
 	 *
+	 * @param imageResolution the image resolution
 	 * @return the element
 	 */
 	public Image getImage( Resolution imageResolution );

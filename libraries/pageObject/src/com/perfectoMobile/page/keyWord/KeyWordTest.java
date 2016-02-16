@@ -16,23 +16,44 @@ import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.data.PageDataManager;
 import com.perfectoMobile.page.keyWord.step.spi.KWSLoopBreak;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class KeyWordTest.
  */
 public class KeyWordTest
 {
 	
+	/** The log. */
 	private Log log = LogFactory.getLog( KeyWordTest.class );
+	
+	/** The name. */
 	private String name;
+	
+	/** The active. */
 	private boolean active;
+	
+	/** The data providers. */
 	private String[] dataProviders;
+	
+	/** The data driver. */
 	private String dataDriver;
+	
+	/** The timed. */
 	private boolean timed;
+	
+	/** The link id. */
 	private String linkId;
+	
+	/** The os. */
 	private String os;
+	
+	/** The description. */
 	private String description;
+	
+	/** The threshold. */
 	private int threshold;
 	
+	/** The step list. */
 	private List<KeyWordStep> stepList = new ArrayList<KeyWordStep>( 10 );
 	
 	/**
@@ -44,6 +65,9 @@ public class KeyWordTest
 	 * @param dataDriver the data driver
 	 * @param timed the timed
 	 * @param linkId the link id
+	 * @param os the os
+	 * @param threshold the threshold
+	 * @param description the description
 	 */
 	public KeyWordTest( String name, boolean active, String dataProviders, String dataDriver, boolean timed, String linkId, String os, int threshold, String description )
 	{
@@ -227,11 +251,21 @@ public class KeyWordTest
 		return stepSuccess;
 	}
 
+	/**
+	 * Gets the os.
+	 *
+	 * @return the os
+	 */
 	public String getOs()
 	{
 		return os;
 	}
 
+	/**
+	 * Sets the os.
+	 *
+	 * @param os the new os
+	 */
 	public void setOs( String os )
 	{
 		this.os = os;

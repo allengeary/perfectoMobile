@@ -27,19 +27,30 @@ import com.perfectoMobile.page.keyWord.step.spi.KWSVisible;
 import com.perfectoMobile.page.keyWord.step.spi.KWSWait;
 import com.perfectoMobile.page.keyWord.step.spi.KWSWaitFor;
 
+// TODO: Auto-generated Javadoc
 /**
  * A factory for creating KeyWordStep objects.
  */
 public class KeyWordStepFactory
 {
+	
+	/** The singleton. */
 	private static KeyWordStepFactory singleton = new KeyWordStepFactory();
 
+	/**
+	 * Instance.
+	 *
+	 * @return the key word step factory
+	 */
 	public static KeyWordStepFactory instance()
 	{
 		return singleton;
 	}
 	
+	/** The step map. */
 	private Map<String,Class>stepMap = new HashMap<String,Class>( 20 );
+	
+	/** The log. */
 	private Log log = LogFactory.getLog( KeyWordStepFactory.class );
 	
 	/**
@@ -50,6 +61,9 @@ public class KeyWordStepFactory
 		initializeDefaults();
 	}
 	
+	/**
+	 * Initialize defaults.
+	 */
 	private void initializeDefaults()
 	{
 		addKeyWord( "CALL", KWSCall.class );
@@ -86,6 +100,7 @@ public class KeyWordStepFactory
 		
 		stepMap.put( keyWord.toUpperCase(), kwImpl );
 	}
+	
 	/**
 	 * Creates a new KeyWordStep object.
 	 *
@@ -97,6 +112,10 @@ public class KeyWordStepFactory
 	 * @param timed the timed
 	 * @param sFailure the s failure
 	 * @param inverse the inverse
+	 * @param os the os
+	 * @param poi the poi
+	 * @param threshold the threshold
+	 * @param description the description
 	 * @return the key word step
 	 */
 	public KeyWordStep createStep( String name, String pageName, boolean active, String type, String linkId, boolean timed, StepFailure sFailure, boolean inverse, String os, String poi, int threshold, String description )

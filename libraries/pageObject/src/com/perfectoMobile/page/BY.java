@@ -1,5 +1,6 @@
 package com.perfectoMobile.page;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Enum BY.
  */
@@ -33,8 +34,13 @@ public enum BY
 	/** The v image. */
 	V_IMAGE( 8, "Visual Image", "VISUAL" );
 	
+	/** The id. */
 	private int id;
+	
+	/** The description. */
 	private String description;
+	
+	/** The required context. */
 	private String requiredContext;
 	
 	/**

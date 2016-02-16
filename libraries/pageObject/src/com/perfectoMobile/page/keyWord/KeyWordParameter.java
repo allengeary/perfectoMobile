@@ -1,5 +1,6 @@
 package com.perfectoMobile.page.keyWord;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class KeyWordParameter.
  */
@@ -20,10 +21,15 @@ public class KeyWordParameter
  STATIC, 
  /** The data. */
  DATA,
+ 
+ /** The content. */
  CONTENT;
 	}
 	
+	/** The type. */
 	private ParameterType type;
+	
+	/** The value. */
 	private String value;
 
 	

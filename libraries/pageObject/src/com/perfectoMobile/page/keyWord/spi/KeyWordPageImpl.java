@@ -6,12 +6,14 @@ import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.keyWord.KeyWordPage;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class KeyWordPageImpl.
  */
 public class KeyWordPageImpl extends AbstractPage implements KeyWordPage
 {
 
+	/** The _page name. */
 	private String _pageName;
 	
 	/* (non-Javadoc)

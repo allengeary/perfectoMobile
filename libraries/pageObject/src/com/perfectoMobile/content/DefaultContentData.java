@@ -1,11 +1,16 @@
 package com.perfectoMobile.content;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class DefaultContentData.
  */
 public class DefaultContentData implements ContentData
 {
+	
+	/** The name. */
 	private String name;
+	
+	/** The matrix data. */
 	private String[] matrixData;
 	
 	/**

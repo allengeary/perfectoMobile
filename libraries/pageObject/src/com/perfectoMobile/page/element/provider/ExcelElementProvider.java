@@ -17,15 +17,23 @@ import com.perfectoMobile.page.ElementDescriptor;
 import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.element.ElementFactory;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CSVElementProvider.
  */
 public class ExcelElementProvider extends AbstractElementProvider
 {
+	
+	/** The element map. */
 	private Map<String,Element> elementMap = new HashMap<String,Element>(20);
 	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
+	
+	/** The tab names. */
 	private String tabNames;
 	
 	
@@ -55,6 +63,9 @@ public class ExcelElementProvider extends AbstractElementProvider
 		readElements();
 	}
 	
+	/**
+	 * Read elements.
+	 */
 	private void readElements()
 	{
 		if ( fileName == null )
@@ -78,6 +89,12 @@ public class ExcelElementProvider extends AbstractElementProvider
 		}
 	}
 	
+	/**
+	 * Gets the cell value.
+	 *
+	 * @param cell the cell
+	 * @return the cell value
+	 */
 	private String getCellValue( XSSFCell cell )
 	{
 		if (cell != null)
@@ -97,6 +114,11 @@ public class ExcelElementProvider extends AbstractElementProvider
 		return null;
 	}
 	
+	/**
+	 * Read elements.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readElements( InputStream inputStream )
 	{
 		

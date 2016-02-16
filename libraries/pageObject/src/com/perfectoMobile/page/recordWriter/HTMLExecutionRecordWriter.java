@@ -10,12 +10,17 @@ import com.perfectoMobile.page.ExecutionRecord;
 import com.perfectoMobile.page.ExecutionRecordWriter;
 import com.perfectoMobile.page.PageManager.StepStatus;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class HTMLExecutionRecordWriter.
  */
 public class HTMLExecutionRecordWriter implements ExecutionRecordWriter
 {
+	
+	/** The root folder. */
 	private File rootFolder;
+	
+	/** The output writer. */
 	private Writer outputWriter;
 	
 	/** The success. */

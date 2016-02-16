@@ -11,7 +11,10 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
+import com.morelandLabs.integrations.common.PercentagePoint;
+import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.spi.PropertyProvider;
 import com.morelandLabs.spi.driver.NativeDriverProvider;
 
@@ -24,6 +27,7 @@ public abstract class AbstractGesture implements Gesture
 	private static final String DEVICE_NAME = "DEVICE_NAME";
 	/** The log. */
 	protected Log log = LogFactory.getLog( Gesture.class );
+	protected WebElement webElement;
 	
 	/**
 	 * _execute gesture.
@@ -41,6 +45,13 @@ public abstract class AbstractGesture implements Gesture
 		return _executeGesture( webDriver );
 	}
 	
+	@Override
+	public boolean executeGesture(WebDriver webDriver, WebElement webElement) 
+	{
+		this.webElement = webElement;
+		return _executeGesture( webDriver );
+	}
+	
 	/**
 	 * Gets the actual point.
 	 *
@@ -50,6 +61,16 @@ public abstract class AbstractGesture implements Gesture
 	 */
 	protected Point getActualPoint( Point percentagePoint, Dimension screenDimension )
 	{
+		if ( webElement != null )
+		{
+			if ( webElement.getLocation() != null && webElement.getSize() != null && webElement.getSize().getWidth() > 0 && webElement.getSize().getHeight() > 0 )
+			{
+				int x = percentagePoint.getX() * webElement.getSize().getWidth() + webElement.getLocation().getX();
+				int y = percentagePoint.getY() * webElement.getSize().getHeight() + webElement.getLocation().getY();
+				return new Point( x, y );
+			}
+		}
+		
 		return new Point( (int) ( (percentagePoint.getX() / 100.0 ) * (double)screenDimension.getWidth() ), (int) ( (percentagePoint.getY() / 100.0 ) * (double)screenDimension.getHeight() ) );
 	}
 	

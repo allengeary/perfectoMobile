@@ -3,18 +3,29 @@ package com.perfectoMobile.page;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * Holds a reference to the executions of a timed method or event.
  */
 public class ExecutionTiming
 {
+	
+	/** The method name. */
 	private String methodName;
 	
 	/** The run list. */
 	public List<Long> runList = new ArrayList<Long>( 10 );
+	
+	/** The execution time. */
 	private long executionTime = 0;
+	
+	/** The minimum run. */
 	private long minimumRun = Long.MAX_VALUE;
+	
+	/** The maximum run. */
 	private long maximumRun = 0;
+	
+	/** The average run. */
 	private long averageRun = 0;
 	
 	/**
@@ -110,6 +121,11 @@ public class ExecutionTiming
 		return methodName;
 	}
 
+	/**
+	 * Gets the execution time.
+	 *
+	 * @return the execution time
+	 */
 	public long getExecutionTime() {
 		return executionTime;
 	}

@@ -11,6 +11,7 @@ import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class KWSValue.
  */
@@ -81,6 +82,12 @@ public class KWSContrastRatio extends AbstractKeyWordStep
 		return true;
 	}
 
+	/**
+	 * Calculate luminance.
+	 *
+	 * @param rgb the rgb
+	 * @return the double
+	 */
 	private static double calculateLuminance( int[] rgb )
 	{
 		double[] dRGB = new double[3];
@@ -99,6 +106,12 @@ public class KWSContrastRatio extends AbstractKeyWordStep
 
 	}
 	
+	/**
+	 * Extract colors.
+	 *
+	 * @param colorData the color data
+	 * @return the int[]
+	 */
 	public int[] extractColors( int colorData )
 	{
 		return new int[] { (int) ( (colorData & 0x00ff0000) >> 16 ), (int) ( (colorData & 0x0000ff00) >> 8 ), (int) ( (colorData & 0x000000ff) )} ;

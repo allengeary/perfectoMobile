@@ -4,11 +4,11 @@ import com.perfectoMobile.gesture.Gesture;
 import com.perfectoMobile.gesture.Gesture.GestureType;
 import com.perfectoMobile.gesture.factory.AbstractGestureFactory;
 import com.perfectoMobile.gesture.factory.GestureFactory;
-import com.perfectoMobile.gesture.factory.spi.perfectoV7.KeyPressGesture;
-import com.perfectoMobile.gesture.factory.spi.perfectoV7.PressGesture;
-import com.perfectoMobile.gesture.factory.spi.perfectoV7.RotateGesture;
-import com.perfectoMobile.gesture.factory.spi.perfectoV7.SwipeGesture;
-import com.perfectoMobile.gesture.factory.spi.perfectoV7.TwoFingerGesture;
+import com.perfectoMobile.gesture.factory.spi.perfecto.KeyPressGesture;
+import com.perfectoMobile.gesture.factory.spi.perfecto.PressGesture;
+import com.perfectoMobile.gesture.factory.spi.perfecto.RotateGesture;
+import com.perfectoMobile.gesture.factory.spi.perfecto.SwipeGesture;
+import com.perfectoMobile.gesture.factory.spi.perfecto.TwoFingerGesture;
 
 /**
  * A factory for creating SeleniumGesture objects.

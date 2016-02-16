@@ -4,9 +4,18 @@ import org.apache.xpath.patterns.ContextMatchStepPattern;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DefaultContentDataTest.
+ */
 public class DefaultContentDataTest
 {
 
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	@Test
 	public void getName()
 	{
@@ -15,6 +24,11 @@ public class DefaultContentDataTest
 		Assert.assertEquals( cd.getName(), "test" );
 	}
 
+	/**
+	 * Gets the value.
+	 *
+	 * @return the value
+	 */
 	@Test
 	public void getValue()
 	{
@@ -28,6 +42,11 @@ public class DefaultContentDataTest
 		Assert.assertNull( cd.getValue() );
 	}
 
+	/**
+	 * Gets the value string.
+	 *
+	 * @return the value string
+	 */
 	@Test
 	public void getValueString()
 	{
@@ -42,6 +61,11 @@ public class DefaultContentDataTest
 		Assert.assertNull( cd.getValue( "4" ) );
 	}
 
+	/**
+	 * Gets the valueint.
+	 *
+	 * @return the valueint
+	 */
 	@Test
 	public void getValueint()
 	{

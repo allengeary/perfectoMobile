@@ -9,7 +9,26 @@ import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
 /**
- * The Class KWSAttribute.
+ * Keyword(s): <b>ATTRIBUTE</b><br>
+ * Description: The Attribute keyword allows the developer to extract a named attributes value from an Element and either store it or compare it to provided value. <br>
+ * Parameters: Parameters can be supplied in as either a single parameter or a set of 2 parameters <br>
+ * <i>Extraction Only</i><br>
+ * <ul>
+ * <li>Attribute Name: This specifies the name of the attribute that you want to extract</li>
+ * </ul>
+ * <i>Extraction and Comparison</i><br>
+ * <ul>
+ * <li>Compare To: This specifies the value that you want to compare the attribute to</li>
+ * <li>Attribute Name: This specifies the name of the attribute that you want to extract</li>
+ * </ul> 
+ * <br><br><b>Example(s): </b><ul>
+ * <li> This example will extract the value of the 'name' attribute and compare it to the static text 'myelement' from the element named 'TEST_ELEMENT'<br>
+ * {@literal <step name="TEST_ELEMENT" type="ATTRIBUTE" page="TEST_PAGE"> }<br>
+ * &nbsp;&nbsp;&nbsp;{@literal 	<parameter type="static" value="myelement" /> }<br>
+ * &nbsp;&nbsp;&nbsp;{@literal 	<parameter type="static" value="name" /> }<br>
+ * {@literal </step> }
+ * </li>
+ * </ul>
  */
 public class KWSAttribute extends AbstractKeyWordStep
 {

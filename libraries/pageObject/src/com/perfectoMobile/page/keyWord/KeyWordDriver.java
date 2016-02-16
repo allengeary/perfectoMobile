@@ -15,19 +15,32 @@ import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.data.PageDataManager;
 import com.perfectoMobile.page.keyWord.provider.KeyWordProvider;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class KeyWordDriver.
  */
 public class KeyWordDriver
 {
+	
+	/** The test list. */
 	private List<String> testList = new ArrayList<String>( 20 );
+	
+	/** The test map. */
 	private Map<String, KeyWordTest> testMap = new HashMap<String, KeyWordTest>( 10 );
+	
+	/** The inactive test map. */
 	private Map<String, KeyWordTest> inactiveTestMap = new HashMap<String, KeyWordTest>( 10 );
+	
+	/** The function map. */
 	private Map<String, KeyWordTest> functionMap = new HashMap<String, KeyWordTest>( 10 );
+	
+	/** The page map. */
 	private Map<String, Class<Page>> pageMap = new HashMap<String, Class<Page>>( 10 );
 
+	/** The context map. */
 	private ThreadLocal<Map<String, Object>> contextMap = new ThreadLocal<Map<String, Object>>();
 
+	/** The singleton. */
 	private static KeyWordDriver singleton = new KeyWordDriver();
 
 	/**
@@ -40,6 +53,9 @@ public class KeyWordDriver
 		return singleton;
 	}
 
+	/**
+	 * Instantiates a new key word driver.
+	 */
 	private KeyWordDriver()
 	{
 
@@ -56,6 +72,7 @@ public class KeyWordDriver
 		keyWordProvider.readData();
 	}
 
+	/** The log. */
 	private Log log = LogFactory.getLog( KeyWordDriver.class );
 
 	/**
@@ -187,6 +204,12 @@ public class KeyWordDriver
 	}
 
 	
+	/**
+	 * Gets the test.
+	 *
+	 * @param testName the test name
+	 * @return the test
+	 */
 	public KeyWordTest getTest( String testName )
 	{
 		KeyWordTest test = testMap.get( testName );

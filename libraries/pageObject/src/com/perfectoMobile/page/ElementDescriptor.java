@@ -1,13 +1,22 @@
 package com.perfectoMobile.page;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ElementDescriptor.
  */
 public class ElementDescriptor 
 {
+	
+	/** The Constant DELIMITER. */
 	private static final String DELIMITER = ".";
+	
+	/** The site name. */
 	private String siteName;
+	
+	/** The page name. */
 	private String pageName;
+	
+	/** The element name. */
 	private String elementName;
 	
 	

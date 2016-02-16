@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.perfectoMobile.page.data.PageData;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractPageDataProvider.
  */
@@ -25,9 +26,14 @@ public abstract class AbstractPageDataProvider implements PageDataProvider
 	 * @see com.perfectoMobile.page.data.provider.PageDataProvider#readPageData()
 	 */
 	public abstract void readPageData();
+	
+	/** The wait time out. */
 	private long waitTimeOut = 60;
 	
+	/** The record map. */
 	private Map<String,Deque<PageData>> recordMap = new HashMap<String,Deque<PageData>>( 10 );
+	
+	/** The id map. */
 	private Map<String,PageData> idMap = new HashMap<String,PageData>( 10 );
 
 	/* (non-Javadoc)

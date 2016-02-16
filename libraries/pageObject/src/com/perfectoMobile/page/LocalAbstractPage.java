@@ -6,11 +6,14 @@ import java.util.Map;
 import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.element.provider.ElementDataSource;
 
+// TODO: Auto-generated Javadoc
 /**
  * Holds local reference to all loaded page elements.  This is the default page object abstraction
  */
 public abstract class LocalAbstractPage extends AbstractPage
 {
+	
+	/** The element map. */
 	private Map<String,Element> elementMap = new HashMap<String,Element>( 20 );
 	
 	/**

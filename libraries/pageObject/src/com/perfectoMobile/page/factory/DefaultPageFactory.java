@@ -18,6 +18,7 @@ import com.perfectoMobile.page.PageManager;
 
 
 
+// TODO: Auto-generated Javadoc
 /**
  * A factory for creating DefaultPage objects.
  *
@@ -26,7 +27,10 @@ import com.perfectoMobile.page.PageManager;
 public class DefaultPageFactory extends LocalPageFactory implements InvocationHandler
 {
 
+    /** The Constant TYPE. */
     private static final String TYPE = "TYPE";
+    
+    /** The service map. */
     private Map<Class<Page>,Page> serviceMap = new HashMap<>( 10 );
     
     
@@ -48,6 +52,14 @@ public class DefaultPageFactory extends LocalPageFactory implements InvocationHa
     	return (Page) Proxy.newProxyInstance( this.getClass().getClassLoader(), new Class[] { serviceInterface, Page.class }, this );
     }
     
+    /**
+     * Find method.
+     *
+     * @param rootClass the root class
+     * @param methodName the method name
+     * @param args the args
+     * @return the method
+     */
     private Method findMethod( Class rootClass, String methodName, Object[] args )
     {
     	Method[] methodArray = rootClass.getMethods();
@@ -139,6 +151,14 @@ public class DefaultPageFactory extends LocalPageFactory implements InvocationHa
 		return null;
 	}
 	
+    /**
+     * Checks if is correct method.
+     *
+     * @param compareMethod the compare method
+     * @param methodName the method name
+     * @param parameterArray the parameter array
+     * @return true, if is correct method
+     */
     private boolean isCorrectMethod( Method compareMethod, String methodName, Object[] parameterArray )
     {
         if ( !methodName.equals( compareMethod.getName() ) )
@@ -168,6 +188,13 @@ public class DefaultPageFactory extends LocalPageFactory implements InvocationHa
         return true;
     }
     
+    /**
+     * Checks if is instance.
+     *
+     * @param classType the class type
+     * @param value the value
+     * @return true, if is instance
+     */
     private boolean isInstance( Class classType, Object value )
     {
         try

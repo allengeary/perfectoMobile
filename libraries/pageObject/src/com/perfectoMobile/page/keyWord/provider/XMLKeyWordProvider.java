@@ -34,34 +34,80 @@ import com.perfectoMobile.page.keyWord.KeyWordToken;
 import com.perfectoMobile.page.keyWord.KeyWordToken.TokenType;
 import com.perfectoMobile.page.keyWord.step.KeyWordStepFactory;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class XMLKeyWordProvider.
  */
 public class XMLKeyWordProvider implements KeyWordProvider
 {
+	
+	/** The Constant NAME. */
 	private static final String NAME = "name";
+	
+	/** The Constant PAGE. */
 	private static final String PAGE = "page";
+	
+	/** The Constant CLASS. */
 	private static final String CLASS = "class";
+	
+	/** The Constant TYPE. */
 	private static final String TYPE = "type";
+	
+	/** The Constant VALUE. */
 	private static final String VALUE = "value";
+	
+	/** The Constant ACTIVE. */
 	private static final String ACTIVE = "active";
+	
+	/** The Constant LINK. */
 	private static final String LINK = "linkId";
+	
+	/** The Constant TIMED. */
 	private static final String TIMED = "timed";
+	
+	/** The Constant INVERT. */
 	private static final String INVERT = "inverse";
+	
+	/** The Constant POI. */
 	private static final String POI = "poi";
+	
+	/** The Constant THRESHOLD. */
 	private static final String THRESHOLD = "threshold";
+	
+	/** The Constant OS. */
 	private static final String OS = "os";
+	
+	/** The Constant FAILURE_MODE. */
 	private static final String FAILURE_MODE = "failureMode";
+	
+	/** The Constant DATA_PROVIDER. */
 	private static final String DATA_PROVIDER = "dataProvider";
+	
+	/** The Constant DATA_DRIVER. */
 	private static final String DATA_DRIVER = "dataDriver";
+	
+	/** The Constant FILE_NAME. */
 	private static final String FILE_NAME = "fileName";
+	
+	/** The Constant INCLUDE_TESTS. */
 	private static final String INCLUDE_TESTS = "includeTests";
+	
+	/** The Constant INCLUDE_FUNCTIONS. */
 	private static final String INCLUDE_FUNCTIONS = "includeFunctions";
 
+	/** The log. */
 	private Log log = LogFactory.getLog( KeyWordTest.class );
+	
+	/** The x path factory. */
 	private XPathFactory xPathFactory;
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
+	
+	/** The as resource. */
 	private boolean asResource = false;
 
 	/**
@@ -118,6 +164,13 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		}
 	}
 
+	/**
+	 * Read elements.
+	 *
+	 * @param inputStream the input stream
+	 * @param readTests the read tests
+	 * @param readFunctions the read functions
+	 */
 	private void readElements( InputStream inputStream, boolean readTests, boolean readFunctions )
 	{
 
@@ -191,6 +244,11 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		}
 	}
 
+	/**
+	 * Parses the imports.
+	 *
+	 * @param xmlDocument the xml document
+	 */
 	private void parseImports( Document xmlDocument )
 	{
 		NodeList nodeList = getNodes( xmlDocument, "//suite/import" );
@@ -225,6 +283,11 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		}
 	}
 
+	/**
+	 * Parses the model.
+	 *
+	 * @param xmlDocument the xml document
+	 */
 	private void parseModel( Document xmlDocument )
 	{
 		NodeList nodeList = getNodes( xmlDocument, "//suite/model/page" );
@@ -254,6 +317,13 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		}
 	}
 
+	/**
+	 * Parses the test.
+	 *
+	 * @param testNode the test node
+	 * @param typeName the type name
+	 * @return the key word test
+	 */
 	private KeyWordTest parseTest( Node testNode, String typeName )
 	{
 		Node useNode = testNode;
@@ -353,6 +423,14 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		return test;
 	}
 
+	/**
+	 * Parses the steps.
+	 *
+	 * @param testNode the test node
+	 * @param testName the test name
+	 * @param typeName the type name
+	 * @return the key word step[]
+	 */
 	private KeyWordStep[] parseSteps( Node testNode, String testName, String typeName )
 	{
 		NodeList nodeList = testNode.getChildNodes();
@@ -440,6 +518,15 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		return stepList.toArray( new KeyWordStep[0] );
 	}
 
+	/**
+	 * Parses the parameters.
+	 *
+	 * @param testNode the test node
+	 * @param testName the test name
+	 * @param stepName the step name
+	 * @param typeName the type name
+	 * @return the key word parameter[]
+	 */
 	private KeyWordParameter[] parseParameters( Node testNode, String testName, String stepName, String typeName )
 	{
 		List<KeyWordParameter> paramList = new ArrayList<KeyWordParameter>( 10 );
@@ -465,6 +552,15 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		return paramList.toArray( new KeyWordParameter[0] );
 	}
 
+	/**
+	 * Parses the tokens.
+	 *
+	 * @param testNode the test node
+	 * @param testName the test name
+	 * @param stepName the step name
+	 * @param typeName the type name
+	 * @return the key word token[]
+	 */
 	private KeyWordToken[] parseTokens( Node testNode, String testName, String stepName, String typeName )
 	{
 		List<KeyWordToken> paramList = new ArrayList<KeyWordToken>( 10 );
@@ -491,6 +587,13 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		return paramList.toArray( new KeyWordToken[0] );
 	}
 
+	/**
+	 * Gets the nodes.
+	 *
+	 * @param xmlDocument the xml document
+	 * @param xPathExpression the x path expression
+	 * @return the nodes
+	 */
 	private NodeList getNodes( Document xmlDocument, String xPathExpression )
 	{
 		try
@@ -508,6 +611,13 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		}
 	}
 
+	/**
+	 * Gets the node.
+	 *
+	 * @param xmlDocument the xml document
+	 * @param xPathExpression the x path expression
+	 * @return the node
+	 */
 	private Node getNode( Document xmlDocument, String xPathExpression )
 	{
 		try

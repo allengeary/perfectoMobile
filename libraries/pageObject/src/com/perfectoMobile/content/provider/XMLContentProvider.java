@@ -26,15 +26,23 @@ import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.element.ElementFactory;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class XMLElementProvider.
  */
 public class XMLContentProvider extends AbstractContentProvider
 {
+	
+	/** The Constant NAME. */
 	private static final String NAME = "name";
 
+	/** The x path factory. */
 	private XPathFactory xPathFactory;
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
 	
 	/**
@@ -59,6 +67,9 @@ public class XMLContentProvider extends AbstractContentProvider
 		this.resourceName = resourceName;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.content.provider.ContentProvider#readContent()
+	 */
 	public void readContent()
 	{
 		if ( fileName == null )
@@ -82,6 +93,11 @@ public class XMLContentProvider extends AbstractContentProvider
 		}
 	}
 	
+	/**
+	 * Read elements.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readElements( InputStream inputStream )
 	{
 		
@@ -134,6 +150,13 @@ public class XMLContentProvider extends AbstractContentProvider
 	
 	
 	
+	/**
+	 * Gets the node.
+	 *
+	 * @param xmlDocument the xml document
+	 * @param xPathExpression the x path expression
+	 * @return the node
+	 */
 	private  Node getNode( Document xmlDocument, String xPathExpression )
 	{
 		try
@@ -151,6 +174,13 @@ public class XMLContentProvider extends AbstractContentProvider
 		}
 	}
 	
+	/**
+	 * Gets the nodes.
+	 *
+	 * @param xmlDocument the xml document
+	 * @param xPathExpression the x path expression
+	 * @return the nodes
+	 */
 	private  NodeList getNodes( Document xmlDocument, String xPathExpression )
 	{
 		try

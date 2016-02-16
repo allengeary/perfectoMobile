@@ -52,7 +52,7 @@ public class IOSDriverFactory extends AbstractDriverFactory
 				dc.setCapability( name, currentDevice.getCabilities().get( name ) );
 			
 			for ( String name : ApplicationRegistry.instance().getAUT().getCapabilities().keySet() )
-				dc.setCapability( name, currentDevice.getCabilities().get( name ) );
+				dc.setCapability( name, ApplicationRegistry.instance().getAUT().getCapabilities().get( name ) );
 			
 			dc.setCapability( AUTOMATION_NAME, "Appium" );
 			if( ApplicationRegistry.instance().getAUT().getAppleIdentifier() != null && !ApplicationRegistry.instance().getAUT().getAppleIdentifier().isEmpty() )

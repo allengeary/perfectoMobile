@@ -31,6 +31,7 @@ import com.perfectoMobile.page.factory.DefaultPageFactory;
 import com.perfectoMobile.page.factory.PageFactory;
 import com.perfectoMobile.page.listener.ExecutionListener;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class PageManager.
  *
@@ -38,54 +39,117 @@ import com.perfectoMobile.page.listener.ExecutionListener;
  */
 public class PageManager
 {
+	
+	/** The log. */
 	private Log log = LogFactory.getLog( PageManager.class );
+	
+	/** The Constant EXECUTION_ID. */
 	private static final String EXECUTION_ID = "EXECUTION_ID";
+	
+	/** The Constant DEVICE_NAME. */
 	private static final String DEVICE_NAME = "DEVICE_NAME";
+    
+    /** The singleton. */
     private static PageManager singleton = new PageManager();
+    
+    /** The site name. */
     private String siteName;
+    
+    /** The element provider. */
     private ElementProvider elementProvider;
+    
+    /** The execution listeners. */
     private List<ExecutionListener> executionListeners = new ArrayList<ExecutionListener>( 20 );
 
+    /** The timing map. */
     private Map<String,ExecutionTiming> timingMap = new HashMap<String,ExecutionTiming>( 20 );
+    
+    /** The execution log. */
     private Map<String,List<ExecutionRecord>> executionLog = new HashMap<String,List<ExecutionRecord>>( 20 );
+    
+    /** The local exception. */
     private ThreadLocal<Throwable> localException = new ThreadLocal<Throwable>();
     
+    /** The timing writer. */
     private ExecutionTimingWriter timingWriter = null;
+    
+    /** The record writer. */
     private ExecutionRecordWriter recordWriter = null;
     
+    /** The page factory. */
     private PageFactory pageFactory = new DefaultPageFactory();
     
+    /** The wind tunnel enabled. */
     private boolean windTunnelEnabled = false;
     
+    /** The store images. */
     private boolean storeImages = false;
+    
+    /** The image location. */
     private String imageLocation;
 
     
     
+	/**
+	 * Checks if is wind tunnel enabled.
+	 *
+	 * @return true, if is wind tunnel enabled
+	 */
 	public boolean isWindTunnelEnabled() {
 		return windTunnelEnabled;
 	}
 
+	/**
+	 * Sets the wind tunnel enabled.
+	 *
+	 * @param windTunnelEnabled the new wind tunnel enabled
+	 */
 	public void setWindTunnelEnabled(boolean windTunnelEnabled) {
 		this.windTunnelEnabled = windTunnelEnabled;
 	}
 
+	/**
+	 * Checks if is store images.
+	 *
+	 * @return true, if is store images
+	 */
 	public boolean isStoreImages() {
 		return storeImages;
 	}
 
+	/**
+	 * Sets the store images.
+	 *
+	 * @param storeImages the new store images
+	 */
 	public void setStoreImages(boolean storeImages) {
 		this.storeImages = storeImages;
 	}
     
+    /**
+     * Gets the image location.
+     *
+     * @return the image location
+     */
     public String getImageLocation() {
 		return imageLocation;
 	}
 
+	/**
+	 * Sets the image location.
+	 *
+	 * @param imageLocation the new image location
+	 */
 	public void setImageLocation(String imageLocation) {
 		this.imageLocation = imageLocation;
 	}
 	
+	/**
+	 * Write image.
+	 *
+	 * @param image the image
+	 * @param fileName the file name
+	 */
 	public void writeImage( BufferedImage image, String fileName )
 	{
 		try
@@ -107,11 +171,20 @@ public class PageManager
 
 
 
+	/**
+	 * The Enum StepStatus.
+	 */
 	public enum StepStatus
     {
-    	SUCCESS,
-    	FAILURE,
-    	FAILURE_IGNORED;
+    	
+	    /** The success. */
+	    SUCCESS,
+    	
+	    /** The failure. */
+	    FAILURE,
+    	
+	    /** The failure ignored. */
+	    FAILURE_IGNORED;
     }
 
     /**
@@ -124,6 +197,9 @@ public class PageManager
         return singleton;
     }
 
+    /**
+     * Instantiates a new page manager.
+     */
     private PageManager() {}
     
     /**
@@ -243,8 +319,13 @@ public class PageManager
     /**
      * Adds the execution timing.
      *
+     * @param executionId the execution id
+     * @param deviceName the device name
      * @param methodName the method name
      * @param runLength the run length
+     * @param status the status
+     * @param description the description
+     * @param threshold the threshold
      */
     public void addExecutionTiming( String executionId, String deviceName, String methodName, long runLength, StepStatus status, String description, int threshold )
     {
@@ -276,6 +357,8 @@ public class PageManager
      * @param status the status
      * @param detail the detail
      * @param t the t
+     * @param threshold the threshold
+     * @param description the description
      */
     public void addExecutionLog( String executionId, String deviceName, String group, String name, String type, long timestamp, long runLength, StepStatus status, String detail, Throwable t, int threshold, String description )
     {
@@ -350,6 +433,8 @@ public class PageManager
     
     /**
      * Write execution timings.
+     *
+     * @param additionalUrls the additional urls
      */
     public void writeExecutionRecords( Map<String,String> additionalUrls )
     {

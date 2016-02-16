@@ -1,5 +1,6 @@
 package com.perfectoMobile.page.keyWord;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class KeyWordToken.
  */
@@ -21,11 +22,18 @@ public class KeyWordToken
 		/** The data. */
 		
 		CONTENT, 
+		
+		/** The data. */
 		DATA;
 	}
 
+	/** The type. */
 	private TokenType type;
+	
+	/** The value. */
 	private String value;
+	
+	/** The name. */
 	private String name;
 
 	/**

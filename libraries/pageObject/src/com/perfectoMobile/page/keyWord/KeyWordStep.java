@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.data.PageData;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface KeyWordStep.
  */
@@ -36,8 +37,14 @@ public interface KeyWordStep
 	 */
 	public enum ValidationType
 	{
+		
+		/** The regex. */
 		REGEX,
+		
+		/** The empty. */
 		EMPTY,
+		
+		/** The not empty. */
 		NOT_EMPTY;
 	}
 
@@ -51,8 +58,7 @@ public interface KeyWordStep
 	/**
 	 * Sets the link id.
 	 *
-	 * @param linkId
-	 *            the new link id
+	 * @param os the new os
 	 */
 	public void setOs( String os );
 	
@@ -234,27 +240,87 @@ public interface KeyWordStep
 	 */
 	public String toError();
 	
+	/**
+	 * Gets the context.
+	 *
+	 * @return the context
+	 */
 	public String getContext();
 	
+	/**
+	 * Gets the validation.
+	 *
+	 * @return the validation
+	 */
 	public String getValidation();
 	
+	/**
+	 * Sets the validation.
+	 *
+	 * @param validation the new validation
+	 */
 	public void setValidation( String validation );
 	
+	/**
+	 * Gets the validation type.
+	 *
+	 * @return the validation type
+	 */
 	public ValidationType getValidationType();
 	
+	/**
+	 * Sets the validation type.
+	 *
+	 * @param validationType the new validation type
+	 */
 	public void setValidationType( ValidationType validationType );
 	
+	/**
+	 * Sets the context.
+	 *
+	 * @param contextName the new context
+	 */
 	public void setContext( String contextName );
 	
+	/**
+	 * Sets the threshold.
+	 *
+	 * @param threshold the new threshold
+	 */
 	public void setThreshold( int threshold );
 	
+	/**
+	 * Gets the threshold.
+	 *
+	 * @return the threshold
+	 */
 	public int getThreshold();
 	
+	/**
+	 * Sets the description.
+	 *
+	 * @param description the new description
+	 */
 	public void setDescription( String description );
 	
+	/**
+	 * Gets the description.
+	 *
+	 * @return the description
+	 */
 	public String getDescription();
 	
+	/**
+	 * Sets the poi.
+	 *
+	 * @param poi the new poi
+	 */
 	public void setPoi( String poi );
 	
+	/**
+	 * Gets the poi.
+	 *
+	 * @return the poi
+	 */
 	public String getPoi();
 }

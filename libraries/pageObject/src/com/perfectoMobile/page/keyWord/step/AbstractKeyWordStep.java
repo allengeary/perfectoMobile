@@ -30,48 +30,95 @@ import com.perfectoMobile.page.keyWord.KeyWordStep;
 import com.perfectoMobile.page.keyWord.KeyWordToken;
 import com.perfectoMobile.page.keyWord.step.spi.KWSLoopBreak;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractKeyWordStep.
  */
 public abstract class AbstractKeyWordStep implements KeyWordStep
 {
 
+	/** The name. */
 	private String name;
+	
+	/** The page name. */
 	private String pageName;
+	
+	/** The active. */
 	private boolean active;
+	
+	/** The link id. */
 	private String linkId;
+	
+	/** The timed. */
 	private boolean timed;
+	
+	/** The s failure. */
 	private StepFailure sFailure;
+	
+	/** The inverse. */
 	private boolean inverse = false;
+	
+	/** The Constant SPLIT. */
 	private static final String SPLIT = "-->";
+	
+	/** The fork. */
 	private boolean fork;
+	
+	/** The os. */
 	private String os;
+	
+	/** The context. */
 	private String context;
+	
+	/** The validation. */
 	private String validation;
+	
+	/** The threshold. */
 	private int threshold;
+	
+	/** The description. */
 	private String description;
+	
+	/** The validation type. */
 	private ValidationType validationType;
+	
+	/** The poi. */
 	private String poi;
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#getPoi()
+	 */
 	public String getPoi() {
 		return poi;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#setPoi(java.lang.String)
+	 */
 	public void setPoi(String poi) {
 		this.poi = poi;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#getContext()
+	 */
 	public String getContext()
 	{
 		return context;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#setContext(java.lang.String)
+	 */
 	public void setContext( String context )
 	{
 		this.context = context;
 	}
 
+	/** The parameter list. */
 	private List<KeyWordParameter> parameterList = new ArrayList<KeyWordParameter>( 10 );
+	
+	/** The token list. */
 	private List<KeyWordToken> tokenList = new ArrayList<KeyWordToken>( 10 );
 	
 	/** The log. */
@@ -90,6 +137,12 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	protected abstract boolean _executeStep( Page pageObject, WebDriver webDriver, Map<String, Object> contextMap, Map<String, PageData> dataMap ) throws Exception;
 
 	
+	/**
+	 * Creates the point.
+	 *
+	 * @param pointValue the point value
+	 * @return the point
+	 */
 	protected Point createPoint( String pointValue )
 	{
 		Point x = null;
@@ -129,30 +182,48 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 		return fork;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#getOs()
+	 */
 	@Override
 	public String getOs()
 	{
 		return os;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#setOs(java.lang.String)
+	 */
 	@Override
 	public void setOs( String os )
 	{
 		this.os = os != null ? os.toUpperCase() : os;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#getThreshold()
+	 */
 	public int getThreshold() {
 		return threshold;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#setThreshold(int)
+	 */
 	public void setThreshold(int threshold) {
 		this.threshold = threshold;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#getDescription()
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#setDescription(java.lang.String)
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -192,6 +263,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 		this.inverse = inverse;
 	}
 
+	/** The step list. */
 	private List<KeyWordStep> stepList = new ArrayList<KeyWordStep>( 10 );
 
 	/* (non-Javadoc)
@@ -240,9 +312,28 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	 */
 	protected Element getElement( Page pageObject, Map<String, Object> contextMap, Object webDriver, Map<String,PageData> dataMap )
 	{
-		if ( name.startsWith( Element.CONTEXT_ELEMENT ) )
+		return getElement( pageObject, contextMap, webDriver, dataMap, null );
+	}
+	
+	/**
+	 * Gets the element.
+	 *
+	 * @param pageObject the page object
+	 * @param contextMap the context map
+	 * @param webDriver the web driver
+	 * @param dataMap the data map
+	 * @param overrideName the override name
+	 * @return the element
+	 */
+	protected Element getElement( Page pageObject, Map<String, Object> contextMap, Object webDriver, Map<String,PageData> dataMap, String overrideName )
+	{
+		String useName = name;
+		if ( overrideName != null && !overrideName.isEmpty() )
+			useName = overrideName;
+		
+		if ( useName.startsWith( Element.CONTEXT_ELEMENT ) )
 		{
-			if (Element.CONTEXT_ELEMENT.equals( name ))
+			if (Element.CONTEXT_ELEMENT.equals( useName ))
 			{
 				if (log.isDebugEnabled())
 					log.debug( "Attempting to acquire CONTEXT element" );
@@ -256,7 +347,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 			}
 			else
 			{
-				String elementName = name.split( SPLIT )[ 1 ];
+				String elementName = useName.split( SPLIT )[ 1 ];
 				
 				if (log.isDebugEnabled())
 					log.debug( "Attempting to acquire CONTEXT element" );
@@ -285,8 +376,8 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 			if ( tokenList != null && !tokenList.isEmpty() )
 			{
 				if ( log.isInfoEnabled() )
-					log.info( "Cloning Element " + name + " on page " + pageName );
-				Element clonedElement = pageObject.getElement( pageName, name ).cloneElement();
+					log.info( "Cloning Element " + useName + " on page " + pageName );
+				Element clonedElement = pageObject.getElement( pageName, useName ).cloneElement();
 				
 				for ( KeyWordToken token : tokenList )
 				{
@@ -296,7 +387,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 				return clonedElement;
 			}
 			else
-				return pageObject.getElement( pageName, name );
+				return pageObject.getElement( pageName, useName );
 		}
 	}
 	
@@ -861,6 +952,12 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 		return PageManager.instance().getDeviceName(webDriver);
 	}
 	
+	/**
+	 * Validate data.
+	 *
+	 * @param dataValue the data value
+	 * @return true, if successful
+	 */
 	protected boolean validateData( String dataValue )
 	{
 		if ( validationType == null )
@@ -895,21 +992,33 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#getValidation()
+	 */
 	public String getValidation()
 	{
 		return validation;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#setValidation(java.lang.String)
+	 */
 	public void setValidation( String validation )
 	{
 		this.validation = validation;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#getValidationType()
+	 */
 	public ValidationType getValidationType()
 	{
 		return validationType;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#setValidationType(com.perfectoMobile.page.keyWord.KeyWordStep.ValidationType)
+	 */
 	public void setValidationType( ValidationType validationType )
 	{
 		this.validationType = validationType;

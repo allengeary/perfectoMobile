@@ -2,11 +2,14 @@ package com.perfectoMobile.page.data;
 
 import com.perfectoMobile.page.data.provider.PageDataProvider;
 
+// TODO: Auto-generated Javadoc
 /**
  * The singleton containing all loaded page data records.
  */
 public class PageDataManager
 {
+	
+	/** The singleton. */
 	private static PageDataManager singleton = new PageDataManager();
 
     /**
@@ -19,8 +22,12 @@ public class PageDataManager
         return singleton;
     }
 
+    /**
+     * Instantiates a new page data manager.
+     */
     private PageDataManager() {}
     
+    /** The data provider. */
     private PageDataProvider dataProvider;
     
     /**

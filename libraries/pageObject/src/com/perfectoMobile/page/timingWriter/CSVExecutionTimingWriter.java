@@ -8,12 +8,17 @@ import java.io.Writer;
 import com.perfectoMobile.page.ExecutionTiming;
 import com.perfectoMobile.page.ExecutionTimingWriter;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CSVExecutionTimingWriter.
  */
 public class CSVExecutionTimingWriter implements ExecutionTimingWriter
 {
+	
+	/** The output file. */
 	private File outputFile;
+	
+	/** The output writer. */
 	private Writer outputWriter;
 	
 	/* (non-Javadoc)

@@ -17,6 +17,7 @@ import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
@@ -32,19 +33,35 @@ import com.perfectoMobile.page.BY;
 import com.perfectoMobile.page.ElementDescriptor;
 import com.perfectoMobile.page.PageManager;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class SeleniumElement.
  */
 public class SeleniumElement extends AbstractElement
 {
+	
+	/** The log. */
 	private static Log log = LogFactory.getLog( SeleniumElement.class );
+	
+	/** The Constant EXECUTION_ID. */
 	private static final String EXECUTION_ID = "EXECUTION_ID";
+	
+	/** The Constant DEVICE_NAME. */
 	private static final String DEVICE_NAME = "DEVICE_NAME";
 	
+	/** The web driver. */
 	private WebDriver webDriver;
+	
+	/** The located element. */
 	private WebElement locatedElement;
+	
+	/** The count. */
 	private int count = -1;
+	
+	/** The index. */
 	private int index = -1;
+	
+	/** The use visual driver. */
 	private boolean useVisualDriver = false;
 
 	/* (non-Javadoc)
@@ -71,6 +88,17 @@ public class SeleniumElement extends AbstractElement
 		super( by, elementKey, fieldName, pageName, contextElement );
 	}
 	
+	/**
+	 * Instantiates a new selenium element.
+	 *
+	 * @param by the by
+	 * @param elementKey the element key
+	 * @param fieldName the field name
+	 * @param pageName the page name
+	 * @param contextElement the context element
+	 * @param locatedElement the located element
+	 * @param index the index
+	 */
 	private SeleniumElement( BY by, String elementKey, String fieldName, String pageName, String contextElement, WebElement locatedElement, int index )
 	{
 		super( by, elementKey, fieldName, pageName, contextElement );
@@ -78,6 +106,9 @@ public class SeleniumElement extends AbstractElement
 		this.index = index;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.element.AbstractElement#_getImage(com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution)
+	 */
 	@Override
 	public Image _getImage( Resolution imageResolution )
 	{
@@ -131,6 +162,12 @@ public class SeleniumElement extends AbstractElement
 	}
 	
 	
+	/**
+	 * Gets the element.
+	 *
+	 * @param elementName the element name
+	 * @return the element
+	 */
 	private Element getElement( String elementName )
     {
     	ElementDescriptor elementDescriptor = new ElementDescriptor( PageManager.instance().getSiteName(), getPageName(), elementName );
@@ -163,6 +200,11 @@ public class SeleniumElement extends AbstractElement
 		return index;
 	}
 
+	/**
+	 * Use by.
+	 *
+	 * @return the by
+	 */
 	private By useBy()
 	{
 		if (getBy().getContext() != null)
@@ -251,6 +293,11 @@ public class SeleniumElement extends AbstractElement
 			return null;
 	}
 
+	/**
+	 * Gets the element.
+	 *
+	 * @return the element
+	 */
 	private WebElement getElement()
 	{
 		if ( locatedElement != null )
@@ -430,10 +477,25 @@ public class SeleniumElement extends AbstractElement
 	protected void _setValue( String currentValue )
 	{
 		WebElement webElement = getElement();
-		if (log.isInfoEnabled())
-			log.info( "Setting element [" + getKey() + "] to " + currentValue );
-		webElement.clear();
-		webElement.sendKeys( currentValue );
+		
+		if ( webElement.getTagName().equalsIgnoreCase( "select" ) )
+		{
+			if (log.isInfoEnabled())
+				log.info( "Selecting element value from [" + getKey() + "] as " + currentValue );
+			
+			Select selectElement = new Select( webElement );
+			if ( selectElement.isMultiple() )
+				selectElement.deselectAll();
+			
+			selectElement.selectByVisibleText( currentValue );
+		}
+		else
+		{
+			if (log.isInfoEnabled())
+				log.info( "Setting element [" + getKey() + "] to " + currentValue );
+			webElement.clear();
+			webElement.sendKeys( currentValue );
+		}
 
 	}
 

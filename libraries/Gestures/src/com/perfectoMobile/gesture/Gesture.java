@@ -1,6 +1,7 @@
 package com.perfectoMobile.gesture;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
  * The Interface Gesture.
@@ -62,6 +63,14 @@ public interface Gesture
 	 * @return true, if successful
 	 */
 	public boolean executeGesture( WebDriver webDriver );
+	
+	/**
+	 * Execute gesture.
+	 *
+	 * @param webDriver the web driver
+	 * @return true, if successful
+	 */
+	public boolean executeGesture( WebDriver webDriver, WebElement webElement );
 	
 	/**
 	 * Sets the parameters.

@@ -6,12 +6,17 @@ import org.apache.commons.logging.LogFactory;
 import com.perfectoMobile.page.BY;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * A factory for creating Element objects.
  */
 public class ElementFactory 
 {
+	
+	/** The Constant DEFAULT_IMPL. */
 	private static final String DEFAULT_IMPL = "Selenium";
+	
+	/** The log. */
 	private Log log = LogFactory.getLog( getClass() );
 	
 	/**
@@ -23,7 +28,10 @@ public class ElementFactory
 		/** The Selenium. */
 		Selenium( 0, "Selenium" );
 		
+		/** The id. */
 		private int id;
+		
+		/** The desc. */
 		private String desc;
 		
 		/**
@@ -61,6 +69,7 @@ public class ElementFactory
 		
 	}
 	
+	/** The singleton. */
 	private static ElementFactory singleton = new ElementFactory();
     
 
@@ -74,6 +83,9 @@ public class ElementFactory
         return singleton;
     }
 
+    /**
+     * Instantiates a new element factory.
+     */
     private ElementFactory() 
     {
     	

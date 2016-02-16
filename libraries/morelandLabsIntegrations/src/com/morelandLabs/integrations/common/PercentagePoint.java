@@ -11,6 +11,8 @@ public class PercentagePoint
 	
 	/** The y. */
 	public int y;
+	
+	boolean includePercent = true;
 
 	/**
 	 * Instantiates a new percentage point.
@@ -22,6 +24,19 @@ public class PercentagePoint
 	{
 		this.x = x;
 		this.y = y;
+	}
+	
+	/**
+	 * Instantiates a new percentage point.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 */
+	public PercentagePoint( int x, int y, boolean includePercent )
+	{
+		this.x = x;
+		this.y = y;
+		this.includePercent = includePercent;
 	}
 
 	/**
@@ -87,6 +102,9 @@ public class PercentagePoint
 	@Override
 	public String toString()
 	{
-		return String.format( "%d%%, %d%%", x, y );
+		if ( includePercent )
+			return String.format( "%d%%, %d%%", x, y );
+		else
+			return String.format( "%d, %d", x, y );
 	}
 }

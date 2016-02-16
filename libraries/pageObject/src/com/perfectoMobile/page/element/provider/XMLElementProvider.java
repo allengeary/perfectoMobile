@@ -24,21 +24,41 @@ import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.element.ElementFactory;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class XMLElementProvider.
  */
 public class XMLElementProvider extends AbstractElementProvider
 {
+	
+	/** The Constant NAME. */
 	private static final String NAME = "name";
+	
+	/** The Constant DESCRIPTOR. */
 	private static final String DESCRIPTOR = "descriptor";
+	
+	/** The Constant VALUE. */
 	private static final String VALUE = "value";
+	
+	/** The Constant CONTEXT_NAME. */
 	private static final String CONTEXT_NAME = "contextName";
+	
+	/** The Constant FILE_NAME. */
 	private static final String FILE_NAME = "fileName";
 
+	/** The element map. */
 	private Map<String,Element> elementMap = new HashMap<String,Element>(20);
+	
+	/** The x path factory. */
 	private XPathFactory xPathFactory;
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
+	
+	/** The as resource. */
 	private boolean asResource = false;
 	
 	/**
@@ -65,6 +85,9 @@ public class XMLElementProvider extends AbstractElementProvider
 		readElements();
 	}
 	
+	/**
+	 * Read elements.
+	 */
 	private void readElements()
 	{
 		if ( fileName == null )
@@ -89,6 +112,11 @@ public class XMLElementProvider extends AbstractElementProvider
 		}
 	}
 	
+	/**
+	 * Read elements.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readElements( InputStream inputStream )
 	{
 		
@@ -115,6 +143,11 @@ public class XMLElementProvider extends AbstractElementProvider
 		}
 	}
 	
+	/**
+	 * Parses the import.
+	 *
+	 * @param importNode the import node
+	 */
 	private void parseImport( Node importNode )
 	{
 		Node fileName = importNode.getAttributes().getNamedItem( FILE_NAME );
@@ -137,6 +170,11 @@ public class XMLElementProvider extends AbstractElementProvider
 		}
 	}
 	
+	/**
+	 * Parses the site.
+	 *
+	 * @param siteNode the site node
+	 */
 	private void parseSite( Node siteNode )
 	{
 		String siteName = siteNode.getAttributes().getNamedItem( NAME ).getNodeValue();
@@ -154,6 +192,12 @@ public class XMLElementProvider extends AbstractElementProvider
 		}
 	}
 	
+	/**
+	 * Parses the page.
+	 *
+	 * @param siteName the site name
+	 * @param pageNode the page node
+	 */
 	private void parsePage( String siteName, Node pageNode )
 	{
 		String pageName = pageNode.getAttributes().getNamedItem( NAME ).getNodeValue();
@@ -169,6 +213,13 @@ public class XMLElementProvider extends AbstractElementProvider
 			parseElement( siteName, pageName, nodeList.item( i ) );
 	}
 	
+	/**
+	 * Parses the element.
+	 *
+	 * @param siteName the site name
+	 * @param pageName the page name
+	 * @param elementNode the element node
+	 */
 	private void parseElement( String siteName, String pageName, Node elementNode )
 	{
 		String elementName = elementNode.getAttributes().getNamedItem( NAME ).getNodeValue();
@@ -198,6 +249,13 @@ public class XMLElementProvider extends AbstractElementProvider
 	}
 	
 	
+	/**
+	 * Gets the nodes.
+	 *
+	 * @param xmlDocument the xml document
+	 * @param xPathExpression the x path expression
+	 * @return the nodes
+	 */
 	private  NodeList getNodes( Document xmlDocument, String xPathExpression )
 	{
 		try

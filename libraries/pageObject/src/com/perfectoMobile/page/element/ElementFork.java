@@ -8,15 +8,26 @@ import org.apache.commons.logging.LogFactory;
 
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ElementFork.
  */
 public class ElementFork
 {
+	
+	/** The log. */
 	private Log log = LogFactory.getLog( ElementFork.class );
+	
+	/** The thread pool. */
 	private static ExecutorService threadPool = Executors.newCachedThreadPool();
+	
+	/** The element index. */
 	private int elementIndex = -1;
+	
+	/** The element found. */
 	private Element elementFound;
+	
+	/** The time out. */
 	private long timeOut;
 	
 	/**
@@ -112,12 +123,28 @@ public class ElementFork
 		}
 	}
 	
+	/**
+	 * The Class ElementThread.
+	 */
 	private class ElementThread implements Runnable
 	{
+		
+		/** The current element. */
 		private Element currentElement;
+		
+		/** The index. */
 		private int index;
+		
+		/** The time out. */
 		private int timeOut;
 		
+		/**
+		 * Instantiates a new element thread.
+		 *
+		 * @param currentElement the current element
+		 * @param index the index
+		 * @param timeOut the time out
+		 */
 		public ElementThread( Element currentElement, int index, int timeOut )
 		{
 			this.currentElement = currentElement;
@@ -125,6 +152,9 @@ public class ElementFork
 			this.timeOut = timeOut;
 		}
 		
+		/* (non-Javadoc)
+		 * @see java.lang.Runnable#run()
+		 */
 		public void run()
 		{
 			

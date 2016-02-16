@@ -13,6 +13,7 @@ import com.perfectoMobile.page.BY;
 import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.PageManager.StepStatus;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractElement.
  */
@@ -69,6 +70,7 @@ public abstract class AbstractElement implements Element
 	/**
 	 * _is present.
 	 *
+	 * @param res the res
 	 * @return true, if successful
 	 */
 	protected abstract Image _getImage( Resolution res );
@@ -103,14 +105,31 @@ public abstract class AbstractElement implements Element
 	 */
 	protected abstract Element[] _getAll();
 	
+	/** The by. */
 	private BY by;
+	
+	/** The element key. */
 	private String elementKey;
+	
+	/** The timed. */
 	private boolean timed;
+	
+	/** The element name. */
 	private String elementName;
+	
+	/** The page name. */
 	private String pageName;
+	
+	/** The context element. */
 	private String contextElement;
+	
+	/** The context. */
 	private Element context;
+	
+	/** The token map. */
 	private Map<String,String> tokenMap = null;
+	
+	/** The tokens applied. */
 	private boolean tokensApplied = false;
 
 	/**
@@ -421,6 +440,9 @@ public abstract class AbstractElement implements Element
 		return returnValue;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.element.Element#getImage(com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution)
+	 */
 	@Override
 	public Image getImage( Resolution resolution )
 	{

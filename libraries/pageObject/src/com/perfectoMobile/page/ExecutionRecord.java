@@ -2,17 +2,32 @@ package com.perfectoMobile.page;
 
 import com.perfectoMobile.page.PageManager.StepStatus;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ExecutionRecord.
  */
 public class ExecutionRecord
 {
+	
+	/** The group. */
 	private String group;
+	
+	/** The name. */
 	private String name;
+	
+	/** The type. */
 	private String type;
+	
+	/** The time stamp. */
 	private long timeStamp;
+	
+	/** The run time. */
 	private long runTime;
+	
+	/** The status. */
 	private StepStatus status;
+	
+	/** The t. */
 	private Throwable t;
 	
 	/**
@@ -80,6 +95,7 @@ public class ExecutionRecord
 		this.status = status;
 	}
 
+	/** The detail. */
 	private String detail;
 	
 	/**

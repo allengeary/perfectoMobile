@@ -39,7 +39,6 @@ public class SwipeGesture extends AbstractSwipeGesture
 		Point actualStart = getActualPoint( getSwipeStart(), screenDimension );
 		Point actualEnd = getActualPoint( getSwipeEnd(), screenDimension );
 		
-		
 		TouchAction swipeAction = new TouchAction( appiumDriver );
 		swipeAction.press( actualStart.getX(), actualStart.getY() ).moveTo( actualEnd.getX(), actualEnd.getY() ).release().perform();
 		

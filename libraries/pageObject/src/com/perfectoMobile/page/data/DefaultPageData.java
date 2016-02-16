@@ -3,6 +3,7 @@ package com.perfectoMobile.page.data;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO: Auto-generated Javadoc
 /**
  * The default page data instance.
  */
@@ -12,8 +13,13 @@ public class DefaultPageData implements PageData
 	/** The record map. */
 	public Map<String, String> recordMap = new HashMap<String, String>( 10 );
 
+	/** The type name. */
 	private String typeName;
+	
+	/** The record name. */
 	private String recordName;
+	
+	/** The active. */
 	private boolean active;
 
 	/**
@@ -21,6 +27,7 @@ public class DefaultPageData implements PageData
 	 *
 	 * @param typeName the type name
 	 * @param recordName the record name
+	 * @param active the active
 	 */
 	public DefaultPageData( String typeName, String recordName, boolean active )
 	{
@@ -66,6 +73,9 @@ public class DefaultPageData implements PageData
 		recordMap.put( fieldName, value );
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.data.PageData#isActive()
+	 */
 	@Override
 	public boolean isActive()
 	{

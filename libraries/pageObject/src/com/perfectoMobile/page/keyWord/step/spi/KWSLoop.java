@@ -12,12 +12,17 @@ import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.keyWord.KeyWordDriver;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class KWSLoop.
  */
 public class KWSLoop extends AbstractKeyWordStep
 {
+	
+	/** The Constant DATA_START. */
 	private static final String DATA_START = "data{";
+	
+	/** The Constant DATA_STOP. */
 	private static final String DATA_STOP = "}";
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep#_executeStep(com.perfectoMobile.page.Page, org.openqa.selenium.WebDriver, java.util.Map, java.util.Map)

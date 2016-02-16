@@ -8,7 +8,6 @@ import org.openqa.selenium.ScreenOrientation;
 import com.perfectoMobile.gesture.Gesture.Direction;
 import com.perfectoMobile.gesture.Gesture.GestureType;
 import com.perfectoMobile.gesture.factory.GestureFactory;
-import com.perfectoMobile.gesture.factory.spi.PerfectoGestureFactory;
 
 /**
  * The Class GestureManager.

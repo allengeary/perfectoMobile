@@ -14,15 +14,26 @@ import com.perfectoMobile.content.ContentData;
 import com.perfectoMobile.content.ContentManager;
 import com.perfectoMobile.content.DefaultContentData;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CSVElementProvider.
  */
 public class ExcelContentProvider extends AbstractContentProvider
 {	
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
+	
+	/** The key column. */
 	private int keyColumn;
+	
+	/** The lookup columns. */
 	private int[] lookupColumns;
+	
+	/** The tab name. */
 	private String tabName;
 	
 	
@@ -30,7 +41,9 @@ public class ExcelContentProvider extends AbstractContentProvider
 	 * Instantiates a new Excel element provider.
 	 *
 	 * @param fileName the file name
-	 * @param tabNames the tab names
+	 * @param tabName the tab name
+	 * @param keyColumn the key column
+	 * @param lookupColumns the lookup columns
 	 */
 	public ExcelContentProvider( File fileName, String tabName, int keyColumn, int[] lookupColumns )
 	{
@@ -44,7 +57,9 @@ public class ExcelContentProvider extends AbstractContentProvider
 	 * Instantiates a new CSV element provider.
 	 *
 	 * @param resourceName the resource name
-	 * @param tabNames the tab names
+	 * @param tabName the tab name
+	 * @param keyColumn the key column
+	 * @param lookupColumns the lookup columns
 	 */
 	public ExcelContentProvider( String resourceName, String tabName, int keyColumn, int[] lookupColumns )
 	{
@@ -54,6 +69,9 @@ public class ExcelContentProvider extends AbstractContentProvider
 		this.tabName = tabName;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.content.provider.ContentProvider#readContent()
+	 */
 	public void readContent()
 	{
 		if ( fileName == null )
@@ -77,6 +95,12 @@ public class ExcelContentProvider extends AbstractContentProvider
 		}
 	}
 	
+	/**
+	 * Gets the cell value.
+	 *
+	 * @param cell the cell
+	 * @return the cell value
+	 */
 	private String getCellValue( XSSFCell cell )
 	{
 		if (cell != null)
@@ -96,6 +120,11 @@ public class ExcelContentProvider extends AbstractContentProvider
 		return null;
 	}
 	
+	/**
+	 * Read elements.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readElements( InputStream inputStream )
 	{
 		
@@ -111,9 +140,6 @@ public class ExcelContentProvider extends AbstractContentProvider
 			{
 				XSSFRow currentRow = sheet.getRow( i );
 
-				if ( getCellValue( currentRow.getCell( 0 ) ) == null || getCellValue( currentRow.getCell( 0 ) ).isEmpty() )
-					break;
-				
 				String keyName = getCellValue( currentRow.getCell( keyColumn ) );
 				
 				String[] valueList = new String[ lookupColumns.length ];

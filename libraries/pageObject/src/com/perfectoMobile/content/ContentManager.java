@@ -11,21 +11,38 @@ import org.apache.commons.logging.LogFactory;
 import com.perfectoMobile.content.provider.ContentProvider;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
+// TODO: Auto-generated Javadoc
 /**
  * The singleton containing all loaded page data records.
  */
 public class ContentManager
 {
+	
+	/** The Constant OB. */
 	private static final String OB = "{";
+	
+	/** The Constant CB. */
 	private static final String CB = "}";
+	
+	/** The Constant PS. */
 	private static final String PS = "#";
 	
+	/** The content pattern. */
 	private static Pattern CONTENT_PATTERN = Pattern.compile( "(\\S*)\\{?(#)?(\\w*)?\\}?" );
+	
+	/** The singleton. */
 	private static ContentManager singleton = new ContentManager();
 	
+	/** The content map. */
 	private Map<String,ContentData> contentMap = new HashMap<String,ContentData>( 100 );
+	
+	/** The matrix positions. */
 	private Map<String,Integer> matrixPositions = new HashMap<String,Integer> ();
+	
+	/** The matrix data. */
 	private Map<Integer,String> matrixData = new HashMap<Integer,String> ();
+	
+	/** The log. */
 	private Log log = LogFactory.getLog( ContentManager.class );
 	
     /**
@@ -38,8 +55,12 @@ public class ContentManager
         return singleton;
     }
 
+    /**
+     * Instantiates a new content manager.
+     */
     private ContentManager() {}
     
+    /** The content provider. */
     private ContentProvider contentProvider;
     
     /**
@@ -56,7 +77,7 @@ public class ContentManager
     /**
      * Gets the content.
      *
-     * @param contentKey the content key
+     * @param contentName the content name
      * @return the content
      */
     public ContentData getContent( String contentName )
@@ -156,7 +177,12 @@ public class ContentManager
      */
     public void addContentData( ContentData contentData )
     {
-    	if ( contentData != null )
+    	if ( contentData != null && contentData.getName() != null && contentData.getValue() != null )
+    	{
+    		if ( log.isInfoEnabled() )
+    			log.info( "Adding content for [" + contentData.getName() + "] as [" + contentData + "]" );
+    		
     		contentMap.put( contentData.getName(), contentData );
+    	}
     }
 }

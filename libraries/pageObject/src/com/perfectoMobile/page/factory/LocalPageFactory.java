@@ -18,6 +18,7 @@ import com.perfectoMobile.page.element.Element;
 
 
 
+// TODO: Auto-generated Javadoc
 /**
  * The local page factory is used to create the local instance using the interface name and 
  * a derived implementation name using a predefined structure.  The FQGN of the interface name 
@@ -27,9 +28,16 @@ import com.perfectoMobile.page.element.Element;
 public class LocalPageFactory extends AbstractPageFactory
 {
 
+    /** The Constant DOT. */
     private static final char DOT = '.';
+    
+    /** The Constant SPI. */
     private static final String SPI = ".spi";
+    
+    /** The Constant IMPL. */
     private static final String IMPL = "Impl";
+    
+    /** The Constant GET. */
     private static final String GET = "get";
     
     /**

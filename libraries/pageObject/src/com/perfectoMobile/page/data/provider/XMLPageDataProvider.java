@@ -21,17 +21,29 @@ import com.perfectoMobile.page.data.DefaultPageData;
 import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.element.ElementFactory;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class XMLPageDataProvider.
  */
 public class XMLPageDataProvider extends AbstractPageDataProvider
 {
+	
+	/** The Constant NAME. */
 	private static final String NAME = "name";
+	
+	/** The Constant ACTIVE. */
 	private static final String ACTIVE = "active";
+	
+	/** The Constant LOCK. */
 	private static final String LOCK = "lockRecords";
 
+	/** The x path factory. */
 	private XPathFactory xPathFactory;
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
 
 	/**
@@ -84,6 +96,11 @@ public class XMLPageDataProvider extends AbstractPageDataProvider
 
 	}
 
+	/**
+	 * Read elements.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readElements( InputStream inputStream )
 	{
 
@@ -107,6 +124,11 @@ public class XMLPageDataProvider extends AbstractPageDataProvider
 		}
 	}
 
+	/**
+	 * Parses the type.
+	 *
+	 * @param siteNode the site node
+	 */
 	private void parseType( Node siteNode )
 	{
 		String typeName = siteNode.getAttributes().getNamedItem( NAME ).getNodeValue();
@@ -127,6 +149,12 @@ public class XMLPageDataProvider extends AbstractPageDataProvider
 			parseRecord( typeName, nodeList.item( i ) );
 	}
 
+	/**
+	 * Parses the record.
+	 *
+	 * @param typeName the type name
+	 * @param pageNode the page node
+	 */
 	private void parseRecord( String typeName, Node pageNode )
 	{
 		String recordName = pageNode.getAttributes().getNamedItem( NAME ).getNodeValue();
@@ -168,6 +196,13 @@ public class XMLPageDataProvider extends AbstractPageDataProvider
 		addRecord( currentRecord );
 	}
 
+	/**
+	 * Gets the nodes.
+	 *
+	 * @param xmlDocument the xml document
+	 * @param xPathExpression the x path expression
+	 * @return the nodes
+	 */
 	private NodeList getNodes( Document xmlDocument, String xPathExpression )
 	{
 		try

@@ -20,13 +20,20 @@ import org.w3c.dom.NodeList;
 
 import com.perfectoMobile.page.data.DefaultPageData;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class XMLPageDataProvider.
  */
 public class ExcelPageDataProvider extends AbstractPageDataProvider
 {
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
+	
+	/** The tab names. */
 	private String tabNames;
 
 	/**
@@ -81,6 +88,12 @@ public class ExcelPageDataProvider extends AbstractPageDataProvider
 
 	}
 
+	/**
+	 * Gets the cell value.
+	 *
+	 * @param cell the cell
+	 * @return the cell value
+	 */
 	private String getCellValue( XSSFCell cell )
 	{
 		if (cell != null)
@@ -101,6 +114,11 @@ public class ExcelPageDataProvider extends AbstractPageDataProvider
 	}
 	
 	
+	/**
+	 * Read elements.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readElements( InputStream inputStream )
 	{
 		
