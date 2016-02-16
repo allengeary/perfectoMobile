@@ -4,6 +4,7 @@ import com.morelandLabs.integrations.perfectoMobile.rest.bean.Handset;
 import com.morelandLabs.integrations.perfectoMobile.rest.bean.HandsetCollection;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.PerfectoService.ServiceDescriptor;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface Devices.
  */

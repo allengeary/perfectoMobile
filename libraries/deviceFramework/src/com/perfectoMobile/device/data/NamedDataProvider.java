@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.data;
 
 import org.apache.commons.logging.Log;
@@ -9,14 +12,20 @@ import com.morelandLabs.spi.Device;
 import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.SimpleDevice;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CSVDataProvider.
  */
 public class NamedDataProvider implements DataProvider
 {
+	
+	/** The log. */
 	private Log log = LogFactory.getLog( NamedDataProvider.class );
 	
+	/** The named resources. */
 	private String[] namedResources = null; 
+	
+	/** The driver type. */
 	private DriverType driverType;
 	
 	/**

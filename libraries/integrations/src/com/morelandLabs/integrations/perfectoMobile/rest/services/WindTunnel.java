@@ -3,6 +3,7 @@ package com.morelandLabs.integrations.perfectoMobile.rest.services;
 import com.morelandLabs.integrations.perfectoMobile.rest.bean.Execution;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.PerfectoService.ServiceDescriptor;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface WindTunnel.
  */
@@ -45,7 +46,10 @@ public interface WindTunnel extends PerfectoService
 	public enum Status
 	{
 		
+		/** The success. */
 		success,
+		
+		/** The failure. */
 		failure;
 	}
 	
@@ -70,6 +74,7 @@ public interface WindTunnel extends PerfectoService
 	 * @param result the result
 	 * @param status the status
 	 * @param description the description
+	 * @param threshold the threshold
 	 * @return the execution
 	 */
 	@Operation( operationName="command" )

@@ -2,11 +2,14 @@ package com.perfectoMobile.gesture;
 
 import org.openqa.selenium.ScreenOrientation;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractRotateGesture.
  */
 public abstract class AbstractRotateGesture extends AbstractGesture
 {
+	
+	/** The s orientation. */
 	private ScreenOrientation sOrientation;
 	
 	/* (non-Javadoc)

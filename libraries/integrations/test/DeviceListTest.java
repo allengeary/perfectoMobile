@@ -5,8 +5,18 @@ import com.morelandLabs.integrations.perfectoMobile.rest.services.Devices;
 import com.morelandLabs.integrations.perfectoMobile.rest.bean.Handset;
 import com.morelandLabs.integrations.perfectoMobile.rest.bean.HandsetCollection;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DeviceListTest.
+ */
 public class DeviceListTest
 {
+    
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main( String[] args )
     {
         PerfectoMobile.instance().setBaseUrl( "https://partners.perfectomobile.com" );

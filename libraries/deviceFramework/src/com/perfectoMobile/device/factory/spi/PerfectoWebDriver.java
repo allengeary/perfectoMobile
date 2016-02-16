@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.factory.spi;
 
 import org.openqa.selenium.WebDriver;
@@ -9,11 +12,14 @@ import com.perfectoMobile.device.factory.DeviceWebDriver;
 import com.perfectomobile.selenium.api.IMobileDevice;
 import com.perfectomobile.selenium.nativeapp.MobileNativeApplication;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class PerfectoWebDriver.
  */
 public class PerfectoWebDriver extends DeviceWebDriver implements VisualDriverProvider
 {
+	
+	/** The mobile device. */
 	private IMobileDevice mobileDevice;
 	
 	/**

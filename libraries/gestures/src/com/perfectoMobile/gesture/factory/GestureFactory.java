@@ -5,6 +5,7 @@ import java.util.List;
 import com.perfectoMobile.gesture.Gesture;
 import com.perfectoMobile.gesture.Gesture.GestureType;
 
+// TODO: Auto-generated Javadoc
 /**
  * A factory for creating Gesture objects.
  */

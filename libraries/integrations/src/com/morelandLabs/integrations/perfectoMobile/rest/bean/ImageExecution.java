@@ -4,20 +4,27 @@ import com.morelandLabs.integrations.rest.bean.AbstractBean;
 import com.morelandLabs.integrations.rest.bean.Bean.BeanDescriptor;
 import com.morelandLabs.integrations.rest.bean.Bean.FieldDescriptor;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ImageExecution.
  */
 @BeanDescriptor( beanName="response" )
 public class ImageExecution extends AbstractBean
 {
+	
+	/** The width. */
 	@FieldDescriptor ( fieldPath="screenAnalysis.resultRegion.width" )
 	private String width;
+	
+	/** The height. */
 	@FieldDescriptor ( fieldPath="screenAnalysis.resultRegion.width" )
 	private String height;
 
+	/** The grade. */
 	@FieldDescriptor ( fieldPath="screenAnalysis.grade" )
 	private String grade;
 	
+	/** The status. */
 	@FieldDescriptor ( fieldPath="returnValue" )
 	private String status;
 

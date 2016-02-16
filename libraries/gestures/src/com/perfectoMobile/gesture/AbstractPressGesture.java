@@ -2,12 +2,17 @@ package com.perfectoMobile.gesture;
 
 import org.openqa.selenium.Point;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractPressGesture.
  */
 public abstract class AbstractPressGesture extends AbstractGesture
 {
+	
+	/** The press position. */
 	private Point pressPosition;
+	
+	/** The press length. */
 	private int pressLength;
 	
 	/* (non-Javadoc)

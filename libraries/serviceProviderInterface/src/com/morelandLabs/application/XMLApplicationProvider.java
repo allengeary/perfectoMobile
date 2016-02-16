@@ -18,20 +18,38 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class XMLApplicationProvider.
  */
 public class XMLApplicationProvider extends AbstractApplicationProvider
 {
+	
+	/** The Constant NAME. */
 	private static final String NAME = "name";
+	
+	/** The Constant APP_PACKAGE. */
 	private static final String APP_PACKAGE = "appPackage";
+	
+	/** The Constant BUNDLE_ID. */
 	private static final String BUNDLE_ID = "bundleId";
+	
+	/** The Constant URL. */
 	private static final String URL = "url";
+	
+	/** The Constant IOS_INSTALL. */
 	private static final String IOS_INSTALL = "iosInstall";
+	
+	/** The Constant ANDROID_INSTALL. */
 	private static final String ANDROID_INSTALL = "androidInstall";
 
+	/** The x path factory. */
 	private XPathFactory xPathFactory;
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
 	
 	/**
@@ -84,6 +102,11 @@ public class XMLApplicationProvider extends AbstractApplicationProvider
 		}
 	}
 	
+	/**
+	 * Read elements.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readElements( InputStream inputStream )
 	{
 		
@@ -108,6 +131,11 @@ public class XMLApplicationProvider extends AbstractApplicationProvider
 		}
 	}
 	
+	/**
+	 * Parses the application.
+	 *
+	 * @param appNode the app node
+	 */
 	private void parseApplication( Node appNode )
 	{
 		String appName = appNode.getAttributes().getNamedItem( NAME ).getNodeValue();
@@ -141,6 +169,13 @@ public class XMLApplicationProvider extends AbstractApplicationProvider
 		ApplicationRegistry.instance().addApplicationDescriptor( new ApplicationDescriptor( appName, description, appNode.getAttributes().getNamedItem( APP_PACKAGE ).getNodeValue(), appNode.getAttributes().getNamedItem( BUNDLE_ID ).getNodeValue(), appNode.getAttributes().getNamedItem( URL ).getNodeValue(), iosInstall, androidInstall, capabilities ) );
 	}
 	
+	/**
+	 * Gets the nodes.
+	 *
+	 * @param xmlDocument the xml document
+	 * @param xPathExpression the x path expression
+	 * @return the nodes
+	 */
 	private  NodeList getNodes( Document xmlDocument, String xPathExpression )
 	{
 		try

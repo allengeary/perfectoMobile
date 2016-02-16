@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.data;
 
 import java.io.File;
@@ -8,11 +11,14 @@ import org.apache.commons.logging.LogFactory;
 import com.perfectoMobile.device.artifact.ArtifactProducer;
 import com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class DataManager.
  */
 public class DataManager
 {
+	
+	/** The singleton. */
 	private static DataManager singleton = new DataManager();
 
 	/**
@@ -25,16 +31,30 @@ public class DataManager
 		return singleton;
 	}
 
+	/**
+	 * Instantiates a new data manager.
+	 */
 	private DataManager()
 	{
 
 	}
 	
+	/** The log. */
 	private Log log = LogFactory.getLog( DataManager.class );
+	
+	/** The test names. */
 	private String[] testNames;
+	
+	/** The persona names. */
 	private String[] personaNames;
+	
+	/** The artifact producer. */
 	private ArtifactProducer artifactProducer;
+	
+	/** The report folder. */
 	private File reportFolder;
+	
+	/** The automatic downloads. */
 	private ArtifactType[] automaticDownloads;
 
 	/**
@@ -59,16 +79,31 @@ public class DataManager
 	
 	
 	
+	/**
+	 * Gets the personas.
+	 *
+	 * @return the personas
+	 */
 	public String[] getPersonas() 
 	{
 		return personaNames;
 	}
 
+	/**
+	 * Sets the personas.
+	 *
+	 * @param personaNames the new personas
+	 */
 	public void setPersonas(String[] personaNames) 
 	{
 		this.personaNames = personaNames;
 	}
 	
+	/**
+	 * Sets the personas.
+	 *
+	 * @param personaNames the new personas
+	 */
 	public void setPersonas(String personaNames) 
 	{
 		this.personaNames = personaNames.split( "," );

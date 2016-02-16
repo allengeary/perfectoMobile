@@ -1,5 +1,6 @@
 package com.morelandLabs.integrations.common;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Location.
  */

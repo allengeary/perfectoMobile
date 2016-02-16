@@ -26,15 +26,23 @@ import com.morelandLabs.integrations.perfectoMobile.rest.services.PerfectoServic
 import com.morelandLabs.integrations.rest.bean.Bean;
 import com.morelandLabs.integrations.rest.bean.factory.BeanManager;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class RESTInvocationHandler.
  */
 public class RESTInvocationHandler implements InvocationHandler
 {
+	
+	/** The Constant SLASH. */
 	private static final String SLASH = "/";
+	
+	/** The Constant TYPE. */
 	private static final String TYPE = "TYPE";
+	
+	/** The Constant PARAM. */
 	private static final String PARAM = "param.";
 	
+	/** The log. */
 	private Log log = LogFactory.getLog( RESTInvocationHandler.class );
 	
 	/* (non-Javadoc)
@@ -163,6 +171,13 @@ public class RESTInvocationHandler implements InvocationHandler
 		
 	}
 	
+	/**
+	 * Gets the annotation.
+	 *
+	 * @param annotationArray the annotation array
+	 * @param annotationType the annotation type
+	 * @return the annotation
+	 */
 	private Annotation getAnnotation( Annotation[] annotationArray, Class annotationType )
 	{
 		for ( Annotation ant : annotationArray )
@@ -209,6 +224,14 @@ public class RESTInvocationHandler implements InvocationHandler
 		
 	}
 	
+	/**
+	 * Find method.
+	 *
+	 * @param rootClass the root class
+	 * @param methodName the method name
+	 * @param args the args
+	 * @return the method
+	 */
 	private Method findMethod( Class rootClass, String methodName, Object[] args )
     {
     	Method[] methodArray = rootClass.getMethods();
@@ -266,6 +289,14 @@ public class RESTInvocationHandler implements InvocationHandler
     	
     }
 	
+	/**
+	 * Checks if is correct method.
+	 *
+	 * @param compareMethod the compare method
+	 * @param methodName the method name
+	 * @param parameterArray the parameter array
+	 * @return true, if is correct method
+	 */
 	private boolean isCorrectMethod( Method compareMethod, String methodName, Object[] parameterArray )
     {
         if ( !methodName.equals( compareMethod.getName() ) )
@@ -295,6 +326,13 @@ public class RESTInvocationHandler implements InvocationHandler
         return true;
     }
     
+    /**
+     * Checks if is instance.
+     *
+     * @param classType the class type
+     * @param value the value
+     * @return true, if is instance
+     */
     private boolean isInstance( Class classType, Object value )
     {
         try

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.data;
 
 import java.io.File;
@@ -21,16 +24,29 @@ import com.morelandLabs.spi.Device;
 import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.SimpleDevice;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CSVDataProvider.
  */
 public class XMLDataProvider implements DataProvider
 {
+	
+	/** The log. */
 	private Log log = LogFactory.getLog( XMLDataProvider.class );
+	
+	/** The x path factory. */
 	private XPathFactory xPathFactory;
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
+	
+	/** The driver type. */
 	private DriverType driverType;
+	
+	/** The Constant NAME. */
 	private static final String NAME = "name";
 
 	/**
@@ -85,6 +101,11 @@ public class XMLDataProvider implements DataProvider
 		}
 	}
 	
+	/**
+	 * Read elements.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readElements( InputStream inputStream )
 	{
 		try
@@ -107,6 +128,11 @@ public class XMLDataProvider implements DataProvider
 		}
 	}
 	
+	/**
+	 * Parses the device.
+	 *
+	 * @param deviceNode the device node
+	 */
 	private void parseDevice( Node deviceNode )
 	{
 		String name = deviceNode.getAttributes().getNamedItem( NAME ).getNodeValue();
@@ -171,6 +197,13 @@ public class XMLDataProvider implements DataProvider
 		
 	}
 	
+	/**
+	 * Gets the value.
+	 *
+	 * @param deviceNode the device node
+	 * @param attributeName the attribute name
+	 * @return the value
+	 */
 	private String getValue( Node deviceNode, String attributeName )
 	{
 		Node attrNode = deviceNode.getAttributes().getNamedItem( attributeName );
@@ -180,6 +213,13 @@ public class XMLDataProvider implements DataProvider
 			return null;
 	}
 	
+	/**
+	 * Gets the nodes.
+	 *
+	 * @param xmlDocument the xml document
+	 * @param xPathExpression the x path expression
+	 * @return the nodes
+	 */
 	private NodeList getNodes( Document xmlDocument, String xPathExpression )
 	{
 		try

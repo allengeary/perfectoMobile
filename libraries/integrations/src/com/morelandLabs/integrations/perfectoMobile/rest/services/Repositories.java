@@ -3,6 +3,7 @@ package com.morelandLabs.integrations.perfectoMobile.rest.services;
 import com.morelandLabs.integrations.perfectoMobile.rest.bean.ItemCollection;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.PerfectoService.ServiceDescriptor;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface Repositories.
  */
@@ -36,6 +37,13 @@ public interface Repositories extends PerfectoService
 	@Operation( operationName="list" )
 	public ItemCollection getRepositorys( @ResourceID RepositoryType rType );
 
+	/**
+	 * Download.
+	 *
+	 * @param rType the r type
+	 * @param fileKey the file key
+	 * @return the byte[]
+	 */
 	@Operation( operationName="download" )
 	public byte[] download( @ResourceID RepositoryType rType, @ResourceID String fileKey );
 	

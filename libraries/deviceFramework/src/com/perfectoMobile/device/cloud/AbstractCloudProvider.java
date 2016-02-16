@@ -1,8 +1,12 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.cloud;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractApplicationProvider.
  */

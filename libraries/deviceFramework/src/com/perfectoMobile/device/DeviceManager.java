@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device;
 
 import java.lang.reflect.Method;
@@ -23,13 +26,17 @@ import com.perfectoMobile.device.factory.DeviceWebDriver;
 import com.perfectoMobile.device.factory.DriverManager;
 import com.perfectoMobile.device.listener.RunListener;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class DeviceManager.
  */
 public class DeviceManager
 {
+	
+	/** The singleton. */
 	private static DeviceManager singleton = new DeviceManager();
 	
+	/** The execution id. */
 	private ThreadLocal<String> executionId = new ThreadLocal<String>();
 
 	/**
@@ -42,32 +49,64 @@ public class DeviceManager
 		return singleton;
 	}
 
+	/**
+	 * Instantiates a new device manager.
+	 */
 	private DeviceManager()
 	{
 
 	}
 	
+	/** The log. */
 	private Log log = LogFactory.getLog( DeviceManager.class );
+	
+	/** The manager lock. */
 	private Lock managerLock = new ReentrantLock();
+	
+	/** The device map. */
 	private Map<String, Device> deviceMap = new HashMap<String, Device>( 20 );
+	
+	/** The device list. */
 	private List<Device> deviceList = new LinkedList<Device>();
+	
+	/** The device comparator. */
 	private Comparator<Device> deviceComparator = new WeightedDeviceComparator();
+	
+	/** The retry count. */
 	private int retryCount = 25;
 
+	/** The analytics map. */
 	private Map<String, DeviceAnalytics> analyticsMap = new HashMap<String, DeviceAnalytics>( 20 );
+	
+	/** The active runs. */
 	private Map<String,Boolean> activeRuns = new HashMap<String,Boolean>( 20 );
 
+	/** The run listeners. */
 	private List<RunListener> runListeners = new ArrayList<RunListener>( 20 );
+	
+	/** The caching enabled. */
 	private boolean cachingEnabled = false;
+	
+	/** The dry run. */
 	private boolean dryRun = false;
 
 	
 	
+	/**
+	 * Checks if is dry run.
+	 *
+	 * @return true, if is dry run
+	 */
 	public boolean isDryRun()
 	{
 		return dryRun;
 	}
 
+	/**
+	 * Sets the dry run.
+	 *
+	 * @param dryRun the new dry run
+	 */
 	public void setDryRun( boolean dryRun )
 	{
 		this.dryRun = dryRun;
@@ -114,6 +153,13 @@ public class DeviceManager
 	}
 	
 	
+	/**
+	 * Notify before run.
+	 *
+	 * @param currentDevice the current device
+	 * @param runKey the run key
+	 * @return true, if successful
+	 */
 	private boolean notifyBeforeRun( Device currentDevice, String runKey )
 	{
 		for ( RunListener runListener : runListeners )
@@ -132,6 +178,13 @@ public class DeviceManager
 		return true;
 	}
 	
+	/**
+	 * Notify after run.
+	 *
+	 * @param currentDevice the current device
+	 * @param runKey the run key
+	 * @param successful the successful
+	 */
 	private void notifyAfterRun( Device currentDevice, String runKey, boolean successful )
 	{
 		for ( RunListener runListener : runListeners )
@@ -196,6 +249,7 @@ public class DeviceManager
 	 * @param currentMethod            The current test method
 	 * @param testContext the test context
 	 * @param attachDevice the attach device
+	 * @param personaName the persona name
 	 * @return The next available device or null if no device are available
 	 */
 	public ConnectedDevice getDevice( Method currentMethod, String testContext, boolean attachDevice, String personaName )
@@ -371,6 +425,7 @@ public class DeviceManager
 	 * @param currentMethod the current method
 	 * @param testContext the test context
 	 * @param success the success
+	 * @param personaName the persona name
 	 */
 	public void addRun( Device currentDevice, Method currentMethod, String testContext, boolean success, String personaName )
 	{

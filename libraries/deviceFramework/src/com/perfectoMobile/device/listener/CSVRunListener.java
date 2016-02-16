@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.listener;
 
 import java.io.File;
@@ -7,21 +10,24 @@ import java.util.Map;
 
 import com.morelandLabs.spi.Device;
 
+// TODO: Auto-generated Javadoc
 /**
  * The listener interface for receiving CSVRun events.
  * The class that is interested in processing a CSVRun
  * event implements this interface, and the object created
  * with that class is registered with a component using the
- * component's <code>addCSVRunListener<code> method. When
+ * component's <code>addCSVRunListener</code> method. When
  * the CSVRun event occurs, that object's appropriate
  * method is invoked.
- *
- * @see CSVRunEvent
+
  */
 public class CSVRunListener implements RunListener
 {
+	
+	/** The run map. */
 	private Map <String,Long> runMap = new HashMap<String,Long>(20);
 	
+	/** The output file. */
 	private File outputFile = null;
 	
 	/**

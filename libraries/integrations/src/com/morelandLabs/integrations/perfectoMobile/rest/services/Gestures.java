@@ -4,6 +4,7 @@ import com.morelandLabs.integrations.common.PercentagePoint;
 import com.morelandLabs.integrations.perfectoMobile.rest.bean.Execution;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.PerfectoService.ServiceDescriptor;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface Gestures.
  */
@@ -56,8 +57,8 @@ public interface Gestures extends PerfectoService
 	 *
 	 * @param executionId the execution id
 	 * @param handsetId the handset id
-	 * @param start the start
-	 * @param end the end
+	 * @param key the key
+	 * @param metastate the metastate
 	 * @return the execution
 	 */
 	@Operation( operationName="command" )

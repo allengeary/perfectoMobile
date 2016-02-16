@@ -2,12 +2,17 @@ package com.perfectoMobile.gesture;
 
 import org.openqa.selenium.Point;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractSwipeGesture.
  */
 public abstract class AbstractSwipeGesture extends AbstractGesture
 {
+	
+	/** The swipe start. */
 	private Point swipeStart;
+	
+	/** The swipe end. */
 	private Point swipeEnd;
 	
 	/* (non-Javadoc)

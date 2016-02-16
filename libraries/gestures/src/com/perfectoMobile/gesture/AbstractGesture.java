@@ -18,15 +18,22 @@ import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.spi.PropertyProvider;
 import com.morelandLabs.spi.driver.NativeDriverProvider;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractGesture.
  */
 public abstract class AbstractGesture implements Gesture
 {
+	
+	/** The Constant EXECUTION_ID. */
 	private static final String EXECUTION_ID = "EXECUTION_ID";
+	
+	/** The Constant DEVICE_NAME. */
 	private static final String DEVICE_NAME = "DEVICE_NAME";
 	/** The log. */
 	protected Log log = LogFactory.getLog( Gesture.class );
+	
+	/** The web element. */
 	protected WebElement webElement;
 	
 	/**
@@ -45,6 +52,9 @@ public abstract class AbstractGesture implements Gesture
 		return _executeGesture( webDriver );
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.gesture.Gesture#executeGesture(org.openqa.selenium.WebDriver, org.openqa.selenium.WebElement)
+	 */
 	@Override
 	public boolean executeGesture(WebDriver webDriver, WebElement webElement) 
 	{

@@ -38,6 +38,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.3</version>
+				<configuration>
+					<reportOutputDirectory>../../../javadoc-repo/${project.groupId}</reportOutputDirectory>
+					<destDir>${project.artifactId}</destDir>
+				</configuration>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>

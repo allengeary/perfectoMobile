@@ -4,6 +4,7 @@ import com.perfectoMobile.gesture.device.action.DeviceAction.ActionType;
 import com.perfectoMobile.gesture.device.action.DeviceActionFactory;
 import com.perfectoMobile.gesture.device.action.DeviceActionManager;
 
+// TODO: Auto-generated Javadoc
 /**
  * A factory for creating PerfectoDeviceAction objects.
  */

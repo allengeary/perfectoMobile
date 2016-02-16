@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.cloud;
 
 import java.io.BufferedReader;
@@ -7,12 +10,17 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CSVApplicationProvider.
  */
 public class CSVCloudProvider extends AbstractCloudProvider
 {
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
 	
 	/**
@@ -63,6 +71,11 @@ public class CSVCloudProvider extends AbstractCloudProvider
 		}
 	}
 	
+	/**
+	 * Read elements.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readElements( InputStream inputStream )
 	{
 		BufferedReader fileReader = new BufferedReader( new InputStreamReader( inputStream ) );

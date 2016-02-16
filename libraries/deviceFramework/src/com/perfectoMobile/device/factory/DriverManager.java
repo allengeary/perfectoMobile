@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.factory;
 
 import java.util.HashMap;
@@ -6,11 +9,14 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class DriverManager.
  */
 public class DriverManager
 {
+	
+	/** The singleton. */
 	private static DriverManager singleton = new DriverManager();
 	
 	/**
@@ -23,12 +29,18 @@ public class DriverManager
 		return singleton;
 	}
 
+	/**
+	 * Instantiates a new driver manager.
+	 */
 	private DriverManager()
 	{
 
 	}
 
+	/** The log. */
 	private Log log = LogFactory.getLog( DriverManager.class );
+	
+	/** The driver map. */
 	private Map<String,DriverFactory> driverMap = new HashMap<String,DriverFactory>( 20 );
 	
 	

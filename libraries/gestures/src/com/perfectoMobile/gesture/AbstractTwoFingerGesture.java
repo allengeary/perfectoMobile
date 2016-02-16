@@ -2,14 +2,23 @@ package com.perfectoMobile.gesture;
 
 import org.openqa.selenium.Point;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractTwoFingerGesture.
  */
 public abstract class AbstractTwoFingerGesture extends AbstractGesture
 {
+	
+	/** The start one. */
 	private Point startOne;
+	
+	/** The start two. */
 	private Point startTwo;
+	
+	/** The end one. */
 	private Point endOne;
+	
+	/** The end two. */
 	private Point endTwo;
 	
 	/* (non-Javadoc)

@@ -8,12 +8,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CSVApplicationProvider.
  */
 public class CSVApplicationProvider extends AbstractApplicationProvider
 {
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
 	
 	/**
@@ -64,6 +69,11 @@ public class CSVApplicationProvider extends AbstractApplicationProvider
 		}
 	}
 	
+	/**
+	 * Read elements.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readElements( InputStream inputStream )
 	{
 		BufferedReader fileReader = new BufferedReader( new InputStreamReader( inputStream ) );

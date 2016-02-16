@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.data.perfectoMobile;
 
 import java.io.InputStream;
@@ -18,6 +21,7 @@ import com.perfectoMobile.device.SimpleDevice;
 import com.perfectoMobile.device.cloud.CloudRegistry;
 import com.perfectoMobile.device.data.DataProvider;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class PerfectoMobileDataProvider.
  */
@@ -26,8 +30,13 @@ public class PerfectoMobileDataProvider implements DataProvider
 	
 	
 	
+	/** The log. */
 	private Log log = LogFactory.getLog( PerfectoMobileDataProvider.class );
+	
+	/** The pm validator. */
 	private PerfectoMobileHandsetValidator pmValidator;
+	
+	/** The driver type. */
 	private DriverType driverType;
 	
 	/**
@@ -115,6 +124,13 @@ public class PerfectoMobileDataProvider implements DataProvider
 		}
 	}
 	
+	/**
+	 * Gets the value.
+	 *
+	 * @param handSet the hand set
+	 * @param tagName the tag name
+	 * @return the value
+	 */
 	private String getValue( Node handSet, String tagName )
 	{
 		NodeList params = handSet.getChildNodes();

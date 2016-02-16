@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.artifact;
 
 import java.util.Map;
@@ -6,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 
 import com.perfectoMobile.device.ConnectedDevice;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface ArtifactProducer.
  */
@@ -45,6 +49,7 @@ public interface ArtifactProducer
 		/** The device log. */
 		DEVICE_LOG( ArtifactTime.ON_FAILURE );
 		
+		/** The time. */
 		private ArtifactTime time;
 		
 		/**

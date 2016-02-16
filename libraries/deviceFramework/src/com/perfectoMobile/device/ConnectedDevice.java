@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device;
 
 import org.openqa.selenium.WebDriver;
@@ -5,13 +8,20 @@ import org.openqa.selenium.WebDriver;
 import com.morelandLabs.spi.Device;
 import com.perfectoMobile.device.factory.DeviceWebDriver;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ConnectedDevice.
  */
 public class ConnectedDevice
 {
+	
+	/** The web driver. */
 	private DeviceWebDriver webDriver;
+	
+	/** The device. */
 	private Device device;
+	
+	/** The persona. */
 	private String persona;
 	
 	/**
@@ -19,6 +29,7 @@ public class ConnectedDevice
 	 *
 	 * @param webDriver the web driver
 	 * @param device the device
+	 * @param persona the persona
 	 */
 	public ConnectedDevice( DeviceWebDriver webDriver, Device device, String persona )
 	{
@@ -28,10 +39,20 @@ public class ConnectedDevice
 		this.persona = persona;
 	}
 
+	/**
+	 * Gets the persona.
+	 *
+	 * @return the persona
+	 */
 	public String getPersona() {
 		return persona;
 	}
 
+	/**
+	 * Sets the persona.
+	 *
+	 * @param persona the new persona
+	 */
 	public void setPersona(String persona) {
 		this.persona = persona;
 	}

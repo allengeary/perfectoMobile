@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.cloud;
 
 import java.io.File;
@@ -10,13 +13,20 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ExcelApplicationProvider.
  */
 public class ExcelCloudProvider extends AbstractCloudProvider
 {
+	
+	/** The tab name. */
 	private String tabName;
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
 
 	/**
@@ -73,6 +83,12 @@ public class ExcelCloudProvider extends AbstractCloudProvider
 		}
 	}
 
+	/**
+	 * Gets the cell value.
+	 *
+	 * @param cell the cell
+	 * @return the cell value
+	 */
 	private String getCellValue( XSSFCell cell )
 	{
 		if (cell != null)
@@ -92,6 +108,11 @@ public class ExcelCloudProvider extends AbstractCloudProvider
 		return null;
 	}
 
+	/**
+	 * Read elements.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readElements( InputStream inputStream )
 	{
 		XSSFWorkbook workbook = null;

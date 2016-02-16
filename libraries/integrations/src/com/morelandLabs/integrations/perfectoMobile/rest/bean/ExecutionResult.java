@@ -4,35 +4,47 @@ import com.morelandLabs.integrations.rest.bean.AbstractBean;
 import com.morelandLabs.integrations.rest.bean.Bean.BeanDescriptor;
 import com.morelandLabs.integrations.rest.bean.Bean.FieldDescriptor;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ExecutionResult.
  */
 @BeanDescriptor( beanName="response" )
 public class ExecutionResult extends AbstractBean
 {
+	
+	/** The execution id. */
 	@FieldDescriptor ( )
 	private String executionId;
+	
+	/** The report key. */
 	@FieldDescriptor ( )
 	private String reportKey;
 
+	/** The status. */
 	@FieldDescriptor ( )
 	private String status;
 	
+	/** The failed validations. */
 	@FieldDescriptor ( )
 	private Integer failedValidations;
 	
+	/** The description. */
 	@FieldDescriptor ( )
 	private String description;
 	
+	/** The failed actions. */
 	@FieldDescriptor ( )
 	private Integer failedActions;
 	
+	/** The progress percentage. */
 	@FieldDescriptor ( )
 	private Double progressPercentage;
 	
+	/** The user. */
 	@FieldDescriptor ( )
 	private String user;
 	
+	/** The completed. */
 	@FieldDescriptor ( )
 	private Boolean completed;
 

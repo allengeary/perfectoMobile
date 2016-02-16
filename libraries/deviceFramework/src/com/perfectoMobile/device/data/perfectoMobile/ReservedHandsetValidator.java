@@ -1,9 +1,13 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.data.perfectoMobile;
 
 import org.w3c.dom.Node;
 
 import com.perfectoMobile.device.cloud.CloudRegistry;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ReservedHandsetValidator.
  */

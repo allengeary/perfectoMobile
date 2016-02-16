@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.artifact;
 
 import java.util.Map;
@@ -8,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 
 import com.perfectoMobile.device.ConnectedDevice;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractArtifactProducer.
  */

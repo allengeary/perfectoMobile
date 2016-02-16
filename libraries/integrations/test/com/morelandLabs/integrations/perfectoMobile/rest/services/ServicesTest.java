@@ -13,38 +13,64 @@ import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.*;
 import com.morelandLabs.integrations.perfectoMobile.rest.bean.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ServicesTest.
+ */
 public class ServicesTest
 {
     //
     // Class Data
     //
 
+    /** The Constant USER_NAME. */
     private static final String USER_NAME = "userName";
+    
+    /** The Constant PASSWORD. */
     private static final String PASSWORD = "password";
+    
+    /** The Constant URL. */
     private static final String URL = "url";
+    
+    /** The Constant POLL_INTERVAL_MS. */
     private static final long POLL_INTERVAL_MS = 500;
 
     //
     // Instance Data
     //
 
+    /** The props. */
     private Properties props = null;
+    
+    /** The user name. */
     private String userName = null;
+    
+    /** The password. */
     private String password = null;
+    
+    /** The url. */
     private String url = null;
 
     //
     // Test Data
     //
 
+    /** The Constant DEFAULT_DEVICE. */
     private static final String DEFAULT_DEVICE = "3219D3B1";
+    
+    /** The device. */
     private String device = null;
+    
+    /** The Constant DEFAULT_SCRIPT. */
     private static final String DEFAULT_SCRIPT = "GROUP:cameraTest.xml";
     
     //
     // CTOR
     //
 
+    /**
+     * Instantiates a new services test.
+     */
     public ServicesTest()
     {
         try
@@ -66,6 +92,9 @@ public class ServicesTest
     // Test Setup
     //
 
+    /**
+     * Setup.
+     */
     @BeforeMethod
         public void setup()
     {
@@ -80,6 +109,9 @@ public class ServicesTest
     // Test Methods
     //
 
+    /**
+     * Test device list.
+     */
     @Test
     public void testDeviceList()
     {
@@ -93,6 +125,9 @@ public class ServicesTest
         findAnAvailableDevice( deviceList );
     }
 
+    /**
+     * Test samsung device list.
+     */
     @Test
     public void testSamsungDeviceList()
     {
@@ -104,6 +139,9 @@ public class ServicesTest
         Assert.assertTrue( ( deviceList.getHandsetList().size() > 0 ), "The are Samsung devices in the list" );
     }
 
+    /**
+     * Test script list.
+     */
     @Test
     public void testScriptList()
     {
@@ -115,6 +153,9 @@ public class ServicesTest
         Assert.assertTrue( ( scriptSet.getItemList().size() > 0 ), "The are scripts in the list" );
     }
 
+    /**
+     * Test media list.
+     */
     @Test
     public void testMediaList()
     {
@@ -126,6 +167,9 @@ public class ServicesTest
         Assert.assertTrue( ( scriptSet.getItemList().size() > 0 ), "The are media files in the list" );
     }
 
+    /**
+     * Test data tables list.
+     */
     @Test
     public void testDataTablesList()
     {
@@ -137,6 +181,9 @@ public class ServicesTest
         Assert.assertTrue( ( scriptSet.getItemList().size() > 0 ), "The are data tables in the list" );
     }
 
+    /**
+     * Test script run.
+     */
     @Test
     public void testScriptRun()
     {
@@ -184,6 +231,9 @@ public class ServicesTest
         }
     }
 
+    /**
+     * Test device operations.
+     */
     @Test
     public void testDeviceOperations()
     {
@@ -227,11 +277,21 @@ public class ServicesTest
     // Helpers
     //
 
+    /**
+     * Gets the test device.
+     *
+     * @return the test device
+     */
     private String getTestDevice()
     {
         return DEFAULT_DEVICE; //(( device != null ) ? device : DEFAULT_DEVICE );
     }
 
+    /**
+     * Find an available device.
+     *
+     * @param deviceList the device list
+     */
     private void findAnAvailableDevice( HandsetCollection deviceList )
     {
         Iterator devices = deviceList.getHandsetList().iterator();
@@ -247,6 +307,11 @@ public class ServicesTest
         }
     }
 
+    /**
+     * Sleep.
+     *
+     * @param duration the duration
+     */
     private void sleep( long duration )
     {
         try

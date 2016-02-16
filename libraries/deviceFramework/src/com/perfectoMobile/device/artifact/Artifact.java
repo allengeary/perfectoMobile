@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.artifact;
 
 import java.io.BufferedOutputStream;
@@ -7,14 +10,23 @@ import java.io.FileOutputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Artifact.
  */
 public class Artifact
 {
+	
+	/** The log. */
 	private Log log = LogFactory.getLog( Artifact.class );
+	
+	/** The artifact data. */
 	private byte[] artifactData;
+	
+	/** The artifact name. */
 	private String artifactName;
+	
+	/** The file name. */
 	private File fileName;
 	
 	/**

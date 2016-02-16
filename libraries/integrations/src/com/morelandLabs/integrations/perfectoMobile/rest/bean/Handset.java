@@ -3,6 +3,7 @@ package com.morelandLabs.integrations.perfectoMobile.rest.bean;
 import com.morelandLabs.integrations.rest.bean.AbstractBean;
 import com.morelandLabs.integrations.rest.bean.Bean.BeanDescriptor;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Handset.
  */
@@ -21,67 +22,106 @@ public class Handset extends AbstractBean
 				+ ", positionId=" + positionId + ", positionMethod=" + positionMethod + ", positionRotation=" + positionRotation + ", os=" + os + ", osVersion=" + osVersion + ", resolution=" + resolution + "]";
 	}
 
+	/** The device id. */
 	@FieldDescriptor ( fieldPath = "deviceId")
 	private String deviceId;
 
+	/** The manufacturer. */
 	@FieldDescriptor ( )
 	private String manufacturer;
+	
+	/** The model. */
 	@FieldDescriptor ( )
 	private String model;
 	
+	/** The description. */
 	@FieldDescriptor ( )
 	private String description;
+	
+	/** The firmware. */
 	@FieldDescriptor ( )
 	private String firmware;
+	
+	/** The wifi mac address. */
 	@FieldDescriptor ( )
 	private String wifiMacAddress;
 
+	/** The link. */
 	@FieldDescriptor ( fieldPath = "link/type")
 	private String link;
 
+	/** The operator name. */
 	@FieldDescriptor ( fieldPath = "operator/name")
 	private String operatorName;
 
+	/** The operator country. */
 	@FieldDescriptor ( fieldPath = "operator/country")
 	private String operatorCountry;
 
+	/** The operator code. */
 	@FieldDescriptor ( fieldPath = "operator/code")
 	private String operatorCode;
+	
+	/** The phone number. */
 	@FieldDescriptor ( )
 	private String phoneNumber;
+	
+	/** The location. */
 	@FieldDescriptor ( )
 	private String location;
+	
+	/** The last cradle id. */
 	@FieldDescriptor ( )
 	private String lastCradleId;
+	
+	/** The language. */
 	@FieldDescriptor ( )
 	private String language;
+	
+	/** The status. */
 	@FieldDescriptor ( )
 	private String status;
+	
+	/** The mode. */
 	@FieldDescriptor ( )
 	private String mode;
+	
+	/** The reserved. */
 	@FieldDescriptor ( )
 	private Boolean reserved;
+	
+	/** The in use. */
 	@FieldDescriptor ( )
 	private Boolean inUse;
 
+	/** The operability rating. */
 	@FieldDescriptor ( fieldPath = "operabilityRating/score")
 	private Double operabilityRating;
+	
+	/** The cradle id. */
 	@FieldDescriptor ( )
 	private String cradleId;
 
+	/** The position id. */
 	@FieldDescriptor ( fieldPath = "position/id")
 	private String positionId;
 
+	/** The position method. */
 	@FieldDescriptor ( fieldPath = "position/method")
 	private String positionMethod;
 
+	/** The position rotation. */
 	@FieldDescriptor ( fieldPath = "position/rotation")
 	private Double positionRotation;
+	
+	/** The os. */
 	@FieldDescriptor ( )
 	private String os;
 
+	/** The os version. */
 	private String osVersion;
 
+	/** The resolution. */
 	private String resolution;
 	
 	/**

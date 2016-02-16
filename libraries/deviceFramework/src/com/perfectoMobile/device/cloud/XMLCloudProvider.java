@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.cloud;
 
 import java.io.File;
@@ -15,21 +18,41 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class XMLApplicationProvider.
  */
 public class XMLCloudProvider extends AbstractCloudProvider
 {
+	
+	/** The Constant NAME. */
 	private static final String NAME = "name";
+	
+	/** The Constant USER_NAME. */
 	private static final String USER_NAME = "userName";
+	
+	/** The Constant PASSWORD. */
 	private static final String PASSWORD = "password";
+	
+	/** The Constant HOST_NAME. */
 	private static final String HOST_NAME = "hostName";
+	
+	/** The Constant PROXY_HOST. */
 	private static final String PROXY_HOST = "proxyHost";
+	
+	/** The Constant PROXY_PORT. */
 	private static final String PROXY_PORT = "proxyPort";
+	
+	/** The Constant GRID. */
 	private static final String GRID = "grid";
 
+	/** The x path factory. */
 	private XPathFactory xPathFactory;
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
 	
 	/**
@@ -82,6 +105,11 @@ public class XMLCloudProvider extends AbstractCloudProvider
 		}
 	}
 	
+	/**
+	 * Read elements.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readElements( InputStream inputStream )
 	{
 		
@@ -105,6 +133,11 @@ public class XMLCloudProvider extends AbstractCloudProvider
 		}
 	}
 	
+	/**
+	 * Parses the application.
+	 *
+	 * @param appNode the app node
+	 */
 	private void parseApplication( Node appNode )
 	{
 		String cloudName = appNode.getAttributes().getNamedItem( NAME ).getNodeValue();
@@ -126,6 +159,13 @@ public class XMLCloudProvider extends AbstractCloudProvider
 		CloudRegistry.instance().addCloudDescriptor( new CloudDescriptor( cloudName, userName, password, hostName, proxyHost, proxyPort, description, grid ) );
 	}
 	
+	/**
+	 * Gets the nodes.
+	 *
+	 * @param xmlDocument the xml document
+	 * @param xPathExpression the x path expression
+	 * @return the nodes
+	 */
 	private  NodeList getNodes( Document xmlDocument, String xPathExpression )
 	{
 		try

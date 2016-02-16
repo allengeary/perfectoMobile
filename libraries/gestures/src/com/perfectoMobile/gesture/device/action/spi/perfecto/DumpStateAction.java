@@ -14,6 +14,7 @@ import com.morelandLabs.integrations.perfectoMobile.rest.services.Repositories.R
 import com.perfectoMobile.gesture.device.action.AbstractDefaultAction;
 import com.perfectoMobile.gesture.device.action.DeviceAction;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class InstallApplicationAction.
  */

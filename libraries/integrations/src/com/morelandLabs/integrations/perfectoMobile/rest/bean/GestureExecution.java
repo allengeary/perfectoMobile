@@ -3,17 +3,23 @@ package com.morelandLabs.integrations.perfectoMobile.rest.bean;
 import com.morelandLabs.integrations.rest.bean.AbstractBean;
 import com.morelandLabs.integrations.rest.bean.Bean.BeanDescriptor;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class GestureExecution.
  */
 @BeanDescriptor( beanName="response" )
 public class GestureExecution extends AbstractBean
 {
+	
+	/** The execution id. */
 	@FieldDescriptor ( )
 	private String executionId;
+	
+	/** The report key. */
 	@FieldDescriptor ( )
 	private String reportKey;
 
+	/** The reason. */
 	@FieldDescriptor ( )
 	private String reason;
 

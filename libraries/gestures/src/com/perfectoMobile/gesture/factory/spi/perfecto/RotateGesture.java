@@ -10,6 +10,7 @@ import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Device.ScreenOrientation;
 import com.perfectoMobile.gesture.AbstractRotateGesture;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class RotateGesture.
  */

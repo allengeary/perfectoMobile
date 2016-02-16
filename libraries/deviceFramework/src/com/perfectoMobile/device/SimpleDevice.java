@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device;
 
 import java.util.HashMap;
@@ -6,24 +9,50 @@ import java.util.concurrent.Semaphore;
 
 import com.morelandLabs.spi.Device;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class SimpleDevice.
  */
 public class SimpleDevice implements Device
 {
 
+	/** The key. */
 	private String key;
+	
+	/** The manufacturer. */
 	private String manufacturer;
+	
+	/** The model. */
 	private String model;
+	
+	/** The os. */
 	private String os;
+	
+	/** The os version. */
 	private String osVersion;
+	
+	/** The browser name. */
 	private String browserName;
+	
+	/** The browser version. */
 	private String browserVersion;
+	
+	/** The available devices. */
 	private int availableDevices;
+	
+	/** The device lock. */
 	private Semaphore deviceLock;
+	
+	/** The driver type. */
 	private String driverType;
+	
+	/** The device name. */
 	private String deviceName;
+	
+	/** The active. */
 	private boolean active;
+	
+	/** The capabilities. */
 	private Map<String,String> capabilities = new HashMap<String,String>( 10 );
 	
 	/* (non-Javadoc)
@@ -36,6 +65,7 @@ public class SimpleDevice implements Device
 
 	
 
+	/** The cached string. */
 	private String cachedString;
 	
 	/**
@@ -87,6 +117,9 @@ public class SimpleDevice implements Device
 		cachedString = manufacturer + " " + model + " [" + key + "] --> ";
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.morelandLabs.spi.Device#addCapability(java.lang.String, java.lang.String)
+	 */
 	public void addCapability( String capabilityName, String capabilityValue )
 	{
 		capabilities.put( capabilityName,capabilityValue);
@@ -204,6 +237,9 @@ public class SimpleDevice implements Device
 		return deviceLock;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.morelandLabs.spi.Device#getCabilities()
+	 */
 	@Override
 	public Map<String,String> getCabilities() 
 	{

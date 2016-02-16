@@ -1,20 +1,40 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.cloud;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CloudDescriptor.
  */
 public class CloudDescriptor
 {
+	
+	/** The name. */
 	private String name;
+	
+	/** The user name. */
 	private String userName;
+	
+	/** The password. */
 	private String password;
+	
+	/** The host name. */
 	private String hostName;
+	
+	/** The proxy host. */
 	private String proxyHost;
+	
+	/** The proxy port. */
 	private String proxyPort;
+	
+	/** The description. */
 	private String description;
+	
+	/** The grid instance. */
 	private String gridInstance;
 	
 	/**

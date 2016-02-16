@@ -6,22 +6,31 @@ import java.util.List;
 import com.morelandLabs.integrations.rest.bean.AbstractBean;
 import com.morelandLabs.integrations.rest.bean.Bean.BeanDescriptor;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ExecutionReport.
  */
 @BeanDescriptor ( beanName = "execution")
 public class ExecutionReport extends AbstractBean
 {
+	
+	/** The name. */
 	@FieldDescriptor ( fieldPath = "info/name")
 	private String name;
+	
+	/** The start time. */
 	@FieldDescriptor ( fieldPath = "info/times/flowTimes/start/millis")
 	private Long startTime;
+	
+	/** The end time. */
 	@FieldDescriptor ( fieldPath = "info/times/flowTimes/end/millis")
 	private Long endTime;
 
+	/** The action list. */
 	@FieldCollection ( fieldElement = Action.class, fieldPath = "flow/")
 	private List<Action> actionList = new ArrayList<Action>( 10 );
 	
+	/** The script list. */
 	@FieldCollection ( fieldElement = Script.class, fieldPath = "flow/")
 	private List<Script> scriptList = new ArrayList<Script>( 10 );
 
@@ -115,16 +124,29 @@ public class ExecutionReport extends AbstractBean
 		this.actionList = actionList;
 	}
 
+	/**
+	 * Gets the script list.
+	 *
+	 * @return the script list
+	 */
 	public List<Script> getScriptList()
 	{
 		return scriptList;
 	}
 
+	/**
+	 * Sets the script list.
+	 *
+	 * @param scriptList the new script list
+	 */
 	public void setScriptList( List<Script> scriptList )
 	{
 		this.scriptList = scriptList;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString()
 	{

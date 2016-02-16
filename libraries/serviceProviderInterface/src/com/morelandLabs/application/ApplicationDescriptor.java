@@ -4,25 +4,52 @@ import java.util.Map;
 
 import com.morelandLabs.spi.Device;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ApplicationDescriptor.
  */
 public class ApplicationDescriptor
 {
+	
+	/** The name. */
 	private String name;
+	
+	/** The description. */
 	private String description;
+	
+	/** The android identifier. */
 	private String androidIdentifier;
+	
+	/** The apple identifier. */
 	private String appleIdentifier;
+	
+	/** The url. */
 	private String url;
+	
+	/** The ios installation. */
 	private String iosInstallation;
+	
+	/** The android installation. */
 	private String androidInstallation;
+	
+	/** The capabilities. */
 	private Map<String,String> capabilities;
 
 
+	/**
+	 * Gets the capabilities.
+	 *
+	 * @return the capabilities
+	 */
 	public Map<String, String> getCapabilities() {
 		return capabilities;
 	}
 
+	/**
+	 * Sets the capabilities.
+	 *
+	 * @param capabilities the capabilities
+	 */
 	public void setCapabilities(Map<String, String> capabilities) {
 		this.capabilities = capabilities;
 	}
@@ -99,6 +126,7 @@ public class ApplicationDescriptor
 	 * @param url the url
 	 * @param iosInstallation the ios installation
 	 * @param androidInstallation the android installation
+	 * @param capabilities the capabilities
 	 */
 	public ApplicationDescriptor( String name, String description, String androidIdentifier, String appleIdentifier, String url, String iosInstallation, String androidInstallation, Map<String,String> capabilities )
 	{

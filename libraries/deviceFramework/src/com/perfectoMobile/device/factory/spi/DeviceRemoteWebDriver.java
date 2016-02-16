@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.factory.spi;
 
 import java.net.URL;
@@ -9,11 +12,14 @@ import org.openqa.selenium.remote.RemoteTouchScreen;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class DeviceRemoteWebDriver.
  */
 public class DeviceRemoteWebDriver extends RemoteWebDriver implements HasTouchScreen
 {
+	
+	/** The touch screen. */
 	private RemoteTouchScreen touchScreen;
 	
 	/**

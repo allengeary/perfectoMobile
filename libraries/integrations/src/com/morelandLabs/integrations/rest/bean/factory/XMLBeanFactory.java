@@ -23,14 +23,23 @@ import com.morelandLabs.integrations.rest.bean.Bean.BeanDescriptor;
 import com.morelandLabs.integrations.rest.bean.Bean.FieldCollection;
 import com.morelandLabs.integrations.rest.bean.Bean.FieldDescriptor;
 
+// TODO: Auto-generated Javadoc
 /**
  * A factory for creating XMLBean objects.
  */
 public class XMLBeanFactory extends AbstractBeanFactory
 {
+	
+	/** The Constant SLASH. */
 	private static final String SLASH = "/";
+	
+	/** The Constant DOT. */
 	private static final String DOT = ".";
+	
+	/** The x path factory. */
 	private XPathFactory xPathFactory = XPathFactory.newInstance();
+	
+	/** The transformer factory. */
 	private TransformerFactory transformerFactory = TransformerFactory.newInstance();
 	
 	/* (non-Javadoc)
@@ -86,6 +95,18 @@ public class XMLBeanFactory extends AbstractBeanFactory
 
 	}
 	
+	/**
+	 * Populate bean.
+	 *
+	 * @param parentNode the parent node
+	 * @param returnType the return type
+	 * @param xPath the x path
+	 * @return the bean
+	 * @throws XPathExpressionException the x path expression exception
+	 * @throws IllegalAccessException the illegal access exception
+	 * @throws InstantiationException the instantiation exception
+	 * @throws ClassNotFoundException the class not found exception
+	 */
 	private Bean populateBean( Node parentNode, Class<Bean> returnType, XPath xPath ) throws XPathExpressionException, IllegalAccessException, InstantiationException, ClassNotFoundException
 	{
 		
@@ -178,6 +199,13 @@ public class XMLBeanFactory extends AbstractBeanFactory
 		return beanInstance;
 	}
 	
+	/**
+	 * Creates a new XMLBean object.
+	 *
+	 * @param field the field
+	 * @param value the value
+	 * @return the object
+	 */
 	private Object createValue( Field field, String value )
 	{
 		try

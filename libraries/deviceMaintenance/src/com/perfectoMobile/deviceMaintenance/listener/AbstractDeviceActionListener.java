@@ -8,11 +8,10 @@ import org.apache.commons.logging.LogFactory;
  * The class that is interested in processing a abstractDeviceAction
  * event implements this interface, and the object created
  * with that class is registered with a component using the
- * component's <code>addAbstractDeviceActionListener<code> method. When
+ * component's <code>addAbstractDeviceActionListener</code> method. When
  * the abstractDeviceAction event occurs, that object's appropriate
  * method is invoked.
  *
- * @see AbstractDeviceActionEvent
  */
 public abstract class AbstractDeviceActionListener implements DeviceActionListener
 {

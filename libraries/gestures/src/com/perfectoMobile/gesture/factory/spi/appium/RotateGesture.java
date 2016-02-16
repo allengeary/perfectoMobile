@@ -7,6 +7,7 @@ import com.perfectoMobile.gesture.AbstractRotateGesture;
 
 import io.appium.java_client.AppiumDriver;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class RotateGesture.
  */

@@ -12,6 +12,7 @@ import com.morelandLabs.integrations.perfectoMobile.rest.bean.Handset;
 import com.perfectoMobile.gesture.device.action.AbstractDefaultAction;
 import com.perfectoMobile.gesture.device.action.DeviceAction;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class OpenApplicationAction.
  */

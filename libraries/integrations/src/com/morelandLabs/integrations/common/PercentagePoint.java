@@ -1,5 +1,6 @@
 package com.morelandLabs.integrations.common;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class PercentagePoint.
  */
@@ -12,6 +13,7 @@ public class PercentagePoint
 	/** The y. */
 	public int y;
 	
+	/** The include percent. */
 	boolean includePercent = true;
 
 	/**
@@ -31,6 +33,7 @@ public class PercentagePoint
 	 *
 	 * @param x the x
 	 * @param y the y
+	 * @param includePercent the include percent
 	 */
 	public PercentagePoint( int x, int y, boolean includePercent )
 	{

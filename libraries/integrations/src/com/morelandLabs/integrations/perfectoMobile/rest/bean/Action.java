@@ -9,6 +9,7 @@ import com.morelandLabs.integrations.rest.bean.Bean.BeanDescriptor;
 import com.morelandLabs.integrations.rest.bean.Bean.FieldCollection;
 import com.morelandLabs.integrations.rest.bean.factory.XMLBeanFactory;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Action.
  */
@@ -21,17 +22,30 @@ public class Action extends AbstractBean
 
 	
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString()
 	{
 		return "Action [name=" + name + ", startTime=" + startTime + ", endTime=" + endTime + ", success=" + success + ", failureDescription=" + failureDescription + ", timerList=" + timerList + "]";
 	}
 
+	/**
+	 * Gets the timer list.
+	 *
+	 * @return the timer list
+	 */
 	public List<Timer> getTimerList()
 	{
 		return timerList;
 	}
 
+	/**
+	 * Sets the timer list.
+	 *
+	 * @param timerList the new timer list
+	 */
 	public void setTimerList( List<Timer> timerList )
 	{
 		this.timerList = timerList;
@@ -107,21 +121,27 @@ public class Action extends AbstractBean
 		return (endTime - startTime);
 	}
 
+	/** The name. */
 	@FieldDescriptor ( fieldPath = "info/name")
 	private String name;
 	
+	/** The start time. */
 	@FieldDescriptor ( fieldPath = "info/times/flowTimes/start/millis")
 	private Long startTime;
 	
+	/** The end time. */
 	@FieldDescriptor ( fieldPath = "info/times/flowTimes/end/millis")
 	private Long endTime;
 
+	/** The success. */
 	@FieldDescriptor ( fieldPath = "output/status/success")
 	private Boolean success;
 	
+	/** The failure description. */
 	@FieldDescriptor ( fieldPath = "output/status/description")
 	private String failureDescription;
 
+	/** The timer list. */
 	@FieldCollection ( fieldElement = Timer.class, fieldPath = "output/timers")
 	private List<Timer> timerList = new ArrayList<Timer>( 10 );
 	

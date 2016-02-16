@@ -6,11 +6,14 @@ import java.util.Map;
 import com.perfectoMobile.gesture.device.action.DeviceAction.ActionType;
 import com.perfectoMobile.gesture.device.action.spi.perfecto.PerfectoDeviceActionFactory;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class DeviceActionManager.
  */
 public class DeviceActionManager
 {
+	
+	/** The singleton. */
 	private static DeviceActionManager singleton = new DeviceActionManager();
 	
 	/**
@@ -23,6 +26,9 @@ public class DeviceActionManager
 		return singleton;
 	}
 
+	/**
+	 * Instantiates a new device action manager.
+	 */
 	private DeviceActionManager()
 	{
 		
@@ -38,6 +44,7 @@ public class DeviceActionManager
 		actionFactory.registerDeviceActions();
 	}
 	
+	/** The action map. */
 	private Map<ActionType,Class<DeviceAction>> actionMap = new HashMap<ActionType,Class<DeviceAction>>( 10 );
 	
 	

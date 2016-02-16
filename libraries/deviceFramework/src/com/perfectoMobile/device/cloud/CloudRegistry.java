@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.cloud;
 
 import java.util.Collection;
@@ -8,11 +11,14 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class cloudRegistry.
  */
 public class CloudRegistry
 {
+	
+	/** The singleton. */
 	private static CloudRegistry singleton = new CloudRegistry();
 
 	/**
@@ -25,15 +31,24 @@ public class CloudRegistry
 		return singleton;
 	}
 
+	/**
+	 * Instantiates a new cloud registry.
+	 */
 	private CloudRegistry()
 	{
 
 	}
 	
+	/** The log. */
 	private Log log = LogFactory.getLog( CloudRegistry.class );
 	
+	/** The cloud map. */
 	private Map<String,CloudDescriptor> cloudMap = new HashMap<String,CloudDescriptor>( 20 );
+	
+	/** The cloud provider. */
 	private CloudProvider cloudProvider;
+	
+	/** The cut. */
 	private CloudDescriptor cut = null;
 	
 	/**

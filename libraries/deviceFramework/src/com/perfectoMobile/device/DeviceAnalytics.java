@@ -1,14 +1,22 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device;
 
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class DeviceAnalytics.
  */
 public class DeviceAnalytics
 {
+	
+	/** The key. */
 	private String key;
+	
+	/** The usage map. */
 	private Map<String,Boolean> usageMap = new HashMap<String,Boolean>( 10 );
 	
 	/**

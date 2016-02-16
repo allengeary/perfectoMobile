@@ -10,6 +10,7 @@ import com.perfectoMobile.gesture.factory.spi.perfecto.RotateGesture;
 import com.perfectoMobile.gesture.factory.spi.perfecto.SwipeGesture;
 import com.perfectoMobile.gesture.factory.spi.perfecto.TwoFingerGesture;
 
+// TODO: Auto-generated Javadoc
 /**
  * A factory for creating SeleniumGesture objects.
  */

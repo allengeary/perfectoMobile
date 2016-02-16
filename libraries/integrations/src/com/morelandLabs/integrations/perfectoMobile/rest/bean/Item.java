@@ -3,12 +3,15 @@ package com.morelandLabs.integrations.perfectoMobile.rest.bean;
 import com.morelandLabs.integrations.rest.bean.AbstractBean;
 import com.morelandLabs.integrations.rest.bean.Bean.BeanDescriptor;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Item.
  */
 @BeanDescriptor( beanName="item" )
 public class Item extends AbstractBean
 {
+    
+    /** The text content. */
     @FieldDescriptor ( textContent=true )
     private String textContent;
 
@@ -21,11 +24,21 @@ public class Item extends AbstractBean
         return "Item [textContent=" + textContent + "]";
     }
 
+    /**
+     * Gets the text context.
+     *
+     * @return the text context
+     */
     public String getTextContext()
     {
         return textContent;
     }
     
+    /**
+     * Sets the text context.
+     *
+     * @param val the new text context
+     */
     public void setTextContext( String val )
     {
         this.textContent = val;

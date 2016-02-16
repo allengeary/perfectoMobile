@@ -3,6 +3,7 @@ package com.perfectoMobile.gesture;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface Gesture.
  */
@@ -68,6 +69,7 @@ public interface Gesture
 	 * Execute gesture.
 	 *
 	 * @param webDriver the web driver
+	 * @param webElement the web element
 	 * @return true, if successful
 	 */
 	public boolean executeGesture( WebDriver webDriver, WebElement webElement );

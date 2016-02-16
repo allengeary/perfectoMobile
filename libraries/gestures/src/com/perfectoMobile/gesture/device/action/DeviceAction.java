@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface DeviceAction.
  */
@@ -49,9 +50,10 @@ public interface DeviceAction
 		/** The clean. */
 		CLEAN,
 		
-		/** switch the context */
+		/**  switch the context. */
 		CONTEXT,
 		
+		/** The dump state. */
 		DUMP_STATE,
 		
 		

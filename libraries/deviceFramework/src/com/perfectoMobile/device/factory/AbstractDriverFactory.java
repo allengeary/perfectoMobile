@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.factory;
 
 import org.apache.commons.logging.Log;
@@ -8,6 +11,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import com.morelandLabs.spi.Device;
 import com.perfectoMobile.device.data.DataManager;
 
+// TODO: Auto-generated Javadoc
 /**
  * A factory for creating AbstractDriver objects.
  */
@@ -59,6 +63,12 @@ public abstract class AbstractDriverFactory implements DriverFactory
 		return capData.toString();
 	}
 	
+	/**
+	 * Adds the device capabilities.
+	 *
+	 * @param currentDevice the current device
+	 * @param caps the caps
+	 */
 	protected void addDeviceCapabilities( Device currentDevice, DesiredCapabilities caps )
 	{
 		for ( String name : currentDevice.getCabilities().keySet() )

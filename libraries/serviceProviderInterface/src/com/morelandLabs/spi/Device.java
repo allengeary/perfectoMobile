@@ -3,12 +3,26 @@ package com.morelandLabs.spi;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface Device.
  */
 public interface Device
 {
+	
+	/**
+	 * Adds the capability.
+	 *
+	 * @param capabilityName the capability name
+	 * @param capabilityValue the capability value
+	 */
 	void addCapability( String capabilityName, String capabilityValue );
+	
+	/**
+	 * Gets the cabilities.
+	 *
+	 * @return the cabilities
+	 */
 	Map<String,String> getCabilities();
 	/**
 	 * Gets the manufacturer.

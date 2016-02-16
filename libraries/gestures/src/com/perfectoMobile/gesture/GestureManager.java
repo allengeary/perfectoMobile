@@ -9,11 +9,14 @@ import com.perfectoMobile.gesture.Gesture.Direction;
 import com.perfectoMobile.gesture.Gesture.GestureType;
 import com.perfectoMobile.gesture.factory.GestureFactory;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class GestureManager.
  */
 public class GestureManager
 {
+	
+	/** The singleton. */
 	private static GestureManager singleton = new GestureManager();
 
 	/**
@@ -26,13 +29,18 @@ public class GestureManager
 		return singleton;
 	}
 
+	/**
+	 * Instantiates a new gesture manager.
+	 */
 	private GestureManager()
 	{
 
 	}
 	
+	/** The gesture factory. */
 	private GestureFactory gestureFactory;
 	
+	/** The log. */
 	private Log log = LogFactory.getLog( GestureManager.class );
 	
 	/**
@@ -132,6 +140,7 @@ public class GestureManager
 	 * Creates the key press.
 	 *
 	 * @param keyCode the key code
+	 * @param metaState the meta state
 	 * @return the gesture
 	 */
 	public Gesture createKeyPress( int keyCode, int metaState )

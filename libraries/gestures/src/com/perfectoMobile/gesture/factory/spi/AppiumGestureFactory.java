@@ -11,6 +11,7 @@ import com.perfectoMobile.gesture.factory.spi.appium.RotateGesture;
 import com.perfectoMobile.gesture.factory.spi.appium.SwipeGesture;
 import com.perfectoMobile.gesture.factory.spi.appium.TwoFingerGesture;
 
+// TODO: Auto-generated Javadoc
 /**
  * A factory for creating AppiumGesture objects.
  */

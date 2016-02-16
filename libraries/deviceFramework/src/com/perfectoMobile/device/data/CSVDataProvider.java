@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.data;
 
 import java.io.BufferedReader;
@@ -13,14 +16,23 @@ import com.morelandLabs.spi.Device;
 import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.SimpleDevice;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CSVDataProvider.
  */
 public class CSVDataProvider implements DataProvider
 {
+	
+	/** The log. */
 	private Log log = LogFactory.getLog( CSVDataProvider.class );
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
+	
+	/** The driver type. */
 	private DriverType driverType;
 
 	/**
@@ -74,6 +86,11 @@ public class CSVDataProvider implements DataProvider
 		}
 	}
 
+	/**
+	 * Read data.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readData( InputStream inputStream )
 	{
 		BufferedReader fileReader = null;

@@ -16,13 +16,19 @@ import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Screen
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Repositories.RepositoryType;
 import com.morelandLabs.integrations.rest.bean.Bean;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class BeanManager.
  */
 public class BeanManager
 {
+	
+	/** The singleton. */
 	private static BeanManager singleton = new BeanManager();
 	
+	/**
+	 * Instantiates a new bean manager.
+	 */
 	private BeanManager()
 	{
 		
@@ -38,6 +44,7 @@ public class BeanManager
 		return singleton;
 	}
 	
+	/** The bean factory. */
 	private BeanFactory beanFactory = new XMLBeanFactory();
 
 	/**

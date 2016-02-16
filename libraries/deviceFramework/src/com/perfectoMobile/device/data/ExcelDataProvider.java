@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.data;
 
 import java.io.BufferedReader;
@@ -19,15 +22,26 @@ import com.morelandLabs.spi.Device;
 import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.SimpleDevice;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CSVDataProvider.
  */
 public class ExcelDataProvider implements DataProvider
 {
+	
+	/** The log. */
 	private Log log = LogFactory.getLog( ExcelDataProvider.class );
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The tab name. */
 	private String tabName;
+	
+	/** The resource name. */
 	private String resourceName;
+	
+	/** The driver type. */
 	private DriverType driverType;
 
 	/**
@@ -85,6 +99,12 @@ public class ExcelDataProvider implements DataProvider
 		}
 	}
 
+	/**
+	 * Gets the cell value.
+	 *
+	 * @param cell the cell
+	 * @return the cell value
+	 */
 	private String getCellValue( XSSFCell cell )
 	{
 		if (cell != null)
@@ -105,6 +125,11 @@ public class ExcelDataProvider implements DataProvider
 		return null;
 	}
 
+	/**
+	 * Read data.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readData( InputStream inputStream )
 	{
 		BufferedReader fileReader = null;

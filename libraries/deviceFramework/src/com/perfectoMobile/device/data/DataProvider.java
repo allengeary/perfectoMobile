@@ -1,5 +1,9 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.data;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface DataProvider.
  */

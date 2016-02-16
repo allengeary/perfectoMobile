@@ -4,17 +4,23 @@ import com.morelandLabs.integrations.rest.bean.AbstractBean;
 import com.morelandLabs.integrations.rest.bean.Bean.BeanDescriptor;
 import com.morelandLabs.integrations.rest.bean.Bean.FieldDescriptor;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Execution.
  */
 @BeanDescriptor( beanName="response" )
 public class Execution extends AbstractBean
 {
+	
+	/** The execution id. */
 	@FieldDescriptor ( )
 	private String executionId;
+	
+	/** The report key. */
 	@FieldDescriptor ( )
 	private String reportKey;
 
+	/** The status. */
 	@FieldDescriptor ( fieldPath = "description" )
 	private String status;
 

@@ -10,6 +10,7 @@ import com.perfectoMobile.gesture.AbstractSwipeGesture;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class SwipeGesture.
  */

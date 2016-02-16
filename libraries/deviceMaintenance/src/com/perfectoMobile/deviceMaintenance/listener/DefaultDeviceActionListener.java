@@ -5,11 +5,10 @@ package com.perfectoMobile.deviceMaintenance.listener;
  * The class that is interested in processing a defaultDeviceAction
  * event implements this interface, and the object created
  * with that class is registered with a component using the
- * component's <code>addDefaultDeviceActionListener<code> method. When
+ * component's <code>addDefaultDeviceActionListener</code> method. When
  * the defaultDeviceAction event occurs, that object's appropriate
  * method is invoked.
  *
- * @see DefaultDeviceActionEvent
  */
 public class DefaultDeviceActionListener extends AbstractDeviceActionListener
 {

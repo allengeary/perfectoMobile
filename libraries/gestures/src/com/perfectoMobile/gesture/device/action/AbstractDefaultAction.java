@@ -12,12 +12,17 @@ import com.morelandLabs.spi.PropertyProvider;
 import com.morelandLabs.spi.driver.NativeDriverProvider;
 import com.perfectoMobile.gesture.Gesture;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractDefaultAction.
  */
 public abstract class AbstractDefaultAction implements DeviceAction
 {
+	
+	/** The Constant EXECUTION_ID. */
 	private static final String EXECUTION_ID = "EXECUTION_ID";
+	
+	/** The Constant DEVICE_NAME. */
 	private static final String DEVICE_NAME = "DEVICE_NAME";
 	/** The log. */
 	protected Log log = LogFactory.getLog( Gesture.class );

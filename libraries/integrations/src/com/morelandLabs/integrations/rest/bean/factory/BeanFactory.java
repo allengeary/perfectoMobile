@@ -4,6 +4,7 @@ import java.io.InputStream;
 
 import com.morelandLabs.integrations.rest.bean.Bean;
 
+// TODO: Auto-generated Javadoc
 /**
  * A factory for creating Bean objects.
  */

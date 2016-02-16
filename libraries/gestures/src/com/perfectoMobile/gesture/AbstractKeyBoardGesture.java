@@ -1,10 +1,13 @@
 package com.perfectoMobile.gesture;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractKeyPressGesture.
  */
 public abstract class AbstractKeyBoardGesture extends AbstractGesture
 {
+	
+	/** The show keyboard. */
 	private boolean showKeyboard;
 	
 	/* (non-Javadoc)

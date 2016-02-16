@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.factory;
 
 import java.io.ByteArrayInputStream;
@@ -43,6 +46,7 @@ import com.perfectoMobile.device.factory.spi.PerfectoWebDriver;
 
 import io.appium.java_client.AppiumDriver;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class DeviceWebDriver.
  */
@@ -51,29 +55,61 @@ public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, 
 	
 	/** The web driver. */
 	protected WebDriver webDriver;
+	
+	/** The execution id. */
 	private String executionId;
+	
+	/** The report key. */
 	private String reportKey;
+	
+	/** The wind tunnel report. */
 	private String windTunnelReport;
+	
+	/** The device name. */
 	private String deviceName;
+	
+	/** The current device. */
 	private Device currentDevice;
+	
+	/** The current context. */
 	private String currentContext;
+	
+	/** The context handles. */
 	private Set<String> contextHandles;
+	
+	/** The artifact producer. */
 	private ArtifactProducer artifactProducer;
 	
 	/** The log. */
 	protected Log log = LogFactory.getLog( DeviceWebDriver.class );
 	
+	/** The caching enabled. */
 	private boolean cachingEnabled = true;
+	
+	/** The x path factory. */
 	private XPathFactory xPathFactory = XPathFactory.newInstance();
+	
+	/** The cached document. */
 	private Document cachedDocument = null;
 	
+	/** The context switch supported. */
 	private boolean contextSwitchSupported = true;
 	
+	/** The Constant EXECUTION_ID. */
 	private static final String EXECUTION_ID = "EXECUTION_ID";
+	
+	/** The Constant REPORT_KEY. */
 	private static final String REPORT_KEY = "REPORT_KEY";
+	
+	/** The Constant DEVICE_NAME. */
 	private static final String DEVICE_NAME = "DEVICE_NAME";
+	
+	/** The Constant WIND_TUNNEL. */
 	private static final String WIND_TUNNEL = "WIND_TUNNEL";
 	
+	/* (non-Javadoc)
+	 * @see com.morelandLabs.spi.driver.DeviceProvider#getDevice()
+	 */
 	@Override
 	public Device getDevice()
 	{
@@ -112,6 +148,7 @@ public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, 
 	 *
 	 * @param webDriver the web driver
 	 * @param cachingEnabled the caching enabled
+	 * @param currentDevice the current device
 	 */
 	public DeviceWebDriver( WebDriver webDriver, boolean cachingEnabled, Device currentDevice )
 	{
@@ -176,11 +213,21 @@ public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, 
 	
 	
 
+	/**
+	 * Gets the wind tunnel report.
+	 *
+	 * @return the wind tunnel report
+	 */
 	public String getWindTunnelReport() 
 	{
 		return windTunnelReport;
 	}
 
+	/**
+	 * Sets the wind tunnel report.
+	 *
+	 * @param windTunnelReport the new wind tunnel report
+	 */
 	public void setWindTunnelReport(String windTunnelReport) 
 	{
 		this.windTunnelReport = windTunnelReport;
@@ -433,6 +480,11 @@ public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, 
 		return currentContext;
 	}
 	
+	/**
+	 * _get context.
+	 *
+	 * @return the string
+	 */
 	private String _getContext()
 	{
 		if ( webDriver != null )

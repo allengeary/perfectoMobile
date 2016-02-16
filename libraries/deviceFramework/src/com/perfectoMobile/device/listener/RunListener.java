@@ -1,17 +1,19 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.listener;
 
 import com.morelandLabs.spi.Device;
 
+// TODO: Auto-generated Javadoc
 /**
  * The listener interface for receiving run events.
  * The class that is interested in processing a run
  * event implements this interface, and the object created
  * with that class is registered with a component using the
- * component's <code>addRunListener<code> method. When
+ * component's <code>addRunListener</code> method. When
  * the run event occurs, that object's appropriate
  * method is invoked.
- *
- * @see RunEvent
  */
 public interface RunListener
 {

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.factory;
 
 import java.util.List;
@@ -9,13 +12,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.w3c.dom.Node;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CachedWebElement.
  */
 public class CachedWebElement implements WebElement
 {
+	
+	/** The element node. */
 	private Node elementNode;
+	
+	/** The web driver. */
 	private WebDriver webDriver;
+	
+	/** The by. */
 	private By by;
 	
 	/**

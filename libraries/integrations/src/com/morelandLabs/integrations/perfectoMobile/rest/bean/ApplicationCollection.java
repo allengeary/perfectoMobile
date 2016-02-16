@@ -8,21 +8,31 @@ import com.morelandLabs.integrations.perfectoMobile.rest.services.Application;
 import com.morelandLabs.integrations.rest.bean.AbstractBean;
 import com.morelandLabs.integrations.rest.bean.Bean.BeanDescriptor;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ApplicationCollection.
  */
 @BeanDescriptor( beanName="response" )
 public class ApplicationCollection extends AbstractBean
 {
+	
+	/** The execution id. */
 	@FieldDescriptor ( )
 	private String executionId;
+	
+	/** The report key. */
 	@FieldDescriptor ( )
 	private String reportKey;
+	
+	/** The status. */
 	@FieldDescriptor ( )
 	private String status;
+	
+	/** The return value. */
 	@FieldDescriptor ( )
 	private String returnValue;
 	
+	/** The application map. */
 	private Map<String,String> applicationMap;
 
 	/**
@@ -118,6 +128,9 @@ public class ApplicationCollection extends AbstractBean
 	}
 	
 	
+	/**
+	 * Parses the applications.
+	 */
 	private void parseApplications()
 	{
 		applicationMap = new HashMap<String,String>( 20 );

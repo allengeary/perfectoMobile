@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import com.perfectoMobile.gesture.device.action.AbstractDefaultAction;
 import com.perfectoMobile.gesture.device.action.DeviceAction;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ResetApplicationsAction.
  */

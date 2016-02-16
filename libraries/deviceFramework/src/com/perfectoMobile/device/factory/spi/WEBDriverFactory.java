@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.factory.spi;
 
 import java.net.URL;
@@ -18,6 +21,7 @@ import com.perfectoMobile.device.factory.DeviceWebDriver;
 
 import io.appium.java_client.ios.IOSDriver;
 
+// TODO: Auto-generated Javadoc
 /**
  * A factory for creating WEBDriver objects.
  */
@@ -61,6 +65,12 @@ public class WEBDriverFactory extends AbstractDriverFactory
 
 	}
 
+	/**
+	 * _create desktop driver.
+	 *
+	 * @param currentDevice the current device
+	 * @return the device web driver
+	 */
 	private DeviceWebDriver _createDesktopDriver( Device currentDevice )
 	{
 		DeviceWebDriver webDriver = null;
@@ -147,6 +157,12 @@ public class WEBDriverFactory extends AbstractDriverFactory
 		}
 	}
 
+	/**
+	 * _create mobile driver.
+	 *
+	 * @param currentDevice the current device
+	 * @return the device web driver
+	 */
 	private DeviceWebDriver _createMobileDriver( Device currentDevice )
 	{
 		DeviceWebDriver webDriver = null;

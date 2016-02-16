@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.ng;
 
 import java.io.BufferedOutputStream;
@@ -28,6 +31,7 @@ import com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType;
 import com.perfectoMobile.device.data.DataManager;
 import com.perfectoMobile.device.factory.DeviceWebDriver;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractSeleniumTest.
  */
@@ -37,6 +41,7 @@ public abstract class AbstractSeleniumTest
 	/** The log. */
 	protected Log log = LogFactory.getLog( AbstractSeleniumTest.class );
 
+	/** The thread device. */
 	private ThreadLocal<ConnectedDevice> threadDevice = new ThreadLocal<ConnectedDevice>();
 
 	/**
@@ -44,8 +49,14 @@ public abstract class AbstractSeleniumTest
 	 */
 	protected class TestName
 	{
+		
+		/** The test name. */
 		private String testName;
+		
+		/** The full name. */
 		private String fullName;
+		
+		/** The persona name. */
 		private String personaName;
 
 		/**
@@ -70,11 +81,21 @@ public abstract class AbstractSeleniumTest
 		
 		
 
+		/**
+		 * Gets the persona name.
+		 *
+		 * @return the persona name
+		 */
 		public String getPersonaName() 
 		{
 			return personaName;
 		}
 
+		/**
+		 * Sets the persona name.
+		 *
+		 * @param personaName the new persona name
+		 */
 		public void setPersonaName(String personaName) 
 		{
 			this.personaName = personaName;

@@ -11,13 +11,20 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CSVApplicationProvider.
  */
 public class ExcelApplicationProvider extends AbstractApplicationProvider
 {
+	
+	/** The file name. */
 	private File fileName;
+	
+	/** The resource name. */
 	private String resourceName;
+	
+	/** The tab name. */
 	private String tabName;
 	
 	/**
@@ -72,6 +79,12 @@ public class ExcelApplicationProvider extends AbstractApplicationProvider
 		}
 	}
 	
+	/**
+	 * Gets the cell value.
+	 *
+	 * @param cell the cell
+	 * @return the cell value
+	 */
 	private String getCellValue( XSSFCell cell )
 	{
 		if (cell != null)
@@ -91,6 +104,11 @@ public class ExcelApplicationProvider extends AbstractApplicationProvider
 		return null;
 	}
 	
+	/**
+	 * Read elements.
+	 *
+	 * @param inputStream the input stream
+	 */
 	private void readElements( InputStream inputStream )
 	{
 		

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.comparator;
 
 import java.util.Comparator;
@@ -5,6 +8,7 @@ import java.util.Comparator;
 import com.morelandLabs.spi.Device;
 import com.perfectoMobile.device.DeviceManager;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class WeightedDeviceComparator.
  */

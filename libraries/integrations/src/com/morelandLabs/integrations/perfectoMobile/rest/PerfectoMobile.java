@@ -14,19 +14,34 @@ import com.morelandLabs.integrations.perfectoMobile.rest.services.Reports;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Repositories;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.WindTunnel;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class PerfectoMobile.
  */
 public class PerfectoMobile
 {
+	
+	/** The invocation handler. */
 	private RESTInvocationHandler invocationHandler = new RESTInvocationHandler();
+	
+	/** The base url. */
 	private String baseUrl;
+	
+	/** The user name. */
 	private String userName;
+	
+	/** The password. */
 	private String password;
+	
+	/** The response method. */
 	private String responseMethod = "xml";
 	
+	/** The singleton. */
 	private static PerfectoMobile singleton = new PerfectoMobile();
 	
+	/**
+	 * Instantiates a new perfecto mobile.
+	 */
 	private PerfectoMobile()
 	{
 		

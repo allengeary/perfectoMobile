@@ -20,26 +20,53 @@ import org.opencv.imgproc.Imgproc;
 import com.perfectoMobile.imaging.keyWord.step.spi.KWTemplateMatch;
 import com.perfectoMobile.page.keyWord.step.KeyWordStepFactory;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class OpenCVManager.
+ */
 public class OpenCVManager
 {
+	
+	/** The singleton. */
 	private static OpenCVManager singleton = new OpenCVManager();
 
+	/**
+	 * Instance.
+	 *
+	 * @return the open cv manager
+	 */
 	public static OpenCVManager instance()
 	{
 		return singleton;
 	}
 
+	/**
+	 * Instantiates a new open cv manager.
+	 */
 	private OpenCVManager()
 	{
 
 	}
 
+	/** The library location. */
 	private String libraryLocation;
+	
+	/** The cache folder. */
 	private String cacheFolder;
+	
+	/** The match algorithms. */
 	private int[] matchAlgorithms;
 
+	/** The log. */
 	private Log log = LogFactory.getLog( OpenCVManager.class );
 
+	/**
+	 * Initialize cv.
+	 *
+	 * @param libraryLocation the library location
+	 * @param cacheFolder the cache folder
+	 * @param templateMatchAlgorithms the template match algorithms
+	 */
 	public void initializeCV( String libraryLocation, String cacheFolder, String templateMatchAlgorithms )
 	{
 		if (log.isInfoEnabled())
@@ -57,27 +84,58 @@ public class OpenCVManager
 
 	}
 	
+	/**
+	 * Gets the library location.
+	 *
+	 * @return the library location
+	 */
 	public String getLibraryLocation()
 	{
 		return libraryLocation;
 	}
 
+	/**
+	 * Gets the cache folder.
+	 *
+	 * @return the cache folder
+	 */
 	public String getCacheFolder()
 	{
 		return cacheFolder;
 	}
 
+	/**
+	 * Gets the match algorithms.
+	 *
+	 * @return the match algorithms
+	 */
 	public int[] getMatchAlgorithms()
 	{
 		return matchAlgorithms;
 	}
 
+	/**
+	 * Match images.
+	 *
+	 * @param originalImage the original image
+	 * @param templateImage the template image
+	 * @return the double
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public double matchImages( InputStream originalImage, InputStream templateImage ) throws IOException
 	{
 		return matchImages( ImageIO.read( originalImage ), ImageIO.read(  templateImage ) );
 
 	}
 
+	/**
+	 * Match images.
+	 *
+	 * @param originalImage the original image
+	 * @param templateImage the template image
+	 * @return the double
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public double matchImages( BufferedImage originalImage, BufferedImage templateImage ) throws IOException
 	{
 		Mat oImage = new Mat( originalImage.getWidth(), originalImage.getHeight(), CvType.CV_8UC3 );
@@ -99,12 +157,26 @@ public class OpenCVManager
 		return lowMatch;
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws Exception the exception
+	 */
 	public static void main( String[] args ) throws Exception
 	{
 		OpenCVManager.instance().initializeCV( "c:/tools/opencv_java248.dll", "", "1, 3, 5" );
 		System.out.println( OpenCVManager.instance().matchImages( new FileInputStream( "c:/tools/screen.png" ), new FileInputStream( "c:/tools/logo.png" ) ) );	
 	}
 
+	/**
+	 * Match images.
+	 *
+	 * @param originalImage the original image
+	 * @param imageTemplate the image template
+	 * @param matchMethod the match method
+	 * @return the double
+	 */
 	private double matchImages( Mat originalImage, Mat imageTemplate, int matchMethod )
 	{
 

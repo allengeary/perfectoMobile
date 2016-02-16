@@ -2,11 +2,14 @@ package com.morelandLabs.integrations.perfectoMobile.rest.services;
 
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractService.
  */
 public abstract class AbstractService implements PerfectoService
 {
+	
+	/** The perfecto mobile. */
 	private PerfectoMobile perfectoMobile;
 	
 	/**

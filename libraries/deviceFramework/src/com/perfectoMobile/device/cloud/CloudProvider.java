@@ -1,5 +1,9 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.cloud;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface ApplicationProvider.
  */

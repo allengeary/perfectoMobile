@@ -6,12 +6,15 @@ import java.util.List;
 import com.morelandLabs.integrations.rest.bean.AbstractBean;
 import com.morelandLabs.integrations.rest.bean.Bean.BeanDescriptor;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class HandsetCollection.
  */
 @BeanDescriptor( beanName="handsets" )
 public class HandsetCollection extends AbstractBean
 {
+	
+	/** The handset list. */
 	@FieldCollection( fieldElement=Handset.class, fieldPath="" )
 	private List<Handset> handsetList = new ArrayList<Handset>( 10 );
 	

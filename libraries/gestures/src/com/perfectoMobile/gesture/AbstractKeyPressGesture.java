@@ -1,11 +1,16 @@
 package com.perfectoMobile.gesture;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractKeyPressGesture.
  */
 public abstract class AbstractKeyPressGesture extends AbstractGesture
 {
+	
+	/** The key code. */
 	private int keyCode;
+	
+	/** The meta state. */
 	private int metaState;
 	
 	/* (non-Javadoc)
@@ -17,10 +22,20 @@ public abstract class AbstractKeyPressGesture extends AbstractGesture
 		setMetaState( (int) parameterArray[ 1 ] );
 	}
 
+	/**
+	 * Gets the meta state.
+	 *
+	 * @return the meta state
+	 */
 	public int getMetaState() {
 		return metaState;
 	}
 
+	/**
+	 * Sets the meta state.
+	 *
+	 * @param metaState the new meta state
+	 */
 	public void setMetaState(int metaState) {
 		this.metaState = metaState;
 	}

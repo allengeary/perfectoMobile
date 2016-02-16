@@ -7,11 +7,14 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ApplicationRegistry.
  */
 public class ApplicationRegistry
 {
+	
+	/** The singleton. */
 	private static ApplicationRegistry singleton = new ApplicationRegistry();
 
 	/**
@@ -24,15 +27,24 @@ public class ApplicationRegistry
 		return singleton;
 	}
 
+	/**
+	 * Instantiates a new application registry.
+	 */
 	private ApplicationRegistry()
 	{
 
 	}
 	
+	/** The log. */
 	private Log log = LogFactory.getLog( ApplicationRegistry.class );
 	
+	/** The application map. */
 	private Map<String,ApplicationDescriptor> applicationMap = new HashMap<String,ApplicationDescriptor>( 20 );
+	
+	/** The application provider. */
 	private ApplicationProvider applicationProvider;
+	
+	/** The aut. */
 	private ApplicationDescriptor aut = null;
 	
 	/**

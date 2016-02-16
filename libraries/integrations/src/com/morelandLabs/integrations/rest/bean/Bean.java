@@ -4,6 +4,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface Bean.
  */

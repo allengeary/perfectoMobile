@@ -12,6 +12,7 @@ import com.perfectoMobile.gesture.device.action.DeviceAction;
 
 import io.appium.java_client.AppiumDriver;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class RecoverAction.
  */

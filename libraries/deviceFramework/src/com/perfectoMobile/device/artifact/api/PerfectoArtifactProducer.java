@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.perfectoMobile.device.artifact.api;
 
 import java.io.ByteArrayOutputStream;
@@ -14,15 +17,23 @@ import com.perfectoMobile.device.artifact.AbstractArtifactProducer;
 import com.perfectoMobile.device.artifact.Artifact;
 import com.perfectoMobile.device.cloud.CloudRegistry;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class PerfectoArtifactProducer.
  */
 public class PerfectoArtifactProducer extends AbstractArtifactProducer
 {
 
+	/** The Constant REPORT_KEY. */
 	private static final String REPORT_KEY = "REPORT_KEY";
+	
+	/** The Constant WIND_TUNNEL. */
 	private static final String WIND_TUNNEL = "WIND_TUNNEL";
+	
+	/** The Constant FORMAT. */
 	private static final String FORMAT = "format";
+	
+	/** The Constant DEFAULT_FORMAT. */
 	private static final String DEFAULT_FORMAT = "pdf";
 
 	/**

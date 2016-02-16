@@ -7,6 +7,7 @@ import com.morelandLabs.integrations.common.PercentagePoint;
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.perfectoMobile.gesture.AbstractTwoFingerGesture;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TwoFingerGesture.
  */
