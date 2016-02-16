@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Framework Suite" parallel="false" configfailurepolicy="continue">
+
+	
+	<test name="Framework Tests" parallel="false" thread-count="1">
+		<classes>
+			<class name="com.morelandLabs.page.PageManagerTest"></class>
+		</classes>
+	</test>
+</suite>
