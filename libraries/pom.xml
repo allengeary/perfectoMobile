@@ -27,4 +27,11 @@
 			</snapshots>
 		</repository>
 	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>internal.repo</id>
+			<name>Temporary Staging Repository</name>
+			<url>file:../../maven-repo</url>
+		</repository>
+	</distributionManagement>
 </project>
