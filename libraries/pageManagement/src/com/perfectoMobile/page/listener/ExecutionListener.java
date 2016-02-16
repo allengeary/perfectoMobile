@@ -9,8 +9,6 @@ package com.perfectoMobile.page.listener;
  * component's <code>addExecutionListener</code> method. When
  * the execution event occurs, that object's appropriate
  * method is invoked.
- *
- * @see ExecutionEvent
  */
 public interface ExecutionListener
 {
