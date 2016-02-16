@@ -1,0 +1,27 @@
+package com.morelandLabs.integrations.perfectoMobile.rest.bean;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.morelandLabs.integrations.rest.bean.AbstractBean;
+import com.morelandLabs.integrations.rest.bean.Bean.BeanDescriptor;
+
+/**
+ * The Class ExecutionCollection.
+ */
+@BeanDescriptor( beanName="response" )
+public class ExecutionCollection extends AbstractBean
+{
+	@FieldCollection( fieldElement=Handset.class, fieldPath="handsets" )
+	private List<Handset> handsetList = new ArrayList<Handset>( 10 );
+	
+	/**
+	 * Gets the handset list.
+	 *
+	 * @return the handset list
+	 */
+	public List<Handset> getHandsetList()
+	{
+		return handsetList;
+	}
+}
