@@ -13,7 +13,7 @@
 		<module>serviceProviderInterface</module>
 		<module>deviceFramework</module>
 		<module>deviceMaintenance</module>
-		<module>imagingExtension</module>
+		<module>imagingExtensions</module>
 	</modules>
 	
 	<repositories>
