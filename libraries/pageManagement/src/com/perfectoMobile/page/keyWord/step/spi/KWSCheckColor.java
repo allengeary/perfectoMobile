@@ -2,7 +2,8 @@ package com.perfectoMobile.page.keyWord.step.spi;
 
 import java.awt.image.BufferedImage;
 import java.util.Map;
-
+import org.apache.http.impl.io.SocketOutputBuffer;
+import org.apache.xerces.dom.PSVIDOMImplementationImpl;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 
@@ -12,9 +13,47 @@ import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class KWSValue.
+ * <b>Keyword(s):</b> <code>VERIFY_COLOR</code><br>
+ * The verify color keyword allow you to select a point from a named element, extract the color and compare it to a know color.  
+ * If the deviation falls outside of a predefined threshold then the step fails.  The determine the deviation, the color is broken 
+ * down into 3 bands: red, green and blue.  Each band is compare as a percentage difference against 255.  The 3 differences are then
+ * average out and compared to the deviation value specified.  Note that PageManager can be configured to dump these images to disk 
+ * for analysis purposes.<br><br>
+ * <b>Parameters:</b> Parameters can be supplied in as either a a set of 2 parameter or a set of 4.  The set of 2 parameters is usually used 
+ * in conjunction with the context attribute to store the color for later use as it does no comparison<br>
+ * <i>Extraction Only</i><br>
+ * <ul>
+ * <li>Resolution: high, med or low.  The specifies the screenshot resolution that will be used.</li>
+ * <li>Reference Point: The specifies the point on the extracted element that you want to have the color extracted from.  This point 
+ * is absolute to the image starting from 1,1</li>
+ * </ul>
+ * <i>Extraction and Comparison</i><br>
+ * <ul>
+ * <li>Resolution: high, med or low.  The specifies the screenshot resolution that will be used.</li>
+ * <li>Reference Point: The specifies the point on the extracted element that you want to have the color extracted from.  This point
+ * is absolute to the image starting from 1,1</li>
+ * <li>Color: This specifies the color to compare to.  This can be specified as an HTML color (#FFEE44) and integer represented all 3 bands or
+ * a comma separated list specifying red, green and blue</li> 
+ * <li>Percent Deviation: 0 for no deviation and 100 for maximum deviation.  If the calculated deviation is great than this value then the step fails</li>
+
+ * </ul>
+ * <br><b>Example(s): </b><ul>
+ * <li> This example will find the LOGO element and store the color at the 3,3 position in a context variable named useColor<br>
+ * {@literal <step name="LOGO" type="VERIFY_COLOR" page="TEST_PAGE" context="useColor"> }<br>
+ * &nbsp;&nbsp;&nbsp;{@literal  <parameter type="static" value="high" /> }<br>
+ * &nbsp;&nbsp;&nbsp;{@literal  <parameter type="static" value="3,3" /> }<br>
+ * {@literal </step> }
+ * </li>
+ *  <li> This example will find the LOGO element and analyze the color at the 3,3 position.  If the color is 5% different from white then it will fail<br>
+ * {@literal <step name="LOGO" type="VERIFY_COLOR" page="TEST_PAGE" > }<br>
+ * &nbsp;&nbsp;&nbsp;{@literal  <parameter type="static" value="high" /> }<br>
+ * &nbsp;&nbsp;&nbsp;{@literal  <parameter type="static" value="3,3" /> }<br>
+ * &nbsp;&nbsp;&nbsp;{@literal  <parameter type="static" value="#FFFFFF" /> }<br>
+ * &nbsp;&nbsp;&nbsp;{@literal  <parameter type="static" value="5" /> }<br>
+ * {@literal </step> }
+ * </li>
+ * </ul>
  */
 public class KWSCheckColor extends AbstractKeyWordStep
 {
@@ -70,8 +109,9 @@ public class KWSCheckColor extends AbstractKeyWordStep
 			
 			if ( ( ( redChange + greenChange + blueChange ) / 3 ) > percentDeviation )
 			{
+			    
 				StringBuilder stringBuilder = new StringBuilder();
-				stringBuilder.append( "The COLOR value for [" + getName() + "] was off by " + ( ( redChange + greenChange + blueChange ) / 3 ) + "% - Here is the break down - " );
+				stringBuilder.append( "The COLOR value of [#" + Integer.toHexString( elementColor ) +  "] for [" + getName() + "] was off by " + ( ( redChange + greenChange + blueChange ) / 3 ) + "% - Here is the break down - " );
 				if ( redChange > 0 )
 					stringBuilder.append( "The RED channel was off by " + redChange + "% " );
 				if ( greenChange > 0 )
@@ -86,6 +126,18 @@ public class KWSCheckColor extends AbstractKeyWordStep
 		return true;
 	}
 	
+	
+	public static void main( String args[] )
+	{
+	    int y = Integer.parseInt( "FFFFFF", 16 );
+	    
+	    int x = 123234245;
+	    System.out.println( x );
+	    System.out.println( Integer.toHexString( x ) );
+	    
+	    System.out.println( y );
+	    System.out.println( Integer.toHexString( y ));
+	}
 	/**
 	 * Compare color.
 	 *

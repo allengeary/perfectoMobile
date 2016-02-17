@@ -8,11 +8,14 @@ import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
-// TODO: Auto-generated Javadoc
 /**
- * Keyword(s): <b>ATTRIBUTE</b><br>
- * Description: The Attribute keyword allows the developer to extract a named attributes value from an Element and either store it or compare it to provided value. <br>
- * Parameters: Parameters can be supplied in as either a single parameter or a set of 2 parameters <br>
+ * <b>Keyword(s):</b> <code>ATTRIBUTE</code><br>
+ * The Attribute keyword allows the developer to extract a named attributes value from an Element and either store it or compare it to provided value. <br><br>
+ * <b>Attributes:</b> Attributes defined here are changes to the base attribute contract
+ * <ul>
+ * <li><i>name</i>: In this context, name defines the attribute name
+ * </ul><br><br>
+ * <b>Parameters:</b> Parameters can be supplied in as either a single parameter or a set of 2 parameters <br>
  * <i>Extraction Only</i><br>
  * <ul>
  * <li>Attribute Name: This specifies the name of the attribute that you want to extract</li>
@@ -22,7 +25,7 @@ import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
  * <li>Compare To: This specifies the value that you want to compare the attribute to</li>
  * <li>Attribute Name: This specifies the name of the attribute that you want to extract</li>
  * </ul> 
- * <br><br><b>Example(s): </b><ul>
+ * <br><b>Example(s): </b><ul>
  * <li> This example will extract the value of the 'name' attribute and compare it to the static text 'myelement' from the element named 'TEST_ELEMENT'<br>
  * {@literal <step name="TEST_ELEMENT" type="ATTRIBUTE" page="TEST_PAGE"> }<br>
  * &nbsp;&nbsp;&nbsp;{@literal 	<parameter type="static" value="myelement" /> }<br>

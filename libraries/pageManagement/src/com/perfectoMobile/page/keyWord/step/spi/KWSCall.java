@@ -10,9 +10,32 @@ import com.perfectoMobile.page.keyWord.KeyWordDriver;
 import com.perfectoMobile.page.keyWord.KeyWordParameter;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class KWSCall.
+ * <b>Keyword(s):</b> <code>CALL</code><br>
+ * The Call keyword allows the developer to execute a function or test defined in XML.  The test or function will inherit any dataProvider and dataDriver
+ * data that was provided to the calling test/function.  If a function is called and the funcvtino defined a dataProvider that did not exist on the calling test/function
+ * then it will be added during execution.  It is possible to override the name of a dataProvider/dataDriver using a parameter as defined below.  This allows a function 
+ * to use a single dataProvider name while other calling function may use dataProvider/dataDrivers with different names<br><br>
+ * <b>Attributes:</b> Attributes defined here are changes to the base attribute contract
+ * <ul>
+ * <li><i>name</i>: In this context, name is the function or test name
+ * <li><i>page</i>: In this context, page is unused
+ * </ul><br><br>
+ * <b>Parameters:</b> The only parameter available for the call keyword are the dataProvider/dataDriver overrides.  Each parameter will define a single override and there can be many<br>
+ * <i>Extraction Only</i><br>
+ * <ul>
+ * <li>Data Override: The specifies a single data override in the format of to=from</li>
+ * </ul>
+ * <br><b>Example(s): </b><ul>
+ * <li> This example will call a function name LOGIN<br>
+ * {@literal <step name="LOGIN" type="CALL" /> }<br>
+ * </li>
+ * <li> This example will call a function name LOGIN and override the systemLogin with authData (the function expects authData)<br>
+ * {@literal <step name="LOGIN" type="CALL" /> }<br>
+ * &nbsp;&nbsp;&nbsp;{@literal  <parameter type="static" value="authData=systemLogin" /> }<br>
+ * {@literal </step> }
+ * 
+ * </ul>
  */
 public class KWSCall extends AbstractKeyWordStep
 {
