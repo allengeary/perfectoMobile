@@ -44,7 +44,7 @@ public class KWSCall extends AbstractKeyWordStep
 	 * @see com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep#_executeStep(com.perfectoMobile.page.Page, org.openqa.selenium.WebDriver, java.util.Map, java.util.Map)
 	 */
 	@Override
-	public boolean _executeStep( Page pageObject, WebDriver webDriver, Map<String, Object> contextMap, Map<String, PageData> dataMap ) throws Exception
+	public boolean _executeStep( Page pageObject, WebDriver webDriver, Map<String, Object> contextMap, Map<String, PageData> dataMap, Map<String, Page> pageMap ) throws Exception
 	{
 		if ( log.isDebugEnabled() )
 			log.debug( "Execution Function " + getName() );
@@ -64,7 +64,7 @@ public class KWSCall extends AbstractKeyWordStep
 			}
 		}
 		
-		return KeyWordDriver.instance().executionFunction( getName(), webDriver, dataMap );
+		return KeyWordDriver.instance().executionFunction( getName(), webDriver, dataMap, pageMap );
 	}
 
 }

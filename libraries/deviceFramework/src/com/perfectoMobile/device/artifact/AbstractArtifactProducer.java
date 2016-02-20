@@ -29,7 +29,7 @@ public abstract class AbstractArtifactProducer implements ArtifactProducer
 	 * @param connectedDevice the connected device
 	 * @return the artifact
 	 */
-	protected abstract Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice );
+	protected abstract Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice, String testName );
 	
 	/**
 	 * _get artifact.
@@ -40,26 +40,26 @@ public abstract class AbstractArtifactProducer implements ArtifactProducer
 	 * @param connectedDevice the connected device
 	 * @return the artifact
 	 */
-	protected abstract Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, Map<String,String> parameterMap, ConnectedDevice connectedDevice );
+	protected abstract Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, Map<String,String> parameterMap, ConnectedDevice connectedDevice, String testName );
 	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.device.artifact.ArtifactProducer#getArtifact(org.openqa.selenium.WebDriver, com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType, com.perfectoMobile.device.ConnectedDevice)
 	 */
-	public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice )
+	public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice, String testName )
 	{
 		if ( log.isDebugEnabled() )
 			log.debug( "Acquiring an Artifact of type " + aType );
-		return _getArtifact( webDriver, aType, connectedDevice );
+		return _getArtifact( webDriver, aType, connectedDevice, testName );
 	}
 
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.device.artifact.ArtifactProducer#getArtifact(org.openqa.selenium.WebDriver, com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType, java.util.Map, com.perfectoMobile.device.ConnectedDevice)
 	 */
-	public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, Map<String, String> parameterMap, ConnectedDevice connectedDevice )
+	public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, Map<String, String> parameterMap, ConnectedDevice connectedDevice, String testName )
 	{
 		if ( log.isDebugEnabled() )
 			log.debug( "Acquiring an Artifact of type " + aType + " using " + parameterMap );
-		return _getArtifact( webDriver, aType, parameterMap, connectedDevice );
+		return _getArtifact( webDriver, aType, parameterMap, connectedDevice, testName );
 	}
 
 }

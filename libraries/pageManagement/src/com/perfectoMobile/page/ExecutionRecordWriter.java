@@ -2,6 +2,7 @@ package com.perfectoMobile.page;
 
 import java.io.File;
 import java.util.Map;
+import com.morelandLabs.spi.Device;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -22,7 +23,7 @@ public interface ExecutionRecordWriter
 	 *
 	 * @param keyName the key name
 	 */
-	public void startWriting( String keyName );
+	public void startWriting( String keyName, Device device, String testName );
 	
 	/**
 	 * Write timing.

@@ -12,17 +12,15 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.imageio.ImageIO;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.WebDriver;
-
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.WindTunnel.Status;
+import com.morelandLabs.spi.Device;
 import com.morelandLabs.spi.PropertyProvider;
 import com.morelandLabs.spi.driver.DeviceProvider;
 import com.morelandLabs.spi.driver.NativeDriverProvider;
@@ -87,10 +85,23 @@ public class PageManager
     
     /** The image location. */
     private String imageLocation;
+    
+    private ThreadLocal<Map<Class,Page>> pageCache = new ThreadLocal<Map<Class,Page>>();
 
     
-    
-	/**
+	public Map<Class, Page> getPageCache()
+    {
+	    if( pageCache.get() == null )
+	        pageCache.set( new HashMap<Class,Page>( 10 ) );
+        return pageCache.get();
+    }
+
+    public void setPageCache( Map<Class, Page> pageCache )
+    {
+        this.pageCache.set( pageCache );
+    }
+
+    /**
 	 * Checks if is wind tunnel enabled.
 	 *
 	 * @return true, if is wind tunnel enabled
@@ -169,7 +180,7 @@ public class PageManager
 		
 	}
 
-
+	
 
 	/**
 	 * The Enum StepStatus.
@@ -442,12 +453,31 @@ public class PageManager
     	{
     		for ( String keyName : executionLog.keySet() )
     		{
-    			recordWriter.startWriting( keyName );
+    			recordWriter.startWriting( keyName, null, "" );
         		for ( ExecutionRecord e : executionLog.get( keyName ) )
         			recordWriter.writeRecord( e );
         		recordWriter.stopWriting( keyName, additionalUrls );
     		}
     	}
+    }
+    
+    /**
+     * Write execution timings.
+     *
+     * @param additionalUrls the additional urls
+     */
+    public void writeExecutionRecords( Map<String,String> additionalUrls, Device device, String testName )
+    {
+        if ( recordWriter != null )
+        {
+            for ( String keyName : executionLog.keySet() )
+            {
+                recordWriter.startWriting( keyName, device, testName );
+                for ( ExecutionRecord e : executionLog.get( keyName ) )
+                    recordWriter.writeRecord( e );
+                recordWriter.stopWriting( keyName, additionalUrls );
+            }
+        }
     }
     
     /**

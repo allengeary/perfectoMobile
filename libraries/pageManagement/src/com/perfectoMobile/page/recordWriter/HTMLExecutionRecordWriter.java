@@ -4,10 +4,14 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Map;
-
+import com.morelandLabs.spi.Device;
+import com.morelandLabs.spi.RunDetails;
 import com.perfectoMobile.page.ExecutionRecord;
 import com.perfectoMobile.page.ExecutionRecordWriter;
+import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.PageManager.StepStatus;
 
 // TODO: Auto-generated Javadoc
@@ -16,6 +20,7 @@ import com.perfectoMobile.page.PageManager.StepStatus;
  */
 public class HTMLExecutionRecordWriter implements ExecutionRecordWriter
 {
+	private static DateFormat dateFormat = new SimpleDateFormat( "MM-dd_HH-mm-ss");
 	
 	/** The root folder. */
 	private File rootFolder;
@@ -57,12 +62,30 @@ public class HTMLExecutionRecordWriter implements ExecutionRecordWriter
 	 * @see com.perfectoMobile.page.ExecutionRecordWriter#startWriting(java.lang.String)
 	 */
 	@Override
-	public void startWriting( String keyName )
+	public void startWriting( String keyName, Device device, String testName )
 	{
+	    String localFolder = keyName;
+	    if ( device != null && testName != null )
+	        localFolder = testName + System.getProperty( "file.separator" ) + device.getKey() + System.getProperty( "file.separator" );
+	    
+	    String runKey = (testName == null ? keyName : testName );
+	    StringBuffer stringBuffer = new StringBuffer();
+	    if ( device != null )
+	    {
+    	    stringBuffer.append( "<html><body><table><tr><td align='right'><b>Device Name:</b></td><td>" ).append( device.getManufacturer() ).append( " " ).append( device.getModel() ).append( " (" ).append( device.getKey() ).append(")</td></tr>");
+    	    stringBuffer.append( "<tr><td align='right'><b>OS:</b></td><td>" ).append( device.getOs() ).append( " (" ).append( device.getOsVersion() ).append(")</td></tr>");
+    	    stringBuffer.append( "<tr><td align='right'><b>Test Name:</b></td><td>" ).append( testName ).append("</td></tr></table><table><br><br>");
+	    }
+	    else
+	        stringBuffer.append( "<html><body><table cellspacing='0'>").append( keyName );
+	    
 		try
 		{
-			outputWriter = new BufferedWriter( new FileWriter( new File( rootFolder, keyName + ".html" ), false ) );
-			outputWriter.write( "<HTML><BODY><H2>" + keyName + "</H2><TABLE cellSpacing='0'>" );
+		    File baseFolder = new File( RunDetails.instance().getRootFolder(), localFolder );
+		    baseFolder = new File( rootFolder, baseFolder.getPath() );
+		    baseFolder.mkdirs();
+			outputWriter = new BufferedWriter( new FileWriter( new File( baseFolder, runKey + ".html" ), false ) );
+			outputWriter.write( stringBuffer.toString() );
 		}
 		catch( Exception e )
 		{
@@ -78,9 +101,13 @@ public class HTMLExecutionRecordWriter implements ExecutionRecordWriter
 	{
 		try
 		{
-			success = executionRecord.getStatus().equals( StepStatus.SUCCESS );
+		    if ( executionRecord.getStatus().equals( StepStatus.FAILURE ) )
+		        success = false;
+		    
 			if ( outputWriter != null )
+			{
 				outputWriter.write( executionRecord.toHTML() );
+			}
 		}
 		catch( Exception e )
 		{
@@ -98,11 +125,11 @@ public class HTMLExecutionRecordWriter implements ExecutionRecordWriter
 		{
 			if ( !success )
 			{
-				outputWriter.write( "<tr><td colSpan='6' align='center'><br/><br/><br/><a href='" + keyName + "/deviceLog.xml'>Device Log</a></td></tr>" );
-				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='" + keyName + "/failureDom.xml'>DOM at Failure</a></td></tr>" );
-				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='" + keyName + "/EXECUTION_REPORT_PDF.pdf'>Exeuction Report</a></td></tr>" );
-				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='testNg/index.html'>Test NG Results</a></td></tr>" );
-				outputWriter.write( "<tr><td colSpan='6' align='center'><img height='500' src='" + keyName + "-screenshot.png'/></td></tr>" );
+				outputWriter.write( "<tr><td colSpan='6' align='center'><br/><br/><br/><a href='deviceLog.xml'>Device Log</a></td></tr>" );
+				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='failureDom.xml'>DOM at Failure</a></td></tr>" );
+				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='EXECUTION_REPORT_PDF.pdf'>Exeuction Report</a></td></tr>" );
+				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='../../testNg/index.html'>Test NG Results</a></td></tr>" );
+//				outputWriter.write( "<tr><td colSpan='6' align='center'><img height='500' src='failure-screenshot.png'/></td></tr>" );
 				
 				for ( String key : additionalUrls.keySet() )
 					outputWriter.write( "<tr><td colSpan='6' align='center'><a href='" + additionalUrls.get(key) + "'>" + key + "</a></td></tr>" );

@@ -56,6 +56,8 @@ public interface DeviceAction
 		/** The dump state. */
 		DUMP_STATE,
 		
+		/** The dump state. */
+        SEND_KEYS,
 		
 		/** The location. */
 		LOCATION;

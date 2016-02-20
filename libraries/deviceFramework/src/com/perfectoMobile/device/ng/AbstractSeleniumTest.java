@@ -22,6 +22,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 
 import com.morelandLabs.spi.Device;
+import com.morelandLabs.spi.RunDetails;
 import com.perfectoMobile.device.ConnectedDevice;
 import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.artifact.Artifact;
@@ -246,7 +247,9 @@ public abstract class AbstractSeleniumTest
 	protected WebDriver getWebDriver()
 	{
 		if (threadDevice.get() != null)
+		{
 			return threadDevice.get().getWebDriver();
+		}
 		else
 			return null;
 	}
@@ -298,7 +301,8 @@ public abstract class AbstractSeleniumTest
 		WebDriver webDriver = getWebDriver();
 		if (webDriver != null)
 		{
-
+		    File rootFolder = new File( DataManager.instance().getReportFolder(), RunDetails.instance().getRootFolder() );
+		    rootFolder.mkdirs();
 			//
 			// If this test failed, run through the automatic downloads for a
 			// failed test
@@ -308,14 +312,13 @@ public abstract class AbstractSeleniumTest
 				if ( webDriver instanceof TakesScreenshot )
 				{
 					OutputStream os = null;
-					String deviceName = ( (DeviceWebDriver) getWebDriver() ).getDeviceName();
 					String executionId = ( (DeviceWebDriver) getWebDriver() ).getExecutionId();
 
 					try
 					{
 						byte[] screenShot = ( ( TakesScreenshot ) webDriver ).getScreenshotAs( OutputType.BYTES );
 						
-						File outputFile = new File( DataManager.instance().getReportFolder(), executionId + "-" + deviceName + "-screenshot.png" );
+						File outputFile = new File( new File( rootFolder, ( ( TestName ) testArgs[0] ).getTestName() ), getDevice().getKey() + System.getProperty( "file.separator" ) + "failure-screenshot.png" );
 						os = new BufferedOutputStream( new FileOutputStream( outputFile ) );
 						os.write( screenShot );
 						os.flush();
@@ -341,9 +344,9 @@ public abstract class AbstractSeleniumTest
 							{
 								try
 								{
-									Artifact currentArtifact = ( ( ArtifactProducer ) webDriver ).getArtifact( webDriver, aType, threadDevice.get() );
+									Artifact currentArtifact = ( ( ArtifactProducer ) webDriver ).getArtifact( webDriver, aType, threadDevice.get(), ( ( TestName ) testArgs[0] ).getTestName() );
 									if ( currentArtifact != null )
-										currentArtifact.writeToDisk( DataManager.instance().getReportFolder() );
+										currentArtifact.writeToDisk( rootFolder );
 								}
 								catch (Exception e)
 								{
@@ -376,9 +379,9 @@ public abstract class AbstractSeleniumTest
 						{
 							try
 							{
-								Artifact currentArtifact = ( ( ArtifactProducer ) webDriver ).getArtifact( webDriver, aType, threadDevice.get() );
+								Artifact currentArtifact = ( ( ArtifactProducer ) webDriver ).getArtifact( webDriver, aType, threadDevice.get(), ( ( TestName ) testArgs[0] ).getTestName() );
 								if ( currentArtifact != null )
-									currentArtifact.writeToDisk( DataManager.instance().getReportFolder() );
+									currentArtifact.writeToDisk( rootFolder );
 							}
 							catch (Exception e)
 							{

@@ -4,13 +4,13 @@
 package com.perfectoMobile.device.artifact.api;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
-
 import org.openqa.selenium.WebDriver;
-
+import com.morelandLabs.spi.RunDetails;
 import com.perfectoMobile.device.ConnectedDevice;
 import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.artifact.AbstractArtifactProducer;
@@ -57,7 +57,7 @@ public class PerfectoArtifactProducer extends AbstractArtifactProducer
 	 * @see com.perfectoMobile.device.artifact.AbstractArtifactProducer#_getArtifact(org.openqa.selenium.WebDriver, com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType, com.perfectoMobile.device.ConnectedDevice)
 	 */
 	@Override
-	protected Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice )
+	protected Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice, String testName )
 	{
 		return null;
 	}
@@ -66,9 +66,10 @@ public class PerfectoArtifactProducer extends AbstractArtifactProducer
 	 * @see com.perfectoMobile.device.artifact.AbstractArtifactProducer#_getArtifact(org.openqa.selenium.WebDriver, com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType, java.util.Map, com.perfectoMobile.device.ConnectedDevice)
 	 */
 	@Override
-	protected Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, Map<String, String> parameterMap, ConnectedDevice connectedDevice )
+	protected Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, Map<String, String> parameterMap, ConnectedDevice connectedDevice, String testName )
 	{
-		String rootFolder = DeviceManager.instance().getExecutionId() + "-" + connectedDevice.getDevice().getDeviceName() + System.getProperty( "file.separator" );
+	    String rootFolder = testName + System.getProperty( "file.separator" ) + connectedDevice.getDevice().getKey() + System.getProperty( "file.separator" );
+	    
 		String reportFormat = null;
 		String operation = null;
 		switch (aType)
@@ -117,15 +118,7 @@ public class PerfectoArtifactProducer extends AbstractArtifactProducer
 				break;
 				
 			case WIND_TUNNEL_REPORT:
-				try
-				{
-					return new Artifact( rootFolder + "windTunnel.html", getUrl( new URL( parameterMap.get( WIND_TUNNEL ) + "" ) ) );
-				}
-				catch( Exception e )
-				{
-					log.error( "Error download artifact data", e );
-					return null;
-				}
+			    break;
 				
 			default:
 				operation = "download";

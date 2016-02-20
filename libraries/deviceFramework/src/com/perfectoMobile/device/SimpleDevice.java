@@ -116,7 +116,7 @@ public class SimpleDevice implements Device
 		
 		cachedString = manufacturer + " " + model + " [" + key + "] --> ";
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.morelandLabs.spi.Device#addCapability(java.lang.String, java.lang.String)
 	 */

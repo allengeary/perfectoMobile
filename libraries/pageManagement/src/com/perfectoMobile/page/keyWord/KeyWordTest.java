@@ -116,8 +116,8 @@ public class KeyWordTest
 	{
 		if ( step.isActive() )
 		{
-			if ( log.isInfoEnabled() )
-				log.info( "Adding Step [" + step.getName() + "] to [" + name + "]"  );
+			if ( log.isDebugEnabled() )
+				log.debug( "Adding Step [" + step.getName() + "] to [" + name + "]"  );
 			stepList.add( step );
 		}
 	}
@@ -196,7 +196,7 @@ public class KeyWordTest
 	 * @return true, if successful
 	 * @throws Exception the exception
 	 */
-	public boolean executeTest( WebDriver webDriver, Map<String,Object> contextMap, Map<String,PageData> dataMap ) throws Exception
+	public boolean executeTest( WebDriver webDriver, Map<String,Object> contextMap, Map<String,PageData> dataMap, Map<String,Page> pageMap ) throws Exception
 	{
 		if ( log.isInfoEnabled() )
 			log.info( "*** Executing Test " + name + ( linkId != null ? " linked to " + linkId : "" ) );
@@ -204,8 +204,7 @@ public class KeyWordTest
 		long startTime = System.currentTimeMillis();
 		
 		boolean stepSuccess = true;
-		Exception stepException = null;
-		
+
 		String executionId = PageManager.instance().getExecutionId(webDriver);
 		String deviceName = PageManager.instance().getDeviceName(webDriver);
 		
@@ -217,16 +216,15 @@ public class KeyWordTest
 			Page page = null;
 			if ( step.getPageName() != null )
 			{
-				if ( log.isInfoEnabled() )
-					log.info( "Attempting to create page for " + step.getPageName() );
-				page = PageManager.instance().createPage( KeyWordDriver.instance().getPage( step.getPageName() ), webDriver );
+			    page = pageMap.get( step.getPageName() );
+			    if ( page == null )
+			    {
+    				page = PageManager.instance().createPage( KeyWordDriver.instance().getPage( step.getPageName() ), webDriver );
+    				pageMap.put( step.getPageName(), page );
+			    }
 			}
 			
-			long stepStart = System.currentTimeMillis();
-			
-			stepSuccess = step.executeStep( page, webDriver, contextMap, dataMap );
-			
-			
+			stepSuccess = step.executeStep( page, webDriver, contextMap, dataMap, pageMap );
 			
 			if ( !stepSuccess )
 			{

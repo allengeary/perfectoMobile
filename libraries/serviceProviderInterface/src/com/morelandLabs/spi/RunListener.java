@@ -1,9 +1,7 @@
 /*
  * 
  */
-package com.perfectoMobile.device.listener;
-
-import com.morelandLabs.spi.Device;
+package com.morelandLabs.spi;
 
 // TODO: Auto-generated Javadoc
 /**

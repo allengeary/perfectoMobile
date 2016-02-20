@@ -231,7 +231,7 @@ public interface KeyWordStep
 	 * @return true, if successful
 	 * @throws Exception the exception
 	 */
-	public boolean executeStep( Page pageObject, WebDriver webDriver, Map<String, Object> contextMap, Map<String, PageData> dataMap ) throws Exception;
+	public boolean executeStep( Page pageObject, WebDriver webDriver, Map<String, Object> contextMap, Map<String, PageData> dataMap, Map<String,Page> pageMap ) throws Exception;
 	
 	/**
 	 * To error.

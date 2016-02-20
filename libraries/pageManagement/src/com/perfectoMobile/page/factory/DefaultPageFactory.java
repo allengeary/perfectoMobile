@@ -29,12 +29,7 @@ public class DefaultPageFactory extends LocalPageFactory implements InvocationHa
 
     /** The Constant TYPE. */
     private static final String TYPE = "TYPE";
-    
-    /** The service map. */
-    private Map<Class<Page>,Page> serviceMap = new HashMap<>( 10 );
-    
-    
-    
+
     /* (non-Javadoc)
      * @see com.perfectoMobile.page.factory.LocalPageFactory#_createPage(java.lang.Class, java.lang.Object)
      */
@@ -68,8 +63,8 @@ public class DefaultPageFactory extends LocalPageFactory implements InvocationHa
 		{
 			if ( isCorrectMethod(currentMethod, methodName, args) )
 			{
-				if ( log.isInfoEnabled() )
-					log.info( "Found [" +methodName + "] on " + rootClass.getName() );
+				if ( log.isDebugEnabled() )
+					log.debug( "Found [" +methodName + "] on " + rootClass.getName() );
 				
 				if ( log.isDebugEnabled() && args != null )
 				{
@@ -124,9 +119,13 @@ public class DefaultPageFactory extends LocalPageFactory implements InvocationHa
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable 
 	{
 		
-		Page currentService = serviceMap.get( proxy.getClass() );
+		Page currentService = PageManager.instance().getPageCache().get( proxy.getClass() );
 		
-		currentService = super._createPage( (Class<Page>) proxy.getClass().getInterfaces()[0], webDriver );
+		if ( currentService == null )
+		{
+		    currentService = super._createPage( (Class<Page>) proxy.getClass().getInterfaces()[0], webDriver );
+		    PageManager.instance().getPageCache().put(  proxy.getClass(), currentService );
+		}
 		 
 		Method methodImplemenation = findMethod( currentService.getClass(), method.getName(), args );
 		
@@ -140,9 +139,7 @@ public class DefaultPageFactory extends LocalPageFactory implements InvocationHa
 			Object returnValue = methodImplemenation.invoke( currentService, args );
 			long runLength = System.currentTimeMillis() - startTime;
 			
-			//if ( method.getAnnotation( Page.TimeMethod.class ) != null )
-			//	PageManager.instance().addExecutionTiming( methodKeyName, runLength );
-				
+
 			PageManager.instance().afterExecution( methodKeyName, runLength );
 			
 			return returnValue;

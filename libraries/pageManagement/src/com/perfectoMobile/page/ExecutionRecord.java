@@ -1,5 +1,8 @@
 package com.perfectoMobile.page;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import com.perfectoMobile.page.PageManager.StepStatus;
 
 // TODO: Auto-generated Javadoc
@@ -8,7 +11,7 @@ import com.perfectoMobile.page.PageManager.StepStatus;
  */
 public class ExecutionRecord
 {
-	
+    private static DateFormat timeFormat = new SimpleDateFormat( "HH:mm:ss.SSS");
 	/** The group. */
 	private String group;
 	
@@ -253,7 +256,7 @@ public class ExecutionRecord
 		stringBuffer.append( "<td>" ).append( group ).append( "</td>" );
 		stringBuffer.append( "<td>" ).append( name ).append( "</td>" );
 		stringBuffer.append( "<td>" ).append( type ).append( "</td>" );
-		stringBuffer.append( "<td>" ).append( timeStamp ).append( "</td>" );
+		stringBuffer.append( "<td>" ).append( timeFormat.format( new Date( timeStamp ) ) ).append( "</td>" );
 		stringBuffer.append( "<td>" ).append( runTime ).append( "</td>" );
 		stringBuffer.append( "<td>" ).append( status ).append( "</td>" );
 		stringBuffer.append( "</tr>" );

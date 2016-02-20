@@ -85,8 +85,8 @@ public class KeyWordDriver
 	 */
 	public void addPage( String pageName, Class<Page> pageClass )
 	{
-		if (log.isInfoEnabled())
-			log.info( "Mapping Page [" + pageName + "] to [" + pageClass.getName() + "]" );
+		if (log.isDebugEnabled())
+			log.debug( "Mapping Page [" + pageName + "] to [" + pageClass.getName() + "]" );
 		pageMap.put( pageName, pageClass );
 	}
 
@@ -160,7 +160,7 @@ public class KeyWordDriver
 	 * @throws Exception
 	 *             the exception
 	 */
-	public boolean executionFunction( String testName, WebDriver webDriver, Map<String, PageData> dataMap ) throws Exception
+	public boolean executionFunction( String testName, WebDriver webDriver, Map<String, PageData> dataMap, Map<String,Page> pageMap ) throws Exception
 	{
 		if (log.isDebugEnabled())
 			log.debug( "Attempting to locate function/test [" + testName + "]" );
@@ -200,7 +200,7 @@ public class KeyWordDriver
 			}
 		}
 
-		return test.executeTest( webDriver, contextMap.get(), dataMap );
+		return test.executeTest( webDriver, contextMap.get(), dataMap, pageMap );
 	}
 
 	
@@ -236,6 +236,8 @@ public class KeyWordDriver
 	 */
 	public boolean executeTest( String testName, WebDriver webDriver ) throws Exception
 	{
+	    PageManager.instance().getPageCache().clear();
+	    
 		if (log.isDebugEnabled())
 			log.debug( "Attempting to locate test [" + testName + "]" );
 
@@ -245,6 +247,7 @@ public class KeyWordDriver
 			throw new IllegalArgumentException( "The test [" + testName + "] does not exist" );
 
 		Map<String, PageData> dataMap = new HashMap<String, PageData>( 10 );
+		Map<String, Page> pageMap = new HashMap<String, Page>( 10 );
 
 		try
 		{
@@ -282,7 +285,7 @@ public class KeyWordDriver
 			// Create a new context map and pass it along to all of the steps
 			//
 			contextMap.set( new HashMap<String, Object>( 10 ) );
-			boolean returnValue = test.executeTest( webDriver, contextMap.get(), dataMap );
+			boolean returnValue = test.executeTest( webDriver, contextMap.get(), dataMap, pageMap );
 			contextMap.set( null );
 
 			return returnValue;

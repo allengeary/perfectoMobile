@@ -304,8 +304,8 @@ public class XMLKeyWordProvider implements KeyWordProvider
 					if (className != null && className.getNodeValue() != null)
 						useClass = ( Class<Page> ) Class.forName( className.getNodeValue() );
 
-					if (log.isInfoEnabled())
-						log.info( "Creating page as " + useClass.getSimpleName() + " for " + name.getNodeValue() );
+					if (log.isDebugEnabled())
+			            log.debug( "Creating page as " + useClass.getSimpleName() + " for " + name.getNodeValue() );
 
 					KeyWordDriver.instance().addPage( name.getNodeValue(), useClass );
 				}

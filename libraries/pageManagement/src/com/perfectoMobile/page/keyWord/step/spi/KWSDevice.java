@@ -31,7 +31,7 @@ public class KWSDevice extends AbstractKeyWordStep
 	 * java.util.Map)
 	 */
 	@Override
-	public boolean _executeStep( Page pageObject, WebDriver webDriver, Map<String, Object> contextMap, Map<String, PageData> dataMap )
+	public boolean _executeStep( Page pageObject, WebDriver webDriver, Map<String, Object> contextMap, Map<String, PageData> dataMap, Map<String, Page> pageMap )
 	{
 		long startTime = System.currentTimeMillis();
 		if ( log.isDebugEnabled() )

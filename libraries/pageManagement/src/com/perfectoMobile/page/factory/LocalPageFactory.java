@@ -7,9 +7,6 @@ package com.perfectoMobile.page.factory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.perfectoMobile.page.AbstractPage;
 import com.perfectoMobile.page.ElementDescriptor;
 import com.perfectoMobile.page.Page;
@@ -66,6 +63,7 @@ public class LocalPageFactory extends AbstractPageFactory
         	Page currentPage = (Page) Class.forName( serviceName ).newInstance();
         	currentPage.initializePage();
         	currentPage.setDriver( webDriver );
+
         	
         	Method[] methodArray = currentPage.getClass().getInterfaces()[0].getMethods();
         	

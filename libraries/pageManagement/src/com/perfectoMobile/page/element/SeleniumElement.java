@@ -130,15 +130,15 @@ public class SeleniumElement extends AbstractElement
 					}
 					catch( Exception e )
 					{
-						log.error( "Error extracting image data", e );
+						log.error( Thread.currentThread().getName() + ": Error extracting image data", e );
 					}
 				}
 				else
-					log.warn( "No image data could be retrieved for [" + fileKey + "]" );
+					log.warn( Thread.currentThread().getName() + ": No image data could be retrieved for [" + fileKey + "]" );
 				
 			}
 			else
-				log.warn( "The element returned via " + getKey() + " did not contain a location or size" );
+				log.warn( Thread.currentThread().getName() + ": The element returned via " + getKey() + " did not contain a location or size" );
 		}
 		
 		return null;
@@ -170,10 +170,11 @@ public class SeleniumElement extends AbstractElement
 	 */
 	private Element getElement( String elementName )
     {
+	    
     	ElementDescriptor elementDescriptor = new ElementDescriptor( PageManager.instance().getSiteName(), getPageName(), elementName );
     	
     	if ( log.isInfoEnabled() )
-    		log.info( "Attempting to locate element using [" + elementDescriptor.toString() + "]" );
+    		log.info( Thread.currentThread().getName() + ": Attempting to locate element using [" + elementDescriptor.toString() + "]" );
     	
     	Element myElement = PageManager.instance().getElementProvider().getElement( elementDescriptor );
     	myElement.setDriver( webDriver );
@@ -261,7 +262,7 @@ public class SeleniumElement extends AbstractElement
 			
 			
 			if (log.isInfoEnabled())
-				log.info( "Locating element by [" + getBy() + "] using [" + getKey() + "]" );
+				log.info( Thread.currentThread().getName() + ": Locating element by [" + getBy() + "] using [" + getKey() + "]" );
 
 			
 			List<WebElement> webElements = null;
@@ -274,7 +275,7 @@ public class SeleniumElement extends AbstractElement
 			if (log.isInfoEnabled())
 			{
 				if (webElements == null)
-					log.info( "Could not locate by [" + getBy() + "] using [" + getKey() + "]" );
+					log.info( Thread.currentThread().getName() + ": Could not locate by [" + getBy() + "] using [" + getKey() + "]" );
 				else
 					log.info( webElements.size() + "Elements Located using " + getKey() );
 			}
@@ -313,12 +314,11 @@ public class SeleniumElement extends AbstractElement
 
 		try
 		{
-
 			By useBy = useBy();
 			if (useBy != null)
 			{
 				if (log.isInfoEnabled())
-					log.info( "Locating element by [" + getBy() + "] using [" + getKey() + "]" + ( fromContext != null ? (" from [" + fromContext.getNative() + "]") : "" ) );
+					log.info( Thread.currentThread().getName() + ": Locating element by [" + getBy() + "] using [" + getKey() + "]" + ( fromContext != null ? (" from [" + fromContext.getNative() + "]") : "" ) );
 
 				WebElement webElement = null;
 				
@@ -337,9 +337,9 @@ public class SeleniumElement extends AbstractElement
 				if (log.isInfoEnabled())
 				{
 					if (webElement == null)
-						log.info( "Could not locate by [" + getBy() + "] using [" + getKey() + "]" );
+						log.info( Thread.currentThread().getName() + ": Could not locate by [" + getBy() + "] using [" + getKey() + "]" );
 					else
-						log.info( "Element " + getKey() + " Located" );
+						log.info( Thread.currentThread().getName() + ": Element " + getKey() + " Located" );
 				}
 				
 				return webElement;
@@ -438,7 +438,7 @@ public class SeleniumElement extends AbstractElement
 		}
 		catch (Exception e)
 		{
-			log.error( "Could not locate " + useBy(), e );
+			log.error( Thread.currentThread().getName() + ": Could not locate " + useBy(), e );
 			throw new IllegalStateException( "Could not locate " + getKey() + " on page " + getPageName(), e );
 		}
 	}
@@ -465,7 +465,7 @@ public class SeleniumElement extends AbstractElement
 		}
 		catch (Exception e)
 		{
-			log.error( "Could not locate " + useBy() );
+			log.error( Thread.currentThread().getName() + ": Could not locate " + useBy() );
 			throw new IllegalStateException( "Could not locate " + getKey() + " on page " + getPageName(), e );
 		}
 	}
@@ -481,7 +481,7 @@ public class SeleniumElement extends AbstractElement
 		if ( webElement.getTagName().equalsIgnoreCase( "select" ) )
 		{
 			if (log.isInfoEnabled())
-				log.info( "Selecting element value from [" + getKey() + "] as " + currentValue );
+				log.info( Thread.currentThread().getName() + ": Selecting element value from [" + getKey() + "] as " + currentValue );
 			
 			Select selectElement = new Select( webElement );
 			if ( selectElement.isMultiple() )
@@ -492,7 +492,7 @@ public class SeleniumElement extends AbstractElement
 		else
 		{
 			if (log.isInfoEnabled())
-				log.info( "Setting element [" + getKey() + "] to " + currentValue );
+				log.info( Thread.currentThread().getName() + ": Setting element [" + getKey() + "] to " + currentValue );
 			webElement.clear();
 			webElement.sendKeys( currentValue );
 		}
@@ -584,7 +584,7 @@ public class SeleniumElement extends AbstractElement
 		}
 		
 		if ( executionId == null )
-			log.warn( "No Execution ID could be located" );
+			log.warn( Thread.currentThread().getName() + ": No Execution ID could be located" );
 		
 		return executionId;
 	}

@@ -21,10 +21,10 @@ import org.htmlcleaner.PrettyXmlSerializer;
 import org.htmlcleaner.TagNode;
 
 import com.morelandLabs.spi.Device;
+import com.morelandLabs.spi.RunListener;
 import com.perfectoMobile.device.comparator.WeightedDeviceComparator;
 import com.perfectoMobile.device.factory.DeviceWebDriver;
 import com.perfectoMobile.device.factory.DriverManager;
-import com.perfectoMobile.device.listener.RunListener;
 
 // TODO: Auto-generated Javadoc
 /**

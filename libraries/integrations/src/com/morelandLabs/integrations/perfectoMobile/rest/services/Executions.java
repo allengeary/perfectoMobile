@@ -3,6 +3,7 @@ package com.morelandLabs.integrations.perfectoMobile.rest.services;
 import com.morelandLabs.integrations.perfectoMobile.rest.bean.Execution;
 import com.morelandLabs.integrations.perfectoMobile.rest.bean.ExecutionCollection;
 import com.morelandLabs.integrations.perfectoMobile.rest.bean.ExecutionResult;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.PerfectoService.Parameter;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.PerfectoService.ServiceDescriptor;
 
 // TODO: Auto-generated Javadoc
@@ -50,7 +51,7 @@ public interface Executions extends PerfectoService
 	 * @return the execution
 	 */
 	@Operation( operationName="execute" )
-	public Execution execute( String scriptKey, @Parameter String DUT );
+	public Execution execute( @NameOverride( name="scriptKey" ) String scriptKey, @Parameter( name="DUT" ) String DUT );
 	
 	/**
 	 * Status.
@@ -90,6 +91,6 @@ public interface Executions extends PerfectoService
 	 * @return the executions
 	 */
 	@Operation( operationName="list" )
-	public ExecutionCollection getExecutions( Boolean completed, Boolean admin, FlowEndCode flowEndCode, @NameOverride( name="time.type" ) TimeType timeType, @NameOverride( name="time.anchor") Long timeAnchor, @NameOverride( name="time.offset" ) Short timeOffset );
+	public ExecutionCollection getExecutions( @NameOverride( name="completed" )Boolean completed, @NameOverride( name="admin" )Boolean admin, @NameOverride( name="flowEndCode" ) FlowEndCode flowEndCode, @NameOverride( name="time.type" ) TimeType timeType, @NameOverride( name="time.anchor") Long timeAnchor, @NameOverride( name="time.offset" ) Short timeOffset );
 	
 }

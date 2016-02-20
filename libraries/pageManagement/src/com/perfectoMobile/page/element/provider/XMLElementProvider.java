@@ -239,8 +239,8 @@ public class XMLElementProvider extends AbstractElementProvider
 			ElementDescriptor elementDescriptor = new ElementDescriptor( siteName,  pageName, elementName );
 			Element currentElement = ElementFactory.instance().createElement( BY.valueOf( descriptor.getNodeValue() ), value.getNodeValue(), elementName, pageName, contextName );
 			
-			if ( log.isInfoEnabled() )
-				log.info( "Adding XML Element using [" + elementDescriptor.toString() + "] as [" + currentElement + "]" );
+			if (log.isDebugEnabled())
+	            log.debug( "Adding XML Element using [" + elementDescriptor.toString() + "] as [" + currentElement + "]" );
 			elementMap.put(elementDescriptor.toString(), currentElement );
 		}
 		else

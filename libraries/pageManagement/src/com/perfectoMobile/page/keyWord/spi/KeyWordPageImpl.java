@@ -34,9 +34,9 @@ public class KeyWordPageImpl extends AbstractPage implements KeyWordPage
     	ElementDescriptor elementDescriptor = new ElementDescriptor( siteName, pageName, elementName );
     	
     	if ( log.isInfoEnabled() )
-    		log.info( "Attempting to locate element using [" + elementDescriptor.toString() + "]" );
+    		log.info( Thread.currentThread().getName() + ": Attempting to locate element using [" + elementDescriptor.toString() + "]" + " - " + webDriver );
     	
-    	Element myElement = PageManager.instance().getElementProvider().getElement( elementDescriptor );
+    	Element myElement = PageManager.instance().getElementProvider().getElement( elementDescriptor ).cloneElement();
     	myElement.setDriver( webDriver );
     	return myElement;
     }

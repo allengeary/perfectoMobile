@@ -1,14 +1,12 @@
 /*
  * 
  */
-package com.perfectoMobile.device.listener;
+package com.morelandLabs.spi;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.morelandLabs.spi.Device;
 
 // TODO: Auto-generated Javadoc
 /**

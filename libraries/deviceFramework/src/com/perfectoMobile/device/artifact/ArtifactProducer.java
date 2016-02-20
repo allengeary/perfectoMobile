@@ -94,7 +94,7 @@ public interface ArtifactProducer
 	 * @param connectedDevice the connected device
 	 * @return the artifact
 	 */
-	public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice );
+	public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice, String testName );
 	
 	/**
 	 * Gets the artifact.
@@ -105,5 +105,5 @@ public interface ArtifactProducer
 	 * @param connectedDevice the connected device
 	 * @return the artifact
 	 */
-	public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, Map<String,String> parameterMap, ConnectedDevice connectedDevice );
+	public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, Map<String,String> parameterMap, ConnectedDevice connectedDevice, String testName );
 }
