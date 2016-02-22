@@ -228,7 +228,10 @@ public abstract class AbstractElement implements Element
 				String newKey = elementKey;
 				for ( String tokenName : tokenMap.keySet() )
 				{
-					newKey = newKey.replaceAll( "\\{" + tokenName + "\\}", tokenMap.get( tokenName ) );
+				    if ( tokenMap.get( tokenName ) != null)
+				        newKey = newKey.replaceAll( "\\{" + tokenName + "\\}", tokenMap.get( tokenName ) );
+				    else
+				        log.warn( "Token [" + tokenName + " was null" );
 				}
 				elementKey = newKey;
 			}

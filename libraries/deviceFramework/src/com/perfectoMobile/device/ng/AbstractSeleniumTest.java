@@ -276,6 +276,7 @@ public abstract class AbstractSeleniumTest
 	@BeforeMethod
 	public void beforeMethod( Method currentMethod, Object[] testArgs )
 	{
+	    Thread.currentThread().setName( testArgs[0].toString() );
 		if (log.isInfoEnabled())
 			log.info( "Attempting to acquire device for " + currentMethod.getName() );
 
@@ -285,6 +286,7 @@ public abstract class AbstractSeleniumTest
 		{
 			threadDevice.set( connectedDevice );
 			( ( TestName ) testArgs[0] ).setFullName( testArgs[0].toString() );
+			Thread.currentThread().setName( testArgs[0].toString() );
 		}
 	}
 

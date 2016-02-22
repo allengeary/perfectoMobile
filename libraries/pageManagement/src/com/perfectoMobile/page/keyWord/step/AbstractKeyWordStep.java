@@ -424,7 +424,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 			}
 			
 			if (log.isInfoEnabled())
-				log.info( Thread.currentThread().getName() + ": *** Executing Step " + name + " of type " + getClass().getSimpleName() + ( linkId != null ? " linked to " + linkId : "" ) );
+				log.info( Thread.currentThread().getName() + ": Executing Step " + name + "(" + getClass().getSimpleName() + ")" + ( linkId != null ? " linked to " + linkId : "" ) );
 
 			Exception stepException = null;
 			boolean returnValue = false;
@@ -804,8 +804,8 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 		{
 			if (isCorrectMethod( currentMethod, methodName, args ))
 			{
-				if (log.isInfoEnabled())
-					log.info( "Found [" + methodName + "] on " + rootClass.getName() );
+				if (log.isDebugEnabled())
+					log.debug( "Found [" + methodName + "] on " + rootClass.getName() );
 
 				if (log.isDebugEnabled() && args != null)
 				{
@@ -983,7 +983,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 				}
 				else
 				{
-					log.info( Thread.currentThread().getName() + ": Attempting to analyze [" + dataValue + "] using the Regular Expression [" + validation + "]" );
+					log.debug( Thread.currentThread().getName() + ": Attempting to analyze [" + dataValue + "] using the Regular Expression [" + validation + "]" );
 					if ( !dataValue.matches( validation ) )
 					{
 						log.error( Thread.currentThread().getName() + ": Validation failed for [" + dataValue + "] using the Regular Expression [" + validation + "]" );

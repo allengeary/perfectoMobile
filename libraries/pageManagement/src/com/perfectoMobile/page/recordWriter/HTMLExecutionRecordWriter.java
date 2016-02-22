@@ -28,8 +28,6 @@ public class HTMLExecutionRecordWriter implements ExecutionRecordWriter
 	/** The output writer. */
 	private Writer outputWriter;
 	
-	/** The success. */
-	boolean success = false;
 	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.ExecutionRecordWriter#setFile(java.io.File)
@@ -101,9 +99,6 @@ public class HTMLExecutionRecordWriter implements ExecutionRecordWriter
 	{
 		try
 		{
-		    if ( executionRecord.getStatus().equals( StepStatus.FAILURE ) )
-		        success = false;
-		    
 			if ( outputWriter != null )
 			{
 				outputWriter.write( executionRecord.toHTML() );
@@ -119,7 +114,7 @@ public class HTMLExecutionRecordWriter implements ExecutionRecordWriter
 	 * @see com.perfectoMobile.page.ExecutionRecordWriter#stopWriting(java.lang.String)
 	 */
 	@Override
-	public void stopWriting( String keyName, Map<String,String> additionalUrls )
+	public void stopWriting( String keyName, Map<String,String> additionalUrls, boolean success )
 	{
 		try
 		{
@@ -128,8 +123,8 @@ public class HTMLExecutionRecordWriter implements ExecutionRecordWriter
 				outputWriter.write( "<tr><td colSpan='6' align='center'><br/><br/><br/><a href='deviceLog.xml'>Device Log</a></td></tr>" );
 				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='failureDom.xml'>DOM at Failure</a></td></tr>" );
 				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='EXECUTION_REPORT_PDF.pdf'>Exeuction Report</a></td></tr>" );
-				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='../../testNg/index.html'>Test NG Results</a></td></tr>" );
-//				outputWriter.write( "<tr><td colSpan='6' align='center'><img height='500' src='failure-screenshot.png'/></td></tr>" );
+				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='../../../testNg/index.html'>Test NG Results</a></td></tr>" );
+				outputWriter.write( "<tr><td colSpan='6' align='center'><img height='500' src='failure-screenshot.png'/></td></tr>" );
 				
 				for ( String key : additionalUrls.keySet() )
 					outputWriter.write( "<tr><td colSpan='6' align='center'><a href='" + additionalUrls.get(key) + "'>" + key + "</a></td></tr>" );

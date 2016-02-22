@@ -136,8 +136,8 @@ public class RESTInvocationHandler implements InvocationHandler
 		
 		URL currentUrl = new URL( urlBuilder.toString() );
 		
-		if ( log.isInfoEnabled() )
-			log.info( "Submitting REST call as " + urlBuilder.toString() );
+		if ( log.isDebugEnabled() )
+			log.debug( "Submitting REST call as " + urlBuilder.toString() );
 		
 		if ( method.getReturnType().isAssignableFrom( byte[].class ) )
 		{
@@ -197,8 +197,8 @@ public class RESTInvocationHandler implements InvocationHandler
 	 */
 	public byte[] getUrl( URL currentUrl )
 	{
-		if ( log.isInfoEnabled() )
-			log.info( "Executing " + currentUrl.toString() );
+		if ( log.isDebugEnabled() )
+			log.debug( "Executing " + currentUrl.toString() );
 		InputStream inputStream = null;
 		try
 		{
@@ -240,11 +240,10 @@ public class RESTInvocationHandler implements InvocationHandler
 		{
 			if ( isCorrectMethod(currentMethod, methodName, args) )
 			{
-				if ( log.isInfoEnabled() )
-					log.info( "Found [" +methodName + "] on " + rootClass.getName() );
-				
-				if ( log.isDebugEnabled() && args != null )
+				if ( log.isDebugEnabled() )
 				{
+					log.debug( "Found [" +methodName + "] on " + rootClass.getName() );
+
 					StringBuilder pBuilder = new StringBuilder();
 					
 					pBuilder.append( args.length ).append(" paramters supplied as: \r\n" );

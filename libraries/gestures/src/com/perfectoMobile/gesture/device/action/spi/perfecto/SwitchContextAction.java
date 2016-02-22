@@ -23,8 +23,13 @@ public class SwitchContextAction extends AbstractDefaultAction implements Device
 	{
 		String contextName = (String) parameterList.get( 0 );
 
+		
+		
 		if ( webDriver instanceof ContextAware )
+		{
+System.out.println( ( (ContextAware) webDriver ).getContext() );
 			( (ContextAware) webDriver ).context( contextName );
+		}
 		
 		return true;
 	}

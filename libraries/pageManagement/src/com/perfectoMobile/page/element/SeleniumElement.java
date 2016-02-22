@@ -173,8 +173,8 @@ public class SeleniumElement extends AbstractElement
 	    
     	ElementDescriptor elementDescriptor = new ElementDescriptor( PageManager.instance().getSiteName(), getPageName(), elementName );
     	
-    	if ( log.isInfoEnabled() )
-    		log.info( Thread.currentThread().getName() + ": Attempting to locate element using [" + elementDescriptor.toString() + "]" );
+    	if ( log.isDebugEnabled() )
+    		log.debug( Thread.currentThread().getName() + ": Attempting to locate element using [" + elementDescriptor.toString() + "]" );
     	
     	Element myElement = PageManager.instance().getElementProvider().getElement( elementDescriptor );
     	myElement.setDriver( webDriver );

@@ -114,7 +114,7 @@ public class SimpleDevice implements Device
 		this.active = active;
 		deviceLock = new Semaphore( availableDevices );
 		
-		cachedString = manufacturer + " " + model + " [" + key + "] --> ";
+		cachedString = manufacturer + " " + model + " [" + key + "]";
 	}
 
 	/* (non-Javadoc)

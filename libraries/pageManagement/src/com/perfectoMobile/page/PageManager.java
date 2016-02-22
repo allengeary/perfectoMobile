@@ -22,6 +22,7 @@ import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.WindTunnel.Status;
 import com.morelandLabs.spi.Device;
 import com.morelandLabs.spi.PropertyProvider;
+import com.morelandLabs.spi.RunDetails;
 import com.morelandLabs.spi.driver.DeviceProvider;
 import com.morelandLabs.spi.driver.NativeDriverProvider;
 import com.perfectoMobile.page.element.provider.ElementProvider;
@@ -63,7 +64,8 @@ public class PageManager
     private Map<String,ExecutionTiming> timingMap = new HashMap<String,ExecutionTiming>( 20 );
     
     /** The execution log. */
-    private Map<String,List<ExecutionRecord>> executionLog = new HashMap<String,List<ExecutionRecord>>( 20 );
+    
+    private ThreadLocal<List<ExecutionRecord>> executionLog = new ThreadLocal<List<ExecutionRecord>>();
     
     /** The local exception. */
     private ThreadLocal<Throwable> localException = new ThreadLocal<Throwable>();
@@ -373,18 +375,17 @@ public class PageManager
      */
     public void addExecutionLog( String executionId, String deviceName, String group, String name, String type, long timestamp, long runLength, StepStatus status, String detail, Throwable t, int threshold, String description )
     {
-    	
-    	String keyName = new String( executionId + "-" + deviceName );
-    	
-    	List<ExecutionRecord> recordList = executionLog.get( keyName );
-    	
-    	if ( recordList == null )
-    	{
-    		recordList = new ArrayList<ExecutionRecord>( 10 );
-    		executionLog.put( keyName, recordList );
-    	}
-    	
-    	recordList.add( new ExecutionRecord( group, name, type, timestamp, runLength, status, detail, t ) );
+        if ( executionLog.get() == null )
+            executionLog.set( new ArrayList<ExecutionRecord>( 10 ) );
+    	executionLog.get().add( new ExecutionRecord( group, name, type, timestamp, runLength, status, detail, t ) );
+    }
+    
+    public void clearExecutionLog()
+    {
+        if ( executionLog.get() == null )
+            executionLog.set( new ArrayList<ExecutionRecord>( 10 ) );
+        
+        executionLog.get().clear();
     }
     
     /**
@@ -451,13 +452,15 @@ public class PageManager
     {
     	if ( recordWriter != null )
     	{
-    		for ( String keyName : executionLog.keySet() )
+			recordWriter.startWriting( "", null, "" );
+			boolean success = true;
+    		for ( ExecutionRecord e : executionLog.get() )
     		{
-    			recordWriter.startWriting( keyName, null, "" );
-        		for ( ExecutionRecord e : executionLog.get( keyName ) )
-        			recordWriter.writeRecord( e );
-        		recordWriter.stopWriting( keyName, additionalUrls );
+    		    if ( e.getStatus().equals( StepStatus.FAILURE ) )
+    		        success = false;
+    			recordWriter.writeRecord( e );
     		}
+    		recordWriter.stopWriting( "", additionalUrls, success );
     	}
     }
     
@@ -466,17 +469,19 @@ public class PageManager
      *
      * @param additionalUrls the additional urls
      */
-    public void writeExecutionRecords( Map<String,String> additionalUrls, Device device, String testName )
+    public void writeExecutionRecords( Map<String,String> additionalUrls, Device device, String testName, String keyName )
     {
         if ( recordWriter != null )
         {
-            for ( String keyName : executionLog.keySet() )
+            recordWriter.startWriting( keyName, device, testName );
+            boolean success = true;
+            for ( ExecutionRecord e : executionLog.get() )
             {
-                recordWriter.startWriting( keyName, device, testName );
-                for ( ExecutionRecord e : executionLog.get( keyName ) )
-                    recordWriter.writeRecord( e );
-                recordWriter.stopWriting( keyName, additionalUrls );
+                if ( e.getStatus().equals( StepStatus.FAILURE ) )
+                    success = false;
+                recordWriter.writeRecord( e );
             }
+            recordWriter.stopWriting( keyName, additionalUrls, success );
         }
     }
     

@@ -38,5 +38,5 @@ public interface ExecutionRecordWriter
 	 * @param keyName the key name
 	 * @param additionalUrls the additional urls
 	 */
-	public void stopWriting( String keyName, Map<String,String> additionalUrls );
+	public void stopWriting( String keyName, Map<String,String> additionalUrls, boolean success );
 }

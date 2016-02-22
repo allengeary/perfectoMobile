@@ -29,7 +29,7 @@ public class KWSGesture extends AbstractKeyWordStep
 	public boolean _executeStep( Page pageObject, WebDriver webDriver, Map<String, Object> contextMap, Map<String, PageData> dataMap, Map<String, Page> pageMap )
 	{
 		if ( log.isDebugEnabled() )
-			log.debug( "Executing Gesture " + getName() + " using " + getParameterList() );
+			log.info( "Executing Gesture " + getName() );
 		boolean success = false;
 
 			
