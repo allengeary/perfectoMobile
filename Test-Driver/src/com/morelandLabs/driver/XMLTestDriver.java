@@ -2,12 +2,12 @@ package com.morelandLabs.driver;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
-
+import com.morelandLabs.spi.RunDetails;
 import com.perfectoMobile.device.DeviceManager;
+import com.perfectoMobile.device.data.DataManager;
 import com.perfectoMobile.device.factory.DeviceWebDriver;
 import com.perfectoMobile.device.ng.AbstractSeleniumTest;
 import com.perfectoMobile.page.PageManager;
@@ -21,6 +21,8 @@ public class XMLTestDriver extends AbstractSeleniumTest
 	{
 		String deviceOs = getDevice().getOs();
 		
+		PageManager.instance().clearExecutionLog();
+		
 		KeyWordTest test = KeyWordDriver.instance().getTest( testName.getTestName() );
 		if ( test == null )
 			throw new IllegalArgumentException( "The Test Name " + testName + " does not exist" );
@@ -33,7 +35,7 @@ public class XMLTestDriver extends AbstractSeleniumTest
 		
 		if ( DeviceManager.instance().isDryRun() )
 		{
-			log.info( "This would hve executed " +  testName.getTestName() );
+			log.info( "This would have executed " +  testName.getTestName() );
 			return;
 		}
 		
@@ -44,8 +46,9 @@ public class XMLTestDriver extends AbstractSeleniumTest
 		if ( wtUrl != null && !wtUrl.isEmpty() )
 			additionalUrls.put( "Wind Tunnel Report", wtUrl );
 		
-		PageManager.instance().writeExecutionRecords( additionalUrls );
+		PageManager.instance().writeExecutionRecords( additionalUrls, getDevice(), testName.getTestName(), testName.getTestName() );
 		PageManager.instance().writeExecutionTimings();
+		RunDetails.instance().writeHTMLIndex( DataManager.instance().getReportFolder() );
 		
 		if ( returnValue )
 			return;

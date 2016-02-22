@@ -16,6 +16,8 @@ import com.morelandLabs.application.XMLApplicationProvider;
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.rest.bean.factory.BeanManager;
 import com.morelandLabs.integrations.rest.bean.factory.XMLBeanFactory;
+import com.morelandLabs.spi.CSVRunListener;
+import com.morelandLabs.spi.RunDetails;
 import com.perfectoMobile.content.ContentManager;
 import com.perfectoMobile.content.provider.ExcelContentProvider;
 import com.perfectoMobile.content.provider.XMLContentProvider;
@@ -35,7 +37,6 @@ import com.perfectoMobile.device.data.XMLDataProvider;
 import com.perfectoMobile.device.data.perfectoMobile.AvailableHandsetValidator;
 import com.perfectoMobile.device.data.perfectoMobile.PerfectoMobileDataProvider;
 import com.perfectoMobile.device.data.perfectoMobile.ReservedHandsetValidator;
-import com.perfectoMobile.device.listener.CSVRunListener;
 import com.perfectoMobile.gesture.GestureManager;
 import com.perfectoMobile.gesture.device.action.DeviceActionManager;
 import com.perfectoMobile.gesture.device.action.spi.perfecto.PerfectoDeviceActionFactory;
@@ -453,6 +454,7 @@ public class TestDriver
 		String executionReport = configProperties.getProperty( "deviceManagement.executionLog.fileName" );
 		if ( executionReport != null )
 			DeviceManager.instance().addRunListener( new CSVRunListener( new File( executionReport ) ) );
+		DeviceManager.instance().addRunListener( RunDetails.instance() );
 	}
 	
 	private static boolean validateProperties( Properties configProperties, String[] propertyNames )
