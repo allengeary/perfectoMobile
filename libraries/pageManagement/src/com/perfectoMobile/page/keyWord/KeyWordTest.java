@@ -53,6 +53,8 @@ public class KeyWordTest
 	/** The threshold. */
 	private int threshold;
 	
+	private String[] testTags;
+	
 	/** The step list. */
 	private List<KeyWordStep> stepList = new ArrayList<KeyWordStep>( 10 );
 	
@@ -69,7 +71,7 @@ public class KeyWordTest
 	 * @param threshold the threshold
 	 * @param description the description
 	 */
-	public KeyWordTest( String name, boolean active, String dataProviders, String dataDriver, boolean timed, String linkId, String os, int threshold, String description )
+	public KeyWordTest( String name, boolean active, String dataProviders, String dataDriver, boolean timed, String linkId, String os, int threshold, String description, String testTags )
 	{
 		this.name = name;
 		this.active = active;
@@ -81,6 +83,9 @@ public class KeyWordTest
 		this.os = os;
 		this.threshold = threshold;
 		this.description = description;
+		
+		if ( testTags != null )
+		    this.testTags = testTags.split( "," );
 	}
 
 	/**
@@ -91,9 +96,10 @@ public class KeyWordTest
 	 */
 	public KeyWordTest copyTest( String testName )
 	{
-		KeyWordTest newTest = new KeyWordTest( testName, active, null, dataDriver, timed, linkId, os, threshold, description );
+		KeyWordTest newTest = new KeyWordTest( testName, active, null, dataDriver, timed, linkId, os, threshold, description, null );
 		newTest.dataProviders = dataProviders;
 		newTest.stepList = stepList;
+		newTest.testTags = testTags;
 		return newTest;
 	}
 	
@@ -267,6 +273,20 @@ public class KeyWordTest
 	public void setOs( String os )
 	{
 		this.os = os;
+	}
+	
+	public boolean isTagged( String tagName )
+	{
+	    if ( testTags == null )
+	        return false;
+	    
+	    for ( String testTag : testTags )
+	    {
+	        if ( tagName.equalsIgnoreCase( testTag ) )
+	            return true;
+	    }
+	    
+	    return false;
 	}
 	
 	

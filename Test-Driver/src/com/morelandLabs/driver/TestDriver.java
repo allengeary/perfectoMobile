@@ -116,6 +116,10 @@ public class TestDriver
 				PageManager.instance().setWindTunnelEnabled( true );
 			}
 			
+			String interruptString = configProperties.getProperty( "driver.deviceInterrupts" );
+			if ( interruptString != null && !interruptString.isEmpty() )
+			    DeviceManager.instance().setDeviceInterrupts( interruptString );
+			
 			switch( configProperties.getProperty( DRIVER[ 0 ] ).toUpperCase() )
 			{
 				case "XML":

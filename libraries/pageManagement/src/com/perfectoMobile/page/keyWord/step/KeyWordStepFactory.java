@@ -2,10 +2,8 @@ package com.perfectoMobile.page.keyWord.step;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import com.perfectoMobile.page.keyWord.KeyWordStep;
 import com.perfectoMobile.page.keyWord.KeyWordStep.StepFailure;
 import com.perfectoMobile.page.keyWord.step.spi.KWSAttribute;
@@ -26,6 +24,7 @@ import com.perfectoMobile.page.keyWord.step.spi.KWSValue;
 import com.perfectoMobile.page.keyWord.step.spi.KWSVisible;
 import com.perfectoMobile.page.keyWord.step.spi.KWSWait;
 import com.perfectoMobile.page.keyWord.step.spi.KWSWaitFor;
+import com.perfectoMobile.page.keyWord.step.spi.KWSWindow;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -85,6 +84,7 @@ public class KeyWordStepFactory
 		addKeyWord( "VISIBLE", KWSVisible.class );
 		addKeyWord( "VERIFY_COLOR", KWSCheckColor.class );
 		addKeyWord( "VERIFY_CONTRAST", KWSContrastRatio.class );
+		addKeyWord( "WINDOW", KWSWindow.class );
 	}
 	
 	/**

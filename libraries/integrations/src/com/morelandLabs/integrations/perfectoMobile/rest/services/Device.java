@@ -92,4 +92,29 @@ public interface Device extends PerfectoService
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="location", subCommandName = "set" )
 	public Execution setLocation( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="coordinates" ) Location coordinates );
+	
+
+    /**
+     * Call.
+     *
+     * @param executionId the execution id
+     * @param handsetId the handset id
+     * @return the execution
+     */
+    @Operation( operationName="command" )
+    @PerfectoCommand( commandName="gateway", subCommandName = "call" )
+    public Execution call( @ResourceID String executionId, @Parameter( name="to.handset" ) String handsetId );
+    
+    /**
+     * Call.
+     *
+     * @param executionId the execution id
+     * @param handsetId the handset id
+     * @return the execution
+     */
+    @Operation( operationName="command" )
+    @PerfectoCommand( commandName="gateway", subCommandName = "sms" )
+    public Execution sendText( @ResourceID String executionId, @NameOverride( name="body" )String body, @Parameter( name="to.handset" ) String handsetId );
+    
+	
 }

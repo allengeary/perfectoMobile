@@ -10,13 +10,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
@@ -33,7 +31,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import com.morelandLabs.spi.Device;
 import com.morelandLabs.spi.PropertyProvider;
 import com.morelandLabs.spi.driver.DeviceProvider;
@@ -43,7 +40,8 @@ import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.artifact.Artifact;
 import com.perfectoMobile.device.artifact.ArtifactProducer;
 import com.perfectoMobile.device.factory.spi.PerfectoWebDriver;
-
+import com.perfectoMobile.device.interrupt.DeviceInterrupt;
+import com.perfectoMobile.device.interrupt.DeviceInterruptThread;
 import io.appium.java_client.AppiumDriver;
 
 // TODO: Auto-generated Javadoc
@@ -53,6 +51,10 @@ import io.appium.java_client.AppiumDriver;
 public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, ArtifactProducer, NativeDriverProvider, PropertyProvider, TakesScreenshot, DeviceProvider
 {
 	
+    private List<DeviceInterrupt> interruptList;
+    
+    private DeviceInterruptThread diThread = null;
+    
 	/** The web driver. */
 	protected WebDriver webDriver;
 	
@@ -155,6 +157,19 @@ public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, 
 		this.webDriver = webDriver;
 		this.cachingEnabled = cachingEnabled;
 		this.currentDevice = currentDevice;
+		
+		
+	}
+	
+	public void setDeviceInterrupts( List<DeviceInterrupt> interruptList )
+	{
+	    this.interruptList = interruptList;
+        
+        if ( interruptList != null && interruptList.size() > 0 )
+        {
+            diThread = new DeviceInterruptThread( interruptList, this );
+            new Thread( diThread ).start();
+        }
 	}
 	
 	/**
@@ -380,6 +395,9 @@ public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, 
 		if ( webDriver != null && webDriver instanceof AppiumDriver )
 			try { ( (AppiumDriver) webDriver ).closeApp(); } catch( Exception e ) {}
 		webDriver.close();
+		
+		if ( diThread != null )
+		    diThread.stop();
 	}
 
 	/* (non-Javadoc)
@@ -388,6 +406,8 @@ public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, 
 	public void quit()
 	{
 		webDriver.quit();
+		if ( diThread != null )
+            diThread.stop();
 	}
 
 	/* (non-Javadoc)

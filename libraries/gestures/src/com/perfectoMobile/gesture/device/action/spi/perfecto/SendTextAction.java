@@ -2,17 +2,21 @@ package com.perfectoMobile.gesture.device.action.spi.perfecto;
 
 import java.util.List;
 
-import org.openqa.selenium.ContextAware;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
+import com.morelandLabs.spi.driver.NativeDriverProvider;
 import com.perfectoMobile.gesture.device.action.AbstractDefaultAction;
 import com.perfectoMobile.gesture.device.action.DeviceAction;
 
+import io.appium.java_client.AppiumDriver;
+
 // TODO: Auto-generated Javadoc
 /**
- * The Class ResetApplicationsAction.
+ * The Class RecoverAction.
  */
-public class SwitchContextAction extends AbstractDefaultAction implements DeviceAction
+public class SendTextAction extends AbstractDefaultAction implements DeviceAction
 {
 	
 	/* (non-Javadoc)
@@ -21,15 +25,9 @@ public class SwitchContextAction extends AbstractDefaultAction implements Device
 	@Override
 	public boolean _executeAction( WebDriver webDriver, List<Object> parameterList )
 	{
-		String contextName = (String) parameterList.get( 0 );
-
-		
-		
-		if ( webDriver instanceof ContextAware )
-		{
-			( (ContextAware) webDriver ).context( contextName );
-		}
-		
+		String executionId = getExecutionId( webDriver );
+		String deviceName = getDeviceName( webDriver );
+		PerfectoMobile.instance().device().sendText( executionId, parameterList.get( 0 ) + "", deviceName );
 		return true;
 	}
 

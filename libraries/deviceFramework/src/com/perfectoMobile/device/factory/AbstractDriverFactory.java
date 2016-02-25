@@ -3,13 +3,17 @@
  */
 package com.perfectoMobile.device.factory;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
 import com.morelandLabs.spi.Device;
 import com.perfectoMobile.device.data.DataManager;
+import com.perfectoMobile.device.interrupt.DeviceInterrupt;
+import com.perfectoMobile.device.interrupt.DeviceInterrupt.INTERRUPT_TYPE;
+import com.perfectoMobile.device.interrupt.DeviceInterruptFactory;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -61,6 +65,24 @@ public abstract class AbstractDriverFactory implements DriverFactory
 		}
 		
 		return capData.toString();
+	}
+	
+	protected List<DeviceInterrupt> getDeviceInterrupts( String interruptString, String executionId, String deviceName )
+	{
+	    if ( interruptString != null && !interruptString.isEmpty() )
+	    {
+	        String[] interrupts = interruptString.split( "," );
+	        List<DeviceInterrupt> interruptList = new ArrayList<DeviceInterrupt>( interrupts.length );
+	        
+	        for ( String interruptName : interrupts )
+	        {
+	            interruptList.add( DeviceInterruptFactory.instance().getDeviceInterrupt( INTERRUPT_TYPE.valueOf( interruptName.trim().toUpperCase() ), executionId, deviceName ) );
+	        }
+	        
+	        return interruptList;
+	    }
+	    
+	    return null;
 	}
 	
 	/**

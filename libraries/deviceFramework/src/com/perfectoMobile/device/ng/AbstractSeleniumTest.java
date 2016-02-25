@@ -303,6 +303,9 @@ public abstract class AbstractSeleniumTest
 		WebDriver webDriver = getWebDriver();
 		if (webDriver != null)
 		{
+		    String runKey = DeviceManager.instance().getRunKey( threadDevice.get().getDevice(), currentMethod, ( ( TestName ) testArgs[0] ).getTestName(), testResult.isSuccess(), threadDevice.get().getPersona() );
+		    runKey = runKey.substring( 25 );
+		    
 		    File rootFolder = new File( DataManager.instance().getReportFolder(), RunDetails.instance().getRootFolder() );
 		    rootFolder.mkdirs();
 			//
@@ -314,13 +317,12 @@ public abstract class AbstractSeleniumTest
 				if ( webDriver instanceof TakesScreenshot )
 				{
 					OutputStream os = null;
-					String executionId = ( (DeviceWebDriver) getWebDriver() ).getExecutionId();
-
 					try
 					{
 						byte[] screenShot = ( ( TakesScreenshot ) webDriver ).getScreenshotAs( OutputType.BYTES );
-						
-						File outputFile = new File( new File( rootFolder, ( ( TestName ) testArgs[0] ).getTestName() ), getDevice().getKey() + System.getProperty( "file.separator" ) + "failure-screenshot.png" );
+						File useFolder = new File( rootFolder, runKey );
+						useFolder.mkdirs();
+						File outputFile = new File( useFolder, getDevice().getKey() + System.getProperty( "file.separator" ) + "failure-screenshot.png" );
 						os = new BufferedOutputStream( new FileOutputStream( outputFile ) );
 						os.write( screenShot );
 						os.flush();
@@ -346,7 +348,7 @@ public abstract class AbstractSeleniumTest
 							{
 								try
 								{
-									Artifact currentArtifact = ( ( ArtifactProducer ) webDriver ).getArtifact( webDriver, aType, threadDevice.get(), ( ( TestName ) testArgs[0] ).getTestName() );
+									Artifact currentArtifact = ( ( ArtifactProducer ) webDriver ).getArtifact( webDriver, aType, threadDevice.get(), runKey );
 									if ( currentArtifact != null )
 										currentArtifact.writeToDisk( rootFolder );
 								}
@@ -381,7 +383,7 @@ public abstract class AbstractSeleniumTest
 						{
 							try
 							{
-								Artifact currentArtifact = ( ( ArtifactProducer ) webDriver ).getArtifact( webDriver, aType, threadDevice.get(), ( ( TestName ) testArgs[0] ).getTestName() );
+								Artifact currentArtifact = ( ( ArtifactProducer ) webDriver ).getArtifact( webDriver, aType, threadDevice.get(), runKey );
 								if ( currentArtifact != null )
 									currentArtifact.writeToDisk( rootFolder );
 							}

@@ -23,7 +23,6 @@ public class KWSFunction extends AbstractKeyWordStep
 	@Override
 	public boolean _executeStep( Page pageObject, WebDriver webDriver, Map<String, Object> contextMap, Map<String, PageData> dataMap, Map<String, Page> pageMap )
 	{
-		long startTime = System.currentTimeMillis();
 		if ( pageObject == null )
 			throw new IllegalStateException( "Page Object was not defined" );
 		try

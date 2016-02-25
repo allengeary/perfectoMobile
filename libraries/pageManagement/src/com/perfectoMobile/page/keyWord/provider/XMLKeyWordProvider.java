@@ -94,6 +94,8 @@ public class XMLKeyWordProvider implements KeyWordProvider
 	
 	/** The Constant INCLUDE_FUNCTIONS. */
 	private static final String INCLUDE_FUNCTIONS = "includeFunctions";
+	
+	private static final String TAG_NAMES = "tagNames";
 
 	/** The log. */
 	private Log log = LogFactory.getLog( KeyWordTest.class );
@@ -379,6 +381,7 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		boolean timed = false;
 
 		String data = null;
+		String tagNames = null;
 		String dataDriver = null;
 		String linkId = null;
 		int threshold = 0;
@@ -389,6 +392,10 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		pData = useNode.getAttributes().getNamedItem( DATA_DRIVER );
 		if (pData != null)
 			dataDriver = pData.getNodeValue();
+		
+		pData = useNode.getAttributes().getNamedItem( TAG_NAMES );
+        if (pData != null)
+            tagNames = pData.getNodeValue();
 
 		pData = useNode.getAttributes().getNamedItem( LINK );
 		if (pData != null)
@@ -413,7 +420,7 @@ public class XMLKeyWordProvider implements KeyWordProvider
 		if (log.isDebugEnabled())
 			log.debug( "Extracted Test [" + testName + "]" );
 
-		KeyWordTest test = new KeyWordTest( testName, active, data, dataDriver, timed, linkId, osString, threshold, useNode.getTextContent() );
+		KeyWordTest test = new KeyWordTest( testName, active, data, dataDriver, timed, linkId, osString, threshold, useNode.getTextContent(), tagNames );
 		
 		KeyWordStep[] steps = parseSteps( useNode, testName, typeName );
 

@@ -103,11 +103,11 @@ public class BeanManager
 	{
 		BeanManager.instance().setBeanFactory( new XMLBeanFactory() );
 		
-		PerfectoMobile.instance().setBaseUrl( "https://allstate.perfectomobile.com" );
+		PerfectoMobile.instance().setBaseUrl( "https://discover.perfectomobile.com" );
 		PerfectoMobile.instance().setUserName( "alleng@perfectomobile.com" );
 		PerfectoMobile.instance().setPassword( "Perfecto123" );
 		
-		System.out.println( PerfectoMobile.instance().devices().getDevice( "854D1700A3D9E45E378200C63383707E7E05F140" ) );
+		System.out.println( PerfectoMobile.instance().devices().getDevice( "78C4EE8665F1C7E428BA4F7CCA3F7B1F0D9FDB1D" ) );
 		
 		//PerfectoMobile.instance().executions().getExecutions( null, true, null, TimeType.started, null, (short) ( 60 * 60 * 1 ) );
 		//System.out.println( PerfectoMobile.instance().devices().getDevices() );
@@ -131,7 +131,7 @@ public class BeanManager
 		Execution x = PerfectoMobile.instance().executions().startExecution();
 		System.out.println( x.getExecutionId() );
 		
-		PerfectoMobile.instance().device().open( x.getExecutionId(), "93C8CC73" );
+		PerfectoMobile.instance().device().open( x.getExecutionId(), "78C4EE8665F1C7E428BA4F7CCA3F7B1F0D9FDB1D" );
 		
 		//PerfectoMobile.instance().imaging().imageExists("exe", "hset", "PRIVATE:logo.png", (short) 20, MatchMode.bounded );
 		
@@ -147,11 +147,12 @@ public class BeanManager
 		//FileOutputStream os = new FileOutputStream( "c:/tools/a.png" );
 		//os.write( file );
 		//os.close();
-		PerfectoMobile.instance().gestures().sendKey(x.getExecutionId(), "93C8CC73", 3, 0 );
 		
-		Thread.sleep( 5000 );
+		System.out.println( PerfectoMobile.instance().device().call(  x.getExecutionId(), "78C4EE8665F1C7E428BA4F7CCA3F7B1F0D9FDB1D"  ) );
 		
-		PerfectoMobile.instance().device().close(  x.getExecutionId(), "93C8CC73"  );
+		Thread.sleep( 10000 );
+		
+		PerfectoMobile.instance().device().close(  x.getExecutionId(), "78C4EE8665F1C7E428BA4F7CCA3F7B1F0D9FDB1D"  );
 		x = PerfectoMobile.instance().executions().endExecution( x.getExecutionId() );
 		System.out.println( x.getStatus() ); 
 		

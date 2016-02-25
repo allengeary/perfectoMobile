@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.testng.Assert;
 import org.testng.SkipException;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.Test;
 import com.morelandLabs.spi.RunDetails;
 import com.perfectoMobile.device.DeviceManager;
@@ -46,9 +47,11 @@ public class XMLTestDriver extends AbstractSeleniumTest
 		if ( wtUrl != null && !wtUrl.isEmpty() )
 			additionalUrls.put( "Wind Tunnel Report", wtUrl );
 		
-		PageManager.instance().writeExecutionRecords( additionalUrls, getDevice(), testName.getTestName(), testName.getTestName() );
+		
+		PageManager.instance().writeExecutionRecords( additionalUrls, getDevice(), testName.getTestName(), testName.getTestName() + ( ( testName.getPersonaName() != null && !testName.getPersonaName().isEmpty() ) ? "." + testName.getPersonaName() : "" ) );
 		PageManager.instance().writeExecutionTimings();
 		RunDetails.instance().writeHTMLIndex( DataManager.instance().getReportFolder() );
+		
 		
 		if ( returnValue )
 			return;
@@ -59,4 +62,10 @@ public class XMLTestDriver extends AbstractSeleniumTest
 		
 		Assert.assertTrue( returnValue );
 	} 
+	
+	@AfterSuite
+	public void afterSuite() throws Throwable
+	{
+	    RunDetails.instance().writeHTMLIndex( DataManager.instance().getReportFolder() );
+	}
 }

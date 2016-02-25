@@ -99,7 +99,8 @@ public class KWSGesture extends AbstractKeyWordStep
 				break;
 				
 			case PRESS:
-				GestureManager.instance().createPress( new Point( Integer.parseInt( (String) getParameterValue( getParameterList().get( 0 ), contextMap, dataMap ) ), Integer.parseInt( (String) getParameterValue( getParameterList().get( 1 ), contextMap, dataMap ) ) ) ).executeGesture( webDriver, webElement );
+			    Point pressPoint = createPoint( (String) getParameterValue( getParameterList().get( 0 ), contextMap, dataMap ) );
+				GestureManager.instance().createPress( pressPoint ).executeGesture( webDriver, webElement );
 				break;
 				
 			case ROTATE:

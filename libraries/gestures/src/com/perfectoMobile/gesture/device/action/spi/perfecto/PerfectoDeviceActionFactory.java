@@ -32,6 +32,8 @@ public class PerfectoDeviceActionFactory implements DeviceActionFactory
 		DeviceActionManager.instance().registerAction( ActionType.CONTEXT, SwitchContextAction.class );
 		DeviceActionManager.instance().registerAction( ActionType.DUMP_STATE, DumpStateAction.class );
 		DeviceActionManager.instance().registerAction( ActionType.SEND_KEYS, SendKeysAction.class );
+		DeviceActionManager.instance().registerAction( ActionType.SEND_TEXT, SendTextAction.class );
+		DeviceActionManager.instance().registerAction( ActionType.CALL, CallAction.class );
 	}
 
 }

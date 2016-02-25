@@ -64,9 +64,9 @@ public class HTMLExecutionRecordWriter implements ExecutionRecordWriter
 	{
 	    String localFolder = keyName;
 	    if ( device != null && testName != null )
-	        localFolder = testName + System.getProperty( "file.separator" ) + device.getKey() + System.getProperty( "file.separator" );
+	        localFolder = keyName + System.getProperty( "file.separator" ) + device.getKey() + System.getProperty( "file.separator" );
 	    
-	    String runKey = (testName == null ? keyName : testName );
+	    String runKey = keyName;
 	    StringBuffer stringBuffer = new StringBuffer();
 	    if ( device != null )
 	    {

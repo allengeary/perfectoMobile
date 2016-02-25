@@ -69,8 +69,6 @@ public class PERFECTODriverFactory extends AbstractDriverFactory
 			if ( appMode == false && webMode == false )
 				throw new IllegalArgumentException( "You must provide and application or website to test" );
 			
-			URL hubUrl = new URL( CloudRegistry.instance().getCloud().getCloudUrl() );
-			
 			IMobileDriver mobileDriver = new MobileDriver( CloudRegistry.instance().getCloud().getHostName(), CloudRegistry.instance().getCloud().getUserName(), CloudRegistry.instance().getCloud().getPassword() );
 			IMobileDevice mobileDevice = mobileDriver.findDevice( options );
 			if ( mobileDevice == null )
@@ -90,6 +88,8 @@ public class PERFECTODriverFactory extends AbstractDriverFactory
 			webDriver.setExecutionId( mobileDriver.getExecutionId() );
 			webDriver.setReportKey( mobileDriver.getReportKey() );
 			webDriver.setDeviceName( mobileDevice.getDeviceId() );
+			String interruptString = ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" )  != null ? ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" ) : DeviceManager.instance().getDeviceInterrupts();
+            webDriver.setDeviceInterrupts( getDeviceInterrupts( interruptString, webDriver.getExecutionId(), webDriver.getDeviceName() ) );
 
 			//
 			// If there was a URL then we are in Web Mode

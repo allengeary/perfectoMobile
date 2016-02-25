@@ -38,8 +38,20 @@ public class DeviceManager
 	
 	/** The execution id. */
 	private ThreadLocal<String> executionId = new ThreadLocal<String>();
+	
+	private String deviceInterrupts;
 
-	/**
+	public String getDeviceInterrupts()
+    {
+        return deviceInterrupts;
+    }
+
+    public void setDeviceInterrupts( String deviceInterrupts )
+    {
+        this.deviceInterrupts = deviceInterrupts;
+    }
+
+    /**
 	 * Instance.
 	 *
 	 * @return the device manager
@@ -418,6 +430,15 @@ public class DeviceManager
 		return analyticsMap.get( currentDevice.getKey() ).getUsage();
 	}
 
+	public String getRunKey( Device currentDevice, Method currentMethod, String testContext, boolean success, String personaName )
+	{
+	    String runKey = currentMethod.getDeclaringClass().getSimpleName() + "." + currentMethod.getName() + ( testContext != null ? ( "." + testContext ) : "" );
+        if ( personaName != null && !personaName.isEmpty() )
+            runKey = runKey + "." + personaName;
+        
+        return runKey;
+	}
+	
 	/**
 	 * Adds the run.
 	 *
@@ -436,9 +457,7 @@ public class DeviceManager
 		managerLock.lock();
 		try
 		{
-			String runKey = currentMethod.getDeclaringClass().getSimpleName() + "." + currentMethod.getName() + ( testContext != null ? ( "." + testContext ) : "" );
-			if ( personaName != null && !personaName.isEmpty() )
-				runKey = runKey + "." + personaName;
+			String runKey = getRunKey( currentDevice, currentMethod, testContext, success, personaName );
 			
 			if (log.isInfoEnabled())
 				log.info( Thread.currentThread().getName() + ": Adding run [" + runKey + "] to device " + currentDevice );
@@ -502,23 +521,5 @@ public class DeviceManager
 	{
 		this.cachingEnabled = cachingEnabled;
 	}  
-	
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 * @throws Exception the exception
-	 */
-	public static void main( String[] args ) throws Exception
-	{
-		HtmlCleaner x = new HtmlCleaner();
-		
-		TagNode f = x.clean( "c:/tools/report/device.xml" );
-		
-		System.out.println( f.getAllElements( true ).length );
-		
-		new PrettyXmlSerializer( x.getProperties() ).writeToFile( f, "c:/tools/report/deviceOut.xml" );
-		
-	}
 	
 }

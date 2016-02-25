@@ -470,12 +470,17 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 					}
 					
 					if ( step.isInverse() )
+					{
 						subReturnValue = !subReturnValue;
+					}
 					
 					if ( !subReturnValue )
 					{
 						returnValue = false;
-						subFailure = true;
+						if ( step.getFailure().equals(  StepStatus.FAILURE_IGNORED ) )
+						    subFailure = false;
+						else
+						    subFailure = true;
 						break;
 					}
 					
@@ -533,12 +538,8 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 								PerfectoMobile.instance().windTunnel().addPointOfInterest( getExecutionId( webDriver ), getPoi() + "(" + getPageName() + "." + getName() + ")", Status.failure);
 						}
 						
-						if ( subFailure )
-						    return false;
-						else
-						    return true;
+						return !subFailure;
 
-					
 				}
 			}
 

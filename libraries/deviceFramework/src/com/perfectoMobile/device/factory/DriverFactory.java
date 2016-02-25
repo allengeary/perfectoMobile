@@ -66,6 +66,8 @@ public interface DriverFactory
 	/** The Constant BROWSER VERSION. */
 	public static final String BROWSER_VERSION = "browserVersion";
 	
+	/** The Constant BROWSER VERSION. */
+    public static final String DEVICE_INTERRUPT = "deviceInterrupt";
 	
 	/**
 	 * Creates a new Driver object.

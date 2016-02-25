@@ -21,8 +21,8 @@ public class KWSSet extends AbstractKeyWordStep
 	@Override
 	public boolean _executeStep( Page pageObject, WebDriver webDriver, Map<String, Object> contextMap, Map<String, PageData> dataMap, Map<String, Page> pageMap )
 	{
-		if (pageObject == null || getElement( pageObject, contextMap, webDriver, dataMap ) == null )
-			throw new IllegalStateException( "The Element " + getName() + " is not defined.  Ensure it exists on your Page object" );
+	    if ( pageObject == null )
+            throw new IllegalStateException( "There was no Page Object defined" );
 		
 		if ( getParameterList().size() < 1 )
 			throw new IllegalArgumentException( "You must provide 1 parameter to setValue" );

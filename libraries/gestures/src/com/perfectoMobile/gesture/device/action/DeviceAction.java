@@ -60,7 +60,12 @@ public interface DeviceAction
         SEND_KEYS,
 		
 		/** The location. */
-		LOCATION;
+		LOCATION,
+		/** Call this device */
+		CALL,
+		
+		/** send a text to this device */
+		SEND_TEXT;
 	}
 	
 	/**
