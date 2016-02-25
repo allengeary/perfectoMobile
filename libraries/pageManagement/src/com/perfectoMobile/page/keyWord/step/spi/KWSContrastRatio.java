@@ -11,9 +11,29 @@ import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class KWSValue.
+ * <b>Keyword(s):</b> <code>VERIFY_CONTRAST</code><br>
+ * The verify contrast is used to locate an element on the screen and perform a Lumenosity analysis on it.  The Lumenosity calculate
+ * is derived from the WCAG 2.0 standard.  The returned value will be between 0 and 21.  Please refer to the WCAG 2.0 specification for 
+ * a definition of the values  Note that PageManager can be configured to dump these images to disk 
+ * for analysis purposes.<br><br>
+
+ * <b>Parameters:</b> <br>
+ * <ul>
+ * <li>Resolution: high, med or low.  The specifies the screenshot resolution that will be used.</li>
+ * <li>Minimum Contrast:  The minimum amount of contrast that must be present</li>
+ * <li>Maximum Contrast:  The maximum amount of contrast that must be present</li>
+ * </ul>
+
+ * <br><b>Example(s): </b><ul>
+ * <li> This example will find the LOGO element and analyze the contrast ratio to ensure that it meets AAA standards<br>
+ * {@literal <step name="LOGO" type="VERIFY_CONTRAST" page="TEST_PAGE"> }<br>
+ * &nbsp;&nbsp;&nbsp;{@literal  <parameter type="static" value="high" /> }<br>
+ * &nbsp;&nbsp;&nbsp;{@literal  <parameter type="static" value="7.0" /> }<br>
+ * &nbsp;&nbsp;&nbsp;{@literal  <parameter type="static" value="21.1" /> }<br>
+ * {@literal </step> }
+ * </li>
+ * </ul>
  */
 public class KWSContrastRatio extends AbstractKeyWordStep
 {
@@ -28,7 +48,7 @@ public class KWSContrastRatio extends AbstractKeyWordStep
 			throw new IllegalStateException( "Page Object was not defined" );
 
 		if (getParameterList().size() < 2 )
-			throw new IllegalArgumentException( "Verify Color must have 3 parameters - Resolution, location(x, y) and color" );
+			throw new IllegalArgumentException( "Verify Color must have 3 parameters" );
 		
 		long fileKey = System.currentTimeMillis();
 		Resolution resolution = Resolution.valueOf( ( getParameterValue( getParameterList().get( 0 ), contextMap, dataMap ) + "" ).toLowerCase() );
