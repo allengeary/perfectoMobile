@@ -4,11 +4,10 @@
 package com.perfectoMobile.device.artifact;
 
 import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.WebDriver;
-
+import com.morelandLabs.artifact.ArtifactType;
 import com.perfectoMobile.device.ConnectedDevice;
 
 // TODO: Auto-generated Javadoc

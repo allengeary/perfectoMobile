@@ -118,7 +118,7 @@ public class KeyWordStepFactory
 	 * @param description the description
 	 * @return the key word step
 	 */
-	public KeyWordStep createStep( String name, String pageName, boolean active, String type, String linkId, boolean timed, StepFailure sFailure, boolean inverse, String os, String poi, int threshold, String description )
+	public KeyWordStep createStep( String name, String pageName, boolean active, String type, String linkId, boolean timed, StepFailure sFailure, boolean inverse, String os, String poi, int threshold, String description, long waitTime )
 	{
 		
 		Class kwImpl = stepMap.get( type.toUpperCase() );
@@ -142,6 +142,7 @@ public class KeyWordStepFactory
 			returnValue.setPoi( poi );
 			returnValue.setThreshold( threshold );
 			returnValue.setDescription(description);
+			returnValue.setWait( waitTime );
 			
 			return returnValue;
 		}

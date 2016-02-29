@@ -2,12 +2,13 @@ package com.perfectoMobile.page.keyWord.step.spi;
 
 import java.awt.image.BufferedImage;
 import java.util.Map;
-import org.apache.http.impl.io.SocketOutputBuffer;
-import org.apache.xerces.dom.PSVIDOMImplementationImpl;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
-
+import com.morelandLabs.artifact.ArtifactManager;
+import com.morelandLabs.artifact.ArtifactType;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
+import com.morelandLabs.wcag.WCAGRecord;
+import com.morelandLabs.wcag.WCAGRecord.WCAGType;
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.data.PageData;
@@ -85,8 +86,9 @@ public class KWSCheckColor extends AbstractKeyWordStep
 		}
 		
 		BufferedImage elementValue = (BufferedImage)getElement( pageObject, contextMap, webDriver, dataMap ).getImage( resolution );
-		if ( elementValue != null && PageManager.instance().isStoreImages() )
-			PageManager.instance().writeImage( elementValue, fileKey + "-" + getName() + ".png" );
+		String imagePath = null;
+		if ( elementValue != null )
+			imagePath = PageManager.instance().writeImage( elementValue, fileKey + "-" + getName() + ".png" );
 		
 		
 		int elementColor = elementValue.getRGB( location.getX(), location.getY() );
@@ -119,8 +121,12 @@ public class KWSCheckColor extends AbstractKeyWordStep
 				if ( blueChange > 0 )
 					stringBuilder.append( "The BLUE channel was off by " + blueChange + "% " );
 				
+				ArtifactManager.instance().notifyArtifactListeners( ArtifactType.WCAG_REPORT, new WCAGRecord( getPageName(), getName(), WCAGType.ColorVerification, System.currentTimeMillis(), System.currentTimeMillis() - fileKey, false, imagePath, colorCode, Integer.toHexString( elementColor ), stringBuilder.toString() ) );
+				
 				throw new IllegalArgumentException( stringBuilder.toString() );
 			}
+			else
+			    ArtifactManager.instance().notifyArtifactListeners( ArtifactType.WCAG_REPORT, new WCAGRecord( getPageName(), getName(), WCAGType.ColorVerification, System.currentTimeMillis(), System.currentTimeMillis() - fileKey, true, imagePath, colorCode, Integer.toHexString( elementColor ), "OK" ) );
 		}
 		
 		return true;

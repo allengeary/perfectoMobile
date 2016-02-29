@@ -323,4 +323,8 @@ public interface KeyWordStep
 	 * @return the poi
 	 */
 	public String getPoi();
+	
+	public long getWait();
+	
+	public void setWait( long waitAfter );
 }

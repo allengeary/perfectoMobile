@@ -21,7 +21,7 @@ public abstract class AbstractPressGesture extends AbstractGesture
 	public void setParameters( Object[] parameterArray )
 	{
 		setPressPosition( (Point) parameterArray[ 0 ] );
-		setPressLength( (int) parameterArray[ 1 ] );
+		setPressLength( ( (Long) parameterArray[ 1 ] ).intValue() );
 	}
 	
 	/**

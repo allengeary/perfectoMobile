@@ -120,14 +120,15 @@ public class HTMLExecutionRecordWriter implements ExecutionRecordWriter
 		{
 			if ( !success )
 			{
-				outputWriter.write( "<tr><td colSpan='6' align='center'><br/><br/><br/><a href='deviceLog.xml'>Device Log</a></td></tr>" );
-				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='failureDom.xml'>DOM at Failure</a></td></tr>" );
-				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='EXECUTION_REPORT_PDF.pdf'>Exeuction Report</a></td></tr>" );
-				outputWriter.write( "<tr><td colSpan='6' align='center'><a href='../../../testNg/index.html'>Test NG Results</a></td></tr>" );
-				outputWriter.write( "<tr><td colSpan='6' align='center'><img height='500' src='failure-screenshot.png'/></td></tr>" );
+				outputWriter.write( "<tr><td align='center' colspan='2'><br/><br/><br/><a href='deviceLog.xml'>Device Log</a></td><td rowspan='7' colspan='4' align='center'><img height='500' src='failure-screenshot.png'/></td></tr>" );
+				outputWriter.write( "<tr><td align='center' colspan='2'><a href='failureDom.xml'>DOM at Failure</a></td></tr>" );
+				outputWriter.write( "<tr><td align='center' colspan='2'><a href='console.txt'>Console Output</a></td></tr>" );
+				outputWriter.write( "<tr><td align='center' colspan='2'><a href='EXECUTION_REPORT_PDF.pdf'>Exeuction Report</a></td></tr>" );
+				outputWriter.write( "<tr><td align='center' colspan='2'><a href='../../../testNg/index.html'>Test NG Results</a></td></tr>" );
+				outputWriter.write( "<tr><td align='center' colspan='2'><a href='wcag.html'>WCAG Report</a></td></tr>" );
 				
 				for ( String key : additionalUrls.keySet() )
-					outputWriter.write( "<tr><td colSpan='6' align='center'><a href='" + additionalUrls.get(key) + "'>" + key + "</a></td></tr>" );
+					outputWriter.write( "<tr><td align='center' colspan='2'><a href='" + additionalUrls.get(key) + "'>" + key + "</a></td></tr>" );
 				
 			}
 			

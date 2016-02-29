@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.WebDriver;
+import com.morelandLabs.artifact.ArtifactListener;
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.WindTunnel.Status;
 import com.morelandLabs.spi.Device;
@@ -87,6 +88,8 @@ public class PageManager
     
     /** The image location. */
     private String imageLocation;
+    
+    
     
     private ThreadLocal<Map<Class,Page>> pageCache = new ThreadLocal<Map<Class,Page>>();
 
@@ -163,21 +166,25 @@ public class PageManager
 	 * @param image the image
 	 * @param fileName the file name
 	 */
-	public void writeImage( BufferedImage image, String fileName )
+	public String writeImage( BufferedImage image, String fileName )
 	{
 		try
 		{
 			File outputFile = null;
 			if ( imageLocation != null )
-				outputFile = new File( imageLocation, fileName );
+				outputFile = new File( new File( imageLocation, RunDetails.instance().getRootFolder() + System.getProperty( "file.separator" ) + "wcag" ), fileName );
 			else
-				outputFile = new File( fileName );
+				outputFile = new File( RunDetails.instance().getRootFolder() + System.getProperty( "file.separator" ) + "wcag", fileName );
 			
+			outputFile.getParentFile().mkdirs();
 			ImageIO.write( image, "png", outputFile );
+			
+			return outputFile.getAbsolutePath();
 		}
 		catch( Exception e )
 		{
 			e.printStackTrace();
+			return null;
 		}
 		
 	}
@@ -633,4 +640,6 @@ public class PageManager
 		
 		return executionId;
 	}
+	
+	
 }

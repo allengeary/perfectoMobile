@@ -85,6 +85,8 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	/** The poi. */
 	private String poi;
 	
+	private long waitTime;
+	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#getPoi()
 	 */
@@ -549,6 +551,20 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 		catch( KWSLoopBreak lb )
 		{
 			throw lb;
+		}
+		finally
+		{
+		    if ( waitTime > 0 )
+		    {
+		        try
+		        {
+		            Thread.sleep( waitTime );
+		        }
+		        catch( Exception e )
+		        {
+		            
+		        }
+		    }
 		}
 	}
 
@@ -1030,5 +1046,15 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	public void setValidationType( ValidationType validationType )
 	{
 		this.validationType = validationType;
+	}
+	
+	public long getWait()
+	{
+	    return waitTime;
+	}
+	
+	public void setWait( long waitAfter )
+	{
+	    this.waitTime = waitAfter;
 	}
 }

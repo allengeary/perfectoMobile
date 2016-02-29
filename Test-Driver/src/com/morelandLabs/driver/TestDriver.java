@@ -5,14 +5,14 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
+import java.util.logging.Level;
 import org.testng.TestNG;
-
 import com.morelandLabs.Initializable;
 import com.morelandLabs.application.ApplicationRegistry;
 import com.morelandLabs.application.CSVApplicationProvider;
 import com.morelandLabs.application.ExcelApplicationProvider;
 import com.morelandLabs.application.XMLApplicationProvider;
+import com.morelandLabs.artifact.ArtifactType;
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.rest.bean.factory.BeanManager;
 import com.morelandLabs.integrations.rest.bean.factory.XMLBeanFactory;
@@ -22,7 +22,6 @@ import com.perfectoMobile.content.ContentManager;
 import com.perfectoMobile.content.provider.ExcelContentProvider;
 import com.perfectoMobile.content.provider.XMLContentProvider;
 import com.perfectoMobile.device.DeviceManager;
-import com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType;
 import com.perfectoMobile.device.artifact.api.PerfectoArtifactProducer;
 import com.perfectoMobile.device.cloud.CSVCloudProvider;
 import com.perfectoMobile.device.cloud.CloudRegistry;
@@ -37,6 +36,7 @@ import com.perfectoMobile.device.data.XMLDataProvider;
 import com.perfectoMobile.device.data.perfectoMobile.AvailableHandsetValidator;
 import com.perfectoMobile.device.data.perfectoMobile.PerfectoMobileDataProvider;
 import com.perfectoMobile.device.data.perfectoMobile.ReservedHandsetValidator;
+import com.perfectoMobile.device.logging.ThreadedFileHandler;
 import com.perfectoMobile.gesture.GestureManager;
 import com.perfectoMobile.gesture.device.action.DeviceActionManager;
 import com.perfectoMobile.gesture.device.action.spi.perfecto.PerfectoDeviceActionFactory;
@@ -132,10 +132,6 @@ public class TestDriver
 						DataManager.instance().setTests( KeyWordDriver.instance().getTestNames( ) );
 					break;
 			}
-			
-			
-			
-			
 		}
 		catch( Exception e )
 		{
@@ -157,6 +153,9 @@ public class TestDriver
 		switch( configProperties.getProperty( DRIVER[ 0 ] ).toUpperCase() )
 		{
 			case "XML":
+			    
+			    RunDetails.instance().setStartTime();
+			    
 				TestNG testNg = new TestNG( true );
 				testNg.setOutputDirectory( configProperties.getProperty( ARTIFACT[ 1 ] ) + System.getProperty( "file.separator" ) + "testNg" );
 				testNg.setTestClasses( new Class[] { XMLTestDriver.class } );
@@ -280,6 +279,14 @@ public class TestDriver
 				try
 				{
 					artifactList.add(  ArtifactType.valueOf( type ) );
+					if ( ArtifactType.valueOf( type ).equals( ArtifactType.CONSOLE_LOG ) )
+					{
+					    String logLevel = configProperties.getProperty( "artifactProducer.logLevel" );
+					    if ( logLevel == null )
+					        logLevel = "INFO";
+					    ThreadedFileHandler threadedHandler = new ThreadedFileHandler();
+					    threadedHandler.configureHandler( Level.parse( logLevel.toUpperCase() ) );
+					}
 				}
 				catch( Exception e )
 				{

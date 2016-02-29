@@ -26,9 +26,6 @@ public class CallDeviceInterrupt extends AbstractDeviceInterrupt
             {
                 
             }
-            
-            
-            
         }
         catch( Exception e )
         {

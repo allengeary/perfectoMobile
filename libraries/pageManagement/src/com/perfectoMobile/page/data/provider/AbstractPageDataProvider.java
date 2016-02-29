@@ -28,7 +28,7 @@ public abstract class AbstractPageDataProvider implements PageDataProvider
 	public abstract void readPageData();
 	
 	/** The wait time out. */
-	private long waitTimeOut = 60;
+	private long waitTimeOut = 240;
 	
 	/** The record map. */
 	private Map<String,Deque<PageData>> recordMap = new HashMap<String,Deque<PageData>>( 10 );

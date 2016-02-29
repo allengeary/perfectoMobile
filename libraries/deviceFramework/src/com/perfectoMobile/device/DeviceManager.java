@@ -3,6 +3,8 @@
  */
 package com.perfectoMobile.device;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,13 +15,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.htmlcleaner.HtmlCleaner;
-import org.htmlcleaner.PrettyXmlSerializer;
-import org.htmlcleaner.TagNode;
-
+import com.morelandLabs.artifact.ArtifactListener;
+import com.morelandLabs.artifact.ArtifactManager;
+import com.morelandLabs.artifact.ArtifactType;
 import com.morelandLabs.spi.Device;
 import com.morelandLabs.spi.RunListener;
 import com.perfectoMobile.device.comparator.WeightedDeviceComparator;
@@ -30,14 +30,18 @@ import com.perfectoMobile.device.factory.DriverManager;
 /**
  * The Class DeviceManager.
  */
-public class DeviceManager
+public class DeviceManager implements ArtifactListener
 {
-	
 	/** The singleton. */
 	private static DeviceManager singleton = new DeviceManager();
 	
 	/** The execution id. */
 	private ThreadLocal<String> executionId = new ThreadLocal<String>();
+	
+	/** Stores an instance to a log handler */
+	private ThreadLocal<StringBuffer> logHandler = new ThreadLocal<StringBuffer>();
+	
+	private ThreadLocal<Map<ArtifactType,List<Object>>> artifactMap = new ThreadLocal<Map<ArtifactType,List<Object>>>();
 	
 	private String deviceInterrupts;
 
@@ -49,6 +53,81 @@ public class DeviceManager
     public void setDeviceInterrupts( String deviceInterrupts )
     {
         this.deviceInterrupts = deviceInterrupts;
+    }
+    
+    
+    public void addArtifactRecord( ArtifactType aType, Object value )
+    {
+        if ( artifactMap.get() == null )
+            artifactMap.set( new HashMap<ArtifactType,List<Object>>( 10 ) );
+        
+        List<Object> artifactList = artifactMap.get().get( aType );
+        if ( artifactList == null )
+        {
+            artifactList = new ArrayList<Object>(10);
+            artifactMap.get().put( aType, artifactList );
+        }
+        
+        artifactList.add( value );        
+    }
+    
+    public List<Object> getArtifacts( ArtifactType aType )
+    {
+        if ( artifactMap.get() == null )
+            return null;
+        
+        return artifactMap.get().get( aType );
+    }
+    
+    public void clearArtifacts( ArtifactType aType )
+    {
+        if ( artifactMap.get() == null )
+            return;
+        
+        if ( artifactMap.get().get( aType ) != null )
+            artifactMap.get().get( aType ).clear(); 
+    }
+    
+    public void clearAllArtifacts()
+    {
+        artifactMap.set( new HashMap<ArtifactType,List<Object>>( 10 ) );
+    }
+    
+    public void addLog( String logMessage )
+    {
+        if ( logHandler.get() == null )
+            logHandler.set( new StringBuffer() );
+        
+        logHandler.get().append( logMessage );
+    }
+    
+    public void writeLog( File fileName )
+    {
+        try
+        {
+            fileName.getParentFile().mkdirs();
+            FileWriter outputStream = new FileWriter( fileName );
+            outputStream.write( logHandler.get().toString() );
+            logHandler.set( new StringBuffer() );
+            outputStream.close();
+        }
+        catch( Exception e )
+        {
+            log.error( "Error writing console log", e );
+        }
+    }
+    
+    public String getLog()
+    {
+        if ( logHandler.get() != null )
+            return logHandler.get().toString();
+        else
+            return "";
+    }
+    
+    public void clearLog()
+    {
+        logHandler.set( new StringBuffer() );
     }
 
     /**
@@ -66,7 +145,7 @@ public class DeviceManager
 	 */
 	private DeviceManager()
 	{
-
+	    ArtifactManager.instance().addArtifactListener( this );
 	}
 	
 	/** The log. */

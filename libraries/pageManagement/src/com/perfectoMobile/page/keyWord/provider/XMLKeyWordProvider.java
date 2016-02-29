@@ -62,6 +62,9 @@ public class XMLKeyWordProvider implements KeyWordProvider
 	/** The Constant LINK. */
 	private static final String LINK = "linkId";
 	
+	/** The Constant LINK. */
+    private static final String WAIT_TIME = "wait";
+	
 	/** The Constant TIMED. */
 	private static final String TIMED = "timed";
 	
@@ -493,13 +496,18 @@ public class XMLKeyWordProvider implements KeyWordProvider
 				Node inverseData = nodeList.item( i ).getAttributes().getNamedItem( INVERT );
 				if (inverseData != null)
 					inverse = Boolean.parseBoolean( inverseData.getNodeValue() );
+				
+				long waitTimeLong = 0;
+                Node waitTime = nodeList.item( i ).getAttributes().getNamedItem( WAIT_TIME );
+                if (waitTime != null)
+                    waitTimeLong = Long.parseLong( waitTime.getNodeValue() );
 
 				StepFailure sFailure = StepFailure.ERROR;
 				Node sFailureNode = nodeList.item( i ).getAttributes().getNamedItem( FAILURE_MODE );
 				if (sFailureNode != null && !sFailureNode.getNodeValue().isEmpty() )
 					sFailure = StepFailure.valueOf( sFailureNode.getNodeValue() );
 
-				KeyWordStep step = KeyWordStepFactory.instance().createStep( name.getNodeValue(), usePage, active == null ? true : Boolean.parseBoolean( active.getNodeValue() ), type.getNodeValue().toUpperCase(), linkIdString, timed, sFailure, inverse, osString, poiString, tInt, nodeList.item( i ).getTextContent() );
+				KeyWordStep step = KeyWordStepFactory.instance().createStep( name.getNodeValue(), usePage, active == null ? true : Boolean.parseBoolean( active.getNodeValue() ), type.getNodeValue().toUpperCase(), linkIdString, timed, sFailure, inverse, osString, poiString, tInt, nodeList.item( i ).getTextContent(), waitTimeLong );
 
 				KeyWordParameter[] params = parseParameters( nodeList.item( i ), testName, name.getNodeValue(), typeName );
 

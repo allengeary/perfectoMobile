@@ -31,6 +31,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import com.morelandLabs.artifact.ArtifactType;
 import com.morelandLabs.spi.Device;
 import com.morelandLabs.spi.PropertyProvider;
 import com.morelandLabs.spi.driver.DeviceProvider;

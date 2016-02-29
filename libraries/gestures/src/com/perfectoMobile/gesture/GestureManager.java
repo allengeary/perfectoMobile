@@ -121,7 +121,7 @@ public class GestureManager
 	 */
 	public Gesture createPress( Point pressPosition )
 	{
-		return createPress( pressPosition, 100 );
+		return createPress( pressPosition, 100l );
 	}
 	
 	/**

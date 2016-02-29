@@ -4,13 +4,17 @@
 package com.perfectoMobile.device.artifact.api;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import org.openqa.selenium.WebDriver;
-import com.morelandLabs.spi.RunDetails;
+import com.morelandLabs.artifact.ArtifactType;
+import com.morelandLabs.spi.Device;
+import com.morelandLabs.wcag.WCAGRecord;
 import com.perfectoMobile.device.ConnectedDevice;
 import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.artifact.AbstractArtifactProducer;
@@ -23,7 +27,7 @@ import com.perfectoMobile.device.cloud.CloudRegistry;
  */
 public class PerfectoArtifactProducer extends AbstractArtifactProducer
 {
-
+    private static DateFormat timeFormat = new SimpleDateFormat( "HH:mm:ss.SSS");
 	/** The Constant REPORT_KEY. */
 	private static final String REPORT_KEY = "REPORT_KEY";
 	
@@ -87,6 +91,11 @@ public class PerfectoArtifactProducer extends AbstractArtifactProducer
 			case FAILURE_SOURCE:
 				return new Artifact( rootFolder + "failureDOM.xml", webDriver.getPageSource() != null ? webDriver.getPageSource().getBytes() : null );
 
+			case CONSOLE_LOG:
+			    Artifact consoleArtifact = new Artifact( rootFolder + "console.txt", DeviceManager.instance().getLog().getBytes() );
+			    DeviceManager.instance().clearLog();
+			    return consoleArtifact;
+				
 			case DEVICE_LOG:
 				try
 				{
@@ -117,8 +126,41 @@ public class PerfectoArtifactProducer extends AbstractArtifactProducer
 				reportFormat = "xml";
 				break;
 				
-			case WIND_TUNNEL_REPORT:
-			    break;
+			case WCAG_REPORT:
+			    StringBuilder wcagBuffer = new StringBuilder();
+			    Device device = connectedDevice.getDevice();
+			    
+			    wcagBuffer.append( "<html><body><table><tr><td align='right'><b>Device Name:</b></td><td>" ).append( device.getManufacturer() ).append( " " ).append( device.getModel() ).append( " (" ).append( device.getKey() ).append(")</td></tr>");
+			    wcagBuffer.append( "<tr><td align='right'><b>OS:</b></td><td>" ).append( device.getOs() ).append( " (" ).append( device.getOsVersion() ).append(")</td></tr>");
+			    wcagBuffer.append( "<tr><td align='right'><b>Test Name:</b></td><td>" ).append( testName ).append("</td></tr><tr><td align='center' colspan='2'><h2>WCAG Report</h2></td></tr></table><table cellpadding='5' cellspacing='0'><br><br>");
+			    wcagBuffer.append(  "<tr><th>Page</th><th>Element</th><th>Type</th><th>Time</th><th>Duration</th><th>Success</th><th>Expected</th><th>Actual</th></tr>" );
+			    
+			    for ( Object item : DeviceManager.instance().getArtifacts( ArtifactType.WCAG_REPORT ) )
+			    {
+			        WCAGRecord wcagItem = (WCAGRecord) item;
+			        
+			        String backgroundColor = null;
+			        if ( !wcagItem.getStatus() )
+			            backgroundColor = " bgcolor='#ff3333' ";
+			        else
+			            backgroundColor = " bgcolor='#66FF99' ";
+			            
+
+			        wcagBuffer.append( "<tr " + backgroundColor + "><td>" ).append( wcagItem.getPageName() ).append( "</td>" );
+	                wcagBuffer.append( "<td>" ).append( wcagItem.getElementName() ).append( "</td>" );
+	                wcagBuffer.append( "<td>" ).append( wcagItem.getType() ).append( "</td>" );
+	                wcagBuffer.append( "<td>" ).append( timeFormat.format( new Date( wcagItem.getTimeStamp() ) ) ).append( "</td>" );
+	                wcagBuffer.append( "<td>" ).append( wcagItem.getDuration() ).append( "</td>" );
+	                wcagBuffer.append( "<td>" ).append( wcagItem.getStatus() ).append( "</td>" );
+	                wcagBuffer.append( "<td>" ).append( wcagItem.getExpectedValue() ).append( "</td>" );
+	                wcagBuffer.append( "<td>" ).append( wcagItem.getActualValue() ).append( "</td></tr>" );
+	                wcagBuffer.append( "<tr " + backgroundColor + "><td colspan='6'><i>" ).append( wcagItem.getFailureMessage() ).append( "</i></td>" );
+	                wcagBuffer.append( "<td colspan='2'><img height='100' src='file://" ).append( wcagItem.getImageLocation() ).append( "'/></td></tr>" );
+			    }
+			    
+			    wcagBuffer.append( "</table></body></html>" );
+			    
+                return new Artifact( rootFolder + "wcag.html", wcagBuffer.toString().getBytes() );
 				
 			default:
 				operation = "download";

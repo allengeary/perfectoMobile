@@ -4,8 +4,11 @@ import java.awt.image.BufferedImage;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
-
+import com.morelandLabs.artifact.ArtifactManager;
+import com.morelandLabs.artifact.ArtifactType;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
+import com.morelandLabs.wcag.WCAGRecord;
+import com.morelandLabs.wcag.WCAGRecord.WCAGType;
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.data.PageData;
@@ -57,8 +60,9 @@ public class KWSContrastRatio extends AbstractKeyWordStep
 		
 		
 		BufferedImage elementValue = (BufferedImage)getElement( pageObject, contextMap, webDriver, dataMap ).getImage( resolution );
-		if ( elementValue != null && PageManager.instance().isStoreImages() )
-			PageManager.instance().writeImage( elementValue, fileKey + "-" + getName() + ".png" );
+		String imagePath = null;
+		if ( elementValue != null )
+			imagePath = PageManager.instance().writeImage( elementValue, fileKey + "-" + getName() + ".png" );
 
 		
 		int minColor = 0;
@@ -89,8 +93,13 @@ public class KWSContrastRatio extends AbstractKeyWordStep
 		double contrastRatio = (maxLumens + 0.05) / (minLumens + 0.05 );
 		if ( contrastRatio < minContrast || contrastRatio > maxContrast )
 		{
-			throw new IllegalArgumentException( "The contrast for [" + getName() + "] should be between [#" + Integer.toHexString( minColor ) + "] and [" + Integer.toHexString( maxColor ) + "] was [" + contrastRatio + "] and fell outside of the expected range" );
+		    String contrastMessage = "The contrast for [" + getName() + "] should be between [#" + Integer.toHexString( minColor ) + "] and [" + Integer.toHexString( maxColor ) + "] was [" + contrastRatio + "] and fell outside of the expected range";
+		    ArtifactManager.instance().notifyArtifactListeners( ArtifactType.WCAG_REPORT, new WCAGRecord( getPageName(), getName(), WCAGType.ContrastVerification, System.currentTimeMillis(), System.currentTimeMillis() - fileKey, false, imagePath, minContrast + "-" + maxContrast, contrastRatio + "", contrastMessage ) );
+		    
+			throw new IllegalArgumentException( contrastMessage );
 		}
+		else
+		    ArtifactManager.instance().notifyArtifactListeners( ArtifactType.WCAG_REPORT, new WCAGRecord( getPageName(), getName(), WCAGType.ContrastVerification, System.currentTimeMillis(), System.currentTimeMillis() - fileKey, true, imagePath, minContrast + "-" + maxContrast, contrastRatio + "", "OK" ) );
 		
 		if ( getContext() != null )
 		{

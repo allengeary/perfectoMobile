@@ -41,6 +41,11 @@ public class RunDetails implements RunListener
         return startTime;
     }
     
+    public void setStartTime()
+    {
+        startTime = System.currentTimeMillis();
+    }
+    
     public String getRootFolder()
     {
         return timeFormat.format( new Date( startTime ) );
@@ -86,7 +91,9 @@ public class RunDetails implements RunListener
         
         try
         {
-            FileWriter fileWriter = new FileWriter( new File( rootFolder, getRootFolder() +System.getProperty( "file.separator" ) + "index.html" ) );
+            File useFile = new File( rootFolder, getRootFolder() + System.getProperty( "file.separator" ) + "index.html" );
+            useFile.getParentFile().mkdirs();
+            FileWriter fileWriter = new FileWriter( useFile );
             fileWriter.write( stringBuilder.toString() );
             fileWriter.close();
         }

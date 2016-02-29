@@ -4,12 +4,10 @@
 package com.perfectoMobile.device.data;
 
 import java.io.File;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+import com.morelandLabs.artifact.ArtifactType;
 import com.perfectoMobile.device.artifact.ArtifactProducer;
-import com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType;
 
 // TODO: Auto-generated Javadoc
 /**

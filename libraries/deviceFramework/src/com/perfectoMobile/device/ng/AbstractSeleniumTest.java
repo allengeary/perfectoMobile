@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.OutputType;
@@ -20,17 +19,15 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
-
+import com.morelandLabs.artifact.ArtifactTime;
+import com.morelandLabs.artifact.ArtifactType;
 import com.morelandLabs.spi.Device;
 import com.morelandLabs.spi.RunDetails;
 import com.perfectoMobile.device.ConnectedDevice;
 import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.artifact.Artifact;
 import com.perfectoMobile.device.artifact.ArtifactProducer;
-import com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactTime;
-import com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType;
 import com.perfectoMobile.device.data.DataManager;
-import com.perfectoMobile.device.factory.DeviceWebDriver;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -405,11 +402,15 @@ public abstract class AbstractSeleniumTest
 			}
 		}
 
+		
+		
 		Device currentDevice = getDevice();
 		if (currentDevice != null)
 		{
 			DeviceManager.instance().addRun( currentDevice, currentMethod, ( ( TestName ) testArgs[0] ).getTestName(), testResult.isSuccess(), threadDevice.get().getPersona() );
 			DeviceManager.instance().releaseDevice( currentDevice );
 		}
+		
+		DeviceManager.instance().clearAllArtifacts();
 	}
 }
