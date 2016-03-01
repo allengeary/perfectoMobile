@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import org.apache.commons.logging.Log;
@@ -25,6 +26,7 @@ import com.morelandLabs.spi.RunListener;
 import com.perfectoMobile.device.comparator.WeightedDeviceComparator;
 import com.perfectoMobile.device.factory.DeviceWebDriver;
 import com.perfectoMobile.device.factory.DriverManager;
+import com.perfectoMobile.device.property.PropertyAdapter;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,8 +46,22 @@ public class DeviceManager implements ArtifactListener
 	private ThreadLocal<Map<ArtifactType,List<Object>>> artifactMap = new ThreadLocal<Map<ArtifactType,List<Object>>>();
 	
 	private String deviceInterrupts;
+	
+	private List<PropertyAdapter> propertyAdapterList = new ArrayList<PropertyAdapter>( 10 );
+	
+	private Properties configurationProperties;
 
-	public String getDeviceInterrupts()
+	public Properties getConfigurationProperties()
+    {
+        return configurationProperties;
+    }
+
+    public void setConfigurationProperties( Properties configurationProperties )
+    {
+        this.configurationProperties = configurationProperties;
+    }
+
+    public String getDeviceInterrupts()
     {
         return deviceInterrupts;
     }
@@ -55,6 +71,28 @@ public class DeviceManager implements ArtifactListener
         this.deviceInterrupts = deviceInterrupts;
     }
     
+    public void registerPropertyAdapter( PropertyAdapter propertyAdapter )
+    {
+        propertyAdapterList.add( propertyAdapter );
+    }
+    
+    public void notifyPropertyAdapter( Properties configurationProperties )
+    {
+        if ( configurationProperties != null )
+        {
+            for ( PropertyAdapter p : propertyAdapterList )
+                p.applyProperties( configurationProperties );
+        }
+    }
+    
+    public void notifyPropertyAdapter( Properties configurationProperties, Object webDriver )
+    {
+        if ( configurationProperties != null )
+        {
+            for ( PropertyAdapter p : propertyAdapterList )
+                p.applyInstanceProperties( configurationProperties, webDriver );
+        }
+    }
     
     public void addArtifactRecord( ArtifactType aType, Object value )
     {
@@ -424,7 +462,9 @@ public class DeviceManager implements ArtifactListener
 											{
 												if ( log.isDebugEnabled() )
 													log.debug( "WebDriver Created - Creating Connected Device for " + currentDevice );
-												
+											
+												DeviceManager.instance().notifyPropertyAdapter( configurationProperties, webDriver );
+
 												activeRuns.put( currentDevice.getKey() + "." + runKey , true );
 												
 												return new ConnectedDevice( webDriver, currentDevice, personaName );

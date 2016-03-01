@@ -37,6 +37,7 @@ import com.perfectoMobile.device.data.perfectoMobile.AvailableHandsetValidator;
 import com.perfectoMobile.device.data.perfectoMobile.PerfectoMobileDataProvider;
 import com.perfectoMobile.device.data.perfectoMobile.ReservedHandsetValidator;
 import com.perfectoMobile.device.logging.ThreadedFileHandler;
+import com.perfectoMobile.device.property.PropertyAdapter;
 import com.perfectoMobile.gesture.GestureManager;
 import com.perfectoMobile.gesture.device.action.DeviceActionManager;
 import com.perfectoMobile.gesture.device.action.spi.perfecto.PerfectoDeviceActionFactory;
@@ -106,6 +107,27 @@ public class TestDriver
 			
 			System.out.println( "Configuring Driver" );
 			validateProperties( configProperties, DRIVER );
+			
+			String propertyAdapters = configProperties.getProperty( "driver.propertyAdapters" );
+			if ( propertyAdapters != null && !propertyAdapters.isEmpty() )
+			{
+			    String[] adapterList = propertyAdapters.split( "," );
+			    for ( String adapterName : adapterList )
+			    {
+			        try
+			        {
+			            DeviceManager.instance().registerPropertyAdapter( (PropertyAdapter) Class.forName( adapterName ).newInstance() ); 
+			        }
+			        catch( Exception e )
+			        {
+			            System.err.println( "Property Adapter [" + adapterName + "] coudl not be created" );
+			            System.exit( -1 );
+			        }
+			    }
+			}
+			
+			DeviceManager.instance().setConfigurationProperties( configProperties );
+			DeviceManager.instance().notifyPropertyAdapter( configProperties );
 			
 			GestureManager.instance().setGestureFactory( new PerfectoGestureFactory() );
 			
