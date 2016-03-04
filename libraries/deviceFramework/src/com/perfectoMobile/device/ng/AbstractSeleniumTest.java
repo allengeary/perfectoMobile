@@ -158,6 +158,11 @@ public abstract class AbstractSeleniumTest
 			else
 				return "Unknown Test";
 		}
+		
+		public String getKeyName()
+		{
+		    return testName + ( personaName != null && !personaName.isEmpty() ? "." + personaName : "" );
+		}
 	}
 
 	/**
@@ -318,8 +323,8 @@ public abstract class AbstractSeleniumTest
 					{
 						byte[] screenShot = ( ( TakesScreenshot ) webDriver ).getScreenshotAs( OutputType.BYTES );
 						File useFolder = new File( rootFolder, runKey );
-						useFolder.mkdirs();
 						File outputFile = new File( useFolder, getDevice().getKey() + System.getProperty( "file.separator" ) + "failure-screenshot.png" );
+						outputFile.getParentFile().mkdirs();
 						os = new BufferedOutputStream( new FileOutputStream( outputFile ) );
 						os.write( screenShot );
 						os.flush();

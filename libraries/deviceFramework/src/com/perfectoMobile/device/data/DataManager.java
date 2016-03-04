@@ -170,6 +170,20 @@ public class DataManager
 	{
 		return automaticDownloads;
 	}
+	
+	public boolean isArtifactEnabled( ArtifactType isType )
+	{
+	    if ( automaticDownloads == null )
+	        return false;
+	    
+	    for ( ArtifactType aType : automaticDownloads )
+	    {
+	        if ( aType.equals( isType ) )
+	            return true;
+	    }
+	    
+	    return false;
+	}
 
 	/**
 	 * Sets the automatic downloads.

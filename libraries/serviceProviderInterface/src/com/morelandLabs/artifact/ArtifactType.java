@@ -36,7 +36,15 @@ public enum ArtifactType
     DEVICE_LOG( ArtifactTime.ON_FAILURE ),
     
     /** The device log. */
-    CONSOLE_LOG( ArtifactTime.AFTER_TEST );
+    CONSOLE_LOG( ArtifactTime.AFTER_TEST ),
+    
+    EXECUTION_RECORD_HTML( ArtifactTime.AFTER_TEST ),
+    
+    EXECUTION_RECORD_CSV( ArtifactTime.AFTER_TEST ),
+    
+    EXECUTION_RECORD( ArtifactTime.NOOP ),
+    
+    EXECUTION_TIMING( ArtifactTime.AFTER_TEST );
     
     /** The time. */
     private ArtifactTime time;

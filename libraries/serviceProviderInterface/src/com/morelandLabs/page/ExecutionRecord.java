@@ -1,9 +1,8 @@
-package com.perfectoMobile.page;
+package com.morelandLabs.page;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import com.perfectoMobile.page.PageManager.StepStatus;
 
 // TODO: Auto-generated Javadoc
 /**

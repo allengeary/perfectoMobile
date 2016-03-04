@@ -18,9 +18,13 @@ import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.WebDriver;
-import com.morelandLabs.artifact.ArtifactListener;
+import com.morelandLabs.artifact.ArtifactManager;
+import com.morelandLabs.artifact.ArtifactType;
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.WindTunnel.Status;
+import com.morelandLabs.page.ExecutionRecord;
+import com.morelandLabs.page.ExecutionTiming;
+import com.morelandLabs.page.StepStatus;
 import com.morelandLabs.spi.Device;
 import com.morelandLabs.spi.PropertyProvider;
 import com.morelandLabs.spi.RunDetails;
@@ -61,21 +65,12 @@ public class PageManager
     /** The execution listeners. */
     private List<ExecutionListener> executionListeners = new ArrayList<ExecutionListener>( 20 );
 
-    /** The timing map. */
-    private Map<String,ExecutionTiming> timingMap = new HashMap<String,ExecutionTiming>( 20 );
-    
     /** The execution log. */
     
     private ThreadLocal<List<ExecutionRecord>> executionLog = new ThreadLocal<List<ExecutionRecord>>();
     
     /** The local exception. */
     private ThreadLocal<Throwable> localException = new ThreadLocal<Throwable>();
-    
-    /** The timing writer. */
-    private ExecutionTimingWriter timingWriter = null;
-    
-    /** The record writer. */
-    private ExecutionRecordWriter recordWriter = null;
     
     /** The page factory. */
     private PageFactory pageFactory = new DefaultPageFactory();
@@ -191,21 +186,7 @@ public class PageManager
 
 	
 
-	/**
-	 * The Enum StepStatus.
-	 */
-	public enum StepStatus
-    {
-    	
-	    /** The success. */
-	    SUCCESS,
-    	
-	    /** The failure. */
-	    FAILURE,
-    	
-	    /** The failure ignored. */
-	    FAILURE_IGNORED;
-    }
+	
 
     /**
      * Instance to the Page Manager singleton.
@@ -349,19 +330,10 @@ public class PageManager
      */
     public void addExecutionTiming( String executionId, String deviceName, String methodName, long runLength, StepStatus status, String description, int threshold )
     {
-    	ExecutionTiming eTime = timingMap.get(  methodName  );
-    	if ( eTime == null )
-    	{
-    		eTime = new ExecutionTiming( methodName );
-    		timingMap.put( methodName, eTime );
-    	}
-    	
     	if ( isWindTunnelEnabled() )
     	{
     		PerfectoMobile.instance().windTunnel().addTimerReport( executionId, methodName, (int)runLength, ( ( status.equals( StepStatus.SUCCESS ) || ( status.equals( StepStatus.FAILURE_IGNORED ) ) ) ? Status.success : Status.failure ), description, threshold );
     	}
-    	
-    	eTime.addRun( runLength );
     }
     
     /**
@@ -382,116 +354,9 @@ public class PageManager
      */
     public void addExecutionLog( String executionId, String deviceName, String group, String name, String type, long timestamp, long runLength, StepStatus status, String detail, Throwable t, int threshold, String description )
     {
-        if ( executionLog.get() == null )
-            executionLog.set( new ArrayList<ExecutionRecord>( 10 ) );
-    	executionLog.get().add( new ExecutionRecord( group, name, type, timestamp, runLength, status, detail, t ) );
+        ArtifactManager.instance().notifyArtifactListeners( ArtifactType.EXECUTION_RECORD, new ExecutionRecord( group, name, type, timestamp, runLength, status, detail, t ) );
     }
-    
-    public void clearExecutionLog()
-    {
-        if ( executionLog.get() == null )
-            executionLog.set( new ArrayList<ExecutionRecord>( 10 ) );
-        
-        executionLog.get().clear();
-    }
-    
-    /**
-     * Gets the execution timing.
-     *
-     * @param methodName the method name
-     * @return the execution timing
-     */
-    public ExecutionTiming getExecutionTiming( String methodName )
-    {
-    	return timingMap.get( methodName );
-    }
-    
-    /**
-     * Gets the timed methods.
-     *
-     * @return the timed methods
-     */
-    public Collection<ExecutionTiming> getTimedMethods()
-    {
-    	return timingMap.values();
-    }
-    
-    /**
-     * Sets the execution timing writer.
-     *
-     * @param timingWriter the new execution timing writer
-     */
-    public void setExecutionTimingWriter( ExecutionTimingWriter timingWriter )
-    {
-    	this.timingWriter = timingWriter;
-    }
-    
-    /**
-     * Write execution timings.
-     */
-    public void writeExecutionTimings()
-    {
-    	if ( timingWriter != null )
-    	{
-    		timingWriter.startWriting();
-    		for ( ExecutionTiming e : getTimedMethods() )
-    			timingWriter.writeTiming( e );
-    		timingWriter.stopWriting();
-    	}
-    }
-    
-    /**
-     * Sets the execution timing writer.
-     *
-     * @param recordWriter the new execution record writer
-     */
-    public void setExecutionRecordWriter( ExecutionRecordWriter recordWriter )
-    {
-    	this.recordWriter = recordWriter;
-    }
-    
-    /**
-     * Write execution timings.
-     *
-     * @param additionalUrls the additional urls
-     */
-    public void writeExecutionRecords( Map<String,String> additionalUrls )
-    {
-    	if ( recordWriter != null )
-    	{
-			recordWriter.startWriting( "", null, "" );
-			boolean success = true;
-    		for ( ExecutionRecord e : executionLog.get() )
-    		{
-    		    if ( e.getStatus().equals( StepStatus.FAILURE ) )
-    		        success = false;
-    			recordWriter.writeRecord( e );
-    		}
-    		recordWriter.stopWriting( "", additionalUrls, success );
-    	}
-    }
-    
-    /**
-     * Write execution timings.
-     *
-     * @param additionalUrls the additional urls
-     */
-    public void writeExecutionRecords( Map<String,String> additionalUrls, Device device, String testName, String keyName )
-    {
-        if ( recordWriter != null )
-        {
-            recordWriter.startWriting( keyName, device, testName );
-            boolean success = true;
-            for ( ExecutionRecord e : executionLog.get() )
-            {
-                if ( e.getStatus().equals( StepStatus.FAILURE ) )
-                    success = false;
-                recordWriter.writeRecord( e );
-            }
-            recordWriter.stopWriting( keyName, additionalUrls, success );
-        }
-    }
-    
+
     /**
      * Sets the throwable.
      *

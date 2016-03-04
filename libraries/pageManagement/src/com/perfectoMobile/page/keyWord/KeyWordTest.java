@@ -1,20 +1,15 @@
 package com.perfectoMobile.page.keyWord;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.WebDriver;
-
+import com.morelandLabs.page.StepStatus;
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.PageManager;
-import com.perfectoMobile.page.PageManager.StepStatus;
 import com.perfectoMobile.page.data.PageData;
-import com.perfectoMobile.page.data.PageDataManager;
-import com.perfectoMobile.page.keyWord.step.spi.KWSLoopBreak;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -237,6 +232,8 @@ public class KeyWordTest
 				if ( log.isWarnEnabled() )
 					log.warn( "***** Step [" + step.getName() + "] Failed" );
 				
+				PageManager.instance().addExecutionLog( executionId, deviceName, "", this.getName(), "Test", startTime, System.currentTimeMillis() - startTime, StepStatus.FAILURE, "", null, 0, "" );
+				
 				if ( timed )
 					PageManager.instance().addExecutionTiming( executionId, deviceName, getName(), System.currentTimeMillis() - startTime, StepStatus.FAILURE, description, threshold );
 				
@@ -248,6 +245,8 @@ public class KeyWordTest
 			}	
 			
 		}
+		
+		PageManager.instance().addExecutionLog( executionId, deviceName, "", this.getName(), "Test", startTime, System.currentTimeMillis() - startTime, StepStatus.SUCCESS, "", null, 0, "" );
 		
 		if ( timed )
 			PageManager.instance().addExecutionTiming( executionId, deviceName, getName(), System.currentTimeMillis() - startTime, StepStatus.SUCCESS, description, threshold );

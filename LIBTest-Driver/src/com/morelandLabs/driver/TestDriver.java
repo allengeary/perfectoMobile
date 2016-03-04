@@ -91,6 +91,18 @@ public class TestDriver
 			System.out.println( "Reading Cloud Configuration" );
 			configureCloudRegistry( configProperties );
 			
+			if (CloudRegistry.instance().getCloud().getProxyHost() != null && !CloudRegistry.instance().getCloud().getProxyHost().isEmpty()
+                    && Integer.parseInt( CloudRegistry.instance().getCloud().getProxyPort() ) > 0) 
+			{
+			    System.setProperty("https.proxyHost", CloudRegistry.instance().getCloud().getProxyHost());
+                System.setProperty("https.proxyPort", CloudRegistry.instance().getCloud().getProxyPort() + "");
+			    
+                System.setProperty("http.proxyHost", CloudRegistry.instance().getCloud().getProxyHost());
+                System.setProperty("http.proxyPort", CloudRegistry.instance().getCloud().getProxyPort() + "");
+                System.setProperty("http.proxyUser", "");
+                System.setProperty("http.proxyPassword", "");
+            }
+			
 			System.out.println( "Reading Application Configuration" );
 			configureApplicationRegistry( configProperties );
 			

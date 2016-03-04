@@ -64,7 +64,7 @@ public class RunDetails implements RunListener
         detailsList.add( new Object[] { runKey, currentDevice, successful } );
     }
     
-    public void writeHTMLIndex( File rootFolder )
+    public synchronized void writeHTMLIndex( File rootFolder )
     {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append( "<html><body><table cellspacing='0' border='1'>" );

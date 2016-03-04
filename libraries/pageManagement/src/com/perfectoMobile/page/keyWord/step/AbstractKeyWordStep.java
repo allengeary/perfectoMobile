@@ -5,24 +5,17 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
-
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.WindTunnel.Status;
-import com.morelandLabs.spi.PropertyProvider;
-import com.morelandLabs.spi.driver.DeviceProvider;
-import com.morelandLabs.spi.driver.NativeDriverProvider;
+import com.morelandLabs.page.StepStatus;
 import com.perfectoMobile.content.ContentManager;
 import com.perfectoMobile.page.ElementDescriptor;
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.PageManager;
-import com.perfectoMobile.page.PageManager.StepStatus;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.keyWord.KeyWordParameter;

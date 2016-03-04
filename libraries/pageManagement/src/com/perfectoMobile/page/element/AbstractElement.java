@@ -4,14 +4,12 @@ import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
+import com.morelandLabs.page.StepStatus;
 import com.perfectoMobile.page.BY;
 import com.perfectoMobile.page.PageManager;
-import com.perfectoMobile.page.PageManager.StepStatus;
 
 // TODO: Auto-generated Javadoc
 /**

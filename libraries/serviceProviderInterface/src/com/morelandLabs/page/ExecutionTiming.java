@@ -1,4 +1,4 @@
-package com.perfectoMobile.page;
+package com.morelandLabs.page;
 
 import java.util.ArrayList;
 import java.util.List;
