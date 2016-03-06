@@ -85,6 +85,7 @@ public class KeyWordStepFactory
 		addKeyWord( "VERIFY_COLOR", KWSCheckColor.class );
 		addKeyWord( "VERIFY_CONTRAST", KWSContrastRatio.class );
 		addKeyWord( "WINDOW", KWSWindow.class );
+                addKeyWord( "EXECJS", KWSExecJS.class );
 	}
 	
 	/**
