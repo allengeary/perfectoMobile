@@ -7,16 +7,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Unmarshaller;
+import com.perfectoMobile.device.cloud.xsd.Cloud;
+import com.perfectoMobile.device.cloud.xsd.ObjectFactory;
+import com.perfectoMobile.device.cloud.xsd.RegistryRoot;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -24,30 +20,6 @@ import org.w3c.dom.NodeList;
  */
 public class XMLCloudProvider extends AbstractCloudProvider
 {
-	
-	/** The Constant NAME. */
-	private static final String NAME = "name";
-	
-	/** The Constant USER_NAME. */
-	private static final String USER_NAME = "userName";
-	
-	/** The Constant PASSWORD. */
-	private static final String PASSWORD = "password";
-	
-	/** The Constant HOST_NAME. */
-	private static final String HOST_NAME = "hostName";
-	
-	/** The Constant PROXY_HOST. */
-	private static final String PROXY_HOST = "proxyHost";
-	
-	/** The Constant PROXY_PORT. */
-	private static final String PROXY_PORT = "proxyPort";
-	
-	/** The Constant GRID. */
-	private static final String GRID = "grid";
-
-	/** The x path factory. */
-	private XPathFactory xPathFactory;
 	
 	/** The file name. */
 	private File fileName;
@@ -62,7 +34,6 @@ public class XMLCloudProvider extends AbstractCloudProvider
 	 */
 	public XMLCloudProvider( File fileName )
 	{
-		xPathFactory = XPathFactory.newInstance();
 		this.fileName = fileName;
 		readData();
 	}
@@ -74,7 +45,6 @@ public class XMLCloudProvider extends AbstractCloudProvider
 	 */
 	public XMLCloudProvider( String resourceName )
 	{
-		xPathFactory = XPathFactory.newInstance();
 		this.resourceName = resourceName;
 		readData();
 	}
@@ -116,15 +86,14 @@ public class XMLCloudProvider extends AbstractCloudProvider
 		try
 		{
 		
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			dbFactory.setNamespaceAware( true );
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			
-			Document xmlDocument = dBuilder.parse( inputStream );
-		
-			NodeList nodeList = getNodes( xmlDocument, "//cloudRegistry/cloud");
-			for ( int i=0; i<nodeList.getLength(); i++ )
-				parseApplication( nodeList.item( i ) );
+		    JAXBContext jc = JAXBContext.newInstance( ObjectFactory.class );
+		    Unmarshaller u = jc.createUnmarshaller();
+            JAXBElement<?> rootElement = (JAXBElement<?>)u.unmarshal( inputStream );
+            
+            RegistryRoot rRoot = (RegistryRoot)rootElement.getValue();
+		    
+			for ( Cloud cloud : rRoot.getCloud() )
+				parseApplication( cloud );
 			
 		}
 		catch( Exception e )
@@ -138,49 +107,10 @@ public class XMLCloudProvider extends AbstractCloudProvider
 	 *
 	 * @param appNode the app node
 	 */
-	private void parseApplication( Node appNode )
+	private void parseApplication( Cloud cloud )
 	{
-		String cloudName = appNode.getAttributes().getNamedItem( NAME ).getNodeValue();
-		String userName = appNode.getAttributes().getNamedItem( USER_NAME ).getNodeValue();
-		String password = appNode.getAttributes().getNamedItem( PASSWORD ).getNodeValue();
-		String hostName = appNode.getAttributes().getNamedItem( HOST_NAME ).getNodeValue();
-		String proxyHost = appNode.getAttributes().getNamedItem( PROXY_HOST ).getNodeValue();
-		String proxyPort = appNode.getAttributes().getNamedItem( PROXY_PORT ).getNodeValue();
-		String grid = null;
-		Node gridInstance = appNode.getAttributes().getNamedItem( GRID );
-		if ( gridInstance != null )
-			grid = gridInstance.getNodeValue();
-			
-		if ( log.isDebugEnabled() )
-			log.debug( "Extracted Site [" + cloudName + "]" );
-		
-		String description = appNode.getTextContent();
-		
-		CloudRegistry.instance().addCloudDescriptor( new CloudDescriptor( cloudName, userName, password, hostName, proxyHost, proxyPort, description, grid ) );
+	    CloudRegistry.instance().addCloudDescriptor( new CloudDescriptor( cloud.getName(), cloud.getUserName(), cloud.getPassword(), cloud.getHostName(), cloud.getProxyHost(), cloud.getProxyPort() + "", "", cloud.getGrid() ) );
 	}
-	
-	/**
-	 * Gets the nodes.
-	 *
-	 * @param xmlDocument the xml document
-	 * @param xPathExpression the x path expression
-	 * @return the nodes
-	 */
-	private  NodeList getNodes( Document xmlDocument, String xPathExpression )
-	{
-		try
-		{
-			if ( log.isDebugEnabled() )
-				log.debug( "Attempting to return Nodes for [" + xPathExpression + "]" );
-			
-			XPath xPath = xPathFactory.newXPath();
-			return (NodeList) xPath.evaluate( xPathExpression, xmlDocument, XPathConstants.NODESET );
-		}
-		catch( Exception e )
-		{
-			log.error( "Error parsing xPath Expression [" + xPathExpression + "]" );
-			return null;
-		}
-	}
+
 	
 }

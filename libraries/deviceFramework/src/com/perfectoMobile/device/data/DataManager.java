@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.morelandLabs.artifact.ArtifactType;
 import com.perfectoMobile.device.artifact.ArtifactProducer;
+import com.perfectoMobile.device.artifact.api.PerfectoArtifactProducer;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -34,7 +35,7 @@ public class DataManager
 	 */
 	private DataManager()
 	{
-
+	    setReportFolder( new File( "test-otput" ) );
 	}
 	
 	/** The log. */
@@ -47,13 +48,13 @@ public class DataManager
 	private String[] personaNames;
 	
 	/** The artifact producer. */
-	private ArtifactProducer artifactProducer;
+	private ArtifactProducer artifactProducer = new PerfectoArtifactProducer();
 	
 	/** The report folder. */
 	private File reportFolder;
 	
 	/** The automatic downloads. */
-	private ArtifactType[] automaticDownloads;
+	private ArtifactType[] automaticDownloads = new ArtifactType[] { ArtifactType.EXECUTION_REPORT_HTML, ArtifactType.CONSOLE_LOG, ArtifactType.FAILURE_SOURCE, ArtifactType.EXECUTION_RECORD_HTML, ArtifactType.EXECUTION_RECORD_CSV };
 
 	/**
 	 * Sets the tests.

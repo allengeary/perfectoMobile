@@ -154,7 +154,7 @@ public class SimpleDevice implements Device
 	@Override
 	public String toString()
 	{
-		return manufacturer + " " + model + " (" + deviceName + ")";
+		return manufacturer + " " + model + " (" + key + ")";
 	}
 
 	/* (non-Javadoc)

@@ -7,22 +7,23 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import com.morelandLabs.spi.Device;
 import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.SimpleDevice;
+import com.perfectoMobile.device.data.xsd.DeviceCapability;
+import com.perfectoMobile.device.data.xsd.ObjectFactory;
+import com.perfectoMobile.device.data.xsd.RegistryRoot;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -34,8 +35,6 @@ public class XMLDataProvider implements DataProvider
 	/** The log. */
 	private Log log = LogFactory.getLog( XMLDataProvider.class );
 	
-	/** The x path factory. */
-	private XPathFactory xPathFactory;
 	
 	/** The file name. */
 	private File fileName;
@@ -46,9 +45,6 @@ public class XMLDataProvider implements DataProvider
 	/** The driver type. */
 	private DriverType driverType;
 	
-	/** The Constant NAME. */
-	private static final String NAME = "name";
-
 	/**
 	 * Instantiates a new CSV data provider.
 	 *
@@ -57,7 +53,6 @@ public class XMLDataProvider implements DataProvider
 	 */
 	public XMLDataProvider( File fileName, DriverType driverType )
 	{
-		xPathFactory = XPathFactory.newInstance();
 		this.fileName = fileName;
 		this.driverType = driverType;
 	}
@@ -70,7 +65,6 @@ public class XMLDataProvider implements DataProvider
 	 */
 	public XMLDataProvider( String resourceName, DriverType driverType )
 	{
-		xPathFactory = XPathFactory.newInstance();
 		this.resourceName = resourceName;
 		this.driverType = driverType;
 	}
@@ -111,15 +105,14 @@ public class XMLDataProvider implements DataProvider
 		try
 		{
 		
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			dbFactory.setNamespaceAware( true );
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			
-			Document xmlDocument = dBuilder.parse( inputStream );
+		    JAXBContext jc = JAXBContext.newInstance( ObjectFactory.class );
+            Unmarshaller u = jc.createUnmarshaller();
+            JAXBElement<?> rootElement = (JAXBElement<?>)u.unmarshal( inputStream );
+            
+            RegistryRoot rRoot = (RegistryRoot)rootElement.getValue();
 		
-			NodeList nodeList = getNodes( xmlDocument, "//deviceRegistry/device");
-			for ( int i=0; i<nodeList.getLength(); i++ )
-				parseDevice( nodeList.item( i ) );
+			for ( com.perfectoMobile.device.data.xsd.Device device : rRoot.getDevice() )
+				parseDevice( device );
 			
 		}
 		catch( Exception e )
@@ -133,39 +126,18 @@ public class XMLDataProvider implements DataProvider
 	 *
 	 * @param deviceNode the device node
 	 */
-	private void parseDevice( Node deviceNode )
+	private void parseDevice( com.perfectoMobile.device.data.xsd.Device device )
 	{
-		String name = deviceNode.getAttributes().getNamedItem( NAME ).getNodeValue();
-		
-		if ( log.isDebugEnabled() )
-			log.debug( "Extracted Device [" + name + "]" );
-		
-		String manufacturer = getValue( deviceNode, "manufacturer" );
-		String model = getValue( deviceNode, "model" );
-		String os = getValue( deviceNode, "os" );
-		String osVersion = getValue( deviceNode, "osVersion" );
-		String browserName = getValue( deviceNode, "browserName" );
-		String availableDevicesString = getValue( deviceNode, "availableDevices" );
-		int availableDevices = 1;
-		if ( availableDevicesString != null )
-			availableDevices = Integer.parseInt( availableDevicesString );
-		
-		String activeString = getValue( deviceNode, "active" );
-		boolean active = true;
-		if ( activeString != null )
-			active = Boolean.parseBoolean( activeString );
-		String id = getValue( deviceNode, "id" );
-		
 		String driverName = "";
 		switch( driverType )
 		{
 			case APPIUM:
-				if ( os.toUpperCase().equals( "IOS" ) )
+				if ( device.getOs().toUpperCase().equals( "IOS" ) )
 					driverName = "IOS";
-				else if ( os.toUpperCase().equals( "ANDROID" ) )
+				else if ( device.getOs().toUpperCase().equals( "ANDROID" ) )
 					driverName = "ANDROID";
 				else
-					log.warn( "Appium is not supported on the following OS " + os.toUpperCase() + " - this device will be ignored" );
+					log.warn( "Appium is not supported on the following OS " + device.getOs().toUpperCase() + " - this device will be ignored" );
 				break;
 				
 			case PERFECTO:
@@ -177,15 +149,12 @@ public class XMLDataProvider implements DataProvider
 				break;
 		}
 		
-		Device currentDevice = new SimpleDevice( name, manufacturer, model, os, osVersion, browserName, null, availableDevices, driverName, active, id );
-		
-		for ( int i=0; i<deviceNode.getChildNodes().getLength(); i++ )
+		Device currentDevice = new SimpleDevice(device.getName(), device.getManufacturer(), device.getModel(), device.getOs(), device.getOsVersion(), device.getBrowserName(), null, device.getAvailableDevices().intValue(), driverName, device.isActive(), device.getId() );
+		if ( device.getCapability() != null )
 		{
-			Node currentNode =deviceNode.getChildNodes().item( i );
-			if ( currentNode.getNodeType() == Node.ELEMENT_NODE && currentNode.getNodeName().toLowerCase().equals( "capability" ) )
-				currentDevice.addCapability( currentNode.getAttributes().getNamedItem( "name" ).getNodeValue(), currentNode.getTextContent() );
+		    for ( DeviceCapability cap : device.getCapability() )
+		        currentDevice.addCapability( cap.getName(), cap.getValue() );
 		}
-		
 
 		if ( currentDevice.isActive() )
 		{				
@@ -196,46 +165,4 @@ public class XMLDataProvider implements DataProvider
 		}
 		
 	}
-	
-	/**
-	 * Gets the value.
-	 *
-	 * @param deviceNode the device node
-	 * @param attributeName the attribute name
-	 * @return the value
-	 */
-	private String getValue( Node deviceNode, String attributeName )
-	{
-		Node attrNode = deviceNode.getAttributes().getNamedItem( attributeName );
-		if ( attrNode != null )
-			return attrNode.getNodeValue();
-		else
-			return null;
-	}
-	
-	/**
-	 * Gets the nodes.
-	 *
-	 * @param xmlDocument the xml document
-	 * @param xPathExpression the x path expression
-	 * @return the nodes
-	 */
-	private NodeList getNodes( Document xmlDocument, String xPathExpression )
-	{
-		try
-		{
-			if ( log.isDebugEnabled() )
-				log.debug( "Attempting to return Nodes for [" + xPathExpression + "]" );
-			
-			XPath xPath = xPathFactory.newXPath();
-			return (NodeList) xPath.evaluate( xPathExpression, xmlDocument, XPathConstants.NODESET );
-		}
-		catch( Exception e )
-		{
-			log.error( "Error parsing xPath Expression [" + xPathExpression + "]" );
-			return null;
-		}
-	}
-
-	
 }

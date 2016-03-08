@@ -56,6 +56,8 @@ public abstract class AbstractSeleniumTest
 		
 		/** The persona name. */
 		private String personaName;
+		
+		private String testContext;
 
 		/**
 		 * Gets the full name.
@@ -97,9 +99,23 @@ public abstract class AbstractSeleniumTest
 		public void setPersonaName(String personaName) 
 		{
 			this.personaName = personaName;
+			formatTestName();
 		}
 
-		/**
+		
+		
+		public String getTestContext()
+        {
+            return testContext;
+        }
+
+        public void setTestContext( String testContext )
+        {
+            this.testContext = testContext;
+            formatTestName();
+        }
+
+        /**
 		 * Instantiates a new test name.
 		 */
 		public TestName()
@@ -114,6 +130,7 @@ public abstract class AbstractSeleniumTest
 		public TestName( String testName )
 		{
 			this.testName = testName;
+			formatTestName();
 
 		}
 
@@ -126,8 +143,31 @@ public abstract class AbstractSeleniumTest
 		{
 			return testName;
 		}
+		
+		
 
-		/**
+		public void setTestName( String testName )
+        {
+            this.testName = testName;
+            formatTestName();
+        }
+
+		private void formatTestName()
+		{
+		    if ( testName == null )
+		        return;
+		    String useTest = testName;
+		    
+		    if ( personaName != null && !personaName.isEmpty() )
+		        useTest = useTest + "." + personaName;
+		    
+		    if ( testContext != null && !testContext.isEmpty() )
+		        useTest = useTest + "[" + testContext + "]";
+		    
+		    this.testName = useTest;
+		}
+		
+        /**
 		 * Gets the device.
 		 *
 		 * @return the device
@@ -287,6 +327,11 @@ public abstract class AbstractSeleniumTest
 		if (connectedDevice != null)
 		{
 			threadDevice.set( connectedDevice );
+			
+			TestName testName = ( ( TestName ) testArgs[0] );
+			if ( testName.getTestName() == null || testName.getTestName().isEmpty() )
+			    testName.setTestName( currentMethod.getDeclaringClass().getSimpleName() + "." + currentMethod.getName() );
+			
 			( ( TestName ) testArgs[0] ).setFullName( testArgs[0].toString() );
 			Thread.currentThread().setName( testArgs[0].toString() );
 		}
@@ -305,8 +350,10 @@ public abstract class AbstractSeleniumTest
 		WebDriver webDriver = getWebDriver();
 		if (webDriver != null)
 		{
-		    String runKey = DeviceManager.instance().getRunKey( threadDevice.get().getDevice(), currentMethod, ( ( TestName ) testArgs[0] ).getTestName(), testResult.isSuccess(), threadDevice.get().getPersona() );
-		    runKey = runKey.substring( 25 );
+		    //String runKey = DeviceManager.instance().getRunKey( threadDevice.get().getDevice(), currentMethod, ( ( TestName ) testArgs[0] ).getTestName(), testResult.isSuccess(), threadDevice.get().getPersona() );
+		    //if ( runKey.startsWith( "XMLTestDriver" ) )
+		    //    runKey = runKey.substring( 25 );
+		    String runKey = ( ( TestName ) testArgs[0] ).getTestName();
 		    
 		    File rootFolder = new File( DataManager.instance().getReportFolder(), RunDetails.instance().getRootFolder() );
 		    rootFolder.mkdirs();

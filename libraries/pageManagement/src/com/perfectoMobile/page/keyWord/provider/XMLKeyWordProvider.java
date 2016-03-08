@@ -7,19 +7,16 @@ import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.data.PageDataManager;
@@ -29,6 +26,7 @@ import com.perfectoMobile.page.keyWord.KeyWordParameter;
 import com.perfectoMobile.page.keyWord.KeyWordParameter.ParameterType;
 import com.perfectoMobile.page.keyWord.KeyWordStep;
 import com.perfectoMobile.page.keyWord.KeyWordStep.StepFailure;
+import com.perfectoMobile.page.keyWord.KeyWordStep.ValidationType;
 import com.perfectoMobile.page.keyWord.KeyWordTest;
 import com.perfectoMobile.page.keyWord.KeyWordToken;
 import com.perfectoMobile.page.keyWord.KeyWordToken.TokenType;
@@ -99,6 +97,12 @@ public class XMLKeyWordProvider implements KeyWordProvider
 	private static final String INCLUDE_FUNCTIONS = "includeFunctions";
 	
 	private static final String TAG_NAMES = "tagNames";
+	
+	private static final String VALIDATION = "validation";
+	
+	private static final String VALIDATION_TYPE = "validationType";
+	
+	private static final String CONTEXT = "context";
 
 	/** The log. */
 	private Log log = LogFactory.getLog( KeyWordTest.class );
@@ -506,8 +510,23 @@ public class XMLKeyWordProvider implements KeyWordProvider
 				Node sFailureNode = nodeList.item( i ).getAttributes().getNamedItem( FAILURE_MODE );
 				if (sFailureNode != null && !sFailureNode.getNodeValue().isEmpty() )
 					sFailure = StepFailure.valueOf( sFailureNode.getNodeValue() );
+				
+				String validation = null;
+                Node validationNode = nodeList.item( i ).getAttributes().getNamedItem( VALIDATION );
+                if (validationNode != null)
+                    validation = validationNode.getNodeValue();
+                
+                String context = null;
+                Node contextNode = nodeList.item( i ).getAttributes().getNamedItem( CONTEXT );
+                if (contextNode != null)
+                    context = contextNode.getNodeValue();
+                
+                ValidationType vType = null;
+                Node vNode = nodeList.item( i ).getAttributes().getNamedItem( VALIDATION_TYPE );
+                if (vNode != null)
+                    vType = ValidationType.valueOf( vNode.getNodeValue() );
 
-				KeyWordStep step = KeyWordStepFactory.instance().createStep( name.getNodeValue(), usePage, active == null ? true : Boolean.parseBoolean( active.getNodeValue() ), type.getNodeValue().toUpperCase(), linkIdString, timed, sFailure, inverse, osString, poiString, tInt, nodeList.item( i ).getTextContent(), waitTimeLong );
+				KeyWordStep step = KeyWordStepFactory.instance().createStep( name.getNodeValue(), usePage, active == null ? true : Boolean.parseBoolean( active.getNodeValue() ), type.getNodeValue().toUpperCase(), linkIdString, timed, sFailure, inverse, osString, poiString, tInt, nodeList.item( i ).getTextContent(), waitTimeLong, context, validation, vType );
 
 				KeyWordParameter[] params = parseParameters( nodeList.item( i ), testName, name.getNodeValue(), typeName );
 

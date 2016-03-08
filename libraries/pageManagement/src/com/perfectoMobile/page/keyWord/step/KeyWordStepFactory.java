@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.perfectoMobile.page.keyWord.KeyWordStep;
 import com.perfectoMobile.page.keyWord.KeyWordStep.StepFailure;
+import com.perfectoMobile.page.keyWord.KeyWordStep.ValidationType;
 import com.perfectoMobile.page.keyWord.step.spi.KWSAttribute;
 import com.perfectoMobile.page.keyWord.step.spi.KWSBreak;
 import com.perfectoMobile.page.keyWord.step.spi.KWSCall;
@@ -13,6 +14,7 @@ import com.perfectoMobile.page.keyWord.step.spi.KWSCheckColor;
 import com.perfectoMobile.page.keyWord.step.spi.KWSClick;
 import com.perfectoMobile.page.keyWord.step.spi.KWSContrastRatio;
 import com.perfectoMobile.page.keyWord.step.spi.KWSDevice;
+import com.perfectoMobile.page.keyWord.step.spi.KWSExecJS;
 import com.perfectoMobile.page.keyWord.step.spi.KWSExists;
 import com.perfectoMobile.page.keyWord.step.spi.KWSFork;
 import com.perfectoMobile.page.keyWord.step.spi.KWSFunction;
@@ -85,7 +87,7 @@ public class KeyWordStepFactory
 		addKeyWord( "VERIFY_COLOR", KWSCheckColor.class );
 		addKeyWord( "VERIFY_CONTRAST", KWSContrastRatio.class );
 		addKeyWord( "WINDOW", KWSWindow.class );
-                addKeyWord( "EXECJS", KWSExecJS.class );
+        addKeyWord( "EXECJS", KWSExecJS.class );
 	}
 	
 	/**
@@ -119,7 +121,7 @@ public class KeyWordStepFactory
 	 * @param description the description
 	 * @return the key word step
 	 */
-	public KeyWordStep createStep( String name, String pageName, boolean active, String type, String linkId, boolean timed, StepFailure sFailure, boolean inverse, String os, String poi, int threshold, String description, long waitTime )
+	public KeyWordStep createStep( String name, String pageName, boolean active, String type, String linkId, boolean timed, StepFailure sFailure, boolean inverse, String os, String poi, int threshold, String description, long waitTime, String context, String validation, ValidationType validationType )
 	{
 		
 		Class kwImpl = stepMap.get( type.toUpperCase() );
@@ -144,6 +146,9 @@ public class KeyWordStepFactory
 			returnValue.setThreshold( threshold );
 			returnValue.setDescription(description);
 			returnValue.setWait( waitTime );
+			returnValue.setValidation( validation );
+			returnValue.setValidationType( validationType );
+			returnValue.setContext( context );
 			
 			return returnValue;
 		}

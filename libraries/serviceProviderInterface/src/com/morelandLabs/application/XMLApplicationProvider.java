@@ -6,17 +6,21 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
-
-import org.apache.http.impl.io.SocketOutputBuffer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import com.morelandLabs.application.xsd.Application;
+import com.morelandLabs.application.xsd.DeviceCapability;
+import com.morelandLabs.application.xsd.ObjectFactory;
+import com.morelandLabs.application.xsd.RegistryRoot;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -24,28 +28,6 @@ import org.w3c.dom.NodeList;
  */
 public class XMLApplicationProvider extends AbstractApplicationProvider
 {
-	
-	/** The Constant NAME. */
-	private static final String NAME = "name";
-	
-	/** The Constant APP_PACKAGE. */
-	private static final String APP_PACKAGE = "appPackage";
-	
-	/** The Constant BUNDLE_ID. */
-	private static final String BUNDLE_ID = "bundleId";
-	
-	/** The Constant URL. */
-	private static final String URL = "url";
-	
-	/** The Constant IOS_INSTALL. */
-	private static final String IOS_INSTALL = "iosInstall";
-	
-	/** The Constant ANDROID_INSTALL. */
-	private static final String ANDROID_INSTALL = "androidInstall";
-
-	/** The x path factory. */
-	private XPathFactory xPathFactory;
-	
 	/** The file name. */
 	private File fileName;
 	
@@ -59,7 +41,6 @@ public class XMLApplicationProvider extends AbstractApplicationProvider
 	 */
 	public XMLApplicationProvider( File fileName )
 	{
-		xPathFactory = XPathFactory.newInstance();
 		this.fileName = fileName;
 		readData();
 	}
@@ -71,7 +52,6 @@ public class XMLApplicationProvider extends AbstractApplicationProvider
 	 */
 	public XMLApplicationProvider( String resourceName )
 	{
-		xPathFactory = XPathFactory.newInstance();
 		this.resourceName = resourceName;
 		readData();
 	}
@@ -113,15 +93,14 @@ public class XMLApplicationProvider extends AbstractApplicationProvider
 		try
 		{
 		
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			dbFactory.setNamespaceAware( true );
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			
-			Document xmlDocument = dBuilder.parse( inputStream );
-		
-			NodeList nodeList = getNodes( xmlDocument, "//applicationRegistry/application");
-			for ( int i=0; i<nodeList.getLength(); i++ )
-				parseApplication( nodeList.item( i ) );
+		    JAXBContext jc = JAXBContext.newInstance( ObjectFactory.class );
+            Unmarshaller u = jc.createUnmarshaller();
+            JAXBElement<?> rootElement = (JAXBElement<?>)u.unmarshal( inputStream );
+            
+            RegistryRoot rRoot = (RegistryRoot)rootElement.getValue();
+
+			for ( Application app : rRoot.getApplication() )
+				parseApplication( app );
 
 			
 		}
@@ -136,61 +115,16 @@ public class XMLApplicationProvider extends AbstractApplicationProvider
 	 *
 	 * @param appNode the app node
 	 */
-	private void parseApplication( Node appNode )
+	private void parseApplication( Application app )
 	{
-		String appName = appNode.getAttributes().getNamedItem( NAME ).getNodeValue();
-		
-		if ( log.isDebugEnabled() )
-			log.debug( "Extracted Site [" + appName + "]" );
-		
-		String iosInstall = "";
-		String androidInstall = "";		
-		
-		Node iosNode = appNode.getAttributes().getNamedItem( IOS_INSTALL );
-		if ( iosNode != null )
-			iosInstall = iosNode.getNodeValue();
-		Node androidNode = appNode.getAttributes().getNamedItem( ANDROID_INSTALL );
-		if ( androidNode != null )
-			androidInstall = androidNode.getNodeValue();
-		
-		Map<String,String> capabilities = new HashMap<String,String>( 10 );
-		
-		for ( int i=0; i<appNode.getChildNodes().getLength(); i++ )
-		{
-			Node currentNode = appNode.getChildNodes().item( i );
-			if ( currentNode.getNodeType() == Node.ELEMENT_NODE && currentNode.getNodeName().toLowerCase().equals( "capability" ) )
-				capabilities.put( currentNode.getAttributes().getNamedItem( "name" ).getNodeValue(), currentNode.getTextContent() );
-		}
-		
-		
-		
-		String description = appNode.getTextContent();
-		
-		ApplicationRegistry.instance().addApplicationDescriptor( new ApplicationDescriptor( appName, description, appNode.getAttributes().getNamedItem( APP_PACKAGE ).getNodeValue(), appNode.getAttributes().getNamedItem( BUNDLE_ID ).getNodeValue(), appNode.getAttributes().getNamedItem( URL ).getNodeValue(), iosInstall, androidInstall, capabilities ) );
-	}
-	
-	/**
-	 * Gets the nodes.
-	 *
-	 * @param xmlDocument the xml document
-	 * @param xPathExpression the x path expression
-	 * @return the nodes
-	 */
-	private  NodeList getNodes( Document xmlDocument, String xPathExpression )
-	{
-		try
-		{
-			if ( log.isDebugEnabled() )
-				log.debug( "Attempting to return Nodes for [" + xPathExpression + "]" );
-			
-			XPath xPath = xPathFactory.newXPath();
-			return (NodeList) xPath.evaluate( xPathExpression, xmlDocument, XPathConstants.NODESET );
-		}
-		catch( Exception e )
-		{
-			log.error( "Error parsing xPath Expression [" + xPathExpression + "]" );
-			return null;
-		}
+	    Map<String,String> capabilities = new HashMap<String,String>( 10 );
+	    if ( app.getCapability() != null )
+	    {
+	        for ( DeviceCapability cap : app.getCapability() )
+	            capabilities.put( cap.getName(), cap.getValue() );
+	    }
+	    
+	    ApplicationRegistry.instance().addApplicationDescriptor( new ApplicationDescriptor( app.getName(), "", app.getAppPackage(), app.getBundleId(), app.getUrl(), app.getIosInstall(), app.getAndroidInstall(), capabilities ) );
 	}
 	
 }

@@ -7,22 +7,25 @@ import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import com.perfectoMobile.page.BY;
 import com.perfectoMobile.page.ElementDescriptor;
 import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.element.ElementFactory;
+import com.perfectoMobile.page.element.provider.xsd.Import;
+import com.perfectoMobile.page.element.provider.xsd.ObjectFactory;
+import com.perfectoMobile.page.element.provider.xsd.Page;
+import com.perfectoMobile.page.element.provider.xsd.RegistryRoot;
+import com.perfectoMobile.page.element.provider.xsd.Site;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,36 +33,14 @@ import com.perfectoMobile.page.element.ElementFactory;
  */
 public class XMLElementProvider extends AbstractElementProvider
 {
-	
-	/** The Constant NAME. */
-	private static final String NAME = "name";
-	
-	/** The Constant DESCRIPTOR. */
-	private static final String DESCRIPTOR = "descriptor";
-	
-	/** The Constant VALUE. */
-	private static final String VALUE = "value";
-	
-	/** The Constant CONTEXT_NAME. */
-	private static final String CONTEXT_NAME = "contextName";
-	
-	/** The Constant FILE_NAME. */
-	private static final String FILE_NAME = "fileName";
-
 	/** The element map. */
 	private Map<String,Element> elementMap = new HashMap<String,Element>(20);
-	
-	/** The x path factory. */
-	private XPathFactory xPathFactory;
 	
 	/** The file name. */
 	private File fileName;
 	
 	/** The resource name. */
 	private String resourceName;
-	
-	/** The as resource. */
-	private boolean asResource = false;
 	
 	/**
 	 * Instantiates a new XML element provider.
@@ -68,7 +49,6 @@ public class XMLElementProvider extends AbstractElementProvider
 	 */
 	public XMLElementProvider( File fileName )
 	{
-		xPathFactory = XPathFactory.newInstance();
 		this.fileName = fileName;
 		readElements();
 	}
@@ -80,7 +60,6 @@ public class XMLElementProvider extends AbstractElementProvider
 	 */
 	public XMLElementProvider( String resourceName )
 	{
-		xPathFactory = XPathFactory.newInstance();
 		this.resourceName = resourceName;
 		readElements();
 	}
@@ -94,7 +73,6 @@ public class XMLElementProvider extends AbstractElementProvider
 		{
 			if ( log.isInfoEnabled() )
 				log.info( "Reading from CLASSPATH as CSVElementProvider.elementFile" );
-			asResource = true;
 			readElements( getClass().getClassLoader().getResourceAsStream( resourceName ) );
 		}
 		else
@@ -122,20 +100,17 @@ public class XMLElementProvider extends AbstractElementProvider
 		
 		try
 		{
-		
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			dbFactory.setNamespaceAware( true );
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			
-			Document xmlDocument = dBuilder.parse( inputStream );
-		
-			NodeList nodeList = getNodes( xmlDocument, "//elementDefinition/site");
-			for ( int i=0; i<nodeList.getLength(); i++ )
-				parseSite( nodeList.item( i ) );
-			
-			nodeList = getNodes( xmlDocument, "//elementDefinition/import");
-			for ( int i=0; i<nodeList.getLength(); i++ )
-				parseImport( nodeList.item( i ) );
+			JAXBContext jc = JAXBContext.newInstance( ObjectFactory.class );
+            Unmarshaller u = jc.createUnmarshaller();
+            JAXBElement<?> rootElement = (JAXBElement<?>)u.unmarshal( inputStream );
+            
+            RegistryRoot rRoot = (RegistryRoot)rootElement.getValue();
+
+			for ( Site site : rRoot.getSite() )
+				parseSite( site);
+
+			for ( Import imp : rRoot.getImport() )
+				parseImport( imp );
 		}
 		catch( Exception e )
 		{
@@ -148,20 +123,16 @@ public class XMLElementProvider extends AbstractElementProvider
 	 *
 	 * @param importNode the import node
 	 */
-	private void parseImport( Node importNode )
+	private void parseImport( Import imp )
 	{
-		Node fileName = importNode.getAttributes().getNamedItem( FILE_NAME );
-
-		if (fileName != null)
+		if (imp.getFileName() != null)
 		{
 			try
 			{
-				
-				
 				if (log.isInfoEnabled())
-					log.info( "Attempting to import file [" + Paths.get(".").toAbsolutePath().normalize().toString() + fileName.getNodeValue() + "]" );
+					log.info( "Attempting to import file [" + Paths.get(".").toAbsolutePath().normalize().toString() + imp.getFileName() + "]" );
 
-				readElements( new FileInputStream( fileName.getNodeValue() ) );
+				readElements( new FileInputStream( imp.getFileName() ) );
 			}
 			catch (FileNotFoundException e)
 			{
@@ -175,101 +146,25 @@ public class XMLElementProvider extends AbstractElementProvider
 	 *
 	 * @param siteNode the site node
 	 */
-	private void parseSite( Node siteNode )
+	private void parseSite( Site site )
 	{
-		String siteName = siteNode.getAttributes().getNamedItem( NAME ).getNodeValue();
-		
 		if ( log.isDebugEnabled() )
-			log.debug( "Extracted Site [" + siteName + "]" );
+			log.debug( "Extracted Site [" + site.getName() + "]" );
 		
-		
-		if ( PageManager.instance().getSiteName().equals( siteName ) )
+		if ( PageManager.instance().getSiteName().equals( site.getName() ) )
 		{
-			NodeList nodeList = getNodes( siteNode.getOwnerDocument(), "//elementDefinition/site[@name='" + siteName + "']/page");
-			
-			for ( int i=0; i<nodeList.getLength(); i++ )
-				parsePage( siteName, nodeList.item( i ) );
-		}
-	}
-	
-	/**
-	 * Parses the page.
-	 *
-	 * @param siteName the site name
-	 * @param pageNode the page node
-	 */
-	private void parsePage( String siteName, Node pageNode )
-	{
-		String pageName = pageNode.getAttributes().getNamedItem( NAME ).getNodeValue();
-		
-		Node parentNode = pageNode;
-		
-		if ( log.isDebugEnabled() )
-			log.debug( "Extracted Page [" + pageName + "]" );
-		
-		NodeList nodeList = getNodes( parentNode.getOwnerDocument(), "//elementDefinition/site[@name='" + siteName + "']/page[@name='" + pageName + "']/element");
-		
-		for ( int i=0; i<nodeList.getLength(); i++ )
-			parseElement( siteName, pageName, nodeList.item( i ) );
-	}
-	
-	/**
-	 * Parses the element.
-	 *
-	 * @param siteName the site name
-	 * @param pageName the page name
-	 * @param elementNode the element node
-	 */
-	private void parseElement( String siteName, String pageName, Node elementNode )
-	{
-		String elementName = elementNode.getAttributes().getNamedItem( NAME ).getNodeValue();
-		
-		if ( log.isDebugEnabled() )
-			log.debug( "Extracted Element [" + elementName + "]" );
-		
-		Node descriptor = elementNode.getAttributes().getNamedItem( DESCRIPTOR );
-		Node value = elementNode.getAttributes().getNamedItem( VALUE );
-		String contextName = null;
-		Node contextNode = elementNode.getAttributes().getNamedItem( CONTEXT_NAME );
-		if ( contextNode != null )
-			contextName = contextNode.getNodeValue();
-		
-		if ( descriptor != null && value != null )
-		{
-			ElementDescriptor elementDescriptor = new ElementDescriptor( siteName,  pageName, elementName );
-			Element currentElement = ElementFactory.instance().createElement( BY.valueOf( descriptor.getNodeValue() ), value.getNodeValue(), elementName, pageName, contextName );
-			
-			if (log.isDebugEnabled())
-	            log.debug( "Adding XML Element using [" + elementDescriptor.toString() + "] as [" + currentElement + "]" );
-			elementMap.put(elementDescriptor.toString(), currentElement );
-		}
-		else
-			throw new IllegalArgumentException( "An element must define a descriptor and a value" );
-		
-	}
-	
-	
-	/**
-	 * Gets the nodes.
-	 *
-	 * @param xmlDocument the xml document
-	 * @param xPathExpression the x path expression
-	 * @return the nodes
-	 */
-	private  NodeList getNodes( Document xmlDocument, String xPathExpression )
-	{
-		try
-		{
-			if ( log.isDebugEnabled() )
-				log.debug( "Attempting to return Nodes for [" + xPathExpression + "]" );
-			
-			XPath xPath = xPathFactory.newXPath();
-			return (NodeList) xPath.evaluate( xPathExpression, xmlDocument, XPathConstants.NODESET );
-		}
-		catch( Exception e )
-		{
-			log.error( "Error parsing xPath Expression [" + xPathExpression + "]" );
-			return null;
+		    for ( Page page : site.getPage() )
+		    {
+		        for ( com.perfectoMobile.page.element.provider.xsd.Element ele : page.getElement() )
+		        {
+		            ElementDescriptor elementDescriptor = new ElementDescriptor( site.getName(), page.getName(), ele.getName() );
+		            Element currentElement = ElementFactory.instance().createElement( BY.valueOf( ele.getDescriptor() ), ele.getValue(), ele.getName(), page.getName(), ele.getContextName() );
+		            
+		            if (log.isDebugEnabled())
+		                log.debug( "Adding XML Element using [" + elementDescriptor.toString() + "] as [" + currentElement + "]" );
+		            elementMap.put(elementDescriptor.toString(), currentElement );
+		        }
+		    }
 		}
 	}
 	
