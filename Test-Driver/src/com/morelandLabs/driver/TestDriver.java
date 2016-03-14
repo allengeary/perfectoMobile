@@ -42,8 +42,6 @@ import com.perfectoMobile.gesture.GestureManager;
 import com.perfectoMobile.gesture.device.action.DeviceActionManager;
 import com.perfectoMobile.gesture.device.action.spi.perfecto.PerfectoDeviceActionFactory;
 import com.perfectoMobile.gesture.factory.spi.PerfectoGestureFactory;
-import com.perfectoMobile.page.ExecutionRecordWriter;
-import com.perfectoMobile.page.ExecutionTimingWriter;
 import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.data.PageDataManager;
 import com.perfectoMobile.page.data.provider.ExcelPageDataProvider;
@@ -64,9 +62,7 @@ public class TestDriver
 	private static final String[] CONTENT = new String[] { "pageManagement.content.provider", "pageManagement.content.fileName" };
 	private static final String[] DEVICE = new String[] { "deviceManagement.provider", "deviceManagement.driverType" };
 	private static final String[] DRIVER = new String[] { "driver.frameworkType", "driver.configName" };
-	private static final String[] TIMING = new String[] { "artifactProducer.timingWriter", "artifactProducer.timingWriter.fileName" };
-	private static final String[] RECORD = new String[] { "artifactProducer.recordWriter", "artifactProducer.recordWriter.fileName" };
-	
+
 	public static void main( String[] args )
 	{
 		if ( args.length != 1 )
@@ -317,43 +313,6 @@ public class TestDriver
 			}
 			
 			DataManager.instance().setAutomaticDownloads( artifactList.toArray( new ArtifactType[ 0 ] ) );
-			
-		}
-		
-		
-		String timingProvider = configProperties.getProperty( "artifactProducer.timingWriter" );
-		if ( timingProvider != null && !timingProvider.isEmpty() )
-		{
-			validateProperties( configProperties, TIMING );
-			try
-			{
-				ExecutionTimingWriter timingWriter = (ExecutionTimingWriter) Class.forName( timingProvider ).newInstance();  
-				timingWriter.setFile( new File( configProperties.getProperty( "artifactProducer.timingWriter.fileName" ) ) );
-				PageManager.instance().setExecutionTimingWriter( timingWriter );
-			}
-			catch( Exception e )
-			{
-				System.err.println( "Could not create class " + timingProvider );
-				System.exit( -1 );
-			}
-			
-		}
-		
-		String recordProvider = configProperties.getProperty( "artifactProducer.recordWriter" );
-		if ( recordProvider != null && !recordProvider.isEmpty() )
-		{
-			validateProperties( configProperties, RECORD );
-			try
-			{
-				ExecutionRecordWriter recordWriter = (ExecutionRecordWriter) Class.forName( recordProvider ).newInstance();  
-				recordWriter.setFile( new File( configProperties.getProperty( "artifactProducer.recordWriter.fileName" ) ) );
-				PageManager.instance().setExecutionRecordWriter( recordWriter );
-			}
-			catch( Exception e )
-			{
-				System.err.println( "Could not create class " + timingProvider );
-				System.exit( -1 );
-			}
 			
 		}
 	}

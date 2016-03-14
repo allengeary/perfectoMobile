@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+
+   <recordType name="authData" lockRecords="false">
+      <record  name="user one" accountName="USER_729102" password="Password" />
+      <record name="user two" accountName="USER_3390" password="Password" />
+   </recordType>
+
+   
+       		   
+</data>
+
