@@ -18,7 +18,7 @@
       <step name="RESULTS" page="Search" type="WAIT_FOR" />
       
       <step name="TOKEN_RESULT" page="Search" type="CLICK" >
-         <token type="data" name="perfectoData" value="perfectoResults.criteria" />
+         <token type="DATA" name="perfectoData" value="perfectoResults.criteria" />
       </step>
       <step name="WAIT" type="WAIT" />
 
@@ -33,22 +33,18 @@
       <step name="RESULTS" page="Search" type="WAIT_FOR" />
       
       <step type="LOOP" page="Search" name="loopOverResult">
-          <parameter type="static" value="data{perfectoResults}" />
-          <parameter type="static" value="checkText" />
+          <parameter type="STATIC" value="data{perfectoResults}" />
+          <parameter type="STATIC" value="checkText" />
       </step>
       
       <step name="TOKEN_RESULT" page="Search" type="CLICK" >
-         <token type="data" name="perfectoData" value="perfectoResults.criteria" />
+         <token type="DATA" name="perfectoData" value="perfectoResults.criteria" />
       </step>
       <step name="WAIT" type="WAIT" />
 
    </test>
    
-   <function name="checkText">
-      <step name="TOKEN_RESULT" page="Search" type="EXISTS" >
-         <token type="data" name="perfectoData" value="perfectoResults.criteria" />
-      </step>
-   </function>
+   
    
    <test name="searchOne" dataProvider="searchCriteria" active="false">
       <step name="SEARCH" page="Search" type="WAIT_FOR" />
@@ -61,15 +57,15 @@
       
       
       <step type="LOOP" page="Search" name="checkResults">
-          <parameter type="static" value="3" />
-          <parameter type="static" value="scrollDown" />
+          <parameter type="STATIC" value="3" />
+          <parameter type="STATIC" value="scrollDown" />
       </step>
       
       <step name="WAIT" type="WAIT" />
       
       <step type="LOOP" page="Search" name="checkResults">
-          <parameter type="static" value="RESULTS" />
-          <parameter type="static" value="viewResult" />
+          <parameter type="STATIC" value="RESULTS" />
+          <parameter type="STATIC" value="viewResult" />
       </step>
       
       <step name="WAIT" type="WAIT" />
@@ -113,14 +109,20 @@
       </step> -->
       
       <step type="LOOP" page="Search" name="checkResults">
-          <parameter type="static" value="RESULTS" />
-          <parameter type="static" value="viewResult" />
+          <parameter type="STATIC" value="RESULTS" />
+          <parameter type="STATIC" value="viewResult" />
       </step>
    </test>
    
+   <function name="checkText">
+      <step name="TOKEN_RESULT" page="Search" type="EXISTS" >
+         <token type="DATA" name="perfectoData" value="perfectoResults.criteria" />
+      </step>
+   </function>
+   
    <function name="scrollDown">
       <step name="SWIPE" page="Search" type="GESTURE" >
-         <parameter type="static" value="UP" />
+         <parameter type="STATIC" value="UP" />
       </step>
       <step name="CRUNCH" page="Search" type="EXISTS"  failureMode="IGNORE" >
          <step name="crunchFound" page="Search" type="BREAK" />
