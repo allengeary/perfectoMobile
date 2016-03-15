@@ -1,14 +1,13 @@
 package com.perfectoMobile.page.keyWord;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.WebDriver;
-
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.data.PageData;
@@ -39,6 +38,8 @@ public class KeyWordDriver
 
 	/** The context map. */
 	private ThreadLocal<Map<String, Object>> contextMap = new ThreadLocal<Map<String, Object>>();
+	
+	private Map<String,List<KeyWordTest>> tagMap = new HashMap<String,List<KeyWordTest>>( 10 );
 
 	/** The singleton. */
 	private static KeyWordDriver singleton = new KeyWordDriver();
@@ -104,6 +105,21 @@ public class KeyWordDriver
 				log.info( "Adding test [" + test.getName() + "]" );
 			testList.add( test.getName() );
 			testMap.put( test.getName(), test );
+			
+			//
+			// Add the Tagged tests
+			//
+			for ( String tag : test.getTags() )
+			{
+			    List<KeyWordTest> tagList = tagMap.get( tag.toLowerCase() );
+			    if ( tagList == null )
+			    {
+			        tagList = new ArrayList<KeyWordTest>( 10 );
+			        tagMap.put( tag.toLowerCase(), tagList );
+			    }
+			    
+			    tagList.add( test );
+			}
 		}
 		else
 			inactiveTestMap.put( test.getName(), test );
@@ -221,6 +237,25 @@ public class KeyWordDriver
 			test = functionMap.get( testName );
 		
 		return test;
+	}
+	
+	public Collection<KeyWordTest> getTaggedTests( String[] tagNames ) 
+	{
+	    Map<String,KeyWordTest> testMap = new HashMap<String,KeyWordTest>( 10 );
+	    
+	    for ( String tagName : tagNames )
+	    {
+	        if ( log.isInfoEnabled() )
+	            log.info( "Adding Tests by TAG [" + tagName.toLowerCase() + "]" );
+	        for ( KeyWordTest t : tagMap.get( tagName.toLowerCase() ) )
+	        {
+	            if ( log.isDebugEnabled() )
+	                log.debug( "Adding Test [" + t.getName() + "]" );
+	            testMap.put( t.getName(), t );
+	        }
+	    }
+	    
+	    return testMap.values();
 	}
 
 	/**

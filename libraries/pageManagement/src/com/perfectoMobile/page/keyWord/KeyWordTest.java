@@ -81,6 +81,8 @@ public class KeyWordTest
 		
 		if ( testTags != null )
 		    this.testTags = testTags.split( "," );
+		else
+		    this.testTags = new String[] { "" };
 	}
 
 	/**
@@ -286,6 +288,14 @@ public class KeyWordTest
 	    }
 	    
 	    return false;
+	}
+	
+	public String[] getTags()
+	{
+	    if ( testTags == null )
+	        return new String[] { "" };
+	    else 
+	        return testTags;
 	}
 	
 	

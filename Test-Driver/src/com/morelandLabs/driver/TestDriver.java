@@ -3,6 +3,8 @@ package com.morelandLabs.driver;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -50,6 +52,7 @@ import com.perfectoMobile.page.element.provider.CSVElementProvider;
 import com.perfectoMobile.page.element.provider.ExcelElementProvider;
 import com.perfectoMobile.page.element.provider.XMLElementProvider;
 import com.perfectoMobile.page.keyWord.KeyWordDriver;
+import com.perfectoMobile.page.keyWord.KeyWordTest;
 import com.perfectoMobile.page.keyWord.provider.XMLKeyWordProvider;
 
 public class TestDriver
@@ -143,11 +146,38 @@ public class TestDriver
 				case "XML":
 					KeyWordDriver.instance().loadTests( new XMLKeyWordProvider( new File( configProperties.getProperty( DRIVER[ 1 ] ) ) ) );
 					
+					List<String> testArray = new ArrayList<String>( 10 );
+					
+					//
+					// Extract any named tests
+					//
 					String testNames = configProperties.getProperty( "driver.testNames" );
 					if ( testNames != null && !testNames.isEmpty() )
-						DataManager.instance().setTests( KeyWordDriver.instance().getTestNames( testNames ) );
-					else
-						DataManager.instance().setTests( KeyWordDriver.instance().getTestNames( ) );
+					    testArray.addAll( Arrays.asList( testNames ) );
+					
+	                //
+                    // Extract any tagged tests
+                    //
+					String tagNames = configProperties.getProperty( "driver.tagNames" );
+                    if ( tagNames != null && !tagNames.isEmpty() )
+                    {
+                        Collection<KeyWordTest> testList = KeyWordDriver.instance().getTaggedTests( tagNames.split( "," ) );
+                        
+                        if ( testList.isEmpty() )
+                        {
+                            System.err.println( "No tests contianed the tag(s) [" + tagNames + "]" );
+                            System.exit( -1 );
+                        }
+                        
+                        for ( KeyWordTest t : testList )
+                            testArray.add( t.getName() );
+                    }
+                    
+                    if ( testArray.size() == 0 )
+						DataManager.instance().setTests( KeyWordDriver.instance().getTestNames() );
+                    else
+                        DataManager.instance().setTests( testArray.toArray( new String[ 0 ] ) );
+                    
 					break;
 			}
 		}
