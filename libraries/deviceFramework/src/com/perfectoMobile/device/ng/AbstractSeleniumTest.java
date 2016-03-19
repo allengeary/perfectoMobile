@@ -438,7 +438,7 @@ public abstract class AbstractSeleniumTest
 							}
 							catch (Exception e)
 							{
-								log.error( "Error acquiring Artifacts - " + e.getMessage() );
+								log.error( "Error acquiring Artifacts - " + e);
 							}
 						}
 					}

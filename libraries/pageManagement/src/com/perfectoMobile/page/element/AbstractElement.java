@@ -73,23 +73,16 @@ public abstract class AbstractElement implements Element
 	 */
 	protected abstract Image _getImage( Resolution res );
 	
+	
 	/**
-	 * _wait for visible.
-	 *
-	 * @param timeOut the time out
-	 * @param timeUnit the time unit
-	 * @return true, if successful
-	 */
-	protected abstract boolean _waitForVisible( long timeOut, TimeUnit timeUnit );
-
-	/**
-	 * _wait for present.
-	 *
-	 * @param timeOut the time out
-	 * @param timeUnit the time unit
-	 * @return true, if successful
-	 */
-	protected abstract boolean _waitForPresent( long timeOut, TimeUnit timeUnit );
+     * _wait for visible.
+     *
+     * @param timeOut the time out
+     * @param timeUnit the time unit
+     * @return true, if successful
+     */
+    protected abstract boolean _waitFor( long timeOut, TimeUnit timeUnit, WAIT_FOR waitType, String value );
+	
 
 	/**
 	 * _click.
@@ -352,30 +345,39 @@ public abstract class AbstractElement implements Element
 	}
 
 	/* (non-Javadoc)
+     * @see com.perfectoMobile.page.element.Element#waitForVisible(long, java.util.concurrent.TimeUnit)
+     */
+    @Override
+    public boolean waitFor( long timeOut, TimeUnit timeUnit, WAIT_FOR waitType, String value )
+    {
+        long startTime = System.currentTimeMillis();
+        boolean returnValue = false;
+        boolean success = false;
+        try
+        {
+            returnValue = _waitFor( timeOut, timeUnit, waitType, value );
+            PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "waitForVisible", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "" );
+            success = true;
+        }
+        catch( Exception e )
+        {
+            throw new IllegalStateException( e );
+        }
+        finally
+        {
+            if ( timed )
+                PageManager.instance().addExecutionTiming( getExecutionId(), getDeviceName(), pageName + "." + elementName + ".waitForVisible()", System.currentTimeMillis() - startTime, success ? StepStatus.SUCCESS : StepStatus.FAILURE, "", 0 );
+        }
+        return returnValue;
+    }
+	
+	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.element.Element#waitForVisible(long, java.util.concurrent.TimeUnit)
 	 */
 	@Override
 	public boolean waitForVisible( long timeOut, TimeUnit timeUnit )
 	{
-		long startTime = System.currentTimeMillis();
-		boolean returnValue = false;
-		boolean success = false;
-		try
-		{
-			returnValue = _waitForVisible( timeOut, timeUnit );
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "waitForVisible", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "" );
-			success = true;
-		}
-		catch( Exception e )
-		{
-			throw new IllegalStateException( e );
-		}
-		finally
-		{
-			if ( timed )
-				PageManager.instance().addExecutionTiming( getExecutionId(), getDeviceName(), pageName + "." + elementName + ".waitForVisible()", System.currentTimeMillis() - startTime, success ? StepStatus.SUCCESS : StepStatus.FAILURE, "", 0 );
-		}
-		return returnValue;
+	    return waitFor( timeOut, timeUnit, WAIT_FOR.VISIBLE, null );
 	}
 
 	/* (non-Javadoc)
@@ -384,25 +386,7 @@ public abstract class AbstractElement implements Element
 	@Override
 	public boolean waitForPresent( long timeOut, TimeUnit timeUnit )
 	{
-		long startTime = System.currentTimeMillis();
-		boolean returnValue = false;
-		boolean success = false;
-		try
-		{
-			returnValue = _waitForPresent( timeOut, timeUnit );
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "waitForPresent", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "" );
-			success = true;
-		}
-		catch( Exception e )
-		{
-			throw new IllegalStateException( e );
-		}
-		finally
-		{
-			if ( timed )
-				PageManager.instance().addExecutionTiming( getExecutionId(), getDeviceName(), pageName + "." + elementName + ".waitForPresent()", System.currentTimeMillis() - startTime, success ? StepStatus.SUCCESS : StepStatus.FAILURE, "", 0 );
-		}
-		return returnValue;
+	    return waitFor( timeOut, timeUnit, WAIT_FOR.PRESENT, null );
 	}
 
 	/* (non-Javadoc)

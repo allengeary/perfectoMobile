@@ -63,6 +63,7 @@ public class SeleniumElement extends AbstractElement
 	
 	/** The use visual driver. */
 	private boolean useVisualDriver = false;
+	
 
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.element.Element#cloneElement()
@@ -415,12 +416,13 @@ public class SeleniumElement extends AbstractElement
 			return Boolean.parseBoolean( PerfectoMobile.instance().imaging().imageExists( getExecutionId(), getDeviceName(), getKey(), (short)30, MatchMode.bounded ).getStatus() );
 		return getElement() != null;
 	}
-
+	
+	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.element.AbstractElement#_waitForPresent(long, java.util.concurrent.TimeUnit)
 	 */
 	@Override
-	protected boolean _waitForPresent( long timeOut, TimeUnit timeUnit )
+	protected boolean _waitFor( long timeOut, TimeUnit timeUnit, WAIT_FOR waitType, String value )
 	{
 		try
 		{
@@ -429,8 +431,35 @@ public class SeleniumElement extends AbstractElement
 				currentContext = ( ( ContextAware ) webDriver ).getContext();
 
 			WebDriverWait wait = new WebDriverWait( webDriver, timeOut );
-			WebElement webElement = wait.until( ExpectedConditions.presenceOfElementLocated( useBy() ) );
-
+			WebElement webElement = null;
+			
+			switch( waitType )
+			{
+    			case CLICKABLE:
+    			    webElement = wait.until( ExpectedConditions.elementToBeClickable( useBy() ) );
+    			    break;
+    			    
+    			case INVISIBLE:
+    			    return wait.until( ExpectedConditions.invisibilityOfElementLocated( useBy() ) );
+    			    
+    			case PRESENT:
+    			    webElement = wait.until( ExpectedConditions.presenceOfElementLocated( useBy() ) );
+                    break;
+                    
+    			case SELECTABLE:
+    			    return wait.until( ExpectedConditions.elementToBeSelected( useBy() ) );
+    			    
+    			case TEXT_VALUE_PRESENT:
+    			    return wait.until( ExpectedConditions.textToBePresentInElementValue( useBy(), value ) );
+    			    
+    			case VISIBLE:
+    			    webElement = wait.until( ExpectedConditions.visibilityOfElementLocated( useBy() ) );
+                    break;
+    			    
+			    default:
+			        throw new IllegalArgumentException( "Unknown Wait Condition [" + waitType + "]" );
+			}
+			
 			if (currentContext != null && webDriver instanceof ContextAware)
 				( ( ContextAware ) webDriver ).context( currentContext );
 
@@ -439,33 +468,6 @@ public class SeleniumElement extends AbstractElement
 		catch (Exception e)
 		{
 			log.error( Thread.currentThread().getName() + ": Could not locate " + useBy(), e );
-			throw new IllegalStateException( "Could not locate " + getKey() + " on page " + getPageName(), e );
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see com.perfectoMobile.page.element.AbstractElement#_waitForVisible(long, java.util.concurrent.TimeUnit)
-	 */
-	@Override
-	protected boolean _waitForVisible( long timeOut, TimeUnit timeUnit )
-	{
-		try
-		{
-			String currentContext = null;
-			if (webDriver instanceof ContextAware)
-				currentContext = ( ( ContextAware ) webDriver ).getContext();
-
-			WebDriverWait wait = new WebDriverWait( webDriver, timeOut );
-			WebElement webElement = wait.until( ExpectedConditions.visibilityOfElementLocated( useBy() ) );
-
-			if (currentContext != null && webDriver instanceof ContextAware)
-				( ( ContextAware ) webDriver ).context( currentContext );
-
-			return webElement != null;
-		}
-		catch (Exception e)
-		{
-			log.error( Thread.currentThread().getName() + ": Could not locate " + useBy() );
 			throw new IllegalStateException( "Could not locate " + getKey() + " on page " + getPageName(), e );
 		}
 	}

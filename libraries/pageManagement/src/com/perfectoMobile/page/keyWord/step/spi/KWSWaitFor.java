@@ -4,10 +4,12 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
-
+import org.openqa.selenium.WebElement;
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.data.PageData;
+import com.perfectoMobile.page.element.Element;
+import com.perfectoMobile.page.element.Element.WAIT_FOR;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
 // TODO: Auto-generated Javadoc
@@ -39,7 +41,11 @@ public class KWSWaitFor extends AbstractKeyWordStep
 		boolean returnValue = false;
 		try
 		{
-			returnValue = getElement( pageObject, contextMap, webDriver, dataMap ).waitForPresent( waitFor, TimeUnit.SECONDS );
+	        String[] waitType = getName().split( "\\." );
+	        if ( waitType.length == 2 )
+	            returnValue = getElement( pageObject, contextMap, webDriver, dataMap, waitType[ 0 ] ).waitFor( waitFor, TimeUnit.SECONDS, WAIT_FOR.valueOf( waitType[ 1 ] ), "" );
+	        else
+	            returnValue = getElement( pageObject, contextMap, webDriver, dataMap ).waitForPresent( waitFor, TimeUnit.SECONDS );
 		}
 		finally
 		{

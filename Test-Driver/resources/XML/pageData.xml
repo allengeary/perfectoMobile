@@ -6,7 +6,10 @@
       <record name="user two" accountName="USER_3390" password="Password" />
    </recordType>
 
-   
+   <recordType name="allensData" lockRecords="false">
+      <record  name="user one" accountName="USER_729102" password="Password" dob="1/1/1" age="10" />
+      <record name="user two" accountName="USER_3390" password="Password" dob="1/1/1" age="10" />
+   </recordType>
        		   
 </data>
 

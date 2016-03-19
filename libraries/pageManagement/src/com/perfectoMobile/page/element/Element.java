@@ -19,6 +19,19 @@ public interface Element
 	/** The Constant CONTEXT_INDEX. */
 	public static final String CONTEXT_INDEX = "_CONTEXT.ELEMENT.INDEX";
 	
+	public enum WAIT_FOR
+    {
+        CLICKABLE,
+        SELECTABLE,
+        INVISIBLE,
+        PRESENT,
+        TEXT_PRESENT,
+        TEXT_VALUE_PRESENT,
+        TITLE_CONTAINS,
+        TITLE_IS,
+        VISIBLE;
+    }
+	
 	/**
 	 * Gets the native.
 	 *
@@ -55,6 +68,8 @@ public interface Element
 	 * @return true, if successful
 	 */
 	public boolean waitForVisible( long timeOut, TimeUnit timeUnit  );
+	
+	public boolean waitFor( long timeout, TimeUnit timeUnit, WAIT_FOR waitType, String value );
 	
 	/**
 	 * Wait for present.
