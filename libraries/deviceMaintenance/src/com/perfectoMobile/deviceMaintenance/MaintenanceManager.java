@@ -30,9 +30,9 @@ public class MaintenanceManager
 	{
 		try
 		{
-			if ( args.length != 6 )
+			if ( args.length < 6 )
 			{
-				System.err.println( "Usage: cloudHost cloudUser cloudPassword queryType actionName listenerName" );
+				System.err.println( "Usage: cloudHost cloudUser cloudPassword queryType actionName listenerName [excluded-device-ids]" );
 				System.exit( -1 );
 			}
 			
@@ -52,8 +52,19 @@ public class MaintenanceManager
 			
 			ExecutorService threadPool = Executors.newCachedThreadPool();
 			
+			String excludedDeviceIds = ((args.length > 6 ) ? args[6] : "" );
+			
 			for( Handset hs : handSetList )
 			{
+				if ( excludedDeviceIds.indexOf( hs.getDeviceId()) >= 0 )
+				{
+                   if ( log.isInfoEnabled() )
+                    {
+					   	log.info( "Skipping device " + hs.getDeviceId() );
+                    }
+
+				    continue;
+				}
 				
 				if ( log.isInfoEnabled() )
 					log.info( "Creating DeviceAction as " + DeviceAction.class.getPackage().getName() + "." + args[4] + "DeviceAction for device " + hs.getDeviceId() );
