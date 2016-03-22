@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<deviceRegistry xmlns="http://www.morelandlabs.com/deviceRegistry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.morelandlabs.com/deviceRegistry https://github.com/allengeary/xsd/raw/master/morelandLabs/deviceManagement/deviceRegistry.xsd">
+<deviceRegistry xmlns="http://www.morelandlabs.com/deviceRegistry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.morelandlabs.com/deviceRegistry http://www.morelandlabs.com/xsd/deviceManagement/deviceRegistry.xsd">
    <device name="Firefox" browserName="firefox" manufacturer="Mozilla" model="Firefox" os="Windows" active="false" availableDevices="2" />
    <device name="Samsung S6" manufacturer="Samsung" model="Galaxy S6" os="Android" active="true" availableDevices="2" />
    <device name="Samsung S5" manufacturer="Samsung" model="Galaxy S5" os="Android" active="true" availableDevices="1" />

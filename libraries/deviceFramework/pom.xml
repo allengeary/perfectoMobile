@@ -8,7 +8,7 @@
 		<repository>
 			<id>morelandlabs</id>
 			<name>Moreland Labs LLC</name>
-			<url>https://github.com/allengeary/maven-repo/raw/master/</url>
+			<url>http://www.morelandlabs.com/repository</url>
 			<snapshots>
 				<enabled>true</enabled>
 				<updatePolicy>always</updatePolicy>
@@ -22,12 +22,19 @@
 	</repositories>
 	<distributionManagement>
 		<repository>
-			<id>internal.repo</id>
-			<name>Temporary Staging Repository</name>
-			<url>file:../../maven-repo</url>
+			<id>Moreland FTP</id>
+			<name>Moreland Labs Repository</name>
+			<url>ftp://ftp.morelandlabs.com</url>
 		</repository>
 	</distributionManagement>
 	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+		</extensions>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
 			<resource>
@@ -52,13 +59,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.8.1</version>
-				<configuration>
-					<altDeploymentRepository>internal.repo::default::file:../../maven-repo</altDeploymentRepository>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

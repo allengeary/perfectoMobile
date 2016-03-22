@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite xmlns="http://www.morelandlabs.com/testRegistry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.morelandlabs.com/testRegistry https://github.com/allengeary/xsd/raw/master/morelandLabs/pageManagement/testRegistry.xsd">
+<suite xmlns="http://www.morelandlabs.com/testRegistry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.morelandlabs.com/testRegistry http://www.morelandlabs.com/xsd/pageManagement/testRegistry.xsd">
 	<model>
       <page name="Search" />
    </model>

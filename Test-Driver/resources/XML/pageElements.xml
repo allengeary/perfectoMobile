@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<elementDefinition xmlns="http://www.morelandlabs.com/pageRegistry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.morelandlabs.com/pageRegistry https://github.com/allengeary/xsd/raw/master/morelandLabs/pageManagement/pageRegistry.xsd">
+<elementDefinition xmlns="http://www.morelandlabs.com/pageRegistry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.morelandlabs.com/pageRegistry http://www.morelandlabs.com/xsd/pageManagement/pageRegistry.xsd">
 
 	<site name="Google">
 		<page name="Search">
