@@ -8,7 +8,7 @@
       <repository>
          <id>morelandlabs</id>
          <name>Moreland Labs LLC</name>
-         <url>https://github.com/allengeary/maven-repo/raw/master</url>
+         <url>http://www.morelandlabs.com/repository</url>
          <snapshots>
             <enabled>true</enabled>
             <updatePolicy>always</updatePolicy>
