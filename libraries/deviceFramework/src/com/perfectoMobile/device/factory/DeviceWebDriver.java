@@ -23,6 +23,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DriverCommand;
 import org.openqa.selenium.remote.ExecuteMethod;
@@ -49,7 +50,16 @@ import io.appium.java_client.AppiumDriver;
 /**
  * The Class DeviceWebDriver.
  */
-public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, ArtifactProducer, NativeDriverProvider, PropertyProvider, TakesScreenshot, DeviceProvider
+public class DeviceWebDriver
+    implements WebDriver,
+               JavascriptExecutor,
+               ContextAware,
+               ExecuteMethod,
+               ArtifactProducer,
+               NativeDriverProvider,
+               PropertyProvider,
+               TakesScreenshot,
+               DeviceProvider
 {
 	
     private List<DeviceInterrupt> interruptList;
@@ -634,7 +644,32 @@ public class DeviceWebDriver implements WebDriver, ContextAware, ExecuteMethod, 
 		else
 			throw new IllegalArgumentException( "Screenshot functionality not supported" );
 	}
-	
+
+    //
+    // JavascriptExecutor Implementation
+    //
+
+    public Object executeScript(String script,
+                                Object... args)
+    {
+        if ( !( webDriver instanceof JavascriptExecutor ))
+        {
+            throw new IllegalStateException( "Web driver (" + webDriver.getClass().getName() + ")doesn't support Javascript execution" );
+        }
+		
+        return ((JavascriptExecutor) webDriver).executeScript( script, args );
+    }
+
+    public Object executeAsyncScript(String script,
+                                     Object... args)
+    {
+        if ( !( webDriver instanceof JavascriptExecutor ))
+        {
+            throw new IllegalStateException( "Web driver (" + webDriver.getClass().getName() + ")doesn't support Javascript execution" );
+        }
+
+        return ((JavascriptExecutor) webDriver).executeAsyncScript( script, args );
+    }
 	
 	
 

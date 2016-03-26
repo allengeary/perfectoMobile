@@ -435,6 +435,8 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 			{
 				stepException = e;
 				returnValue = false;
+				
+				log.debug( Thread.currentThread().getName() + ": ***** Step " + name + " on page " + pageName + " encoundered error: ", e );
 			}
 
 			if (inverse)
@@ -462,6 +464,8 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 					{
 						stepException = e;
 						subReturnValue = false;
+
+                                                log.debug( Thread.currentThread().getName() + ": ***** Step " + name + " on page " + pageName + " encoundered error: ", e );
 					}
 					
 					if ( step.isInverse() )

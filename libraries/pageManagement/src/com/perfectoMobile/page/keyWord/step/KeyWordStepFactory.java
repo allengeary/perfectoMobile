@@ -20,6 +20,7 @@ import com.perfectoMobile.page.keyWord.step.spi.KWSFork;
 import com.perfectoMobile.page.keyWord.step.spi.KWSFunction;
 import com.perfectoMobile.page.keyWord.step.spi.KWSGesture;
 import com.perfectoMobile.page.keyWord.step.spi.KWSLoop;
+import com.perfectoMobile.page.keyWord.step.spi.KWSOpenPage;
 import com.perfectoMobile.page.keyWord.step.spi.KWSReturn;
 import com.perfectoMobile.page.keyWord.step.spi.KWSSet;
 import com.perfectoMobile.page.keyWord.step.spi.KWSValue;
@@ -87,7 +88,8 @@ public class KeyWordStepFactory
 		addKeyWord( "VERIFY_COLOR", KWSCheckColor.class );
 		addKeyWord( "VERIFY_CONTRAST", KWSContrastRatio.class );
 		addKeyWord( "WINDOW", KWSWindow.class );
-        addKeyWord( "EXECJS", KWSExecJS.class );
+                addKeyWord( "EXECJS", KWSExecJS.class );
+                addKeyWord( "OPEN_PAGE", KWSOpenPage.class );
 	}
 	
 	/**
