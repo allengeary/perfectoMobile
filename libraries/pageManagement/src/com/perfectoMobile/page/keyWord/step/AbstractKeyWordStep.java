@@ -772,7 +772,15 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 				if (recordParts.length != 2)
 					throw new IllegalArgumentException( Thread.currentThread().getName() + ": Tokens of type data need to be formatted as follows recordType.fieldName" );
 
-				return dataMap.get( recordParts[0] ).getData( recordParts[1] );
+				if ( dataMap.get( recordParts[0] ) == null )
+				    throw new IllegalArgumentException( Thread.currentThread().getName() + ": The Page Data record type [" + recordParts[0] + "] does not exist for this test - chexk your dataProvider or dataDriver attribute" );
+				
+				Object returnValue = dataMap.get( recordParts[0] ).getData( recordParts[1] );
+                
+                if ( returnValue == null )
+                    throw new IllegalArgumentException( Thread.currentThread().getName() + ": The Page Data field [" + recordParts[1] + "] does not exist for the page data record type [" + recordParts[0] + "] - Reference one of the following fields - " + dataMap.get( recordParts[0] ) );
+				
+				return returnValue + "";
 
 			default:
 				throw new IllegalArgumentException( Thread.currentThread().getName() + ": Unknown Token Type [" + token.getValue() + "]" );
