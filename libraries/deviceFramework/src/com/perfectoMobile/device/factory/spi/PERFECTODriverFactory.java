@@ -39,16 +39,16 @@ public class PERFECTODriverFactory extends AbstractDriverFactory
 		try
 		{
 			MobileDeviceFindOptions options = new MobileDeviceFindOptions();
-			if ( currentDevice.getOs() != null & !currentDevice.getOs().isEmpty()  )
+			if ( currentDevice.getOs() != null && !currentDevice.getOs().isEmpty()  )
 				options.setOS( MobileDeviceOS.valueOf( currentDevice.getOs().toUpperCase() ) );
 			
-			if ( currentDevice.getOsVersion() != null & !currentDevice.getOsVersion().isEmpty()  )
+			if ( currentDevice.getOsVersion() != null && !currentDevice.getOsVersion().isEmpty()  )
 				options.setOSVersion( currentDevice.getOsVersion() );
 			
-			if ( currentDevice.getManufacturer() != null & !currentDevice.getManufacturer().isEmpty()  )
+			if ( currentDevice.getManufacturer() != null && !currentDevice.getManufacturer().isEmpty()  )
 				options.setManufacturer( currentDevice.getManufacturer() );
 				
-			if ( currentDevice.getModel() != null & !currentDevice.getModel().isEmpty()  )
+			if ( currentDevice.getModel() != null && !currentDevice.getModel().isEmpty()  )
 				options.setModel( currentDevice.getModel() );
 
 			boolean webMode = false;
@@ -99,7 +99,7 @@ public class PERFECTODriverFactory extends AbstractDriverFactory
 
 			return webDriver;
 		}
-		catch (Exception e)
+		catch (Throwable e)
 		{
 			log.fatal( "Could not connect to Cloud instance for " + currentDevice, e );
 			if (webDriver != null)

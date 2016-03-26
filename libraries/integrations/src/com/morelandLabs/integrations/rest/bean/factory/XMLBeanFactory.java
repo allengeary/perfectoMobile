@@ -74,7 +74,7 @@ public class XMLBeanFactory extends AbstractBeanFactory
                 outputStream.write( buffer, 0, bytesRead );
             }
 
-            log.info( new String( outputStream.toByteArray() ) );
+            log.debug( new String( outputStream.toByteArray() ) );
 
             useStream = new ByteArrayInputStream( outputStream.toByteArray() );
         }

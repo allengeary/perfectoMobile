@@ -64,7 +64,7 @@ public class IOSDriverFactory extends AbstractDriverFactory
 			
 			
 			if ( log.isInfoEnabled() )
-				log.info( "Acquiring Device as: \r\n" + capabilitiesToString( dc ) );
+			    log.info( "Acquiring Device as: \r\n" + capabilitiesToString( dc ) + "\r\nagainst " + hubUrl );
 			
 			webDriver = new DeviceWebDriver( new IOSDriver( hubUrl, dc ), DeviceManager.instance().isCachingEnabled(), currentDevice );
 
@@ -82,7 +82,7 @@ public class IOSDriverFactory extends AbstractDriverFactory
 		}
 		catch( Exception e )
 		{
-			log.fatal( "Could not connect to Cloud instance for " + currentDevice + "[" + e.getMessage() + "]" );
+			log.fatal( "Could not connect to Cloud instance for " + currentDevice, e );
 			if ( webDriver != null )
 			{
 				try { webDriver.close(); } catch( Exception e2 ) {}

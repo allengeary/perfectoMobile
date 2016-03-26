@@ -37,6 +37,7 @@ public class ANDROIDDriverFactory extends AbstractDriverFactory
 		{
 			DesiredCapabilities dc = new DesiredCapabilities( "", "", Platform.ANY );
 			URL hubUrl = new URL( CloudRegistry.instance().getCloud().getCloudUrl() );
+			
 
 			if ( currentDevice.getDeviceName() != null && !currentDevice.getDeviceName().isEmpty() )
 			{
@@ -64,7 +65,7 @@ public class ANDROIDDriverFactory extends AbstractDriverFactory
 				dc.setCapability( APPLICATION_PACKAGE, ApplicationRegistry.instance().getAUT().getAndroidIdentifier() );
 			
 			if ( log.isInfoEnabled() )
-				log.info( "Acquiring Device as: \r\n" + capabilitiesToString( dc ) );
+				log.info( "Acquiring Device as: \r\n" + capabilitiesToString( dc ) + "\r\nagainst " + hubUrl );
 			
 			webDriver = new DeviceWebDriver( new AndroidDriver( hubUrl, dc ), DeviceManager.instance().isCachingEnabled(), currentDevice );
 	
@@ -82,7 +83,7 @@ public class ANDROIDDriverFactory extends AbstractDriverFactory
 		}
 		catch( Exception e )
 		{
-			log.fatal( "Could not connect to Cloud instance for " + currentDevice + "[" + e.getMessage() + "]" );
+		    log.fatal( "Could not connect to Cloud instance for " + currentDevice, e );
 			if ( webDriver != null )
 			{
 				try { webDriver.close(); } catch( Exception e2 ) {}

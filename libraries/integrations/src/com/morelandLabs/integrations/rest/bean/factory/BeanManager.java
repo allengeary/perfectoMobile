@@ -103,11 +103,11 @@ public class BeanManager
 	{
 		BeanManager.instance().setBeanFactory( new XMLBeanFactory() );
 		
-		PerfectoMobile.instance().setBaseUrl( "https://discover.perfectomobile.com" );
-		PerfectoMobile.instance().setUserName( "alleng@perfectomobile.com" );
-		PerfectoMobile.instance().setPassword( "Perfecto123" );
+		PerfectoMobile.instance().setBaseUrl( "https://partners.perfectomobile.com" );
+		PerfectoMobile.instance().setUserName( "ageary@morelandlabs.com" );
+		PerfectoMobile.instance().setPassword( "Spike123!" );
 		
-		System.out.println( PerfectoMobile.instance().devices().getDevice( "78C4EE8665F1C7E428BA4F7CCA3F7B1F0D9FDB1D" ) );
+		System.out.println( PerfectoMobile.instance().devices().getDevice( "02157DF2A1B46C22" ) );
 		
 		//PerfectoMobile.instance().executions().getExecutions( null, true, null, TimeType.started, null, (short) ( 60 * 60 * 1 ) );
 		//System.out.println( PerfectoMobile.instance().devices().getDevices() );
@@ -131,7 +131,7 @@ public class BeanManager
 		Execution x = PerfectoMobile.instance().executions().startExecution();
 		System.out.println( x.getExecutionId() );
 		
-		PerfectoMobile.instance().device().open( x.getExecutionId(), "78C4EE8665F1C7E428BA4F7CCA3F7B1F0D9FDB1D" );
+		PerfectoMobile.instance().device().open( x.getExecutionId(), "02157DF2A1B46C22" );
 		
 		//PerfectoMobile.instance().imaging().imageExists("exe", "hset", "PRIVATE:logo.png", (short) 20, MatchMode.bounded );
 		
@@ -148,11 +148,14 @@ public class BeanManager
 		//os.write( file );
 		//os.close();
 		
-		System.out.println( PerfectoMobile.instance().device().call(  x.getExecutionId(), "78C4EE8665F1C7E428BA4F7CCA3F7B1F0D9FDB1D"  ) );
+		PerfectoMobile.instance().application().uninstall( x.getExecutionId(), "02157DF2A1B46C22", "MLM", "GROUP:ipa Files\\apk files\\mlm2_internaldist_2.2.17.apk" );
+		PerfectoMobile.instance().application().install( x.getExecutionId(), "02157DF2A1B46C22", "GROUP:ipa Files\\apk files\\mlm2_internaldist_2.2.17.apk", "instrument" );
+		
+		//System.out.println( PerfectoMobile.instance().device().call(  x.getExecutionId(), "02157DF2A1B46C22"  ) );
 		
 		Thread.sleep( 10000 );
 		
-		PerfectoMobile.instance().device().close(  x.getExecutionId(), "78C4EE8665F1C7E428BA4F7CCA3F7B1F0D9FDB1D"  );
+		PerfectoMobile.instance().device().close(  x.getExecutionId(), "02157DF2A1B46C22"  );
 		x = PerfectoMobile.instance().executions().endExecution( x.getExecutionId() );
 		System.out.println( x.getStatus() ); 
 		

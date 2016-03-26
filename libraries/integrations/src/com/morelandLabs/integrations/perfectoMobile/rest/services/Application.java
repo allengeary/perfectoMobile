@@ -24,7 +24,7 @@ public interface Application extends PerfectoService
 	 */
 	@Operation( operationName="command" )
 	@PerfectoCommand( commandName="application", subCommandName = "install" )
-	public Execution install( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId, @Parameter( name="file" ) String file, @Parameter( name="instrument" ) String instrument  );
+	public Execution install( @ResourceID String executionId, @Parameter( name="deviceId" ) String handsetId, @Parameter( name="file" ) String file, @Parameter( name="instrument" ) String instrument  );
 	
 	/**
 	 * Uninstall.
