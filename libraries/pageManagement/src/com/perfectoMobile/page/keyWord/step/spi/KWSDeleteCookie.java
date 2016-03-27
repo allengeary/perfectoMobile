@@ -3,17 +3,17 @@ package com.perfectoMobile.page.keyWord.step.spi;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.JavascriptExecutor;
 
+import com.perfectoMobile.device.factory.DeviceWebDriver;
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class KWSOpenPage.
+ * The Class KWSDeleteCookie.
  */
-public class KWSOpenPage extends AbstractKeyWordStep
+public class KWSDeleteCookie extends AbstractKeyWordStep
 {
 
     /* (non-Javadoc)
@@ -27,17 +27,26 @@ public class KWSOpenPage extends AbstractKeyWordStep
             throw new IllegalStateException( "Page Object was not defined" );
         }
 
-        Object url = null;
+        Object name = null;
                 
         if ( getParameterList().size() == 1 )
         {
-            url = getParameterValue( getParameterList().get( 0 ), contextMap, dataMap );
-            if ( !( url instanceof String ) )
-                throw new IllegalStateException( "url value must be of type String" );
+            name = getParameterValue( getParameterList().get( 0 ), contextMap, dataMap );
+            if ( !( name instanceof String ) )
+                throw new IllegalStateException( "Cookie name must be of type String" );
+        }
+        else
+        {
+            throw new IllegalStateException( "Delete cookie requires one string properties (name)" );
         }
 
-        webDriver.get( (String) url );
-		
+        if ( !( webDriver instanceof DeviceWebDriver ))
+        {
+            throw new IllegalStateException( "Web driver (" + webDriver.getClass().getName() + ") isn't an DeviceWebDriver" );
+        }
+
+        ((DeviceWebDriver) webDriver).deleteCookieNamed( (String) name );
+        	
         return true;
     }
 	

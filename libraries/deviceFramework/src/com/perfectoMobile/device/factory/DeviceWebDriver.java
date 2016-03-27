@@ -19,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ContextAware;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -168,8 +169,6 @@ public class DeviceWebDriver
 		this.webDriver = webDriver;
 		this.cachingEnabled = cachingEnabled;
 		this.currentDevice = currentDevice;
-		
-		
 	}
 	
 	public void setDeviceInterrupts( List<DeviceInterrupt> interruptList )
@@ -652,25 +651,59 @@ public class DeviceWebDriver
     public Object executeScript(String script,
                                 Object... args)
     {
-        if ( !( webDriver instanceof JavascriptExecutor ))
-        {
-            throw new IllegalStateException( "Web driver (" + webDriver.getClass().getName() + ")doesn't support Javascript execution" );
-        }
-		
         return ((JavascriptExecutor) webDriver).executeScript( script, args );
     }
 
     public Object executeAsyncScript(String script,
                                      Object... args)
     {
-        if ( !( webDriver instanceof JavascriptExecutor ))
-        {
-            throw new IllegalStateException( "Web driver (" + webDriver.getClass().getName() + ")doesn't support Javascript execution" );
-        }
-
         return ((JavascriptExecutor) webDriver).executeAsyncScript( script, args );
     }
-	
-	
 
+    //
+    // RemoteWebDriver exposed methods
+    //
+
+    private void verifyRemoteWebDriver()
+    {
+        if ( !( webDriver instanceof RemoteWebDriver ))
+        {
+            throw new IllegalStateException( "Web driver (" + webDriver.getClass().getName() + ") is not a RemoteWebDriver" );
+        }
+    }
+
+    public void addCookie(Cookie cookie)
+    {
+        verifyRemoteWebDriver();
+
+        ((RemoteWebDriver) webDriver).manage().addCookie( cookie );
+    }
+
+    public void deleteCookieNamed(java.lang.String name)
+    {
+        verifyRemoteWebDriver();
+
+        ((RemoteWebDriver) webDriver).manage().deleteCookieNamed( name );
+    }
+
+    public void deleteAllCookies()
+    {
+        verifyRemoteWebDriver();
+
+        ((RemoteWebDriver) webDriver).manage().deleteAllCookies();
+    }
+
+    public java.util.Set<Cookie> getCookies()
+    {
+        verifyRemoteWebDriver();
+
+        return ((RemoteWebDriver) webDriver).manage().getCookies();
+    }
+
+    public Cookie getCookieNamed(java.lang.String name)
+    {
+        verifyRemoteWebDriver();
+
+        return ((RemoteWebDriver) webDriver).manage().getCookieNamed( name );
+    }	
 }

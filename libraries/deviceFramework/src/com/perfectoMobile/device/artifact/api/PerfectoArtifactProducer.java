@@ -17,7 +17,7 @@ import com.morelandLabs.page.ExecutionRecord;
 import com.morelandLabs.page.StepStatus;
 import com.morelandLabs.spi.Device;
 import com.morelandLabs.spi.RunDetails;
-import com.morelandLabs.utility.XMLEscape;
+//import com.morelandLabs.utility.XMLEscape;
 import com.morelandLabs.wcag.WCAGRecord;
 import com.perfectoMobile.device.ConnectedDevice;
 import com.perfectoMobile.device.DeviceManager;
@@ -99,7 +99,7 @@ public class PerfectoArtifactProducer extends AbstractArtifactProducer
 				break;
 
 			case FAILURE_SOURCE:
-				return new Artifact( rootFolder + "failureDOM.xml", webDriver.getPageSource() != null ? XMLEscape.escapeXML( webDriver.getPageSource() ).getBytes() : null );
+				return new Artifact( rootFolder + "failureDOM.xml", webDriver.getPageSource() != null ? webDriver.getPageSource().getBytes() : null );
 
 			case CONSOLE_LOG:
 			    Artifact consoleArtifact = new Artifact( rootFolder + "console.txt", DeviceManager.instance().getLog().getBytes() );

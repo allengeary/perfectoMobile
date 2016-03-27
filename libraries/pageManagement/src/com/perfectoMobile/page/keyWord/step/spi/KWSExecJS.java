@@ -36,6 +36,11 @@ public class KWSExecJS extends AbstractKeyWordStep
                 throw new IllegalStateException( "Script value must be of type String" );
         }
 
+        if ( !( webDriver instanceof JavascriptExecutor ))
+        {
+            throw new IllegalStateException( "Web driver (" + webDriver.getClass().getName() + ") doesn't support Javascript execution" );
+        }
+		
         Object result = ((JavascriptExecutor) webDriver).executeScript( (String) script );
 		
         if (( result instanceof String ) &&

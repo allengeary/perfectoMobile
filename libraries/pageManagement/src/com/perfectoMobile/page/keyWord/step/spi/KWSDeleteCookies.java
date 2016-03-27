@@ -3,17 +3,17 @@ package com.perfectoMobile.page.keyWord.step.spi;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.JavascriptExecutor;
 
+import com.perfectoMobile.device.factory.DeviceWebDriver;
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class KWSOpenPage.
+ * The Class KWSDeleteCookies.
  */
-public class KWSOpenPage extends AbstractKeyWordStep
+public class KWSDeleteCookies extends AbstractKeyWordStep
 {
 
     /* (non-Javadoc)
@@ -27,17 +27,13 @@ public class KWSOpenPage extends AbstractKeyWordStep
             throw new IllegalStateException( "Page Object was not defined" );
         }
 
-        Object url = null;
-                
-        if ( getParameterList().size() == 1 )
+        if ( !( webDriver instanceof DeviceWebDriver ))
         {
-            url = getParameterValue( getParameterList().get( 0 ), contextMap, dataMap );
-            if ( !( url instanceof String ) )
-                throw new IllegalStateException( "url value must be of type String" );
+            throw new IllegalStateException( "Web driver (" + webDriver.getClass().getName() + ") isn't an DeviceWebDriver" );
         }
 
-        webDriver.get( (String) url );
-		
+        ((DeviceWebDriver) webDriver).deleteAllCookies();
+
         return true;
     }
 	
