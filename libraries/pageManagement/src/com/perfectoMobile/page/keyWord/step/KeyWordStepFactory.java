@@ -7,19 +7,25 @@ import org.apache.commons.logging.LogFactory;
 import com.perfectoMobile.page.keyWord.KeyWordStep;
 import com.perfectoMobile.page.keyWord.KeyWordStep.StepFailure;
 import com.perfectoMobile.page.keyWord.KeyWordStep.ValidationType;
+import com.perfectoMobile.page.keyWord.step.spi.KWSAddCookie;
 import com.perfectoMobile.page.keyWord.step.spi.KWSAttribute;
 import com.perfectoMobile.page.keyWord.step.spi.KWSBreak;
 import com.perfectoMobile.page.keyWord.step.spi.KWSCall;
 import com.perfectoMobile.page.keyWord.step.spi.KWSCheckColor;
 import com.perfectoMobile.page.keyWord.step.spi.KWSClick;
 import com.perfectoMobile.page.keyWord.step.spi.KWSContrastRatio;
+import com.perfectoMobile.page.keyWord.step.spi.KWSDeleteCookie;
+import com.perfectoMobile.page.keyWord.step.spi.KWSDeleteCookies;
 import com.perfectoMobile.page.keyWord.step.spi.KWSDevice;
 import com.perfectoMobile.page.keyWord.step.spi.KWSExecJS;
 import com.perfectoMobile.page.keyWord.step.spi.KWSExists;
 import com.perfectoMobile.page.keyWord.step.spi.KWSFork;
 import com.perfectoMobile.page.keyWord.step.spi.KWSFunction;
 import com.perfectoMobile.page.keyWord.step.spi.KWSGesture;
+import com.perfectoMobile.page.keyWord.step.spi.KWSGetCookie;
+import com.perfectoMobile.page.keyWord.step.spi.KWSGetCookies;
 import com.perfectoMobile.page.keyWord.step.spi.KWSLoop;
+import com.perfectoMobile.page.keyWord.step.spi.KWSOpenPage;
 import com.perfectoMobile.page.keyWord.step.spi.KWSReturn;
 import com.perfectoMobile.page.keyWord.step.spi.KWSSet;
 import com.perfectoMobile.page.keyWord.step.spi.KWSValue;
@@ -87,7 +93,13 @@ public class KeyWordStepFactory
 		addKeyWord( "VERIFY_COLOR", KWSCheckColor.class );
 		addKeyWord( "VERIFY_CONTRAST", KWSContrastRatio.class );
 		addKeyWord( "WINDOW", KWSWindow.class );
-        addKeyWord( "EXECJS", KWSExecJS.class );
+                addKeyWord( "EXECJS", KWSExecJS.class );
+                addKeyWord( "OPEN_PAGE", KWSOpenPage.class );
+                addKeyWord( "ADD_COOKIE", KWSAddCookie.class );
+                addKeyWord( "DELETE_COOKIE", KWSDeleteCookie.class );
+                addKeyWord( "DELETE_COOKIES", KWSDeleteCookies.class );
+		addKeyWord( "GET_COOKIE", KWSGetCookie.class );
+		addKeyWord( "GET_COOKIES", KWSGetCookies.class );
 	}
 	
 	/**
