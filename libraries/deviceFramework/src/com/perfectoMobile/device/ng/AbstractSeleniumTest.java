@@ -350,9 +350,6 @@ public abstract class AbstractSeleniumTest
 		WebDriver webDriver = getWebDriver();
 		if (webDriver != null)
 		{
-		    //String runKey = DeviceManager.instance().getRunKey( threadDevice.get().getDevice(), currentMethod, ( ( TestName ) testArgs[0] ).getTestName(), testResult.isSuccess(), threadDevice.get().getPersona() );
-		    //if ( runKey.startsWith( "XMLTestDriver" ) )
-		    //    runKey = runKey.substring( 25 );
 		    String runKey = ( ( TestName ) testArgs[0] ).getTestName();
 		    
 		    File rootFolder = new File( DataManager.instance().getReportFolder(), RunDetails.instance().getRootFolder() );

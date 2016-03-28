@@ -43,9 +43,6 @@ public abstract class AbstractDriverFactory implements DriverFactory
 		
 		DeviceWebDriver webDriver = _createDriver( currentDevice ); 
 		
-		if ( webDriver != null )
-			webDriver.setArtifactProducer( DataManager.instance().getArtifactProducer() );
-		
 		return webDriver;
 	}
 	

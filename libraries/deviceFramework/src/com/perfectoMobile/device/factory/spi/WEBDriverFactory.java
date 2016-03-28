@@ -5,21 +5,25 @@ package com.perfectoMobile.device.factory.spi;
 
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
-
+import java.util.logging.Level;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-
 import com.morelandLabs.application.ApplicationRegistry;
+import com.morelandLabs.artifact.ArtifactType;
 import com.morelandLabs.spi.Device;
 import com.perfectoMobile.device.DeviceManager;
+import com.perfectoMobile.device.artifact.api.PerfectoArtifactProducer;
+import com.perfectoMobile.device.artifact.api.SeleniumArtifactProducer;
 import com.perfectoMobile.device.cloud.CloudDescriptor;
 import com.perfectoMobile.device.cloud.CloudRegistry;
+import com.perfectoMobile.device.data.DataManager;
 import com.perfectoMobile.device.factory.AbstractDriverFactory;
 import com.perfectoMobile.device.factory.DeviceWebDriver;
-
-import io.appium.java_client.ios.IOSDriver;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -64,6 +68,16 @@ public class WEBDriverFactory extends AbstractDriverFactory
 			return _createMobileDriver( currentDevice );
 
 	}
+	
+	public DeviceWebDriver createDriver( Device currentDevice )
+    {
+        if ( log.isDebugEnabled() )
+            log.debug( "Creating Driver for " + getClass().getSimpleName() );
+        
+        DeviceWebDriver webDriver = _createDriver( currentDevice ); 
+        
+        return webDriver;
+    }
 
 	/**
 	 * _create desktop driver.
@@ -120,7 +134,15 @@ public class WEBDriverFactory extends AbstractDriverFactory
 			if ( log.isInfoEnabled() )
 				log.info( "Acquiring Device as: \r\n" + capabilitiesToString( dc ) );
 			
+			if ( DataManager.instance().isArtifactEnabled( ArtifactType.DEVICE_LOG ) )
+			{
+    			LoggingPreferences logPrefs = new LoggingPreferences();
+    	        logPrefs.enable(LogType.BROWSER, Level.ALL);
+    	        dc.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+			}
+			
 			webDriver = new DeviceWebDriver( new RemoteWebDriver( hubUrl, dc ), DeviceManager.instance().isCachingEnabled(), currentDevice );
+			webDriver.setArtifactProducer( new SeleniumArtifactProducer() );
 
 			webDriver.manage().timeouts().implicitlyWait( 10, TimeUnit.SECONDS );
 
@@ -199,6 +221,7 @@ public class WEBDriverFactory extends AbstractDriverFactory
 			webDriver.setReportKey( caps.getCapability( "reportKey" ).toString() );
 			webDriver.setDeviceName( caps.getCapability( "deviceName" ).toString() );
 			webDriver.setWindTunnelReport( caps.getCapability( "windTunnelReportUrl" ).toString() );
+			webDriver.setArtifactProducer( new PerfectoArtifactProducer() );
 
 			if (ApplicationRegistry.instance().getAUT().getUrl() != null)
 				webDriver.get( ApplicationRegistry.instance().getAUT().getUrl() );

@@ -2,15 +2,12 @@ package com.morelandLabs.driver;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.TestNG;
 import com.morelandLabs.Initializable;
 import com.morelandLabs.application.ApplicationRegistry;
@@ -27,7 +24,6 @@ import com.perfectoMobile.content.ContentManager;
 import com.perfectoMobile.content.provider.ExcelContentProvider;
 import com.perfectoMobile.content.provider.XMLContentProvider;
 import com.perfectoMobile.device.DeviceManager;
-import com.perfectoMobile.device.artifact.api.PerfectoArtifactProducer;
 import com.perfectoMobile.device.cloud.CSVCloudProvider;
 import com.perfectoMobile.device.cloud.CloudRegistry;
 import com.perfectoMobile.device.cloud.ExcelCloudProvider;
@@ -57,13 +53,12 @@ import com.perfectoMobile.page.element.provider.XMLElementProvider;
 import com.perfectoMobile.page.keyWord.KeyWordDriver;
 import com.perfectoMobile.page.keyWord.KeyWordTest;
 import com.perfectoMobile.page.keyWord.provider.XMLKeyWordProvider;
-import io.appium.java_client.ios.IOSDriver;
 
 public class TestDriver
 {
 	private static final String[] CLOUD = new String[] { "cloudRegistry.provider", "cloudRegistry.fileName", "cloudRegistry.cloudUnderTest" };
 	private static final String[] APP = new String[] { "applicationRegistry.provider", "applicationRegistry.fileName", "applicationRegistry.applicationUnderTest" };
-	private static final String[] ARTIFACT = new String[] { "artifactProducer.provider", "artifactProducer.parentFolder" };
+	private static final String[] ARTIFACT = new String[] { "artifactProducer.parentFolder" };
 	private static final String[] PAGE = new String[] { "pageManagement.siteName", "pageManagement.provider", "pageManagement.fileName" };
 	private static final String[] DATA = new String[] { "pageManagement.pageData.provider", "pageManagement.pageData.fileName" };
 	private static final String[] CONTENT = new String[] { "pageManagement.content.provider", "pageManagement.content.fileName" };
@@ -217,7 +212,7 @@ public class TestDriver
 			    RunDetails.instance().setStartTime();
 			    
 				TestNG testNg = new TestNG( true );
-				testNg.setOutputDirectory( configProperties.getProperty( ARTIFACT[ 1 ] ) + System.getProperty( "file.separator" ) + "testNg" );
+				testNg.setOutputDirectory( configProperties.getProperty( ARTIFACT[ 0 ] ) + System.getProperty( "file.separator" ) + "testNg" );
 				testNg.setTestClasses( new Class[] { XMLTestDriver.class } );
 				testNg.run();
 				
@@ -311,15 +306,9 @@ public class TestDriver
 	private static void configureArtifacts( Properties configProperties )
 	{
 		validateProperties( configProperties, ARTIFACT );
+
 		
-		switch( ( (String) configProperties.get( ARTIFACT[ 0 ] ) ).toUpperCase() )
-		{
-			case "PERFECTO":
-				DataManager.instance().setArtifactProducer( new PerfectoArtifactProducer() );
-				break;
-		}
-		
-		DataManager.instance().setReportFolder( new File( configProperties.getProperty( ARTIFACT[ 1 ] ) ) );
+		DataManager.instance().setReportFolder( new File( configProperties.getProperty( ARTIFACT[ 0 ] ) ) );
 		String storeImages = configProperties.getProperty( "artifactProducer.storeImages" );
 		if ( storeImages != null && !storeImages.isEmpty() )
 			PageManager.instance().setStoreImages( Boolean.parseBoolean( storeImages ) );

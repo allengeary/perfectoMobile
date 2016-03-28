@@ -5,18 +5,16 @@ package com.perfectoMobile.device.factory.spi;
 
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
 import com.morelandLabs.application.ApplicationRegistry;
 import com.morelandLabs.spi.Device;
 import com.perfectoMobile.device.DeviceManager;
+import com.perfectoMobile.device.artifact.api.PerfectoArtifactProducer;
 import com.perfectoMobile.device.cloud.CloudRegistry;
 import com.perfectoMobile.device.factory.AbstractDriverFactory;
 import com.perfectoMobile.device.factory.DeviceWebDriver;
-
 import io.appium.java_client.android.AndroidDriver;
 
 // TODO: Auto-generated Javadoc
@@ -78,6 +76,7 @@ public class ANDROIDDriverFactory extends AbstractDriverFactory
 			webDriver.setWindTunnelReport( caps.getCapability( "windTunnelReportUrl" ).toString() );
 			String interruptString = ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" )  != null ? ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" ) : DeviceManager.instance().getDeviceInterrupts();
 			webDriver.setDeviceInterrupts( getDeviceInterrupts( interruptString, webDriver.getExecutionId(), webDriver.getDeviceName() ) );
+			webDriver.setArtifactProducer( new PerfectoArtifactProducer() );
 			
 			return webDriver;
 		}

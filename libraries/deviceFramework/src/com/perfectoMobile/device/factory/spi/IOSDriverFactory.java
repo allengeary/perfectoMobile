@@ -13,6 +13,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import com.morelandLabs.application.ApplicationRegistry;
 import com.morelandLabs.spi.Device;
 import com.perfectoMobile.device.DeviceManager;
+import com.perfectoMobile.device.artifact.api.PerfectoArtifactProducer;
 import com.perfectoMobile.device.cloud.CloudRegistry;
 import com.perfectoMobile.device.factory.AbstractDriverFactory;
 import com.perfectoMobile.device.factory.DeviceWebDriver;
@@ -77,6 +78,7 @@ public class IOSDriverFactory extends AbstractDriverFactory
 			webDriver.setWindTunnelReport( caps.getCapability( "windTunnelReportUrl" ).toString() );
 			String interruptString = ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" )  != null ? ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" ) : DeviceManager.instance().getDeviceInterrupts();
             webDriver.setDeviceInterrupts( getDeviceInterrupts( interruptString, webDriver.getExecutionId(), webDriver.getDeviceName() ) );
+            webDriver.setArtifactProducer( new PerfectoArtifactProducer() );
             
 			return webDriver;
 		}

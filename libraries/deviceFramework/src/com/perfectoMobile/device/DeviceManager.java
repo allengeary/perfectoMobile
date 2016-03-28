@@ -443,7 +443,6 @@ public class DeviceManager implements ArtifactListener
 									if ( attachDevice && !dryRun )
 									{
 
-										
 										//
 										// Create the WebDriver here if we are attaching this device
 										//

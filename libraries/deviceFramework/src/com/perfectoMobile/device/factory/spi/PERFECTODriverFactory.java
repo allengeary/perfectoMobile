@@ -12,6 +12,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import com.morelandLabs.application.ApplicationRegistry;
 import com.morelandLabs.spi.Device;
 import com.perfectoMobile.device.DeviceManager;
+import com.perfectoMobile.device.artifact.api.PerfectoArtifactProducer;
 import com.perfectoMobile.device.cloud.CloudRegistry;
 import com.perfectoMobile.device.factory.AbstractDriverFactory;
 import com.perfectoMobile.device.factory.DeviceWebDriver;
@@ -88,6 +89,7 @@ public class PERFECTODriverFactory extends AbstractDriverFactory
 			webDriver.setExecutionId( mobileDriver.getExecutionId() );
 			webDriver.setReportKey( mobileDriver.getReportKey() );
 			webDriver.setDeviceName( mobileDevice.getDeviceId() );
+			webDriver.setArtifactProducer( new PerfectoArtifactProducer() );
 			String interruptString = ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" )  != null ? ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" ) : DeviceManager.instance().getDeviceInterrupts();
             webDriver.setDeviceInterrupts( getDeviceInterrupts( interruptString, webDriver.getExecutionId(), webDriver.getDeviceName() ) );
 
