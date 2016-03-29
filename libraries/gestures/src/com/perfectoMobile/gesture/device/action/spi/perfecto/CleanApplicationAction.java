@@ -11,7 +11,6 @@ import com.morelandLabs.integrations.perfectoMobile.rest.bean.Handset;
 import com.perfectoMobile.gesture.device.action.AbstractDefaultAction;
 import com.perfectoMobile.gesture.device.action.DeviceAction;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CleanApplicationAction.
  */
@@ -33,10 +32,20 @@ public class CleanApplicationAction extends AbstractDefaultAction implements Dev
 	
 		Handset localDevice = PerfectoMobile.instance().devices().getDevice( deviceName );
 		
-		if ( localDevice.getOs().toLowerCase().equals( "android" ) )
-			PerfectoMobile.instance().application().close( executionId, deviceName, appDesc.getName(), appDesc.getAndroidIdentifier() );
+		if ( appDesc.getUrl() != null && !appDesc.getUrl().isEmpty() )
+		{
+		    //
+		    // This is a Web URL so clear all cookies
+		    //
+		    webDriver.manage().deleteAllCookies();
+		}
 		else
-			log.warn( "Could not clean application on " + localDevice.getOs() );
+		{
+    		if ( localDevice.getOs().toLowerCase().equals( "android" ) )
+    			PerfectoMobile.instance().application().clean( executionId, deviceName, appDesc.getName(), appDesc.getAndroidIdentifier() );
+    		else
+    			log.warn( "Could not clean application on " + localDevice.getOs() );
+		}
 		return true;
 	}
 

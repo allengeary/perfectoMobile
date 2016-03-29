@@ -1,11 +1,10 @@
 package com.perfectoMobile.page.keyWord.step.spi;
 
 import java.util.Map;
-
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
-
-import com.perfectoMobile.device.factory.DeviceWebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import com.morelandLabs.spi.driver.NativeDriverProvider;
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
@@ -40,13 +39,13 @@ public class KWSGetCookie extends AbstractKeyWordStep
         {
             throw new IllegalStateException( "Get cookie requires one string properties (name)" );
         }
-
-        if ( !( webDriver instanceof DeviceWebDriver ))
+        Cookie cookie = null;
+        if ( webDriver instanceof RemoteWebDriver )
+            cookie = ((RemoteWebDriver) webDriver).manage().getCookieNamed( (String)name );
+        else if ( webDriver instanceof NativeDriverProvider && ( (NativeDriverProvider) webDriver).getNativeDriver() instanceof RemoteWebDriver )
         {
-            throw new IllegalStateException( "Web driver (" + webDriver.getClass().getName() + ") isn't an DeviceWebDriver" );
+            cookie = ( (RemoteWebDriver) ( (NativeDriverProvider) webDriver).getNativeDriver() ).manage().getCookieNamed( (String)name );
         }
-
-        Cookie cookie = ((DeviceWebDriver) webDriver).getCookieNamed( (String) name );
 		
         Object result = (( cookie != null ) ? cookie.getValue() : null );
 		

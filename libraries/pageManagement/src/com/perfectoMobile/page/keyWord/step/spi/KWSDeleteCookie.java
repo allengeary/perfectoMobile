@@ -1,10 +1,9 @@
 package com.perfectoMobile.page.keyWord.step.spi;
 
 import java.util.Map;
-
 import org.openqa.selenium.WebDriver;
-
-import com.perfectoMobile.device.factory.DeviceWebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import com.morelandLabs.spi.driver.NativeDriverProvider;
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
@@ -40,12 +39,12 @@ public class KWSDeleteCookie extends AbstractKeyWordStep
             throw new IllegalStateException( "Delete cookie requires one string properties (name)" );
         }
 
-        if ( !( webDriver instanceof DeviceWebDriver ))
+        if ( webDriver instanceof RemoteWebDriver )
+            ((RemoteWebDriver) webDriver).manage().deleteCookieNamed( (String)name );
+        else if ( webDriver instanceof NativeDriverProvider && ( (NativeDriverProvider) webDriver).getNativeDriver() instanceof RemoteWebDriver )
         {
-            throw new IllegalStateException( "Web driver (" + webDriver.getClass().getName() + ") isn't an DeviceWebDriver" );
+            ( (RemoteWebDriver) ( (NativeDriverProvider) webDriver).getNativeDriver() ).manage().deleteCookieNamed( (String)name );
         }
-
-        ((DeviceWebDriver) webDriver).deleteCookieNamed( (String) name );
         	
         return true;
     }

@@ -3,11 +3,10 @@ package com.perfectoMobile.page.keyWord.step.spi;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
-
-import com.perfectoMobile.device.factory.DeviceWebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import com.morelandLabs.spi.driver.NativeDriverProvider;
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
@@ -30,12 +29,13 @@ public class KWSGetCookies extends AbstractKeyWordStep
             throw new IllegalStateException( "Page Object was not defined" );
         }
 
-        if ( !( webDriver instanceof DeviceWebDriver ))
+        Set<Cookie> cookieSet = null;
+        if ( webDriver instanceof RemoteWebDriver )
+            cookieSet = ((RemoteWebDriver) webDriver).manage().getCookies();
+        else if ( webDriver instanceof NativeDriverProvider && ( (NativeDriverProvider) webDriver).getNativeDriver() instanceof RemoteWebDriver )
         {
-            throw new IllegalStateException( "Web driver (" + webDriver.getClass().getName() + ") isn't an DeviceWebDriver" );
+            cookieSet = ( (RemoteWebDriver) ( (NativeDriverProvider) webDriver).getNativeDriver() ).manage().getCookies();
         }
-
-        Set<Cookie> cookieSet = ((DeviceWebDriver) webDriver).getCookies();
 
         StringBuilder buffer = new StringBuilder();
         Iterator<Cookie> cookies = cookieSet.iterator();
