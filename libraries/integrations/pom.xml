@@ -32,7 +32,7 @@
 		</repository>
 	</distributionManagement>
 	<build>
-	<extensions>
+		<extensions>
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ftp</artifactId>
