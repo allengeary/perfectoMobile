@@ -48,6 +48,9 @@ public class KWSGetCookie extends AbstractKeyWordStep
         }
 		
         Object result = (( cookie != null ) ? cookie.getValue() : null );
+
+        if ( log.isDebugEnabled() )
+                log.debug( "Cookie [" + result + "]" );
 		
         if (( result instanceof String ) &&
             ( !validateData( result + "" )) )
