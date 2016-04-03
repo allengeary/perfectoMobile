@@ -1,8 +1,18 @@
 package com.morelandLabs.utility;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.IOException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.htmlcleaner.DomSerializer;
+import org.htmlcleaner.HtmlCleaner;
+import org.htmlcleaner.SimpleXmlSerializer;
+import org.htmlcleaner.TagNode;
+import org.w3c.dom.Document;
 
 public class XMLEscape
 {
@@ -23,21 +33,79 @@ public class XMLEscape
         return xmlOut;
     }
     
+    public static String toXML( String xmlIn )
+    {
+        
+        //
+        // Check if the document is already well formed
+        //
+        if ( validateDocument( xmlIn ) )
+            return xmlIn;
+        
+        //
+        // Try to simply escape some characters
+        //
+        String escapedString = escapeXML( xmlIn );
+        if ( validateDocument( escapedString ) )
+            return escapedString;
+        
+        //
+        // We assume HTML at this point
+        //
+
+        try
+        {
+            HtmlCleaner cleaner = new HtmlCleaner();
+            TagNode node = cleaner.clean( new ByteArrayInputStream( xmlIn.getBytes()) );
+            
+            ByteArrayOutputStream htmlDocument = new ByteArrayOutputStream();
+            new SimpleXmlSerializer( cleaner.getProperties() ).writeToStream( node, htmlDocument );
+            
+            String htmlOutput = new String( htmlDocument.toByteArray() );
+            if ( validateDocument( htmlOutput ) )
+                return htmlOutput;
+        }
+        catch( Exception e )
+        {
+            
+        }
+        
+        return null;
+
+        
+    }
+    
+    private static boolean validateDocument( String inputDocument )
+    {
+        try
+        {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse( new ByteArrayInputStream( inputDocument.getBytes() ) );
+            
+            return true;
+        }
+        catch( Throwable t)
+        {
+            return false;
+        }
+    }
+    
+    
+    
     public static void main( String[] args ) throws Exception
     {
         StringBuilder outputStream = new StringBuilder();
         BufferedReader r = new BufferedReader( new FileReader( "c:/projects/tools/failureDOM.xml") );
         
-        String currentLine = null;
-        while ( ( currentLine = r.readLine() ) != null )
-        {
-            System.out.println( currentLine );
-            System.out.println( escapeXML( currentLine ) );
-            outputStream.append( escapeXML( currentLine ) );
-        }
+        HtmlCleaner cleaner = new HtmlCleaner();
+        TagNode node = cleaner.clean( new FileReader( "c:/projects/tools/failureDOM.xml") );
         
-        FileWriter x = new FileWriter( "c:/projects/tools/fixedDOM.xml" );
-        x.write( outputStream.toString() );
-        x.close();
+        new DomSerializer( cleaner.getProperties(), true).createDOM(node).getDocumentElement();
+        
+        ByteArrayOutputStream htmlDocument = new ByteArrayOutputStream();
+        new SimpleXmlSerializer( cleaner.getProperties() ).writeToStream( node, new FileOutputStream( "c:/projects/tools/fixedDOM2.xml" ) );
+        
+
     }
 }

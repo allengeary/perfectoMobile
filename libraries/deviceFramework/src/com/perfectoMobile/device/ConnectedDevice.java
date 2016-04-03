@@ -113,4 +113,13 @@ public class ConnectedDevice
 		return device.toShortString();  
 	}
 	
+	public String getExecutionId()
+	{
+	    return webDriver.getExecutionId();
+	}
+	
+	public String getDeviceName()
+	{
+	    return webDriver.getDeviceName();
+	}
 }
