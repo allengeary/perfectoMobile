@@ -1,4 +1,4 @@
-package com.perfectoMobile.page.keyWord.step.spi;
+package com.morelandLabs.utility;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class BrowserCacheLogic
         
         params.put("property", "osVersion");
         String osVerStr = (String) driver.executeScript("mobile:handset:info", params);
-        double osVer = Double.parseDouble( osVerStr );
+        int[] osVer = parseVersion( osVerStr );
         
 
         //
@@ -43,23 +43,26 @@ public class BrowserCacheLogic
         //
         
         params.clear();
-        params.put("location", "20%,1%");
+        params.put("location", "60%,1%");
         driver.executeScript("mobile:touch:tap", params);
+
+        //
+        // swipe to expose safari
+        //
+        
+        params.clear();
+        params.put("start", "50%,90%");
+        params.put("end", "50%,10%");
+        driver.executeScript("mobile:touch:swipe", params);
 
         //
         // click Safari
         //
-        
+
         params.clear();
-        params.put("content", "Safari");
-        params.put("scrolling", "scroll");
-        params.put("levels.high", "100");
-        params.put("next", "SWIPE=(20%,70%),(20%,30%);WAIT=2000");
-        params.put("screen.width", "50%");
-        params.put("screen.top", "0%");
-        params.put("screen.left", "0%");
-        params.put("screen.height", "100%");
-        driver.executeScript("mobile:text:select", params);
+        params.put("value", "//cell[@name='Safari']");
+        params.put("framework", "perfectoMobile");
+        driver.executeScript("mobile:application.element:click", params);
         
         //
         // swipe to bottom
@@ -87,7 +90,7 @@ public class BrowserCacheLogic
         // below version 8 need to clear also data
         //
         
-        if ( osVer < 8.0 )
+        if ( osVer[0] < 8 )
         {
             params.put("value", "//*[starts-with(text(),'Clear Cookies')]");
             driver.executeScript("mobile:application.element:click", params);
@@ -119,9 +122,9 @@ public class BrowserCacheLogic
         
         params.put("property", "osVersion");
         String osVerStr = (String) driver.executeScript("mobile:handset:info", params);
-        double osVer = Double.parseDouble( osVerStr );
+        int[] osVer = parseVersion( osVerStr );
 
-        if ( osVer >= 5.0 )
+        if ( osVer[0] >= 5 )
         {
             //
             // Launch Chrome
@@ -221,6 +224,36 @@ public class BrowserCacheLogic
         } 
         catch (InterruptedException e) 
         {}
+    }
+
+    private static int[] parseVersion( String str )
+    {
+        String[] tokens = str.split( "\\." );
+        int[] rtn = new int[ tokens.length ];
+
+        for( int i = 0; i < tokens.length; ++i )
+        {
+            rtn[ i ] = parseToken( tokens[ i ] );
+        }
+
+        return rtn;
+    }
+
+    private static int parseToken( String str )
+    {
+        StringBuilder buff = new StringBuilder();
+
+        for( int i = 0; i < str.length(); ++i )
+        {
+            char thisChar = str.charAt( i );
+
+            if ( Character.isDigit( thisChar ))
+            {
+                buff.append( thisChar );
+            }
+        }
+
+        return Integer.parseInt( buff.toString() );
     }
 
 }
