@@ -2,7 +2,10 @@ package com.morelandLabs.utility;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DriverCommand;
 import org.openqa.selenium.remote.RemoteExecuteMethod;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -43,6 +46,12 @@ public class BrowserCacheLogic
             sleep(1000);
 
             //
+            // Make sure we're on the home page
+            //
+            
+            clickIfPresent( driver, "//button[@name='Settings']" );
+
+            //
             // Scroll to Top
             //
         
@@ -51,37 +60,26 @@ public class BrowserCacheLogic
             driver.executeScript("mobile:touch:tap", params);
 
             //
-            // swipe to expose safari
+            // swipe to expose safari and click once exposed
             //
 
             boolean found = false;
             int count = 0;
 
-            while(( !found ) && ( count < 3 ))
+            while(( !found ) && ( count < 10 ))
             {
-                params.clear();
-                params.put("content", "Safari");
-                String result = (String) driver.executeScript("mobile:checkpoint:text", params);
+                found = clickIfPresent( driver, "//cell[@name='Safari']" );
 
-                if ( !( found = (( result != null ) && (result.equalsIgnoreCase("true"))) ))
+                if ( !found )
                 {
                     params.clear();
-                    params.put("start", "50%,90%");
-                    params.put("end", "50%,10%");
+                    params.put("start", "50%,75%");
+                    params.put("end", "50%,25%");
                     driver.executeScript("mobile:touch:swipe", params);
 
                     ++count;
                 }
             }
-
-            //
-            // click Safari
-            //
-
-            params.clear();
-            params.put("value", "//cell[@name='Safari']");
-            params.put("framework", "perfectoMobile");
-            driver.executeScript("mobile:application.element:click", params);
         
             //
             // swipe to bottom
@@ -112,8 +110,10 @@ public class BrowserCacheLogic
             if ( osVer[0] < 8 )
             {
                 params.put("value", "//*[starts-with(text(),'Clear Cookies')]");
+                params.put("framework", "perfectoMobile");
                 driver.executeScript("mobile:application.element:click", params);
                 params.put("value", "//*[(@class='UIAButton' or @class='UIATableCell') and starts-with(@label,'Clear') and @isvisible='true']");
+                params.put("framework", "perfectoMobile");
                 driver.executeScript("mobile:application.element:click", params);
             }
 
@@ -297,5 +297,36 @@ public class BrowserCacheLogic
 
         return Integer.parseInt( buff.toString() );
     }
+
+    private static boolean clickIfPresent( RemoteWebDriver driver, String xpath )
+    {
+        boolean rtn = false;
+
+        HashMap<String, Object> params = new HashMap();
+        params.put("value", xpath);
+        params.put("framework", "perfectoMobile");
+
+        String result = (String) driver.executeScript("mobile:application.element:find", params);
+
+        if (( result != null ) && ( !( "false".equalsIgnoreCase( result ) )))
+        {
+            //
+            // This shouldn't be necessary, but I'm seeing the 'find' call finding
+            // elements that are scrolled off of the screen/page.
+            //
+            
+            try
+            {
+                driver.executeScript("mobile:application.element:click", params);
+
+                rtn = true;
+            }
+            catch( Throwable e )
+            {}
+        }
+
+        return rtn;
+    }
+
 
 }
