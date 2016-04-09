@@ -3,11 +3,13 @@ package com.perfectoMobile.gesture.device.action.spi.perfecto;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import com.morelandLabs.application.ApplicationDescriptor;
 import com.morelandLabs.application.ApplicationRegistry;
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.perfectoMobile.rest.bean.Handset;
+import com.morelandLabs.utility.BrowserCacheLogic;
 import com.perfectoMobile.gesture.device.action.AbstractDefaultAction;
 import com.perfectoMobile.gesture.device.action.DeviceAction;
 
@@ -37,7 +39,25 @@ public class CleanApplicationAction extends AbstractDefaultAction implements Dev
 		    //
 		    // This is a Web URL so clear all cookies
 		    //
+                    
 		    webDriver.manage().deleteAllCookies();
+
+                    //
+                    // clear the browser cache (IOS only)
+                    //
+
+                    if (( localDevice.getOs().toLowerCase().equals( "ios" ) ) &&
+                        ( webDriver instanceof RemoteWebDriver ))
+                    {
+                        try
+                        {
+                            BrowserCacheLogic.clearSafariIOSCache( (RemoteWebDriver) webDriver );
+                        }
+                        catch( Throwable e )
+                        {
+                            e.printStackTrace();
+                        }
+                    }
 		}
 		else
 		{
