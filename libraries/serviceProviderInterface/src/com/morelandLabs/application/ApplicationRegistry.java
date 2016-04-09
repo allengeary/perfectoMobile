@@ -65,7 +65,7 @@ public class ApplicationRegistry
 	public void setApplicationProvider( ApplicationProvider applicationProvider )
 	{
 		this.applicationProvider = applicationProvider;
-		applicationMap.put( "NOOP", new ApplicationDescriptor( "NOOP", "This is the default application type that just opens the phone", "", "", "", "", "", new HashMap<String,String>( 0 ) ) );
+		applicationMap.put( "NOOP", new ApplicationDescriptor( "NOOP", "This is the default application type that just opens the phone", "", "", "", "", "", new HashMap<String,Object>( 0 ) ) );
 	}
 	
 	/**

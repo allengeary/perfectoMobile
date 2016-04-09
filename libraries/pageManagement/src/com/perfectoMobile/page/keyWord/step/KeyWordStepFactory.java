@@ -26,9 +26,12 @@ import com.perfectoMobile.page.keyWord.step.spi.KWSGesture;
 import com.perfectoMobile.page.keyWord.step.spi.KWSGetCookie;
 import com.perfectoMobile.page.keyWord.step.spi.KWSGetCookies;
 import com.perfectoMobile.page.keyWord.step.spi.KWSLoop;
+import com.perfectoMobile.page.keyWord.step.spi.KWSMath;
+import com.perfectoMobile.page.keyWord.step.spi.KWSMouse;
 import com.perfectoMobile.page.keyWord.step.spi.KWSOpenPage;
 import com.perfectoMobile.page.keyWord.step.spi.KWSReturn;
 import com.perfectoMobile.page.keyWord.step.spi.KWSSet;
+import com.perfectoMobile.page.keyWord.step.spi.KWSString;
 import com.perfectoMobile.page.keyWord.step.spi.KWSValue;
 import com.perfectoMobile.page.keyWord.step.spi.KWSVisible;
 import com.perfectoMobile.page.keyWord.step.spi.KWSWait;
@@ -102,6 +105,9 @@ public class KeyWordStepFactory
 		addKeyWord( "GET_COOKIE", KWSGetCookie.class );
 		addKeyWord( "GET_COOKIES", KWSGetCookies.class );
 		addKeyWord( "COMPARE", KWSCompare.class );
+		addKeyWord( "STRING", KWSString.class );
+		addKeyWord( "MATH", KWSMath.class );
+		addKeyWord( "MOUSE", KWSMouse.class );
 	}
 	
 	/**

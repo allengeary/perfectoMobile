@@ -3,6 +3,7 @@
  */
 package com.perfectoMobile.device.ng;
 
+import java.awt.Desktop;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,6 +18,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import com.morelandLabs.artifact.ArtifactTime;
@@ -460,6 +462,29 @@ public abstract class AbstractSeleniumTest
 			DeviceManager.instance().releaseDevice( currentDevice );
 		}
 		
+		//
+        // Write out the index file for all tests
+        //
+		if( DataManager.instance().isArtifactEnabled( ArtifactType.EXECUTION_RECORD_HTML ) )
+		    RunDetails.instance().writeHTMLIndex( DataManager.instance().getReportFolder() );
+		
 		DeviceManager.instance().clearAllArtifacts();
+	}
+	
+	@AfterSuite
+	public void afterSuite()
+	{
+	    if( DataManager.instance().isArtifactEnabled( ArtifactType.EXECUTION_RECORD_HTML ) )
+	    {
+	        File htmlFile = RunDetails.instance().getIndex( DataManager.instance().getReportFolder() );
+	        try
+	        {
+	            Desktop.getDesktop().browse( htmlFile.toURI() );
+	        }
+	        catch( Exception e )
+	        {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 }

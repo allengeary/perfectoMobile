@@ -32,6 +32,8 @@ public interface Element
         VISIBLE;
     }
 	
+	public boolean moveTo();
+	
 	/**
 	 * Gets the native.
 	 *

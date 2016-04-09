@@ -90,8 +90,8 @@ public abstract class AbstractDriverFactory implements DriverFactory
 	 */
 	protected void addDeviceCapabilities( Device currentDevice, DesiredCapabilities caps )
 	{
-		for ( String name : currentDevice.getCabilities().keySet() )
-			caps.setCapability( name, currentDevice.getCabilities().get( name ) );
+		for ( String name : currentDevice.getCapabilities().keySet() )
+			caps.setCapability( name, currentDevice.getCapabilities().get( name ) );
 		
 		
 	}

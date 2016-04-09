@@ -19,13 +19,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ContextAware;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.HasInputDevices;
+import org.openqa.selenium.interactions.Keyboard;
+import org.openqa.selenium.interactions.Mouse;
 import org.openqa.selenium.remote.DriverCommand;
 import org.openqa.selenium.remote.ExecuteMethod;
 import org.openqa.selenium.remote.RemoteExecuteMethod;
@@ -51,7 +53,7 @@ import io.appium.java_client.AppiumDriver;
 /**
  * The Class DeviceWebDriver.
  */
-public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAware, ExecuteMethod, ArtifactProducer, NativeDriverProvider, PropertyProvider, TakesScreenshot, DeviceProvider
+public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAware, ExecuteMethod, ArtifactProducer, NativeDriverProvider, PropertyProvider, TakesScreenshot, DeviceProvider, HasInputDevices
 {
 
     private List<DeviceInterrupt> interruptList;
@@ -712,5 +714,23 @@ public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAw
     public Object executeAsyncScript( String script, Object... args )
     {
         return ((JavascriptExecutor) webDriver).executeAsyncScript( script, args );
+    }
+
+    @Override
+    public Keyboard getKeyboard()
+    {
+        if ( webDriver instanceof HasInputDevices )
+            return ( (HasInputDevices) webDriver ).getKeyboard();
+        else 
+            return null;
+    }
+
+    @Override
+    public Mouse getMouse()
+    {
+        if ( webDriver instanceof HasInputDevices )
+            return ( (HasInputDevices) webDriver ).getMouse();
+        else 
+            return null;
     }
 }

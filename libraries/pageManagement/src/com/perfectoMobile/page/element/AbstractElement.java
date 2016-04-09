@@ -73,6 +73,8 @@ public abstract class AbstractElement implements Element
 	 */
 	protected abstract Image _getImage( Resolution res );
 	
+	protected abstract boolean _moveTo();
+	
 	
 	/**
      * _wait for visible.
@@ -220,7 +222,7 @@ public abstract class AbstractElement implements Element
 				for ( String tokenName : tokenMap.keySet() )
 				{
 				    if ( tokenMap.get( tokenName ) != null)
-				        newKey = newKey.replaceAll( "\\{" + tokenName + "\\}", tokenMap.get( tokenName ) );
+				        newKey = newKey.replace( "{" + tokenName + "}", tokenMap.get( tokenName ) );
 				    else
 				        log.warn( "Token [" + tokenName + " was null" );
 				}
@@ -275,8 +277,8 @@ public abstract class AbstractElement implements Element
 		try
 		{
 			returnValue = _getValue();
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "get", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "" );
 			success = true;
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "get(" + returnValue + ")", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "" );
 		}
 		catch( Exception e )
 		{
@@ -329,8 +331,9 @@ public abstract class AbstractElement implements Element
 		try
 		{
 			returnValue = _isPresent();
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "present", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "" );
 			success = true;
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "present", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "" );
+			
 		}
 		catch( Exception e )
 		{
@@ -356,8 +359,9 @@ public abstract class AbstractElement implements Element
         try
         {
             returnValue = _waitFor( timeOut, timeUnit, waitType, value );
-            PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "waitForVisible", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "" );
             success = true;
+            PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "waitForVisible", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "" );
+            
         }
         catch( Exception e )
         {
@@ -411,7 +415,7 @@ public abstract class AbstractElement implements Element
 		{
 			returnValue = _getAttribute( attributeName );
 			success = true;
-			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "attribute", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "" );
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), pageName, elementName, "attribute(" + returnValue + ")", System.currentTimeMillis(), System.currentTimeMillis() - startTime, success ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "" );
 		}
 		catch( Exception e )
 		{
@@ -478,6 +482,8 @@ public abstract class AbstractElement implements Element
 
 	}
 
+	
+	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.element.Element#click()
 	 */
@@ -521,6 +527,12 @@ public abstract class AbstractElement implements Element
 	public boolean isTimed()
 	{
 		return timed;
+	}
+	
+	@Override
+	public boolean moveTo()
+	{
+	    return _moveTo();
 	}
 	
 	

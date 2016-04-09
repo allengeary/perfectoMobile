@@ -90,7 +90,7 @@ public class PERFECTODriverFactory extends AbstractDriverFactory
 			webDriver.setReportKey( mobileDriver.getReportKey() );
 			webDriver.setDeviceName( mobileDevice.getDeviceId() );
 			webDriver.setArtifactProducer( new PerfectoArtifactProducer() );
-			String interruptString = ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" )  != null ? ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" ) : DeviceManager.instance().getDeviceInterrupts();
+			String interruptString = ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" )  != null ? (String)ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" ) : DeviceManager.instance().getDeviceInterrupts();
             webDriver.setDeviceInterrupts( getDeviceInterrupts( interruptString, webDriver.getExecutionId(), webDriver.getDeviceName() ) );
 
 			//

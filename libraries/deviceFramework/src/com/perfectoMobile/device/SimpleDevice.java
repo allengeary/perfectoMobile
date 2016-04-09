@@ -53,7 +53,7 @@ public class SimpleDevice implements Device
 	private boolean active;
 	
 	/** The capabilities. */
-	private Map<String,String> capabilities = new HashMap<String,String>( 10 );
+	private Map<String,Object> capabilities = new HashMap<String,Object>( 10 );
 	
 	/* (non-Javadoc)
 	 * @see com.morelandLabs.spi.Device#isActive()
@@ -120,7 +120,7 @@ public class SimpleDevice implements Device
 	/* (non-Javadoc)
 	 * @see com.morelandLabs.spi.Device#addCapability(java.lang.String, java.lang.String)
 	 */
-	public void addCapability( String capabilityName, String capabilityValue )
+	public void addCapability( String capabilityName, Object capabilityValue )
 	{
 		capabilities.put( capabilityName,capabilityValue);
 	}
@@ -241,7 +241,7 @@ public class SimpleDevice implements Device
 	 * @see com.morelandLabs.spi.Device#getCabilities()
 	 */
 	@Override
-	public Map<String,String> getCabilities() 
+	public Map<String,Object> getCapabilities() 
 	{
 		return capabilities;
 	}

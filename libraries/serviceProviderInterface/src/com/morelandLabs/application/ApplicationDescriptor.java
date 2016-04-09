@@ -33,7 +33,7 @@ public class ApplicationDescriptor
 	private String androidInstallation;
 	
 	/** The capabilities. */
-	private Map<String,String> capabilities;
+	private Map<String,Object> capabilities;
 
 
 	/**
@@ -41,7 +41,7 @@ public class ApplicationDescriptor
 	 *
 	 * @return the capabilities
 	 */
-	public Map<String, String> getCapabilities() {
+	public Map<String, Object> getCapabilities() {
 		return capabilities;
 	}
 
@@ -50,7 +50,7 @@ public class ApplicationDescriptor
 	 *
 	 * @param capabilities the capabilities
 	 */
-	public void setCapabilities(Map<String, String> capabilities) {
+	public void setCapabilities(Map<String, Object> capabilities) {
 		this.capabilities = capabilities;
 	}
 
@@ -128,7 +128,7 @@ public class ApplicationDescriptor
 	 * @param androidInstallation the android installation
 	 * @param capabilities the capabilities
 	 */
-	public ApplicationDescriptor( String name, String description, String androidIdentifier, String appleIdentifier, String url, String iosInstallation, String androidInstallation, Map<String,String> capabilities )
+	public ApplicationDescriptor( String name, String description, String androidIdentifier, String appleIdentifier, String url, String iosInstallation, String androidInstallation, Map<String,Object> capabilities )
 	{
 		super();
 		this.name = name;

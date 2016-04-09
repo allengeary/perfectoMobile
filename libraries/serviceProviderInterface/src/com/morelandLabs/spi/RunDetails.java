@@ -91,7 +91,7 @@ public class RunDetails implements RunListener
         
         try
         {
-            File useFile = new File( rootFolder, getRootFolder() + System.getProperty( "file.separator" ) + "index.html" );
+            File useFile = getIndex( rootFolder );
             useFile.getParentFile().mkdirs();
             FileWriter fileWriter = new FileWriter( useFile );
             fileWriter.write( stringBuilder.toString() );
@@ -102,6 +102,11 @@ public class RunDetails implements RunListener
             e.printStackTrace( );
         }
         
+    }
+    
+    public File getIndex( File rootFolder )
+    {
+        return new File( rootFolder, getRootFolder() + System.getProperty( "file.separator" ) + "index.html" );
     }
     
     

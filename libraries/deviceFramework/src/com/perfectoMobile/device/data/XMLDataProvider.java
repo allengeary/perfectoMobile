@@ -15,6 +15,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openqa.selenium.Platform;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -153,7 +154,26 @@ public class XMLDataProvider implements DataProvider
 		if ( device.getCapability() != null )
 		{
 		    for ( DeviceCapability cap : device.getCapability() )
-		        currentDevice.addCapability( cap.getName(), cap.getValue() );
+		    {
+		        switch( cap.getClazz() )
+		        {
+		            case "BOOLEAN":
+		                currentDevice.addCapability( cap.getName(), Boolean.parseBoolean( cap.getValue() ) );
+		                break;
+		                
+		            case "OBJECT":
+		                currentDevice.addCapability( cap.getName(), cap.getValue() );
+                        break;
+                        
+		            case "STRING":
+		                currentDevice.addCapability( cap.getName(), cap.getValue() );
+                        break;
+                        
+		            case "PLATFORM":
+		                currentDevice.addCapability( cap.getName(), Platform.valueOf( cap.getValue().toUpperCase() ) );
+                        break;
+		        }
+		    }
 		}
 
 		if ( currentDevice.isActive() )

@@ -51,8 +51,8 @@ public class ANDROIDDriverFactory extends AbstractDriverFactory
 			dc.setCapability( USER_NAME, CloudRegistry.instance().getCloud().getUserName() );
 			dc.setCapability( PASSWORD, CloudRegistry.instance().getCloud().getPassword() );
 			
-			for ( String name : currentDevice.getCabilities().keySet() )
-				dc.setCapability( name, currentDevice.getCabilities().get( name ) );
+			for ( String name : currentDevice.getCapabilities().keySet() )
+				dc.setCapability( name, currentDevice.getCapabilities().get( name ) );
 			
 			for ( String name : ApplicationRegistry.instance().getAUT().getCapabilities().keySet() )
 				dc.setCapability( name, ApplicationRegistry.instance().getAUT().getCapabilities().get( name ) );
@@ -74,7 +74,7 @@ public class ANDROIDDriverFactory extends AbstractDriverFactory
 			webDriver.setReportKey( caps.getCapability( "reportKey" ).toString() );
 			webDriver.setDeviceName( caps.getCapability( "deviceName" ).toString() );
 			webDriver.setWindTunnelReport( caps.getCapability( "windTunnelReportUrl" ).toString() );
-			String interruptString = ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" )  != null ? ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" ) : DeviceManager.instance().getDeviceInterrupts();
+			String interruptString = ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" )  != null ? (String)ApplicationRegistry.instance().getAUT().getCapabilities().get( "deviceInterrupts" ) : DeviceManager.instance().getDeviceInterrupts();
 			webDriver.setDeviceInterrupts( getDeviceInterrupts( interruptString, webDriver.getExecutionId(), webDriver.getDeviceName() ) );
 			webDriver.setArtifactProducer( new PerfectoArtifactProducer() );
 			

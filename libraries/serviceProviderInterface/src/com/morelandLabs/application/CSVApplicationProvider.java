@@ -88,7 +88,7 @@ public class CSVApplicationProvider extends AbstractApplicationProvider
 				
 				String[] lineData = currentLine.split( "," );
 				
-				ApplicationRegistry.instance().addApplicationDescriptor( new ApplicationDescriptor( lineData[ 0 ], lineData[ 1 ], lineData[ 2 ], lineData[ 3 ], lineData[ 4 ], lineData[ 5 ], lineData[ 6 ], new HashMap<String,String>( 0 ) ) );
+				ApplicationRegistry.instance().addApplicationDescriptor( new ApplicationDescriptor( lineData[ 0 ], lineData[ 1 ], lineData[ 2 ], lineData[ 3 ], lineData[ 4 ], lineData[ 5 ], lineData[ 6 ], new HashMap<String,Object>( 0 ) ) );
 			}
 		}
 		catch( Exception e )

@@ -5,9 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import javax.imageio.ImageIO;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
@@ -16,10 +14,11 @@ import org.openqa.selenium.ContextAware;
 import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.HasInputDevices;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.ImageFormat;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.MatchMode;
@@ -248,6 +247,21 @@ public class SeleniumElement extends AbstractElement
 		}
 	}
 	
+	public boolean _moveTo()
+	{
+	    WebElement webElement = getElement();
+	    if ( webElement != null && webElement.getSize().getHeight() > 0 && webElement.getSize().getWidth() > 0 )
+	    {
+	        if ( webDriver instanceof HasInputDevices )
+	        {
+	            new Actions( webDriver ).moveToElement( webElement ).build().perform();
+	            return true;
+	        }
+	    }
+	    
+	    return false;
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.element.AbstractElement#_getAll()
 	 */
@@ -417,7 +431,6 @@ public class SeleniumElement extends AbstractElement
 		return getElement() != null;
 	}
 	
-	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.element.AbstractElement#_waitForPresent(long, java.util.concurrent.TimeUnit)
 	 */
@@ -489,7 +502,7 @@ public class SeleniumElement extends AbstractElement
 			if ( selectElement.isMultiple() )
 				selectElement.deselectAll();
 			
-			selectElement.selectByVisibleText( currentValue );
+			selectElement.selectByValue( currentValue );
 		}
 		else
 		{

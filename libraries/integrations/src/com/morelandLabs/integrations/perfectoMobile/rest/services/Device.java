@@ -1,7 +1,12 @@
 package com.morelandLabs.integrations.perfectoMobile.rest.services;
 
 import com.morelandLabs.integrations.common.Location;
+import com.morelandLabs.integrations.perfectoMobile.rest.bean.ApplicationCollection;
 import com.morelandLabs.integrations.perfectoMobile.rest.bean.Execution;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.PerfectoService.Operation;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.PerfectoService.Parameter;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.PerfectoService.PerfectoCommand;
+import com.morelandLabs.integrations.perfectoMobile.rest.services.PerfectoService.ResourceID;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.PerfectoService.ServiceDescriptor;
 
 // TODO: Auto-generated Javadoc
@@ -116,5 +121,9 @@ public interface Device extends PerfectoService
     @PerfectoCommand( commandName="gateway", subCommandName = "sms" )
     public Execution sendText( @ResourceID String executionId, @NameOverride( name="body" )String body, @Parameter( name="to.handset" ) String handsetId );
     
+    
+    @Operation( operationName="command" )
+    @PerfectoCommand( commandName="browser", subCommandName = "execute" )
+    public Execution clean( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId  );
 	
 }

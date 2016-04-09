@@ -100,11 +100,8 @@ public abstract class AbstractArtifactProducer implements ArtifactProducer
             }
         }
         
-        if ( !success && DataManager.instance().isArtifactEnabled( ArtifactType.DEVICE_LOG ) )
-            stringBuffer.append( "<tr><td align='center' colspan='2'><br/><br/><br/><a href='deviceLog.xml'>Device Log</a></td><td rowspan='7' colspan='4' align='center'><img height='500' src='failure-screenshot.png'/></td></tr>" );
-        
         if ( !success && DataManager.instance().isArtifactEnabled( ArtifactType.FAILURE_SOURCE ) )
-            stringBuffer.append( "<tr><td align='center' colspan='2'><a href='failureDom.xml'>DOM at Failure</a></td></tr>" );
+            stringBuffer.append( "<tr><td align='center' colspan='2'><a href='failureDom.xml'>DOM at Failure</a></td><td rowspan='7' colspan='4' align='center'><img height='500' src='failure-screenshot.png'/></td></tr>" );
         
         if ( DataManager.instance().isArtifactEnabled( ArtifactType.CONSOLE_LOG ) )
             stringBuffer.append( "<tr><td align='center' colspan='2'><a href='console.txt'>Console Output</a></td></tr>" );
@@ -118,15 +115,14 @@ public abstract class AbstractArtifactProducer implements ArtifactProducer
         if ( DataManager.instance().isArtifactEnabled( ArtifactType.WCAG_REPORT ) )
             stringBuffer.append( "<tr><td align='center' colspan='2'><a href='wcag.html'>WCAG Report</a></td></tr>" );
         
+        if ( !success && DataManager.instance().isArtifactEnabled( ArtifactType.DEVICE_LOG ) )
+            stringBuffer.append( "<tr><td align='center' colspan='2'><br/><br/><br/><a href='deviceLog.xml'>Device Log</a></td></tr>" );
+        
+        
         String wtUrl = ( (DeviceWebDriver) webDriver ).getWindTunnelReport();
         if ( wtUrl != null && !wtUrl.isEmpty() )
         
         stringBuffer.append( "</TABLE></BODY></HTML>" );
-        
-        //
-        // Write out the index file for all tests
-        //
-        RunDetails.instance().writeHTMLIndex( DataManager.instance().getReportFolder() );
         
         return new Artifact( rootFolder + testName + ".html", stringBuffer.toString().getBytes() );
 	}

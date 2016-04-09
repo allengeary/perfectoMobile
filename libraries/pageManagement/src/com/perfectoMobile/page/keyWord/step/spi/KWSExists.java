@@ -1,11 +1,10 @@
 package com.perfectoMobile.page.keyWord.step.spi;
 
 import java.util.Map;
-
 import org.openqa.selenium.WebDriver;
-
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.data.PageData;
+import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
 /**
@@ -28,7 +27,17 @@ public class KWSExists extends AbstractKeyWordStep
 	{
 		if ( pageObject == null )
 			throw new IllegalStateException( "There was no Page Object defined" );
-		return getElement( pageObject, contextMap, webDriver, dataMap ).isPresent();
+		
+		Element currentElement = getElement( pageObject, contextMap, webDriver, dataMap );
+		
+		if ( getContext() != null )
+        {
+            if ( log.isDebugEnabled() )
+                log.debug( "Setting Context Data to [" + currentElement.getValue() + "] for [" + getContext() + "]" );
+            contextMap.put( getContext(), currentElement.getValue() );
+        }
+		
+		return currentElement.isPresent();
 	}
 	
 	/* (non-Javadoc)

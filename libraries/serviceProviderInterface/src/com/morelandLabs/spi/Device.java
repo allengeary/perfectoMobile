@@ -16,14 +16,14 @@ public interface Device
 	 * @param capabilityName the capability name
 	 * @param capabilityValue the capability value
 	 */
-	void addCapability( String capabilityName, String capabilityValue );
+	void addCapability( String capabilityName, Object capabilityValue );
 	
 	/**
 	 * Gets the cabilities.
 	 *
 	 * @return the cabilities
 	 */
-	Map<String,String> getCabilities();
+	Map<String,Object> getCapabilities();
 	/**
 	 * Gets the manufacturer.
 	 *
