@@ -71,6 +71,7 @@ public class CloudRegistry
 		this.cloudProvider = cloudProvider;
 	}
 	
+	
 	/**
 	 * Gets the cloud descriptors.
 	 *
@@ -120,8 +121,13 @@ public class CloudRegistry
 	 */
 	public CloudDescriptor getCloud()
 	{
-		if ( cut == null )
+		if ( cut == null && !cloudMap.isEmpty() )
 			cut = cloudMap.values().toArray( new CloudDescriptor[ 0 ] )[ 0 ];
 		return cut;
+	}
+	
+	public void clear()
+	{
+	    cloudMap.clear();
 	}
 }

@@ -54,6 +54,7 @@ public class XMLCloudProvider extends AbstractCloudProvider
 	 */
 	public void readData()
 	{
+	    CloudRegistry.instance().clear();
 		if ( fileName == null )
 		{
 			if ( log.isInfoEnabled() )

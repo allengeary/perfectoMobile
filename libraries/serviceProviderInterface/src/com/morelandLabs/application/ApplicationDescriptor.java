@@ -116,6 +116,11 @@ public class ApplicationDescriptor
 		}
 	}
 	
+	public boolean isWeb()
+	{
+	    return url != null && !url.isEmpty();
+	}
+	
 	/**
 	 * Instantiates a new application descriptor.
 	 *

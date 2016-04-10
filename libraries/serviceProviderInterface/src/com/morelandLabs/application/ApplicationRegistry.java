@@ -102,7 +102,7 @@ public class ApplicationRegistry
 	 */
 	public ApplicationDescriptor getAUT()
 	{
-		if ( aut == null )
+		if ( aut == null && !applicationMap.isEmpty() )
 			aut = applicationMap.values().toArray( new ApplicationDescriptor[ 0 ])[ 0 ];
 		return aut;
 	}
@@ -116,6 +116,11 @@ public class ApplicationRegistry
 	public ApplicationDescriptor getApplication( String appName )
 	{
 		return applicationMap.get( appName );
+	}
+	
+	public void clear()
+	{
+	    applicationMap.clear();
 	}
 	
 }

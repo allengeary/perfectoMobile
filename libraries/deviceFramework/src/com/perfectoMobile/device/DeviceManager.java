@@ -50,6 +50,17 @@ public class DeviceManager implements ArtifactListener
 	private List<PropertyAdapter> propertyAdapterList = new ArrayList<PropertyAdapter>( 10 );
 	
 	private Properties configurationProperties;
+	
+	private Device selectedDevice;
+	public void setSelectedDevice( Device selectedDevice )
+	{
+	    this.selectedDevice = selectedDevice;
+	}
+	
+	public Device getSelectedDevice()
+	{
+	    return selectedDevice;
+	}
 
 	public Properties getConfigurationProperties()
     {

@@ -66,6 +66,7 @@ public class XMLApplicationProvider extends AbstractApplicationProvider
      */
     public void readData()
     {
+        ApplicationRegistry.instance().clear();
         if ( fileName == null )
         {
             if ( log.isInfoEnabled() )
