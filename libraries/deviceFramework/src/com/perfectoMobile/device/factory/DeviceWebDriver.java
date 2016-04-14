@@ -18,6 +18,7 @@ import javax.xml.xpath.XPathFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
+import org.openqa.selenium.By.ByXPath;
 import org.openqa.selenium.ContextAware;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -38,8 +39,10 @@ import org.w3c.dom.NodeList;
 import com.morelandLabs.artifact.ArtifactType;
 import com.morelandLabs.spi.Device;
 import com.morelandLabs.spi.PropertyProvider;
+import com.morelandLabs.spi.driver.CachingDriver;
 import com.morelandLabs.spi.driver.DeviceProvider;
 import com.morelandLabs.spi.driver.NativeDriverProvider;
+import com.morelandLabs.utility.XMLEscape;
 import com.perfectoMobile.device.ConnectedDevice;
 import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.artifact.Artifact;
@@ -53,7 +56,7 @@ import io.appium.java_client.AppiumDriver;
 /**
  * The Class DeviceWebDriver.
  */
-public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAware, ExecuteMethod, ArtifactProducer, NativeDriverProvider, PropertyProvider, TakesScreenshot, DeviceProvider, HasInputDevices
+public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAware, ExecuteMethod, ArtifactProducer, NativeDriverProvider, PropertyProvider, TakesScreenshot, DeviceProvider, HasInputDevices, CachingDriver
 {
 
     private List<DeviceInterrupt> interruptList;
@@ -124,6 +127,16 @@ public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAw
     {
         return currentDevice;
     }
+    
+    @Override
+    public String getPageSource()
+    {
+        String pageSource = webDriver.getPageSource();
+        if ( pageSource != null )
+            return XMLEscape.toXML( pageSource );
+        else
+            return "";
+    }
 
     /**
      * Cache data.
@@ -132,10 +145,10 @@ public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAw
     {
         if ( !cachingEnabled )
             return;
-
-        if ( log.isDebugEnabled() )
-            log.debug( "Caching page data" );
-        String pageSource = webDriver.getPageSource();
+        
+        if ( log.isInfoEnabled() )
+            log.info( Thread.currentThread().getName() + ": Caching page data" );
+        String pageSource = getPageSource();
 
         try
         {
@@ -146,7 +159,7 @@ public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAw
         }
         catch ( Exception e )
         {
-            log.warn( "CACHING HAS BEEN DISABLED" );
+            log.warn( "CACHING HAS BEEN DISABLED", e );
             cachingEnabled = false;
             cachedDocument = null;
         }
@@ -348,13 +361,12 @@ public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAw
                 XPath xPath = xPathFactory.newXPath();
                 String path = by.toString();
                 path = path.substring( path.indexOf( ": " ) + 2 );
-                System.out.println( path );
                 NodeList nodes = (NodeList) xPath.evaluate( path, cachedDocument, XPathConstants.NODESET );
 
                 List<WebElement> elementList = new ArrayList<WebElement>( 10 );
 
                 for ( int i = 0; i < nodes.getLength(); i++ )
-                    elementList.add( new CachedWebElement( webDriver, by, nodes.item( i ) ) );
+                    elementList.add( new CachedWebElement( this, webDriver, by, nodes.item( i ) ) );
 
                 return elementList;
             }
@@ -368,6 +380,11 @@ public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAw
 
         return webDriver.findElements( by );
     }
+    
+    public void clearCache()
+    {
+        cachedDocument = null;
+    }
 
     /*
      * (non-Javadoc)
@@ -376,38 +393,45 @@ public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAw
      */
     public WebElement findElement( By by )
     {
-        if ( cachingEnabled && cachedDocument == null )
-            cacheData();
-
-        if ( cachingEnabled && cachedDocument != null )
+        if ( by instanceof ByXPath )
         {
-            try
+            if ( cachingEnabled && cachedDocument == null )
+                cacheData();
+    
+            if ( cachingEnabled && cachedDocument != null )
             {
-                XPath xPath = xPathFactory.newXPath();
-                String path = by.toString();
-                path = path.substring( path.indexOf( ": " ) + 2 );
-                Node node = (Node) xPath.evaluate( path, cachedDocument, XPathConstants.NODE );
-
-                return new CachedWebElement( webDriver, by, node );
-            }
-            catch ( Exception e )
-            {
-                log.warn( "Error reading from cache " + e.getMessage() );
-                cachingEnabled = false;
-                cachedDocument = null;
+                try
+                {
+                    XPath xPath = xPathFactory.newXPath();
+                    String path = by.toString();
+                    path = path.substring( path.indexOf( ": " ) + 2 );
+                    Node node = (Node) xPath.evaluate( path, cachedDocument, XPathConstants.NODE );
+    
+                    if ( node != null )
+                        return new CachedWebElement( this, webDriver, by, node );
+                    else
+                        cachedDocument = null;
+                }
+                catch ( Exception e )
+                {
+                    log.warn( "Error reading from cache ", e );
+                    cachingEnabled = false;
+                    cachedDocument = null;
+                }
             }
         }
-        return webDriver.findElement( by );
+        return new MorelandWebElement( this, webDriver.findElement( by ) );
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.openqa.selenium.WebDriver#getPageSource()
-     */
-    public String getPageSource()
+
+    public boolean isCachingEnabled()
     {
-        return webDriver.getPageSource();
+        return cachingEnabled;
+    }
+
+    public void setCachingEnabled( boolean cachingEnabled )
+    {
+        this.cachingEnabled = cachingEnabled;
     }
 
     /*

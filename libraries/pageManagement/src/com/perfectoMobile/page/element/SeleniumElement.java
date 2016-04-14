@@ -25,9 +25,12 @@ import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.MatchM
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Screen;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Repositories.RepositoryType;
+import com.morelandLabs.page.StepStatus;
 import com.morelandLabs.spi.PropertyProvider;
+import com.morelandLabs.spi.driver.CachedElement;
 import com.morelandLabs.spi.driver.NativeDriverProvider;
 import com.morelandLabs.spi.driver.VisualDriverProvider;
+import com.morelandLabs.utility.html.HTMLElementLookup;
 import com.perfectoMobile.page.BY;
 import com.perfectoMobile.page.ElementDescriptor;
 import com.perfectoMobile.page.PageManager;
@@ -241,6 +244,11 @@ public class SeleniumElement extends AbstractElement
 
 			case V_TEXT:
 				return By.linkText( getKey() );
+				
+			case HTML:
+			    HTMLElementLookup elementLookup = new HTMLElementLookup( getKey() );
+			    return By.xpath( elementLookup.toXPath() );
+			    
 
 			default:
 				return null;
@@ -385,19 +393,24 @@ public class SeleniumElement extends AbstractElement
 	@Override
 	protected String _getValue()
 	{
+	    long startTime = System.currentTimeMillis();
 		WebElement currentElement = getElement();
 
+		String returnValue = null;
 		switch (currentElement.getTagName().toUpperCase())
 		{
 			case "IMG":
-				return currentElement.getAttribute( "src" );
+			    returnValue = currentElement.getAttribute( "src" );
 
 			case "INPUT":
-				return currentElement.getAttribute( "value" );
+			    returnValue = currentElement.getAttribute( "value" );
 
 			default:
-				return currentElement.getText();
+			    returnValue = currentElement.getText();
 		}
+		
+		PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), getPageName(), getElementName(), "get(" + returnValue + ")", System.currentTimeMillis(), System.currentTimeMillis() - startTime, StepStatus.SUCCESS, getKey(), null, 0, "", currentElement instanceof CachedElement );
+		return returnValue;
 	}
 
 	/* (non-Javadoc)
@@ -415,7 +428,11 @@ public class SeleniumElement extends AbstractElement
 	@Override
 	protected boolean _isVisible()
 	{
-		return getElement().isDisplayed();
+	    long startTime = System.currentTimeMillis();
+	    WebElement webElement = (WebElement) getElement();
+		boolean returnValue = webElement.isDisplayed();
+		PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), getPageName(), getElementName(), "visible", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "", webElement instanceof CachedElement );
+		return returnValue;
 	}
 
 	/* (non-Javadoc)
@@ -424,11 +441,26 @@ public class SeleniumElement extends AbstractElement
 	@Override
 	protected boolean _isPresent()
 	{
+	    boolean returnValue = false;
+	    long startTime = System.currentTimeMillis();
+	    
 		if ( "V_TEXT".equals( getBy().name().toUpperCase() ) )
-			return Boolean.parseBoolean( PerfectoMobile.instance().imaging().textExists( getExecutionId(), getDeviceName(), getKey(), (short)30 ).getStatus() );
+		{
+			returnValue = Boolean.parseBoolean( PerfectoMobile.instance().imaging().textExists( getExecutionId(), getDeviceName(), getKey(), (short)30 ).getStatus() );
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), getPageName(), getElementName(), "present", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "", false );
+		}
 		else if ( "V_IMAGE".equals( getBy().name().toUpperCase() ) )
-			return Boolean.parseBoolean( PerfectoMobile.instance().imaging().imageExists( getExecutionId(), getDeviceName(), getKey(), (short)30, MatchMode.bounded ).getStatus() );
-		return getElement() != null;
+		{
+			returnValue = Boolean.parseBoolean( PerfectoMobile.instance().imaging().imageExists( getExecutionId(), getDeviceName(), getKey(), (short)30, MatchMode.bounded ).getStatus() );
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), getPageName(), getElementName(), "present", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "", false );
+		}
+		
+		WebElement webElement = getElement();
+		PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), getPageName(), getElementName(), "present", System.currentTimeMillis(), System.currentTimeMillis() - startTime, webElement != null ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "", webElement instanceof CachedElement );
+		return webElement != null;
+		
+		
+		
 	}
 	
 	/* (non-Javadoc)
@@ -439,6 +471,7 @@ public class SeleniumElement extends AbstractElement
 	{
 		try
 		{
+		    long startTime = System.currentTimeMillis();
 			String currentContext = null;
 			if (webDriver instanceof ContextAware)
 				currentContext = ( ( ContextAware ) webDriver ).getContext();
@@ -476,6 +509,8 @@ public class SeleniumElement extends AbstractElement
 			if (currentContext != null && webDriver instanceof ContextAware)
 				( ( ContextAware ) webDriver ).context( currentContext );
 
+			
+			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), getPageName(), getElementName(), "waitFor." + waitType, System.currentTimeMillis(), System.currentTimeMillis() - startTime, webElement != null ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "", webElement instanceof CachedElement );
 			return webElement != null;
 		}
 		catch (Exception e)
@@ -501,8 +536,14 @@ public class SeleniumElement extends AbstractElement
 			Select selectElement = new Select( webElement );
 			if ( selectElement.isMultiple() )
 				selectElement.deselectAll();
-			
-			selectElement.selectByValue( currentValue );
+			try
+			{
+			    selectElement.selectByVisibleText( currentValue );
+			}
+			catch( Exception e )
+			{
+			    selectElement.selectByValue( currentValue );
+			}
 		}
 		else
 		{

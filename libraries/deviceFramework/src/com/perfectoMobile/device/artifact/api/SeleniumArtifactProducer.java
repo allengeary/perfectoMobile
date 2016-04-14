@@ -76,7 +76,7 @@ public class SeleniumArtifactProducer extends AbstractArtifactProducer
         switch ( aType )
         {
             case FAILURE_SOURCE:
-                return new Artifact( rootFolder + "failureDOM.xml", webDriver.getPageSource() != null ? XMLEscape.toXML( webDriver.getPageSource() ).getBytes() : null );
+                return new Artifact( rootFolder + "failureDOM.xml", webDriver.getPageSource().getBytes() );
     
             case CONSOLE_LOG:
                 Artifact consoleArtifact = new Artifact( rootFolder + "console.txt", DeviceManager.instance().getLog().getBytes() );

@@ -7,51 +7,31 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.w3c.dom.Node;
-import com.morelandLabs.spi.driver.CachedElement;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CachedWebElement.
  */
-public class CachedWebElement implements WebElement, CachedElement
+public class MorelandWebElement implements WebElement
 {
 	
-	/** The element node. */
-	private Node elementNode;
-	
-	/** The web driver. */
-	private WebDriver webDriver;
-	
-	/** The by. */
-	private By by;
-	
 	private DeviceWebDriver deviceDriver;
+	private WebElement webElement;
 	
-	/**
-	 * Instantiates a new cached web element.
-	 *
-	 * @param webDriver the web driver
-	 * @param by the by
-	 * @param elementNode the element node
-	 */
-	public CachedWebElement( DeviceWebDriver deviceDriver, WebDriver webDriver, By by, Node elementNode )
-	{
-		this.elementNode = elementNode;
-		this.webDriver = webDriver;
-		this.deviceDriver = deviceDriver;
-		this.by = by;
-	}
-	
-	/* (non-Javadoc)
+	public MorelandWebElement( DeviceWebDriver deviceDriver, WebElement webElement )
+    {
+        this.deviceDriver = deviceDriver;
+        this.webElement = webElement;
+    }
+
+    /* (non-Javadoc)
 	 * @see org.openqa.selenium.WebElement#click()
 	 */
 	@Override
 	public void click()
 	{
-		webDriver.findElement( by ).click();
+		webElement.click();
 		deviceDriver.clearCache();
 	}
 
@@ -61,7 +41,7 @@ public class CachedWebElement implements WebElement, CachedElement
 	@Override
 	public void submit()
 	{
-		webDriver.findElement( by ).submit();
+		webElement.submit();
 		deviceDriver.clearCache();
 	}
 
@@ -71,8 +51,7 @@ public class CachedWebElement implements WebElement, CachedElement
 	@Override
 	public void sendKeys( CharSequence... keysToSend )
 	{
-		webDriver.findElement( by ).sendKeys( keysToSend );
-		
+	    webElement.sendKeys( keysToSend );
 	}
 
 	/* (non-Javadoc)
@@ -81,7 +60,7 @@ public class CachedWebElement implements WebElement, CachedElement
 	@Override
 	public void clear()
 	{
-		webDriver.findElement( by ).clear();
+		webElement.clear();
 		
 	}
 
@@ -91,7 +70,7 @@ public class CachedWebElement implements WebElement, CachedElement
 	@Override
 	public String getTagName()
 	{
-		return elementNode.getNodeName();
+		return webElement.getTagName();
 	}
 
 	/* (non-Javadoc)
@@ -100,11 +79,7 @@ public class CachedWebElement implements WebElement, CachedElement
 	@Override
 	public String getAttribute( String name )
 	{
-		Node attributeNode = elementNode.getAttributes().getNamedItem( name );
-		if ( attributeNode != null )
-			return attributeNode.getNodeValue();
-		else
-			return null;
+	    return webElement.getAttribute( name );
 	}
 
 	/* (non-Javadoc)
@@ -113,7 +88,7 @@ public class CachedWebElement implements WebElement, CachedElement
 	@Override
 	public boolean isSelected()
 	{
-		return webDriver.findElement( by ).isSelected();
+		return webElement.isSelected();
 	}
 
 	/* (non-Javadoc)
@@ -122,15 +97,7 @@ public class CachedWebElement implements WebElement, CachedElement
 	@Override
 	public boolean isEnabled()
 	{
-		try
-		{
-			
-			return Boolean.parseBoolean( getAttribute( "enabled" ) );
-		}
-		catch( Exception e )
-		{
-			return webDriver.findElement( by ).isEnabled();
-		}
+		return webElement.isEnabled();
 	}
 
 	/* (non-Javadoc)
@@ -139,7 +106,7 @@ public class CachedWebElement implements WebElement, CachedElement
 	@Override
 	public String getText()
 	{
-		return elementNode.getTextContent();
+		return webElement.getText();
 	}
 
 	/* (non-Javadoc)
@@ -148,7 +115,7 @@ public class CachedWebElement implements WebElement, CachedElement
 	@Override
 	public List<WebElement> findElements( By by )
 	{
-		return webDriver.findElement( this.by ).findElements( by );
+		return webElement.findElements( by );
 	}
 
 	/* (non-Javadoc)
@@ -157,7 +124,7 @@ public class CachedWebElement implements WebElement, CachedElement
 	@Override
 	public WebElement findElement( By by )
 	{
-		return webDriver.findElement( this.by ).findElement( by );
+		return webElement.findElement( by );
 	}
 
 	/* (non-Javadoc)
@@ -166,7 +133,7 @@ public class CachedWebElement implements WebElement, CachedElement
 	@Override
 	public boolean isDisplayed()
 	{
-		return webDriver.findElement( by ).isDisplayed();
+		return webElement.isDisplayed();
 	}
 
 	/* (non-Javadoc)
@@ -175,18 +142,7 @@ public class CachedWebElement implements WebElement, CachedElement
 	@Override
 	public Point getLocation()
 	{
-		try
-		{
-			String x = null, y = null;
-			
-			x=getAttribute( "x" );
-			y=getAttribute( "y" );
-			return new Point( Integer.parseInt( x ), Integer.parseInt( y ) );
-		}
-		catch( Exception e )
-		{
-			return webDriver.findElement( by ).getLocation();
-		}
+		return webElement.getLocation();
 	}
 
 	/* (non-Javadoc)
@@ -195,20 +151,7 @@ public class CachedWebElement implements WebElement, CachedElement
 	@Override
 	public Dimension getSize()
 	{
-		try
-		{
-			String height = null, width = null;
-			
-			height=getAttribute( "height" );
-			width=getAttribute( "width" );
-			return new Dimension( Integer.parseInt( width ), Integer.parseInt( height ) );
-		}
-		catch( Exception e )
-		{
-			return webDriver.findElement( by ).getSize();
-		}
-		
-		
+		return webElement.getSize();
 	}
 
 	/* (non-Javadoc)
@@ -217,7 +160,7 @@ public class CachedWebElement implements WebElement, CachedElement
 	@Override
 	public String getCssValue( String propertyName )
 	{
-		return webDriver.findElement( by ).getCssValue( propertyName );
+		return webElement.getCssValue( propertyName );
 	}
 
 }

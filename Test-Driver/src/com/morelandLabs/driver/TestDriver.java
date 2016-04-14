@@ -37,6 +37,7 @@ import com.perfectoMobile.device.data.XMLDataProvider;
 import com.perfectoMobile.device.data.perfectoMobile.AvailableHandsetValidator;
 import com.perfectoMobile.device.data.perfectoMobile.PerfectoMobileDataProvider;
 import com.perfectoMobile.device.data.perfectoMobile.ReservedHandsetValidator;
+import com.perfectoMobile.device.factory.DriverManager;
 import com.perfectoMobile.device.logging.ThreadedFileHandler;
 import com.perfectoMobile.device.property.PropertyAdapter;
 import com.perfectoMobile.gesture.GestureManager;
@@ -143,6 +144,8 @@ public class TestDriver
 				DataManager.instance().setPersonas( personaNames );
 				PageManager.instance().setWindTunnelEnabled( true );
 			}
+			
+			DeviceManager.instance().setCachingEnabled( Boolean.parseBoolean( configProperties.getProperty( "driver.enableCaching" ) ) );
 			
 			String interruptString = configProperties.getProperty( "driver.deviceInterrupts" );
 			if ( interruptString != null && !interruptString.isEmpty() )

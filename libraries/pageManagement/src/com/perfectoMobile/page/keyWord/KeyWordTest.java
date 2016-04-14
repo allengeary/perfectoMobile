@@ -234,7 +234,7 @@ public class KeyWordTest
 				if ( log.isWarnEnabled() )
 					log.warn( "***** Step [" + step.getName() + "] Failed" );
 				
-				PageManager.instance().addExecutionLog( executionId, deviceName, "", this.getName(), "Test", startTime, System.currentTimeMillis() - startTime, StepStatus.FAILURE, "", null, 0, "" );
+				PageManager.instance().addExecutionLog( executionId, deviceName, "", this.getName(), "Test", startTime, System.currentTimeMillis() - startTime, StepStatus.FAILURE, "", null, 0, "", false );
 				
 				if ( timed )
 					PageManager.instance().addExecutionTiming( executionId, deviceName, getName(), System.currentTimeMillis() - startTime, StepStatus.FAILURE, description, threshold );
@@ -248,7 +248,7 @@ public class KeyWordTest
 			
 		}
 		
-		PageManager.instance().addExecutionLog( executionId, deviceName, "", this.getName(), "Test", startTime, System.currentTimeMillis() - startTime, StepStatus.SUCCESS, "", null, 0, "" );
+		PageManager.instance().addExecutionLog( executionId, deviceName, "", this.getName(), "Test", startTime, System.currentTimeMillis() - startTime, StepStatus.SUCCESS, "", null, 0, "", false );
 		
 		if ( timed )
 			PageManager.instance().addExecutionTiming( executionId, deviceName, getName(), System.currentTimeMillis() - startTime, StepStatus.SUCCESS, description, threshold );

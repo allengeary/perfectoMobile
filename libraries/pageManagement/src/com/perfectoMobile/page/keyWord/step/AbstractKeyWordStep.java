@@ -52,8 +52,8 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	private boolean inverse = false;
 	
 	/** The Constant SPLIT. */
-	private static final String SPLIT = "-->";
-	
+    private static final String SPLIT = "-->";
+
 	/** The fork. */
 	private boolean fork;
 	
@@ -464,8 +464,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 					{
 						stepException = e;
 						subReturnValue = false;
-
-                                                log.debug( Thread.currentThread().getName() + ": ***** Step " + name + " on page " + pageName + " encoundered error: ", e );
+						log.debug( Thread.currentThread().getName() + ": ***** Step " + name + " on page " + pageName + " encoundered error: ", e );
 					}
 					
 					if ( step.isInverse() )
@@ -488,7 +487,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 
 			if ( isRecordable() )
 			{
-				PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, "", null, getThreshold(), getDescription() );
+				PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, "", null, getThreshold(), getDescription(), false );
 				if ( isTimed() )
 					PageManager.instance().addExecutionTiming(getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName() + "." + getName() + "." + getClass().getSimpleName(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, description, threshold);
 			}
@@ -507,7 +506,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 								stepException = new IllegalArgumentException( toError() );
 	
 							PageManager.instance().setThrowable( stepException );						
-							PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, StepStatus.FAILURE, stepException.getMessage(), stepException, getThreshold(), getDescription() );
+							PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, StepStatus.FAILURE, stepException.getMessage(), stepException, getThreshold(), getDescription(), false );
 							
 							if ( isTimed() )
 								PageManager.instance().addExecutionTiming(getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName() + "." + getName() + "." + getClass().getSimpleName(), System.currentTimeMillis() - startTime, StepStatus.FAILURE, description, threshold);
@@ -528,7 +527,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 								stepException = new IllegalArgumentException( toError() );
 	
 							PageManager.instance().setThrowable( stepException );						
-							PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, StepStatus.FAILURE_IGNORED, stepException.getMessage(), stepException, getThreshold(), getDescription() );
+							PageManager.instance().addExecutionLog( getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName(), getName(), getClass().getSimpleName(), startTime, System.currentTimeMillis() - startTime, StepStatus.FAILURE_IGNORED, stepException.getMessage(), stepException, getThreshold(), getDescription(), false );
 							
 							if ( isTimed() )
 								PageManager.instance().addExecutionTiming(getExecutionId( webDriver ), getDeviceName( webDriver ), getPageName() + "." + getName() + "." + getClass().getSimpleName(), System.currentTimeMillis() - startTime, StepStatus.FAILURE, description, threshold);

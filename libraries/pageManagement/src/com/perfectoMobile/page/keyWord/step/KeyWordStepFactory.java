@@ -10,6 +10,7 @@ import com.perfectoMobile.page.keyWord.KeyWordStep.ValidationType;
 import com.perfectoMobile.page.keyWord.step.spi.KWSAddCookie;
 import com.perfectoMobile.page.keyWord.step.spi.KWSAttribute;
 import com.perfectoMobile.page.keyWord.step.spi.KWSBreak;
+import com.perfectoMobile.page.keyWord.step.spi.KWSCache;
 import com.perfectoMobile.page.keyWord.step.spi.KWSCall;
 import com.perfectoMobile.page.keyWord.step.spi.KWSCheckColor;
 import com.perfectoMobile.page.keyWord.step.spi.KWSClick;
@@ -29,6 +30,7 @@ import com.perfectoMobile.page.keyWord.step.spi.KWSLoop;
 import com.perfectoMobile.page.keyWord.step.spi.KWSMath;
 import com.perfectoMobile.page.keyWord.step.spi.KWSMouse;
 import com.perfectoMobile.page.keyWord.step.spi.KWSOpenPage;
+import com.perfectoMobile.page.keyWord.step.spi.KWSReport;
 import com.perfectoMobile.page.keyWord.step.spi.KWSReturn;
 import com.perfectoMobile.page.keyWord.step.spi.KWSSet;
 import com.perfectoMobile.page.keyWord.step.spi.KWSString;
@@ -108,6 +110,8 @@ public class KeyWordStepFactory
 		addKeyWord( "STRING", KWSString.class );
 		addKeyWord( "MATH", KWSMath.class );
 		addKeyWord( "MOUSE", KWSMouse.class );
+		addKeyWord( "CACHE", KWSCache.class );
+		addKeyWord( "REPORt", KWSReport.class );
 	}
 	
 	/**

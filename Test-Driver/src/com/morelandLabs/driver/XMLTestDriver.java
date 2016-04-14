@@ -1,15 +1,9 @@
 package com.morelandLabs.driver;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.testng.Assert;
 import org.testng.SkipException;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.Test;
-import com.morelandLabs.spi.RunDetails;
 import com.perfectoMobile.device.DeviceManager;
-import com.perfectoMobile.device.data.DataManager;
-import com.perfectoMobile.device.factory.DeviceWebDriver;
 import com.perfectoMobile.device.ng.AbstractSeleniumTest;
 import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.keyWord.KeyWordDriver;

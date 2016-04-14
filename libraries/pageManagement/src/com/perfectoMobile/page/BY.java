@@ -32,7 +32,9 @@ public enum BY
 	V_TEXT( 7, "Visual Text", "VISUAL" ),
 	
 	/** The v image. */
-	V_IMAGE( 8, "Visual Image", "VISUAL" );
+	V_IMAGE( 8, "Visual Image", "VISUAL" ),
+	
+	HTML( 9, "HTML Properties" );
 	
 	/** The id. */
 	private int id;

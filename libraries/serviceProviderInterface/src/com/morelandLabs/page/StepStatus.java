@@ -13,5 +13,7 @@ public enum StepStatus
     FAILURE,
     
     /** The failure ignored. */
-    FAILURE_IGNORED;
+    FAILURE_IGNORED,
+    
+    REPORT;
 }

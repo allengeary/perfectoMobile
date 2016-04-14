@@ -638,6 +638,7 @@ public class DeviceManager implements ArtifactListener
 	 */
 	public boolean isCachingEnabled()
 	{
+	    System.out.println( "CACHING ENABLED: " + cachingEnabled );
 		return cachingEnabled;
 	}
 

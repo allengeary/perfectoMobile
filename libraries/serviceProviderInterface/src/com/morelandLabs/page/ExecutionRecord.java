@@ -32,6 +32,8 @@ public class ExecutionRecord
 	/** The t. */
 	private Throwable t;
 	
+	private boolean fromCache = false;
+	
 	/**
 	 * Instantiates a new execution record.
 	 *
@@ -44,7 +46,7 @@ public class ExecutionRecord
 	 * @param detail the detail
 	 * @param t the t
 	 */
-	public ExecutionRecord( String group, String name, String type, long timeStamp, long runTime, StepStatus status, String detail, Throwable t )
+	public ExecutionRecord( String group, String name, String type, long timeStamp, long runTime, StepStatus status, String detail, Throwable t, boolean fromCache )
 	{
 		super();
 		this.group = group;
@@ -55,9 +57,20 @@ public class ExecutionRecord
 		this.status = status;
 		this.detail = detail;
 		this.t = t;
+		this.fromCache = fromCache;
 	}
 	
-	/**
+	public boolean isFromCache()
+    {
+        return fromCache;
+    }
+
+    public void setFromCache( boolean fromCache )
+    {
+        this.fromCache = fromCache;
+    }
+
+    /**
 	 * Gets the t.
 	 *
 	 * @return the t
@@ -245,15 +258,24 @@ public class ExecutionRecord
 			case FAILURE_IGNORED:
 				stringBuffer.append( "<tr bgcolor='#F5DEB3'>" );
 				break;
-				
+			case REPORT:
+                stringBuffer.append( "<tr bgcolor='#ff99ff'>" );
+                break;	
 			case SUCCESS:
-				stringBuffer.append( "<tr bgcolor='#66FF99'>" );
+			    if ( fromCache )
+			        stringBuffer.append( "<tr bgcolor='#33ccff'>" );
+			    else
+			        stringBuffer.append( "<tr bgcolor='#66FF99'>" );
 				break;
 		}
 		
 			
-		stringBuffer.append( "<td>" ).append( group ).append( "</td>" );
-		stringBuffer.append( "<td>" ).append( name ).append( "</td>" );
+		stringBuffer.append( "<td>" ).append( group == null ? "" : group ).append( "</td>" );
+		
+		if ( status.equals( StepStatus.REPORT ) )
+		    stringBuffer.append( "<td>" ).append( name.replace( "\t", "<br/>" ) ).append( "</td>" );
+		else
+		    stringBuffer.append( "<td>" ).append( name ).append( "</td>" );
 		stringBuffer.append( "<td>" ).append( type ).append( "</td>" );
 		stringBuffer.append( "<td>" ).append( timeFormat.format( new Date( timeStamp ) ) ).append( "</td>" );
 		stringBuffer.append( "<td>" ).append( runTime ).append( "</td>" );
@@ -270,9 +292,16 @@ public class ExecutionRecord
 				case FAILURE_IGNORED:
 					backgroundColor = "#F5DEB3";
 					break;
-					
+				case REPORT:
+				    backgroundColor= "#ff99ff";
+				    break;
+				    
 				case SUCCESS:
-					backgroundColor = "#66FF99";
+				    if ( fromCache )
+				        backgroundColor = "#33ccff";
+	                else
+				        backgroundColor = "#66FF99";
+					
 					break;
 			}
 			
@@ -296,4 +325,5 @@ public class ExecutionRecord
 	}
 	
 }
+
 
