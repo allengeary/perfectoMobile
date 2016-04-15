@@ -387,6 +387,17 @@ public class SeleniumElement extends AbstractElement
 		return getElement();
 	}
 
+	protected String _getStyle( String styleProperty )
+	{
+	    long startTime = System.currentTimeMillis();
+        WebElement currentElement = getElement();
+
+        String returnValue = getElement().getCssValue( styleProperty );
+        
+        PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), getPageName(), getElementName(), "style(" + returnValue + ")", System.currentTimeMillis(), System.currentTimeMillis() - startTime, StepStatus.SUCCESS, getKey(), null, 0, "", currentElement instanceof CachedElement );
+        return returnValue;
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.element.AbstractElement#_getValue()
 	 */

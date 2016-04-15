@@ -48,6 +48,8 @@ public interface Element
 	 */
 	public String getValue();
 	
+	public String getStyle( String styleProperty );
+	
 	/**
 	 * Checks if is visible.
 	 *

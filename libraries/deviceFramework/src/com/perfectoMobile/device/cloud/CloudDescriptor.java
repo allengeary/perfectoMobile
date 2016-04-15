@@ -79,7 +79,7 @@ public class CloudDescriptor
 		
 		try
 		{
-			return "https://" + URLEncoder.encode( getUserName(), "UTF-8" ) + ":" + URLEncoder.encode( getPassword(), "UTF-8" ) + "@" + getHostName() + "/nexperience/wd/hub";
+			return "https://" + URLEncoder.encode( getUserName(), "UTF-8" ) + ":" + URLEncoder.encode( getPassword(), "UTF-8" ) + "@mtb.perfecotmobile.com/nexperience/wd/hub";
 		}
 		catch (UnsupportedEncodingException e)
 		{

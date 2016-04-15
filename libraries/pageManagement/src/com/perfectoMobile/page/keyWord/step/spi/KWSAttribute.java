@@ -37,7 +37,7 @@ import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
  */
 public class KWSAttribute extends AbstractKeyWordStep
 {
-
+    private static final String STYLE = "style.";
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep#_executeStep(com.perfectoMobile.page.Page, org.openqa.selenium.WebDriver, java.util.Map, java.util.Map)
 	 */
@@ -51,9 +51,22 @@ public class KWSAttribute extends AbstractKeyWordStep
 		Object compareTo = null;
 		
 		if ( getParameterList().size() == 1 )
-			attributeValue = getElement( pageObject, contextMap, webDriver, dataMap ).getAttribute( getParameterValue( getParameterList().get( 0 ), contextMap, dataMap ) + "" );
+		{
+		    String attributeName = getParameterValue( getParameterList().get( 0 ), contextMap, dataMap ) + "";
+		    if ( attributeName.toLowerCase().startsWith( STYLE ) )
+		        attributeValue = getElement( pageObject, contextMap, webDriver, dataMap ).getStyle( attributeName.substring( STYLE.length() ) );
+		    else
+		        attributeValue = getElement( pageObject, contextMap, webDriver, dataMap ).getAttribute( attributeName );
+			
+		}
 		else
 		{
+		    String attributeName = getParameterValue( getParameterList().get( 1 ), contextMap, dataMap ) + "";
+            if ( attributeName.toLowerCase().startsWith( STYLE ) )
+                attributeValue = getElement( pageObject, contextMap, webDriver, dataMap ).getStyle( attributeName.substring( STYLE.length() ) );
+            else
+                attributeValue = getElement( pageObject, contextMap, webDriver, dataMap ).getAttribute( attributeName );
+            
 			compareTo = getParameterValue( getParameterList().get( 0 ), contextMap, dataMap );
 			attributeValue = getElement( pageObject, contextMap, webDriver, dataMap ).getAttribute( getParameterValue( getParameterList().get( 1 ), contextMap, dataMap ) + "" );
 			if ( !attributeValue.equals( compareTo ) )

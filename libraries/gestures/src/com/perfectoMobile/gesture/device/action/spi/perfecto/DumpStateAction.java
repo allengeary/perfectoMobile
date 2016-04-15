@@ -11,6 +11,7 @@ import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.ImageF
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Resolution;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.Screen;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Repositories.RepositoryType;
+import com.morelandLabs.utility.XMLEscape;
 import com.perfectoMobile.gesture.device.action.AbstractDefaultAction;
 import com.perfectoMobile.gesture.device.action.DeviceAction;
 
@@ -53,7 +54,7 @@ public class DumpStateAction extends AbstractDefaultAction implements DeviceActi
 			outputStream.close();
 			
 			outputStream = new FileOutputStream( DOMFile );
-			outputStream.write( webDriver.getPageSource().getBytes() );
+			outputStream.write( XMLEscape.toXML( webDriver.getPageSource() ).getBytes() );
 			outputStream.flush();
 			outputStream.close();
 			return true;
