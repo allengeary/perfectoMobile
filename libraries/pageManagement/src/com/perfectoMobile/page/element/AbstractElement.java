@@ -43,6 +43,8 @@ public abstract class AbstractElement implements Element
 	 */
 	protected abstract String _getValue();
 
+	protected abstract String _getStyle(String styleProperty);
+	
 	/**
 	 * _get attribute.
 	 *
@@ -290,6 +292,32 @@ public abstract class AbstractElement implements Element
 		}
 		return returnValue;
 	}
+	
+	/* (non-Javadoc)
+     * @see com.perfectoMobile.page.element.Element#getValue()
+     */
+    @Override
+    public String getStyle(String styleProperty)
+    {
+        String returnValue = null;
+        long startTime = System.currentTimeMillis();
+        boolean success = false;
+        try
+        {
+            returnValue = _getStyle( styleProperty );
+            success = true;
+        }
+        catch( Exception e )
+        {
+            throw new IllegalStateException( e );
+        }
+        finally
+        {
+            if ( timed )
+                PageManager.instance().addExecutionTiming( getExecutionId(), getDeviceName(), pageName + "." + elementName + ".getStyle()", System.currentTimeMillis() - startTime, success ? StepStatus.SUCCESS : StepStatus.FAILURE, "", 0 );
+        }
+        return returnValue;
+    }
 
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.element.Element#isVisible()

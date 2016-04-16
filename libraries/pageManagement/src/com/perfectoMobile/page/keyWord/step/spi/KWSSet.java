@@ -1,7 +1,7 @@
 package com.perfectoMobile.page.keyWord.step.spi;
 
 import java.util.Map;
-
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.perfectoMobile.page.Page;
@@ -33,7 +33,6 @@ public class KWSSet extends AbstractKeyWordStep
 			log.info( "Attmepting to set " + getName() + " to [" + newValue + "]" );
 		
 		getElement( pageObject, contextMap, webDriver, dataMap ).setValue( newValue );
-		
 		return true;
 	}
 	
