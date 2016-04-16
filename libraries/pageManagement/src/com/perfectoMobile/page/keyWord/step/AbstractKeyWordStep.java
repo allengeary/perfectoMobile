@@ -11,6 +11,8 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.WindTunnel.Status;
+import com.perfectoMobile.device.ConnectedDevice;
+import com.perfectoMobile.device.ng.AbstractSeleniumTest;
 import com.morelandLabs.page.StepStatus;
 import com.perfectoMobile.content.ContentManager;
 import com.perfectoMobile.page.ElementDescriptor;
@@ -425,7 +427,13 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 			boolean returnValue = false;
 			try
 			{
-				returnValue = _executeStep( pageObject, webDriver, contextMap, dataMap, pageMap );
+                            WebDriver altWebDriver = getAltWebDriver();
+                            
+                            returnValue = _executeStep( pageObject,
+                                                        ((altWebDriver != null) ? altWebDriver : webDriver),
+                                                        contextMap,
+                                                        dataMap,
+                                                        pageMap );
 			}
 			catch( KWSLoopBreak lb )
 			{
@@ -1061,4 +1069,28 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	{
 	    this.waitTime = waitAfter;
 	}
+
+    //
+    // Helpers
+    //
+
+    private WebDriver getAltWebDriver()
+    {
+        KeyWordToken token = ((tokenList.size() > 0 ) ? tokenList.get( 0 ) : null );
+        String deviceName = (( token != null ) ? token.getValue() : null );
+
+        ConnectedDevice device = null;
+
+        if ( deviceName != null )
+        {
+            device = AbstractSeleniumTest.getConnectedDevice( deviceName );
+
+            if ( device == null )
+            {
+                throw new IllegalArgumentException( "Device: " + deviceName + " is not registered" );
+            }
+        }
+
+        return (( device != null ) ? device.getWebDriver() : null );
+    }
 }

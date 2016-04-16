@@ -8,6 +8,7 @@ import com.perfectoMobile.page.keyWord.KeyWordStep;
 import com.perfectoMobile.page.keyWord.KeyWordStep.StepFailure;
 import com.perfectoMobile.page.keyWord.KeyWordStep.ValidationType;
 import com.perfectoMobile.page.keyWord.step.spi.KWSAddCookie;
+import com.perfectoMobile.page.keyWord.step.spi.KWSDevice;
 import com.perfectoMobile.page.keyWord.step.spi.KWSAttribute;
 import com.perfectoMobile.page.keyWord.step.spi.KWSBreak;
 import com.perfectoMobile.page.keyWord.step.spi.KWSCache;
@@ -99,11 +100,11 @@ public class KeyWordStepFactory
 		addKeyWord( "VERIFY_COLOR", KWSCheckColor.class );
 		addKeyWord( "VERIFY_CONTRAST", KWSContrastRatio.class );
 		addKeyWord( "WINDOW", KWSWindow.class );
-        addKeyWord( "EXECJS", KWSExecJS.class );
-        addKeyWord( "OPEN_PAGE", KWSOpenPage.class );
-        addKeyWord( "ADD_COOKIE", KWSAddCookie.class );
-        addKeyWord( "DELETE_COOKIE", KWSDeleteCookie.class );
-        addKeyWord( "DELETE_COOKIES", KWSDeleteCookies.class );
+                addKeyWord( "EXECJS", KWSExecJS.class );
+                addKeyWord( "OPEN_PAGE", KWSOpenPage.class );
+                addKeyWord( "ADD_COOKIE", KWSAddCookie.class );
+                addKeyWord( "DELETE_COOKIE", KWSDeleteCookie.class );
+                addKeyWord( "DELETE_COOKIES", KWSDeleteCookies.class );
 		addKeyWord( "GET_COOKIE", KWSGetCookie.class );
 		addKeyWord( "GET_COOKIES", KWSGetCookies.class );
 		addKeyWord( "COMPARE", KWSCompare.class );
@@ -111,7 +112,8 @@ public class KeyWordStepFactory
 		addKeyWord( "MATH", KWSMath.class );
 		addKeyWord( "MOUSE", KWSMouse.class );
 		addKeyWord( "CACHE", KWSCache.class );
-		addKeyWord( "REPORt", KWSReport.class );
+		addKeyWord( "REPORT", KWSReport.class );
+                addKeyWord( "ADD_DEVICE", KWSAddCookie.class );
 	}
 	
 	/**
