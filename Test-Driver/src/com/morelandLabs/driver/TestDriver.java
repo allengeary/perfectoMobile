@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import org.testng.TestNG;
+import org.openqa.selenium.WebDriver;
 import com.morelandLabs.Initializable;
+import com.morelandLabs.utility.SeleniumSessionManager;
 import com.morelandLabs.application.ApplicationRegistry;
 import com.morelandLabs.application.CSVApplicationProvider;
 import com.morelandLabs.application.ExcelApplicationProvider;
@@ -23,6 +25,7 @@ import com.morelandLabs.spi.RunDetails;
 import com.perfectoMobile.content.ContentManager;
 import com.perfectoMobile.content.provider.ExcelContentProvider;
 import com.perfectoMobile.content.provider.XMLContentProvider;
+import com.perfectoMobile.device.ConnectedDevice;
 import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.cloud.CSVCloudProvider;
 import com.perfectoMobile.device.cloud.CloudRegistry;
@@ -40,6 +43,7 @@ import com.perfectoMobile.device.data.perfectoMobile.ReservedHandsetValidator;
 import com.perfectoMobile.device.factory.DriverManager;
 import com.perfectoMobile.device.logging.ThreadedFileHandler;
 import com.perfectoMobile.device.property.PropertyAdapter;
+import com.perfectoMobile.device.ng.AbstractSeleniumTest;
 import com.perfectoMobile.gesture.GestureManager;
 import com.perfectoMobile.gesture.device.action.DeviceActionManager;
 import com.perfectoMobile.gesture.device.action.spi.perfecto.PerfectoDeviceActionFactory;
@@ -419,6 +423,33 @@ public class TestDriver
 					
 			}
 		}
+
+                //
+                // add in support for multiple devices
+                //
+
+                PageManager.instance().setAlternateWebDriverSource( new SeleniumSessionManager()
+                    {
+                        public WebDriver getAltWebDriver( String name )
+                        {
+                            WebDriver rtn = null;
+                            
+                            ConnectedDevice device = AbstractSeleniumTest.getConnectedDevice( name );
+
+                            if ( device != null )
+                            {
+                                rtn = device.getWebDriver();
+                            }
+
+                            return rtn;
+                        }
+
+                        public void registerAltWebDriver( String name )
+                        {
+                            AbstractSeleniumTest.registerSecondaryDeviceOnName( (String) name );
+                        }
+
+                    } );
 	}
 	
 	private static void configureDeviceManagement( Properties configProperties )

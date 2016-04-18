@@ -11,8 +11,6 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.WindTunnel.Status;
-import com.perfectoMobile.device.ConnectedDevice;
-import com.perfectoMobile.device.ng.AbstractSeleniumTest;
 import com.morelandLabs.page.StepStatus;
 import com.perfectoMobile.content.ContentManager;
 import com.perfectoMobile.page.ElementDescriptor;
@@ -1076,21 +1074,23 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 
     private WebDriver getAltWebDriver()
     {
+        WebDriver rtn = null;
+        
         KeyWordToken token = ((tokenList.size() > 0 ) ? tokenList.get( 0 ) : null );
         String deviceName = (( token != null ) ? token.getValue() : null );
 
-        ConnectedDevice device = null;
-
-        if ( deviceName != null )
+        if (( PageManager.instance().getAlternateWebDriverSource() != null ) &&
+            ( deviceName != null ) &&
+            ( !"null".equals( deviceName )))
         {
-            device = AbstractSeleniumTest.getConnectedDevice( deviceName );
-
-            if ( device == null )
+            rtn = PageManager.instance().getAlternateWebDriverSource().getAltWebDriver( deviceName );
+            
+            if ( rtn == null )
             {
                 throw new IllegalArgumentException( "Device: " + deviceName + " is not registered" );
             }
         }
 
-        return (( device != null ) ? device.getWebDriver() : null );
+        return rtn;
     }
 }

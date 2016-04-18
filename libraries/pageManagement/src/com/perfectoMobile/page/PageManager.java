@@ -30,6 +30,7 @@ import com.morelandLabs.spi.PropertyProvider;
 import com.morelandLabs.spi.RunDetails;
 import com.morelandLabs.spi.driver.DeviceProvider;
 import com.morelandLabs.spi.driver.NativeDriverProvider;
+import com.morelandLabs.utility.SeleniumSessionManager;
 import com.perfectoMobile.page.element.provider.ElementProvider;
 import com.perfectoMobile.page.factory.DefaultPageFactory;
 import com.perfectoMobile.page.factory.PageFactory;
@@ -84,9 +85,9 @@ public class PageManager
     /** The image location. */
     private String imageLocation;
     
-    
-    
     private ThreadLocal<Map<Class,Page>> pageCache = new ThreadLocal<Map<Class,Page>>();
+
+    private SeleniumSessionManager altDriverSource = null;
 
     
 	public Map<Class, Page> getPageCache()
@@ -505,6 +506,16 @@ public class PageManager
 		
 		return executionId;
 	}
+
+    public SeleniumSessionManager getAlternateWebDriverSource()
+    {
+        return altDriverSource;
+    }
+
+    public void setAlternateWebDriverSource( SeleniumSessionManager src )
+    {
+        altDriverSource = src;
+    }
 	
 	
 }

@@ -4,9 +4,9 @@ import java.util.Map;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import com.perfectoMobile.device.ng.AbstractSeleniumTest;
 import com.morelandLabs.spi.driver.NativeDriverProvider;
 import com.perfectoMobile.page.Page;
+import com.perfectoMobile.page.PageManager;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
@@ -41,7 +41,10 @@ public class KWSAddDevice extends AbstractKeyWordStep
             throw new IllegalStateException( "add device requires one string properties (name)" );
         }
 
-        AbstractSeleniumTest.registerSecondaryDeviceOnName( (String) name );
+        if ( PageManager.instance().getAlternateWebDriverSource() != null )
+        {
+            PageManager.instance().getAlternateWebDriverSource().registerAltWebDriver( (String) name );
+        }
 		
         return true;
     }
