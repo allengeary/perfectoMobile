@@ -283,7 +283,11 @@ public class XMLKeyWordProvider implements KeyWordProvider
 
 		for ( Step xStep : xSteps )
 		{
-		    KeyWordStep step = KeyWordStepFactory.instance().createStep( xStep.getName(), xStep.getPage(), xStep.isActive(), xStep.getType(), xStep.getLinkId(), xStep.isTimed(), StepFailure.valueOf( xStep.getFailureMode() ), xStep.isInverse(), xStep.getOs(), xStep.getPoi(), xStep.getThreshold().intValue(), "", xStep.getWait().intValue(), xStep.getContext(), xStep.getValidation(), (xStep.getValidationType() != null && !xStep.getValidationType().isEmpty() ) ? ValidationType.valueOf( xStep.getValidationType() ) : null );
+		    KeyWordStep step = KeyWordStepFactory.instance().createStep( xStep.getName(), xStep.getPage(), xStep.isActive(), xStep.getType(),
+                                                                                 xStep.getLinkId(), xStep.isTimed(), StepFailure.valueOf( xStep.getFailureMode() ), xStep.isInverse(),
+                                                                                 xStep.getOs(), xStep.getPoi(), xStep.getThreshold().intValue(), "", xStep.getWait().intValue(),
+                                                                                 xStep.getContext(), xStep.getValidation(), xStep.getDevice(),
+                                                                                 (xStep.getValidationType() != null && !xStep.getValidationType().isEmpty() ) ? ValidationType.valueOf( xStep.getValidationType() ) : null );
 		    
 		    parseParameters( xStep.getParameter(), testName, xStep.getName(), typeName, step );
 		    parseTokens( xStep.getToken(), testName, xStep.getName(), typeName, step );

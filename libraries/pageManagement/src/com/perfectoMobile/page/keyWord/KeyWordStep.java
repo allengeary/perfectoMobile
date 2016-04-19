@@ -246,6 +246,13 @@ public interface KeyWordStep
 	 * @return the context
 	 */
 	public String getContext();
+
+        /**
+	 * Gets the device name.
+	 *
+	 * @return the device
+	 */
+	public String getDevice();
 	
 	/**
 	 * Gets the validation.
@@ -281,6 +288,13 @@ public interface KeyWordStep
 	 * @param contextName the new context
 	 */
 	public void setContext( String contextName );
+
+        /**
+	 * Sets the device name.
+	 *
+	 * @param deviceName the altername device anme
+	 */
+	public void setDevice( String deviceName );
 	
 	/**
 	 * Sets the threshold.

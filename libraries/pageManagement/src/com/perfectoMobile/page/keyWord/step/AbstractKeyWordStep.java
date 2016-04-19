@@ -79,6 +79,9 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 	private String poi;
 	
 	private long waitTime;
+
+        /** The device. */
+	private String device;
 	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#getPoi()
@@ -296,6 +299,23 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 		this.sFailure = sFailure;
 
 	}
+
+    	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#getDevice()
+	 */
+	public String getDevice()
+	{
+		return device;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.KeyWordStep#setDevice(java.lang.String)
+	 */
+	public void setDevice( String device )
+	{
+		this.device = device;
+	}
+
 
 	/**
 	 * Gets the element.
@@ -1075,9 +1095,8 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
     private WebDriver getAltWebDriver()
     {
         WebDriver rtn = null;
-        
-        KeyWordToken token = ((tokenList.size() > 0 ) ? tokenList.get( 0 ) : null );
-        String deviceName = (( token != null ) ? token.getValue() : null );
+
+        String deviceName = getDevice();
 
         if (( PageManager.instance().getAlternateWebDriverSource() != null ) &&
             ( deviceName != null ) &&

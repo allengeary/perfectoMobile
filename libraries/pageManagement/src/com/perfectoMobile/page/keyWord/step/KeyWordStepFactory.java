@@ -147,7 +147,10 @@ public class KeyWordStepFactory
 	 * @param description the description
 	 * @return the key word step
 	 */
-	public KeyWordStep createStep( String name, String pageName, boolean active, String type, String linkId, boolean timed, StepFailure sFailure, boolean inverse, String os, String poi, int threshold, String description, long waitTime, String context, String validation, ValidationType validationType )
+	public KeyWordStep createStep( String name, String pageName, boolean active, String type,
+                                       String linkId, boolean timed, StepFailure sFailure, boolean inverse,
+                                       String os, String poi, int threshold, String description, long waitTime,
+                                       String context, String validation, String device, ValidationType validationType )
 	{
 		
 		Class kwImpl = stepMap.get( type.toUpperCase() );
@@ -175,6 +178,7 @@ public class KeyWordStepFactory
 			returnValue.setValidation( validation );
 			returnValue.setValidationType( validationType );
 			returnValue.setContext( context );
+                        returnValue.setDevice( device );
 			
 			return returnValue;
 		}
