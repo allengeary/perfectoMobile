@@ -8,6 +8,7 @@ import com.perfectoMobile.page.keyWord.KeyWordStep;
 import com.perfectoMobile.page.keyWord.KeyWordStep.StepFailure;
 import com.perfectoMobile.page.keyWord.KeyWordStep.ValidationType;
 import com.perfectoMobile.page.keyWord.step.spi.KWSAddCookie;
+import com.perfectoMobile.page.keyWord.step.spi.KWSAddDevice;
 import com.perfectoMobile.page.keyWord.step.spi.KWSDevice;
 import com.perfectoMobile.page.keyWord.step.spi.KWSAttribute;
 import com.perfectoMobile.page.keyWord.step.spi.KWSBreak;
@@ -113,7 +114,7 @@ public class KeyWordStepFactory
 		addKeyWord( "MOUSE", KWSMouse.class );
 		addKeyWord( "CACHE", KWSCache.class );
 		addKeyWord( "REPORT", KWSReport.class );
-                addKeyWord( "ADD_DEVICE", KWSAddCookie.class );
+                addKeyWord( "ADD_DEVICE", KWSAddDevice.class );
 	}
 	
 	/**

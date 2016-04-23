@@ -575,8 +575,9 @@ public class DeviceManager implements ArtifactListener
         if ( personaName != null && !personaName.isEmpty() )
             runKey = runKey + "." + personaName;
 
-        if ( !analyticsMap.get( currentDevice.getKey() ).hasRun( runKey ) &&
-             !activeRuns.containsKey( currentDevice.getKey() + "." + runKey ) )
+        if ((( analyticsMap.get( currentDevice.getKey() ) == null ) ||
+             ( !analyticsMap.get( currentDevice.getKey() ).hasRun( runKey ))) &&
+            ( !activeRuns.containsKey( currentDevice.getKey() + "." + runKey )))
         {
             DeviceWebDriver webDriver = null;
             try
