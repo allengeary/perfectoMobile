@@ -404,7 +404,13 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 				return clonedElement;
 			}
 			else
-				return pageObject.getElement( pageName, useName );
+                        {
+                            Element elt = pageObject.getElement( pageName, useName );
+
+                            elt.setDriver( webDriver );
+                            
+                            return elt;
+                        }
 		}
 	}
 	
