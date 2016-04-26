@@ -444,9 +444,9 @@ public class TestDriver
                             return rtn;
                         }
 
-                        public void registerAltWebDriver( String name )
+                        public void registerAltWebDriver( String name, String deviceId )
                         {
-                            AbstractSeleniumTest.registerSecondaryDeviceOnName( (String) name );
+                            AbstractSeleniumTest.registerSecondaryDeviceOnName( name, deviceId );
                         }
 
                     } );
@@ -512,6 +512,7 @@ public class TestDriver
 		if ( executionReport != null )
 			DeviceManager.instance().addRunListener( new CSVRunListener( new File( executionReport ) ) );
 		DeviceManager.instance().addRunListener( RunDetails.instance() );
+                DeviceManager.instance().setDriverType( DriverType.valueOf( configProperties.getProperty( DEVICE[ 1 ] )));
 	}
 	
 	private static boolean validateProperties( Properties configProperties, String[] propertyNames )

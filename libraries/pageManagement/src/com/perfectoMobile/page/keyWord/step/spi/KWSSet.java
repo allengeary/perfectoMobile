@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.data.PageData;
+import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
 // TODO: Auto-generated Javadoc
@@ -32,7 +33,9 @@ public class KWSSet extends AbstractKeyWordStep
 		if ( log.isInfoEnabled() )
 			log.info( "Attmepting to set " + getName() + " to [" + newValue + "]" );
 		
-		getElement( pageObject, contextMap, webDriver, dataMap ).setValue( newValue );
+		Element elt = getElement( pageObject, contextMap, webDriver, dataMap );
+                elt.setValue( newValue );
+                    
 		return true;
 	}
 	

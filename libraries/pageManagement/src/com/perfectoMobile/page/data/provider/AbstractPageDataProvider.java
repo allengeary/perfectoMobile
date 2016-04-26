@@ -44,9 +44,6 @@ public abstract class AbstractPageDataProvider implements PageDataProvider
 	        if ( pageData.containsChildren() )
 	            pageData.populateTreeStructure();
 	    }
-	   
-	    System.out.println( recordMap );
-	    
 	}
 	
 	/* (non-Javadoc)

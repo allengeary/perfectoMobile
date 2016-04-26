@@ -43,37 +43,50 @@ public class NamedDataProvider implements DataProvider
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.device.data.DataProvider#readData()
 	 */
-	public void readData()
-	{
-		for ( String device : namedResources )
-		{
-			Handset handset = PerfectoMobile.instance().devices().getDevice( device );
-			
-			String driverName = "";
-			switch( driverType )
-			{
-				case APPIUM:
-					if ( handset.getOs().equals( "iOS" ) )
-						driverName = "IOS";
-					else if ( handset.getOs().equals( "Android" ) )
-						driverName = "ANDROID";
-					else
-						throw new IllegalArgumentException( "Appium is not supported on the following OS " + handset.getOs() );
-					break;
-					
-				case PERFECTO:
-					driverName = "PERFECTO";
-					break;
-					
-				case WEB:
-					driverName = "WEB";
-					break;
-			}
-			
-			DeviceManager.instance().registerDevice( new SimpleDevice( device, handset.getManufacturer(), handset.getModel(), handset.getOs(), handset.getOsVersion(), null, null, 1, driverName, true, device ) );
+    public void readData()
+    {
+        for ( String device : namedResources )
+        {
+            DeviceManager.instance().registerDevice( lookupDeviceById( device, driverType ));
+        }
+    }
 
+    public static Device lookupDeviceById( String device, DriverType driverType )
+    {
+        Handset handset = PerfectoMobile.instance().devices().getDevice( device );
 			
+        String driverName = "";
+        switch( driverType )
+        {
+            case APPIUM:
+                if ( handset.getOs().equals( "iOS" ) )
+                    driverName = "IOS";
+                else if ( handset.getOs().equals( "Android" ) )
+                    driverName = "ANDROID";
+                else
+                    throw new IllegalArgumentException( "Appium is not supported on the following OS " + handset.getOs() );
+                break;
+                    
+            case PERFECTO:
+                driverName = "PERFECTO";
+                break;
+                    
+            case WEB:
+                driverName = "WEB";
+                break;
+        }
 			
-		}
-	}
+        return new SimpleDevice( device,
+                                 handset.getManufacturer(),
+                                 handset.getModel(),
+                                 handset.getOs(),
+                                 handset.getOsVersion(),
+                                 null,
+                                 null,
+                                 1,
+                                 driverName,
+                                 true,
+                                 device );
+    }
+    
 }

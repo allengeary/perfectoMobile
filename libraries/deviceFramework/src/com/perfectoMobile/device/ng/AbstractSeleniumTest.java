@@ -365,7 +365,7 @@ public abstract class AbstractSeleniumTest
         return map.get( name );
     }
 
-    public static void registerSecondaryDeviceOnName( String name )
+    public static void registerSecondaryDeviceOnName( String name, String deviceId )
     {
         TestContext ctx = threadContext.get();
 
@@ -374,10 +374,10 @@ public abstract class AbstractSeleniumTest
             if (log.isInfoEnabled())
                 log.info( "Attempting to acquire device for " + ctx.currentMethod.getName() );
 
-            ConnectedDevice connectedDevice = DeviceManager.instance().getDevice( ctx.currentMethod,
-                                                                                  ( ( TestName ) ctx.testArgs[0] ).getTestName(),
-                                                                                  true,
-                                                                                  ( ( TestName ) ctx.testArgs[0] ).getPersonaName() );
+            ConnectedDevice connectedDevice = DeviceManager.instance().getUnconfiguredDevice( ctx.currentMethod,
+                                                                                              ( ( TestName ) ctx.testArgs[0] ).getTestName(),
+                                                                                              ( ( TestName ) ctx.testArgs[0] ).getPersonaName(),
+                                                                                              deviceId );
 
             if (connectedDevice != null)
             {
@@ -426,7 +426,7 @@ public abstract class AbstractSeleniumTest
 
         if (webDriver != null)
         {
-            String runKey = ((DEFAULT.equals( name )) ? (( TestName ) testArgs[0] ).getTestName() : (( TestName ) testArgs[0] ).getTestName() + ":" + name );
+            String runKey = ((DEFAULT.equals( name )) ? (( TestName ) testArgs[0] ).getTestName() : (( TestName ) testArgs[0] ).getTestName() + "-" + name );
 		    
             File rootFolder = new File( DataManager.instance().getReportFolder(), RunDetails.instance().getRootFolder() );
             rootFolder.mkdirs();

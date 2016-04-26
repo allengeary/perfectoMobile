@@ -29,21 +29,26 @@ public class KWSAddDevice extends AbstractKeyWordStep
         }
 
         Object name = null;
+        Object deviceId = null;
                 
-        if ( getParameterList().size() == 1 )
+        if ( getParameterList().size() == 2 )
         {
             name = getParameterValue( getParameterList().get( 0 ), contextMap, dataMap );
             if ( !( name instanceof String ) )
                 throw new IllegalStateException( "Device name must be of type String" );
+
+            deviceId = getParameterValue( getParameterList().get( 1 ), contextMap, dataMap );
+            if ( !( deviceId instanceof String ) )
+                throw new IllegalStateException( "Device id must be of type String" );
         }
         else
         {
-            throw new IllegalStateException( "add device requires one string properties (name)" );
+            throw new IllegalStateException( "add device requires two string properties (name, deviceId)" );
         }
 
         if ( PageManager.instance().getAlternateWebDriverSource() != null )
         {
-            PageManager.instance().getAlternateWebDriverSource().registerAltWebDriver( (String) name );
+            PageManager.instance().getAlternateWebDriverSource().registerAltWebDriver( (String) name, (String) deviceId );
         }
 		
         return true;

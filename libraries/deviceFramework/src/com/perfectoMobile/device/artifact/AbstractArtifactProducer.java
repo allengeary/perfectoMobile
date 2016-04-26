@@ -94,6 +94,14 @@ public abstract class AbstractArtifactProducer implements ArtifactProducer
             for ( Object item : DeviceManager.instance().getArtifacts( ArtifactType.EXECUTION_RECORD ) )
             {
                 ExecutionRecord eItem = (ExecutionRecord) item;
+
+                if (( eItem.getDeviceName() != null ) &&
+                    ( device.getDeviceName() != null ) &&
+                    ( !eItem.getDeviceName().equals( device.getDeviceName() )))
+                {
+                    continue;
+                }
+                
                 if ( eItem.getStatus().equals( StepStatus.FAILURE ) )
                     success = false;
                 stringBuffer.append( eItem.toHTML() );
@@ -176,6 +184,13 @@ public abstract class AbstractArtifactProducer implements ArtifactProducer
             for ( Object item : DeviceManager.instance().getArtifacts( ArtifactType.EXECUTION_RECORD ) )
             {
                 ExecutionRecord eItem = (ExecutionRecord) item;
+
+                if (( eItem.getDeviceName() != null ) &&
+                    ( device.getDeviceName() != null ) &&
+                    ( !eItem.getDeviceName().equals( device.getDeviceName() )))
+                {
+                    continue;
+                }
                 
                 stringBuffer.append( device.getManufacturer() ).append( COMMA ).append( device.getModel() ).append( COMMA );
                 stringBuffer.append( device.getOs() ).append( COMMA ).append( device.getOsVersion()).append( COMMA );
