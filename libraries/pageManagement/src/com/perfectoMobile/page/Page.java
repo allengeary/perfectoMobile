@@ -68,13 +68,6 @@ public interface Page
 	@Retention(RetentionPolicy.RUNTIME)
 	public @interface ScreenShot
 	{
-		
-		/**
-		 * Key name.
-		 *
-		 * @return the string
-		 */
-		String keyName();
 	}
 
 	

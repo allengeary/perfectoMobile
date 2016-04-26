@@ -1,11 +1,7 @@
 package com.morelandLabs.utility;
 
-import java.util.Map;
 import java.util.HashMap;
-import java.util.List;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import java.util.Map;
 import org.openqa.selenium.remote.DriverCommand;
 import org.openqa.selenium.remote.RemoteExecuteMethod;
 import org.openqa.selenium.remote.RemoteWebDriver;

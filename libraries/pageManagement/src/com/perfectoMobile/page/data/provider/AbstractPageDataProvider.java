@@ -36,6 +36,19 @@ public abstract class AbstractPageDataProvider implements PageDataProvider
 	/** The id map. */
 	private Map<String,PageData> idMap = new HashMap<String,PageData>( 10 );
 
+	
+	protected void populateTrees()
+	{
+	    for ( PageData pageData : idMap.values() )
+	    {
+	        if ( pageData.containsChildren() )
+	            pageData.populateTreeStructure();
+	    }
+	   
+	    System.out.println( recordMap );
+	    
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.data.provider.PageDataProvider#getRecord(java.lang.String)
 	 */

@@ -18,6 +18,7 @@ import org.w3c.dom.NodeList;
 import com.perfectoMobile.page.BY;
 import com.perfectoMobile.page.ElementDescriptor;
 import com.perfectoMobile.page.data.DefaultPageData;
+import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.element.ElementFactory;
 
@@ -116,7 +117,10 @@ public class XMLPageDataProvider extends AbstractPageDataProvider
 			NodeList nodeList = getNodes( xmlDocument, "//data/recordType" );
 			for (int i = 0; i < nodeList.getLength(); i++)
 				parseType( nodeList.item( i ) );
-
+			
+			
+			populateTrees();
+			
 		}
 		catch (Exception e)
 		{
@@ -181,7 +185,22 @@ public class XMLPageDataProvider extends AbstractPageDataProvider
 		{
 			Node attributeNode = pageNode.getAttributes().item( i );
 			if (!attributeNode.getNodeName().equals( NAME ))
-				currentRecord.addValue( attributeNode.getNodeName(), attributeNode.getNodeValue() );
+			{
+			    String currentName = attributeNode.getNodeName();
+			    String currentValue = attributeNode.getNodeValue();
+			    
+			    if ( currentValue.startsWith( PageData.TREE_MARKER ) && currentValue.endsWith( PageData.TREE_MARKER ) )
+			    {
+			        //
+			        // This is a reference to another page data table
+			        //
+			        currentRecord.addPageData( currentName );
+			        currentRecord.addValue( currentName + PageData.DEF, currentValue );
+			        currentRecord.setContainsChildren( true );
+			    }
+			    else
+			        currentRecord.addValue( currentName, currentValue );
+			}
 		}
 
 		for (int i = 0; i < pageNode.getChildNodes().getLength(); i++)
@@ -189,7 +208,22 @@ public class XMLPageDataProvider extends AbstractPageDataProvider
 			Node elementNode = pageNode.getChildNodes().item( i );
 
 			if (elementNode.getNodeType() == Node.ELEMENT_NODE)
-				currentRecord.addValue( elementNode.getNodeName(), elementNode.getTextContent() );
+			{
+			    String currentName = elementNode.getNodeName();
+                String currentValue = elementNode.getTextContent();
+                
+                if ( currentValue.startsWith( PageData.TREE_MARKER ) && currentValue.endsWith( PageData.TREE_MARKER ) )
+                {
+                    //
+                    // This is a reference to another page data table
+                    //
+                    currentRecord.addPageData( currentName );
+                    currentRecord.addValue( currentName + PageData.DEF, currentValue );
+                    currentRecord.setContainsChildren( true );
+                }
+                else
+                    currentRecord.addValue( currentName, currentValue );
+			}
 
 		}
 

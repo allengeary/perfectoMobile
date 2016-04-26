@@ -1,7 +1,10 @@
 package com.perfectoMobile.page.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -11,7 +14,7 @@ public class DefaultPageData implements PageData
 {
 	
 	/** The record map. */
-	public Map<String, String> recordMap = new HashMap<String, String>( 10 );
+	public Map<String, Object> recordMap = new HashMap<String, Object>( 10 );
 
 	/** The type name. */
 	private String typeName;
@@ -21,6 +24,8 @@ public class DefaultPageData implements PageData
 	
 	/** The active. */
 	private boolean active;
+	
+	private boolean containsChildren;
 
 	/**
 	 * Instantiates a new default page data.
@@ -50,7 +55,7 @@ public class DefaultPageData implements PageData
 	@Override
 	public String getData( String fieldName )
 	{
-		return recordMap.get( fieldName );
+		return recordMap.get( fieldName ) + "";
 	}
 
 	/* (non-Javadoc)
@@ -60,6 +65,57 @@ public class DefaultPageData implements PageData
 	public String getType()
 	{
 		return typeName;
+	}
+	
+	public void populateTreeStructure()
+	{
+	    if ( containsChildren )
+	    {
+	        for ( String keyName : recordMap.keySet() )
+	        {
+	            if ( keyName.endsWith( DEF ) )
+	            {
+	                //
+	                // Set the actual page data name
+	                //
+	                String useKey = keyName.substring( 0, keyName.length() - DEF.length() );
+	                
+	                String lookupValue = (String) recordMap.get( keyName );
+	                Matcher selectorMatcher = SELECTOR.matcher( lookupValue );
+	                while( selectorMatcher.find() )
+	                {
+	                    String recordType = selectorMatcher.group( 1 );
+	                    
+	                    Map<String,String> criteriaMap = new HashMap<String,String>( 5 );
+	                    
+	                    Matcher valueMatcher = VALUES.matcher( selectorMatcher.group( 2 ) );
+	                    while( valueMatcher.find() )
+	                    {
+	                        criteriaMap.put( valueMatcher.group( 1 ), valueMatcher.group( 2 ) );
+	                    }
+	                    
+	                    PageData[] dataArray = PageDataManager.instance().getRecords( recordType );
+	                    
+	                    for ( PageData pageData : dataArray )
+	                    {
+	                        boolean addData = true;
+	                        for ( String criteriaField : criteriaMap.keySet() )
+	                        {
+	                            String compareTo = pageData.getData( criteriaField );
+	                            if ( compareTo == null || !compareTo.equals( criteriaMap.get( criteriaField ) ) )
+	                            {
+	                                addData = false;
+	                                break;
+	                            }
+	                        }
+	                        
+	                        if ( addData )
+	                            addPageData( useKey, pageData );
+	                    }
+	                }
+	            }
+	        }
+	    }
 	}
 
 	/**
@@ -73,6 +129,30 @@ public class DefaultPageData implements PageData
 		recordMap.put( fieldName, value );
 	}
 	
+	public void addPageData( String fieldName, PageData pageData )
+	{
+	    List<PageData> dataList = (List<PageData>) recordMap.get( fieldName );
+	    
+	    if ( dataList == null )
+	    {
+	        dataList = new ArrayList<PageData>( 10 );
+	        recordMap.put( fieldName, dataList );
+	    }
+	    
+	    dataList.add( pageData );
+	}
+	
+	public void addPageData( String fieldName )
+    {
+        List<PageData> dataList = (List<PageData>) recordMap.get( fieldName );
+        
+        if ( dataList == null )
+        {
+            dataList = new ArrayList<PageData>( 10 );
+            recordMap.put( fieldName, dataList );
+        }
+    }
+	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.data.PageData#isActive()
 	 */
@@ -80,6 +160,34 @@ public class DefaultPageData implements PageData
 	public boolean isActive()
 	{
 		return active;
+	}
+	
+	public boolean containsChildren()
+	{
+	    return containsChildren;
+	}
+	
+	public void setContainsChildren( boolean containsChildren )
+	{
+	    this.containsChildren = containsChildren;
+	}
+	
+	public List<PageData> getPageData( String fieldName )
+	{
+	    return (List<PageData>) recordMap.get( fieldName );
+	}
+	
+	public String toString()
+	{
+	    StringBuilder stringBuilder = new StringBuilder();
+	    stringBuilder.append( "Name: " ).append( recordName ).append( "\r\n" );
+	    stringBuilder.append( "Type: " ).append( typeName ).append( "\r\n" );
+	    for ( String keyName : recordMap.keySet() )
+	    {
+	        stringBuilder.append( "[" ).append( keyName ).append( "='" ).append( recordMap.get( keyName ) ).append( "']\r\n" );
+	    }
+	    
+	    return stringBuilder.toString();
 	}
 
 }

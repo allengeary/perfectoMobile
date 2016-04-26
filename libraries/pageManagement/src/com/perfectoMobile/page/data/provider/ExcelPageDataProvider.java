@@ -19,6 +19,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.perfectoMobile.page.data.DefaultPageData;
+import com.perfectoMobile.page.data.PageData;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -85,6 +86,10 @@ public class ExcelPageDataProvider extends AbstractPageDataProvider
 				log.fatal( "Could not read from " + fileName, e );
 			}
 		}
+		
+		populateTrees();
+		
+		
 
 	}
 
@@ -148,7 +153,21 @@ public class ExcelPageDataProvider extends AbstractPageDataProvider
 					DefaultPageData currentRecord = new DefaultPageData( tabName, tabName + "-" + i, true );
 					for ( int x=0; x<firstRow.getLastCellNum(); x++ )
 					{
-						currentRecord.addValue( getCellValue( firstRow.getCell( x ) ), getCellValue( currentRow.getCell( x ) ) );
+					    
+					    String currentName = getCellValue( firstRow.getCell( x ) );
+		                String currentValue = getCellValue( currentRow.getCell( x ) );
+		                
+		                if ( currentValue.startsWith( PageData.TREE_MARKER ) && currentValue.endsWith( PageData.TREE_MARKER ) )
+		                {
+		                    //
+		                    // This is a reference to another page data table
+		                    //
+		                    currentRecord.addPageData( currentName );
+		                    currentRecord.addValue( currentName + PageData.DEF, currentValue );
+		                    currentRecord.setContainsChildren( true );
+		                }
+		                else
+		                    currentRecord.addValue( currentName, currentValue );
 					}
 					
 					addRecord( currentRecord );

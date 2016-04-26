@@ -7,26 +7,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 import org.openqa.selenium.WebDriver;
 import com.morelandLabs.artifact.ArtifactType;
-import com.morelandLabs.page.ExecutionRecord;
-import com.morelandLabs.page.StepStatus;
-import com.morelandLabs.spi.Device;
-import com.morelandLabs.spi.RunDetails;
-import com.morelandLabs.utility.XMLEscape;
-//import com.morelandLabs.utility.XMLEscape;
-import com.morelandLabs.wcag.WCAGRecord;
 import com.perfectoMobile.device.ConnectedDevice;
 import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.artifact.AbstractArtifactProducer;
 import com.perfectoMobile.device.artifact.Artifact;
 import com.perfectoMobile.device.cloud.CloudRegistry;
-import com.perfectoMobile.device.data.DataManager;
-import com.perfectoMobile.device.factory.DeviceWebDriver;
 
 // TODO: Auto-generated Javadoc
 /**

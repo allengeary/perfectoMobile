@@ -17,6 +17,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.HasInputDevices;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
@@ -487,7 +488,7 @@ public class SeleniumElement extends AbstractElement
 			if (webDriver instanceof ContextAware)
 				currentContext = ( ( ContextAware ) webDriver ).getContext();
 
-			WebDriverWait wait = new WebDriverWait( webDriver, timeOut );
+			WebDriverWait wait = new WebDriverWait( webDriver, timeOut, 250 );
 			WebElement webElement = null;
 			
 			switch( waitType )
@@ -500,6 +501,7 @@ public class SeleniumElement extends AbstractElement
     			    return wait.until( ExpectedConditions.invisibilityOfElementLocated( useBy() ) );
     			    
     			case PRESENT:
+    			    
     			    webElement = wait.until( ExpectedConditions.presenceOfElementLocated( useBy() ) );
                     break;
                     
