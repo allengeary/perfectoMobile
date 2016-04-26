@@ -33,6 +33,8 @@ public class ExecutionRecord
 	private Throwable t;
 	
 	private boolean fromCache = false;
+
+        private String deviceName;
 	
 	/**
 	 * Instantiates a new execution record.
@@ -46,7 +48,8 @@ public class ExecutionRecord
 	 * @param detail the detail
 	 * @param t the t
 	 */
-	public ExecutionRecord( String group, String name, String type, long timeStamp, long runTime, StepStatus status, String detail, Throwable t, boolean fromCache )
+        public ExecutionRecord( String group, String name, String type, long timeStamp, long runTime, StepStatus status, String detail,
+                            Throwable t, boolean fromCache, String deviceName )
 	{
 		super();
 		this.group = group;
@@ -58,6 +61,7 @@ public class ExecutionRecord
 		this.detail = detail;
 		this.t = t;
 		this.fromCache = fromCache;
+                this.deviceName = deviceName;
 	}
 	
 	public boolean isFromCache()
@@ -231,6 +235,27 @@ public class ExecutionRecord
 	public void setDetail( String detail )
 	{
 		this.detail = detail;
+	}
+
+
+    	/**
+	 * Gets the device name.
+	 *
+	 * @return the device name
+	 */
+	public String getDeviceName()
+	{
+		return deviceName;
+	}
+	
+	/**
+	 * Sets the detail.
+	 *
+	 * @param val the device name
+	 */
+	public void setDeviceName( String val )
+	{
+		this.deviceName = val;
 	}
 
 	/* (non-Javadoc)

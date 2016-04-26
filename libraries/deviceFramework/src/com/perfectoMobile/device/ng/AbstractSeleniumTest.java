@@ -426,7 +426,7 @@ public abstract class AbstractSeleniumTest
 
         if (webDriver != null)
         {
-            String runKey = ((DEFAULT.equals( name )) ? (( TestName ) testArgs[0] ).getTestName() : (( TestName ) testArgs[0] ).getTestName() + ":" + name );
+            String runKey = ((DEFAULT.equals( name )) ? (( TestName ) testArgs[0] ).getTestName() : (( TestName ) testArgs[0] ).getTestName() + "-" + name );
 		    
             File rootFolder = new File( DataManager.instance().getReportFolder(), RunDetails.instance().getRootFolder() );
             rootFolder.mkdirs();
