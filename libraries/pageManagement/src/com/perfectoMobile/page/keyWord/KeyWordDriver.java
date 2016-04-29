@@ -293,7 +293,17 @@ public class KeyWordDriver
 
 				for (String dataProvider : test.getDataProviders())
 				{
-					PageData pageData = PageDataManager.instance().getPageData( dataProvider );
+				    PageData pageData = null;
+				    if ( dataProvider.contains( "." ) )
+				    {
+				        String[] typeId = dataProvider.split( "." );
+				        if ( typeId.length == 2 )
+				            pageData = PageDataManager.instance().getPageData( typeId[ 0 ], typeId [ 1 ] );
+				        else
+				            pageData = PageDataManager.instance().getPageData( dataProvider );
+				    }
+				    else
+				        pageData = PageDataManager.instance().getPageData( dataProvider );
 					
 					if ( pageData == null )
 						throw new IllegalArgumentException( "Invalid page data value specified.  Ensure that [" + dataProvider + "] exists in your page data definition");

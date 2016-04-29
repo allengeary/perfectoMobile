@@ -12,13 +12,14 @@ import com.perfectoMobile.page.element.Element;
 import com.perfectoMobile.page.keyWord.KeyWordDriver;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
+
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class KWSLoop.
  */
 public class KWSLoop extends AbstractKeyWordStep
 {
-	
 	/** The Constant DATA_START. */
 	private static final String DATA_START = "data{";
 	
@@ -81,11 +82,27 @@ public class KWSLoop extends AbstractKeyWordStep
 		{
 			if ( useValue.startsWith( DATA_START ) )
 			{
+			    PageData[] dataTable = null;
+			    
 				//
 				// We are using a data table for the loop
 				//
 				String tableName = useValue.substring( DATA_START.length(), useValue.length() - 1 );
-				PageData[] dataTable = PageDataManager.instance().getRecords( tableName );
+				
+				if ( tableName.startsWith( "." ) )
+				{
+				    //
+				    // This is a context table from the current record - we only go 1 level deep now
+				    //
+				    tableName = tableName.substring( 1 );
+				    String[] valueSet = tableName.split( "\\." );
+				    if ( valueSet.length == 2 )
+				    {
+				        dataTable = dataMap.get( valueSet[ 0 ] ).getPageData( valueSet[ 1 ] ).toArray( new PageData[ 0 ] );
+				    }
+				}
+				else
+				    dataTable = PageDataManager.instance().getRecords( tableName );
 				
 				for ( PageData pageData : dataTable )
 				{
