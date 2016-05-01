@@ -17,6 +17,10 @@ import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class KWSDevice.
+ */
 public class KWSDevice extends AbstractKeyWordStep
 {
 

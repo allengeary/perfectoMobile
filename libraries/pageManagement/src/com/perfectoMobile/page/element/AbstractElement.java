@@ -43,6 +43,12 @@ public abstract class AbstractElement implements Element
 	 */
 	protected abstract String _getValue();
 
+	/**
+	 * _get style.
+	 *
+	 * @param styleProperty the style property
+	 * @return the string
+	 */
 	protected abstract String _getStyle(String styleProperty);
 	
 	/**
@@ -75,16 +81,37 @@ public abstract class AbstractElement implements Element
 	 */
 	protected abstract Image _getImage( Resolution res );
 	
+	/**
+	 * _move to.
+	 *
+	 * @return true, if successful
+	 */
 	protected abstract boolean _moveTo();
+	
+	/**
+	 * _press.
+	 *
+	 * @return true, if successful
+	 */
+	protected abstract boolean _press();
+	
+	/**
+	 * _release.
+	 *
+	 * @return true, if successful
+	 */
+	protected abstract boolean _release();
 	
 	
 	/**
-     * _wait for visible.
-     *
-     * @param timeOut the time out
-     * @param timeUnit the time unit
-     * @return true, if successful
-     */
+	 * _wait for visible.
+	 *
+	 * @param timeOut the time out
+	 * @param timeUnit the time unit
+	 * @param waitType the wait type
+	 * @param value the value
+	 * @return true, if successful
+	 */
     protected abstract boolean _waitFor( long timeOut, TimeUnit timeUnit, WAIT_FOR waitType, String value );
 	
 
@@ -552,11 +579,32 @@ public abstract class AbstractElement implements Element
 		return timed;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.element.Element#moveTo()
+	 */
 	@Override
 	public boolean moveTo()
 	{
 	    return _moveTo();
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.element.Element#press()
+	 */
+	@Override
+    public boolean press()
+    {
+        return _press();
+    }
+	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.element.Element#release()
+	 */
+	@Override
+    public boolean release()
+    {
+        return _release();
+    }
 	
 	
 

@@ -121,7 +121,7 @@ public class XMLElementProvider extends AbstractElementProvider
 	/**
 	 * Parses the import.
 	 *
-	 * @param importNode the import node
+	 * @param imp the imp
 	 */
 	private void parseImport( Import imp )
 	{
@@ -144,7 +144,7 @@ public class XMLElementProvider extends AbstractElementProvider
 	/**
 	 * Parses the site.
 	 *
-	 * @param siteNode the site node
+	 * @param site the site
 	 */
 	private void parseSite( Site site )
 	{

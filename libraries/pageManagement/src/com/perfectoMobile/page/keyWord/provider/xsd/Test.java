@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * <p>Java class for Test complex type.
  * 
@@ -52,24 +53,43 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class Test {
 
+    /** The step. */
     @XmlElement(required = true)
     protected List<Step> step;
+    
+    /** The name. */
     @XmlAttribute(name = "name", required = true)
     protected String name;
+    
+    /** The data driver. */
     @XmlAttribute(name = "dataDriver")
     protected String dataDriver;
+    
+    /** The data provider. */
     @XmlAttribute(name = "dataProvider")
     protected String dataProvider;
+    
+    /** The tag names. */
     @XmlAttribute(name = "tagNames")
     protected String tagNames;
+    
+    /** The link id. */
     @XmlAttribute(name = "linkId")
     protected String linkId;
+    
+    /** The timed. */
     @XmlAttribute(name = "timed")
     protected Boolean timed;
+    
+    /** The threshold. */
     @XmlAttribute(name = "threshold")
     protected BigInteger threshold;
+    
+    /** The active. */
     @XmlAttribute(name = "active")
     protected Boolean active;
+    
+    /** The os. */
     @XmlAttribute(name = "os")
     protected String os;
 
@@ -92,8 +112,8 @@ public class Test {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Step }
-     * 
-     * 
+     *
+     * @return the step
      */
     public List<Step> getStep() {
         if (step == null) {

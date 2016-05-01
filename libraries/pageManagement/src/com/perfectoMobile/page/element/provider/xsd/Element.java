@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * <p>Java class for Element complex type.
  * 
@@ -52,12 +53,19 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Element")
 public class Element {
 
+    /** The name. */
     @XmlAttribute(name = "name", required = true)
     protected String name;
+    
+    /** The descriptor. */
     @XmlAttribute(name = "descriptor", required = true)
     protected String descriptor;
+    
+    /** The value. */
     @XmlAttribute(name = "value", required = true)
     protected String value;
+    
+    /** The context name. */
     @XmlAttribute(name = "contextName")
     protected String contextName;
 

@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * <p>Java class for Model complex type.
  * 
@@ -41,6 +42,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class Model {
 
+    /** The page. */
     @XmlElement(required = true)
     protected List<Page> page;
 
@@ -63,8 +65,8 @@ public class Model {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Page }
-     * 
-     * 
+     *
+     * @return the page
      */
     public List<Page> getPage() {
         if (page == null) {

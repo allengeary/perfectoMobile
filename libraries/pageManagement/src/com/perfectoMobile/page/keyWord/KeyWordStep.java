@@ -228,6 +228,7 @@ public interface KeyWordStep
 	 * @param webDriver            the web driver
 	 * @param contextMap            the context map
 	 * @param dataMap            the data map
+	 * @param pageMap the page map
 	 * @return true, if successful
 	 * @throws Exception the exception
 	 */
@@ -338,7 +339,17 @@ public interface KeyWordStep
 	 */
 	public String getPoi();
 	
+	/**
+	 * Gets the wait.
+	 *
+	 * @return the wait
+	 */
 	public long getWait();
 	
+	/**
+	 * Sets the wait.
+	 *
+	 * @param waitAfter the new wait
+	 */
 	public void setWait( long waitAfter );
 }

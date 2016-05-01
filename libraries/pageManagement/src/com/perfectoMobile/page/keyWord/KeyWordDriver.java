@@ -39,6 +39,7 @@ public class KeyWordDriver
 	/** The context map. */
 	private ThreadLocal<Map<String, Object>> contextMap = new ThreadLocal<Map<String, Object>>();
 	
+	/** The tag map. */
 	private Map<String,List<KeyWordTest>> tagMap = new HashMap<String,List<KeyWordTest>>( 10 );
 
 	/** The singleton. */
@@ -166,15 +167,12 @@ public class KeyWordDriver
 	/**
 	 * Execution function.
 	 *
-	 * @param testName
-	 *            the test name
-	 * @param webDriver
-	 *            the web driver
-	 * @param dataMap
-	 *            the data map
+	 * @param testName            the test name
+	 * @param webDriver            the web driver
+	 * @param dataMap            the data map
+	 * @param pageMap the page map
 	 * @return true, if successful
-	 * @throws Exception
-	 *             the exception
+	 * @throws Exception             the exception
 	 */
 	public boolean executionFunction( String testName, WebDriver webDriver, Map<String, PageData> dataMap, Map<String,Page> pageMap ) throws Exception
 	{
@@ -239,6 +237,12 @@ public class KeyWordDriver
 		return test;
 	}
 	
+	/**
+	 * Gets the tagged tests.
+	 *
+	 * @param tagNames the tag names
+	 * @return the tagged tests
+	 */
 	public Collection<KeyWordTest> getTaggedTests( String[] tagNames ) 
 	{
 	    Map<String,KeyWordTest> testMap = new HashMap<String,KeyWordTest>( 10 );

@@ -27,6 +27,13 @@ public class KWSMouse extends AbstractKeyWordStep
 	    {
 	        case "MOVE_TO":
 	            return getElement( pageObject, contextMap, webDriver, dataMap ).moveTo();
+	            
+	        case "PRESS":
+                return getElement( pageObject, contextMap, webDriver, dataMap ).press();
+                        
+	        case "RELEASE":
+                return getElement( pageObject, contextMap, webDriver, dataMap ).release();
+	            
 	    }
 		
 		return true;

@@ -11,6 +11,10 @@ import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class KWSReport.
+ */
 public class KWSReport extends AbstractKeyWordStep
 {
 
@@ -41,6 +45,9 @@ public class KWSReport extends AbstractKeyWordStep
 		return true;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep#isRecordable()
+	 */
 	@Override
 	public boolean isRecordable()
 	{

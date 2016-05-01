@@ -48,6 +48,7 @@ public class KeyWordTest
 	/** The threshold. */
 	private int threshold;
 	
+	/** The test tags. */
 	private String[] testTags;
 	
 	/** The step list. */
@@ -65,6 +66,7 @@ public class KeyWordTest
 	 * @param os the os
 	 * @param threshold the threshold
 	 * @param description the description
+	 * @param testTags the test tags
 	 */
 	public KeyWordTest( String name, boolean active, String dataProviders, String dataDriver, boolean timed, String linkId, String os, int threshold, String description, String testTags )
 	{
@@ -196,6 +198,7 @@ public class KeyWordTest
 	 * @param webDriver the web driver
 	 * @param contextMap the context map
 	 * @param dataMap the data map
+	 * @param pageMap the page map
 	 * @return true, if successful
 	 * @throws Exception the exception
 	 */
@@ -276,6 +279,12 @@ public class KeyWordTest
 		this.os = os;
 	}
 	
+	/**
+	 * Checks if is tagged.
+	 *
+	 * @param tagName the tag name
+	 * @return true, if is tagged
+	 */
 	public boolean isTagged( String tagName )
 	{
 	    if ( testTags == null )
@@ -290,6 +299,11 @@ public class KeyWordTest
 	    return false;
 	}
 	
+	/**
+	 * Gets the tags.
+	 *
+	 * @return the tags
+	 */
 	public String[] getTags()
 	{
 	    if ( testTags == null )

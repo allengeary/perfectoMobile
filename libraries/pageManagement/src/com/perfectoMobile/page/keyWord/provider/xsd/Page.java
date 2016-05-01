@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * <p>Java class for Page complex type.
  * 
@@ -36,8 +37,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Page")
 public class Page {
 
+    /** The name. */
     @XmlAttribute(name = "name", required = true)
     protected String name;
+    
+    /** The clazz. */
     @XmlAttribute(name = "class")
     protected String clazz;
 

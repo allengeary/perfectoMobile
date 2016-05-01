@@ -34,6 +34,7 @@ public enum BY
 	/** The v image. */
 	V_IMAGE( 8, "Visual Image", "VISUAL" ),
 	
+	/** The html. */
 	HTML( 9, "HTML Properties" );
 	
 	/** The id. */

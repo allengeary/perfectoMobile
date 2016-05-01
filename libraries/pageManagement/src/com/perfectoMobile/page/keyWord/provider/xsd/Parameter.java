@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * <p>Java class for Parameter complex type.
  * 
@@ -46,8 +47,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Parameter")
 public class Parameter {
 
+    /** The type. */
     @XmlAttribute(name = "type")
     protected String type;
+    
+    /** The value. */
     @XmlAttribute(name = "value", required = true)
     protected String value;
 

@@ -10,12 +10,33 @@ import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class KWSWindow.
+ */
 public class KWSWindow extends AbstractKeyWordStep
 {
 
+    /**
+     * The Enum SwitchType.
+     */
     private enum SwitchType
     {
-        BY_WINTITLE, BY_WINURL, BY_FRAME, BY_PARENTFRAME, BY_DEFAULT, BY_WINCLOSE, BY_ALERT;
+        
+        /** The by wintitle. */
+        BY_WINTITLE, 
+ /** The by winurl. */
+ BY_WINURL, 
+ /** The by frame. */
+ BY_FRAME, 
+ /** The by parentframe. */
+ BY_PARENTFRAME, 
+ /** The by default. */
+ BY_DEFAULT, 
+ /** The by winclose. */
+ BY_WINCLOSE, 
+ /** The by alert. */
+ BY_ALERT;
     }
 
     /*
@@ -100,10 +121,12 @@ public class KWSWindow extends AbstractKeyWordStep
     }
 
     /**
-     * 
-     * @param webDriver
-     * @param byTitleUrl
-     * @return
+     * Verify switch window.
+     *
+     * @param webDriver the web driver
+     * @param byTitleOrUrl the by title or url
+     * @param winExpValue the win exp value
+     * @return true, if successful
      */
     private boolean verifySwitchWindow( WebDriver webDriver, String byTitleOrUrl, String winExpValue )
     {

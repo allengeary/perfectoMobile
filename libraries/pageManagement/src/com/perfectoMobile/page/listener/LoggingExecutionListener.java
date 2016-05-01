@@ -12,6 +12,8 @@ import org.apache.commons.logging.LogFactory;
  * component's <code>addLoggingExecutionListener</code> method. When
  * the loggingExecution event occurs, that object's appropriate
  * method is invoked.
+ *
+ * @see LoggingExecutionEvent
  */
 public class LoggingExecutionListener implements ExecutionListener
 {

@@ -78,6 +78,7 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
     /** The poi. */
     private String poi;
 
+    /** The wait time. */
     private long waitTime;
 
     /** The device. */
@@ -838,6 +839,13 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
         return pageName;
     }
 
+    /**
+     * Gets the page data.
+     *
+     * @param recordIdentifier the record identifier
+     * @param dataMap the data map
+     * @return the page data
+     */
     private PageData getPageData( String recordIdentifier, Map<String, PageData> dataMap )
     {
         //
@@ -1259,11 +1267,17 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
         this.validationType = validationType;
     }
 
+    /* (non-Javadoc)
+     * @see com.perfectoMobile.page.keyWord.KeyWordStep#getWait()
+     */
     public long getWait()
     {
         return waitTime;
     }
 
+    /* (non-Javadoc)
+     * @see com.perfectoMobile.page.keyWord.KeyWordStep#setWait(long)
+     */
     public void setWait( long waitAfter )
     {
         this.waitTime = waitAfter;
@@ -1273,6 +1287,11 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
     // Helpers
     //
 
+    /**
+     * Gets the alt web driver.
+     *
+     * @return the alt web driver
+     */
     private WebDriver getAltWebDriver()
     {
         WebDriver rtn = null;

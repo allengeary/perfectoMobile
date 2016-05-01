@@ -27,13 +27,33 @@ public class StepSync
 	/** The thread pool. */
     private static ExecutorService threadPool = Executors.newCachedThreadPool();
 	
+	/** The web driver. */
 	private WebDriver webDriver;
+	
+	/** The context map. */
 	private Map<String, Object> contextMap;
+	
+	/** The data map. */
 	private Map<String,PageData> dataMap;
+	
+	/** The page map. */
 	private Map<String,Page> pageMap;
+	
+	/** The steps successful. */
 	private boolean stepsSuccessful = false;
+	
+	/** The step threads. */
 	private List<StepThread> stepThreads = new ArrayList<StepThread>( 10 );
 	
+	/**
+	 * Instantiates a new step sync.
+	 *
+	 * @param webDriver the web driver
+	 * @param contextMap the context map
+	 * @param dataMap the data map
+	 * @param pageMap the page map
+	 * @param stepArray the step array
+	 */
 	public StepSync( WebDriver webDriver, Map<String, Object> contextMap, Map<String, PageData> dataMap, Map<String, Page> pageMap, KeyWordStep[] stepArray )
     {
         this.webDriver = webDriver;
@@ -59,6 +79,11 @@ public class StepSync
 
 	
 	
+	/**
+	 * Steps complete.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean stepsComplete()
 	{
 	    for ( StepThread step : stepThreads )
@@ -70,6 +95,11 @@ public class StepSync
 	    return true;
 	}
 	
+	/**
+	 * Steps successful.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean stepsSuccessful()
     {
         return stepsSuccessful;
@@ -82,15 +112,17 @@ public class StepSync
 	 */
 	private class StepThread implements Runnable
 	{
+		
+		/** The step. */
 		private KeyWordStep step;
+		
+		/** The running. */
 		private boolean running = true;
 		
 		/**
 		 * Instantiates a new element thread.
 		 *
-		 * @param currentElement the current element
-		 * @param index the index
-		 * @param timeOut the time out
+		 * @param step the step
 		 */
 		public StepThread( KeyWordStep step )
 		{
@@ -99,6 +131,11 @@ public class StepSync
 		
 		
 		
+		/**
+		 * Checks if is running.
+		 *
+		 * @return true, if is running
+		 */
 		public boolean isRunning()
         {
             return running;

@@ -8,6 +8,7 @@ import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
 
+// TODO: Auto-generated Javadoc
 /**
  * <b>Keyword(s):</b> <code>ATTRIBUTE</code><br>
  * The Attribute keyword allows the developer to extract a named attributes value from an Element and either store it or compare it to provided value. <br><br>
@@ -37,6 +38,8 @@ import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
  */
 public class KWSAttribute extends AbstractKeyWordStep
 {
+    
+    /** The Constant STYLE. */
     private static final String STYLE = "style.";
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep#_executeStep(com.perfectoMobile.page.Page, org.openqa.selenium.WebDriver, java.util.Map, java.util.Map)

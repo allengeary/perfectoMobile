@@ -37,6 +37,9 @@ public abstract class AbstractPageDataProvider implements PageDataProvider
 	private Map<String,PageData> idMap = new HashMap<String,PageData>( 10 );
 
 	
+	/**
+	 * Populate trees.
+	 */
 	protected void populateTrees()
 	{
 	    for ( PageData pageData : idMap.values() )

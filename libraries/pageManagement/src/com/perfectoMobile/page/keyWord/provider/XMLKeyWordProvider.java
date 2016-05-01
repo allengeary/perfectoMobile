@@ -198,7 +198,7 @@ public class XMLKeyWordProvider implements KeyWordProvider
 	/**
 	 * Parses the imports.
 	 *
-	 * @param xmlDocument the xml document
+	 * @param importList the import list
 	 */
 	private void parseImports( List<Import> importList )
 	{
@@ -222,7 +222,7 @@ public class XMLKeyWordProvider implements KeyWordProvider
 	/**
 	 * Parses the model.
 	 *
-	 * @param xmlDocument the xml document
+	 * @param model the model
 	 */
 	private void parseModel( Model model )
 	{
@@ -249,7 +249,7 @@ public class XMLKeyWordProvider implements KeyWordProvider
 	/**
 	 * Parses the test.
 	 *
-	 * @param testNode the test node
+	 * @param xTest the x test
 	 * @param typeName the type name
 	 * @return the key word test
 	 */
@@ -268,7 +268,7 @@ public class XMLKeyWordProvider implements KeyWordProvider
 	/**
 	 * Parses the steps.
 	 *
-	 * @param testNode the test node
+	 * @param xSteps the x steps
 	 * @param testName the test name
 	 * @param typeName the type name
 	 * @return the key word step[]
@@ -302,10 +302,11 @@ public class XMLKeyWordProvider implements KeyWordProvider
 	/**
 	 * Parses the parameters.
 	 *
-	 * @param testNode the test node
+	 * @param pList the list
 	 * @param testName the test name
 	 * @param stepName the step name
 	 * @param typeName the type name
+	 * @param parentStep the parent step
 	 * @return the key word parameter[]
 	 */
 	private void parseParameters( List<Parameter> pList, String testName, String stepName, String typeName, KeyWordStep parentStep )
@@ -323,10 +324,11 @@ public class XMLKeyWordProvider implements KeyWordProvider
 	/**
 	 * Parses the tokens.
 	 *
-	 * @param testNode the test node
+	 * @param tList the t list
 	 * @param testName the test name
 	 * @param stepName the step name
 	 * @param typeName the type name
+	 * @param parentStep the parent step
 	 * @return the key word token[]
 	 */
 	private void parseTokens( List<Token> tList, String testName, String stepName, String typeName, KeyWordStep parentStep )

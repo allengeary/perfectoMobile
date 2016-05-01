@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * <p>Java class for RegistryRoot complex type.
  * 
@@ -43,8 +44,11 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class RegistryRoot {
 
+    /** The _import. */
     @XmlElement(name = "import")
     protected List<Import> _import;
+    
+    /** The site. */
     @XmlElement(required = true)
     protected List<Site> site;
 
@@ -67,8 +71,8 @@ public class RegistryRoot {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Import }
-     * 
-     * 
+     *
+     * @return the import
      */
     public List<Import> getImport() {
         if (_import == null) {
@@ -96,8 +100,8 @@ public class RegistryRoot {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Site }
-     * 
-     * 
+     *
+     * @return the site
      */
     public List<Site> getSite() {
         if (site == null) {

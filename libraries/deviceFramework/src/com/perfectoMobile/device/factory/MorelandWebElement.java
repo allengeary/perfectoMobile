@@ -8,12 +8,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.internal.Coordinates;
+import org.openqa.selenium.internal.Locatable;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CachedWebElement.
  */
-public class MorelandWebElement implements WebElement
+public class MorelandWebElement implements WebElement, Locatable
 {
 	
 	private DeviceWebDriver deviceDriver;
@@ -162,5 +164,14 @@ public class MorelandWebElement implements WebElement
 	{
 		return webElement.getCssValue( propertyName );
 	}
+
+    @Override
+    public Coordinates getCoordinates()
+    {
+        if ( webElement instanceof Locatable )
+            return ( (Locatable) webElement ).getCoordinates();
+        else
+            return null;
+    }
 
 }

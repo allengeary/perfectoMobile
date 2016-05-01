@@ -19,20 +19,60 @@ public interface Element
 	/** The Constant CONTEXT_INDEX. */
 	public static final String CONTEXT_INDEX = "_CONTEXT.ELEMENT.INDEX";
 	
+	/**
+	 * The Enum WAIT_FOR.
+	 */
 	public enum WAIT_FOR
     {
+        
+        /** The clickable. */
         CLICKABLE,
+        
+        /** The selectable. */
         SELECTABLE,
+        
+        /** The invisible. */
         INVISIBLE,
+        
+        /** The present. */
         PRESENT,
+        
+        /** The text present. */
         TEXT_PRESENT,
+        
+        /** The text value present. */
         TEXT_VALUE_PRESENT,
+        
+        /** The title contains. */
         TITLE_CONTAINS,
+        
+        /** The title is. */
         TITLE_IS,
+        
+        /** The visible. */
         VISIBLE;
     }
 	
+	/**
+	 * Move to.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean moveTo();
+	
+	/**
+	 * Press.
+	 *
+	 * @return true, if successful
+	 */
+	public boolean press();
+	
+	/**
+	 * Release.
+	 *
+	 * @return true, if successful
+	 */
+	public boolean release();
 	
 	/**
 	 * Gets the native.
@@ -48,6 +88,12 @@ public interface Element
 	 */
 	public String getValue();
 	
+	/**
+	 * Gets the style.
+	 *
+	 * @param styleProperty the style property
+	 * @return the style
+	 */
 	public String getStyle( String styleProperty );
 	
 	/**
@@ -73,6 +119,15 @@ public interface Element
 	 */
 	public boolean waitForVisible( long timeOut, TimeUnit timeUnit  );
 	
+	/**
+	 * Wait for.
+	 *
+	 * @param timeout the timeout
+	 * @param timeUnit the time unit
+	 * @param waitType the wait type
+	 * @param value the value
+	 * @return true, if successful
+	 */
 	public boolean waitFor( long timeout, TimeUnit timeUnit, WAIT_FOR waitType, String value );
 	
 	/**

@@ -20,6 +20,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import com.morelandLabs.MorelandNamespaceContext;
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.ImageFormat;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.MatchMode;
@@ -256,6 +257,9 @@ public class SeleniumElement extends AbstractElement
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.element.AbstractElement#_moveTo()
+	 */
 	public boolean _moveTo()
 	{
 	    WebElement webElement = getElement();
@@ -270,6 +274,42 @@ public class SeleniumElement extends AbstractElement
 	    
 	    return false;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.element.AbstractElement#_press()
+	 */
+	public boolean _press()
+    {
+        WebElement webElement = getElement();
+        if ( webElement != null && webElement.getSize().getHeight() > 0 && webElement.getSize().getWidth() > 0 )
+        {
+            if ( webDriver instanceof HasInputDevices )
+            {
+                new Actions( webDriver ).clickAndHold( webElement ).build().perform();
+                return true;
+            }
+        }
+        
+        return false;
+    }
+	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.element.AbstractElement#_release()
+	 */
+	public boolean _release()
+    {
+        WebElement webElement = getElement();
+        if ( webElement != null && webElement.getSize().getHeight() > 0 && webElement.getSize().getWidth() > 0 )
+        {
+            if ( webDriver instanceof HasInputDevices )
+            {
+                new Actions( webDriver ).release( webElement ).build().perform();
+                return true;
+            }
+        }
+        
+        return false;
+    }
 	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.element.AbstractElement#_getAll()
@@ -388,6 +428,9 @@ public class SeleniumElement extends AbstractElement
 		return getElement();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.element.AbstractElement#_getStyle(java.lang.String)
+	 */
 	protected String _getStyle( String styleProperty )
 	{
 	    long startTime = System.currentTimeMillis();

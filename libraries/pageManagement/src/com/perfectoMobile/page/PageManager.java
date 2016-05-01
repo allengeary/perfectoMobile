@@ -85,11 +85,18 @@ public class PageManager
     /** The image location. */
     private String imageLocation;
     
+    /** The page cache. */
     private ThreadLocal<Map<Class,Page>> pageCache = new ThreadLocal<Map<Class,Page>>();
 
+    /** The alt driver source. */
     private SeleniumSessionManager altDriverSource = null;
 
     
+	/**
+	 * Gets the page cache.
+	 *
+	 * @return the page cache
+	 */
 	public Map<Class, Page> getPageCache()
     {
 	    if( pageCache.get() == null )
@@ -97,6 +104,11 @@ public class PageManager
         return pageCache.get();
     }
 
+    /**
+     * Sets the page cache.
+     *
+     * @param pageCache the page cache
+     */
     public void setPageCache( Map<Class, Page> pageCache )
     {
         this.pageCache.set( pageCache );
@@ -161,6 +173,7 @@ public class PageManager
 	 *
 	 * @param image the image
 	 * @param fileName the file name
+	 * @return the string
 	 */
 	public String writeImage( BufferedImage image, String fileName )
 	{
@@ -352,6 +365,7 @@ public class PageManager
      * @param t the t
      * @param threshold the threshold
      * @param description the description
+     * @param fromCache the from cache
      */
     public void addExecutionLog( String executionId, String deviceName, String group, String name, String type, long timestamp, long runLength, StepStatus status, String detail, Throwable t, int threshold, String description, boolean fromCache )
     {
@@ -507,11 +521,21 @@ public class PageManager
 		return executionId;
 	}
 
+    /**
+     * Gets the alternate web driver source.
+     *
+     * @return the alternate web driver source
+     */
     public SeleniumSessionManager getAlternateWebDriverSource()
     {
         return altDriverSource;
     }
 
+    /**
+     * Sets the alternate web driver source.
+     *
+     * @param src the new alternate web driver source
+     */
     public void setAlternateWebDriverSource( SeleniumSessionManager src )
     {
         altDriverSource = src;

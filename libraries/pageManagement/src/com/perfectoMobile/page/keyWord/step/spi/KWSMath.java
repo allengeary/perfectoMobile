@@ -13,6 +13,13 @@ import com.perfectoMobile.page.keyWord.step.AbstractKeyWordStep;
  */
 public class KWSMath extends AbstractKeyWordStep
 {
+    
+    /**
+     * Format string.
+     *
+     * @param parameterValue the parameter value
+     * @return the string
+     */
     private String formatString( String parameterValue )
     {
         return parameterValue.replace( "$", " " ).replace( "%", " " ).trim();

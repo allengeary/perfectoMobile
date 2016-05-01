@@ -146,6 +146,11 @@ public class KeyWordStepFactory
 	 * @param poi the poi
 	 * @param threshold the threshold
 	 * @param description the description
+	 * @param waitTime the wait time
+	 * @param context the context
+	 * @param validation the validation
+	 * @param device the device
+	 * @param validationType the validation type
 	 * @return the key word step
 	 */
 	public KeyWordStep createStep( String name, String pageName, boolean active, String type,

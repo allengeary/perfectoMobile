@@ -25,6 +25,7 @@ public class DefaultPageData implements PageData
 	/** The active. */
 	private boolean active;
 	
+	/** The contains children. */
 	private boolean containsChildren;
 
 	/**
@@ -67,6 +68,9 @@ public class DefaultPageData implements PageData
 		return typeName;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.data.PageData#populateTreeStructure()
+	 */
 	public void populateTreeStructure()
 	{
 	    if ( containsChildren )
@@ -129,6 +133,12 @@ public class DefaultPageData implements PageData
 		recordMap.put( fieldName, value );
 	}
 	
+	/**
+	 * Adds the page data.
+	 *
+	 * @param fieldName the field name
+	 * @param pageData the page data
+	 */
 	public void addPageData( String fieldName, PageData pageData )
 	{
 	    List<PageData> dataList = (List<PageData>) recordMap.get( fieldName );
@@ -142,6 +152,11 @@ public class DefaultPageData implements PageData
 	    dataList.add( pageData );
 	}
 	
+	/**
+	 * Adds the page data.
+	 *
+	 * @param fieldName the field name
+	 */
 	public void addPageData( String fieldName )
     {
         List<PageData> dataList = (List<PageData>) recordMap.get( fieldName );
@@ -162,21 +177,35 @@ public class DefaultPageData implements PageData
 		return active;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.data.PageData#containsChildren()
+	 */
 	public boolean containsChildren()
 	{
 	    return containsChildren;
 	}
 	
+	/**
+	 * Sets the contains children.
+	 *
+	 * @param containsChildren the new contains children
+	 */
 	public void setContainsChildren( boolean containsChildren )
 	{
 	    this.containsChildren = containsChildren;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.perfectoMobile.page.data.PageData#getPageData(java.lang.String)
+	 */
 	public List<PageData> getPageData( String fieldName )
 	{
 	    return (List<PageData>) recordMap.get( fieldName );
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString()
 	{
 	    StringBuilder stringBuilder = new StringBuilder();

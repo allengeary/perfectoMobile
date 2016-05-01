@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * <p>Java class for Import complex type.
  * 
@@ -37,10 +38,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Import")
 public class Import {
 
+    /** The file name. */
     @XmlAttribute(name = "fileName", required = true)
     protected String fileName;
+    
+    /** The include tests. */
     @XmlAttribute(name = "includeTests")
     protected Boolean includeTests;
+    
+    /** The include functions. */
     @XmlAttribute(name = "includeFunctions")
     protected Boolean includeFunctions;
 

@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * <p>Java class for Step complex type.
  * 
@@ -117,39 +118,76 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class Step {
 
+    /** The parameter. */
     protected List<Parameter> parameter;
+    
+    /** The token. */
     protected List<Token> token;
+    
+    /** The step. */
     protected List<Step> step;
+    
+    /** The name. */
     @XmlAttribute(name = "name", required = true)
     protected String name;
+    
+    /** The page. */
     @XmlAttribute(name = "page")
     protected String page;
+    
+    /** The type. */
     @XmlAttribute(name = "type", required = true)
     protected String type;
+    
+    /** The active. */
     @XmlAttribute(name = "active")
     protected Boolean active;
+    
+    /** The link id. */
     @XmlAttribute(name = "linkId")
     protected String linkId;
+    
+    /** The os. */
     @XmlAttribute(name = "os")
     protected String os;
+    
+    /** The poi. */
     @XmlAttribute(name = "poi")
     protected String poi;
+    
+    /** The threshold. */
     @XmlAttribute(name = "threshold")
     protected BigInteger threshold;
+    
+    /** The timed. */
     @XmlAttribute(name = "timed")
     protected Boolean timed;
+    
+    /** The inverse. */
     @XmlAttribute(name = "inverse")
     protected Boolean inverse;
+    
+    /** The wait. */
     @XmlAttribute(name = "wait")
     protected BigInteger wait;
+    
+    /** The failure mode. */
     @XmlAttribute(name = "failureMode")
     protected String failureMode;
+    
+    /** The validation. */
     @XmlAttribute(name = "validation")
     protected String validation;
+    
+    /** The validation type. */
     @XmlAttribute(name = "validationType")
     protected String validationType;
+    
+    /** The context. */
     @XmlAttribute(name = "context")
     protected String context;
+    
+    /** The device. */
     @XmlAttribute(name = "device")
     protected String device;
 
@@ -172,8 +210,8 @@ public class Step {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Parameter }
-     * 
-     * 
+     *
+     * @return the parameter
      */
     public List<Parameter> getParameter() {
         if (parameter == null) {
@@ -201,8 +239,8 @@ public class Step {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Token }
-     * 
-     * 
+     *
+     * @return the token
      */
     public List<Token> getToken() {
         if (token == null) {
@@ -230,8 +268,8 @@ public class Step {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Step }
-     * 
-     * 
+     *
+     * @return the step
      */
     public List<Step> getStep() {
         if (step == null) {

@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
@@ -31,6 +32,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    /** The Constant _Suite_QNAME. */
     private final static QName _Suite_QNAME = new QName("http://www.morelandlabs.com/testRegistry", "suite");
 
     /**
@@ -41,72 +43,82 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RegistryRoot }
-     * 
+     * Create an instance of {@link RegistryRoot }.
+     *
+     * @return the registry root
      */
     public RegistryRoot createRegistryRoot() {
         return new RegistryRoot();
     }
 
     /**
-     * Create an instance of {@link Import }
-     * 
+     * Create an instance of {@link Import }.
+     *
+     * @return the import
      */
     public Import createImport() {
         return new Import();
     }
 
     /**
-     * Create an instance of {@link Test }
-     * 
+     * Create an instance of {@link Test }.
+     *
+     * @return the test
      */
     public Test createTest() {
         return new Test();
     }
 
     /**
-     * Create an instance of {@link Model }
-     * 
+     * Create an instance of {@link Model }.
+     *
+     * @return the model
      */
     public Model createModel() {
         return new Model();
     }
 
     /**
-     * Create an instance of {@link Parameter }
-     * 
+     * Create an instance of {@link Parameter }.
+     *
+     * @return the parameter
      */
     public Parameter createParameter() {
         return new Parameter();
     }
 
     /**
-     * Create an instance of {@link Page }
-     * 
+     * Create an instance of {@link Page }.
+     *
+     * @return the page
      */
     public Page createPage() {
         return new Page();
     }
 
     /**
-     * Create an instance of {@link Token }
-     * 
+     * Create an instance of {@link Token }.
+     *
+     * @return the token
      */
     public Token createToken() {
         return new Token();
     }
 
     /**
-     * Create an instance of {@link Step }
-     * 
+     * Create an instance of {@link Step }.
+     *
+     * @return the step
      */
     public Step createStep() {
         return new Step();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link RegistryRoot }{@code >}}
-     * 
+     * Create an instance of {@link JAXBElement }{@code <}{@link RegistryRoot }{@code >}}.
+     *
+     * @param value the value
+     * @return the JAXB element< registry root>
      */
     @XmlElementDecl(namespace = "http://www.morelandlabs.com/testRegistry", name = "suite")
     public JAXBElement<RegistryRoot> createSuite(RegistryRoot value) {

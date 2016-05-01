@@ -52,6 +52,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.10.3</version>
 				<configuration>
+					<failOnError>false</failOnError>
 					<reportOutputDirectory>javadoc</reportOutputDirectory>
 					<destDir>${project.artifactId}</destDir>
 				</configuration>

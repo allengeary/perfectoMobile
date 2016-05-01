@@ -16,6 +16,8 @@ import com.perfectoMobile.page.keyWord.step.StepSync;
  */
 public class KWSSync extends AbstractKeyWordStep
 {
+    
+    /** The thread pool. */
     private static ExecutorService threadPool = Executors.newCachedThreadPool();
 	/**
 	 * Instantiates a new KWS fork.

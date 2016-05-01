@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * <p>Java class for Site complex type.
  * 
@@ -43,8 +44,11 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class Site {
 
+    /** The page. */
     @XmlElement(required = true)
     protected List<Page> page;
+    
+    /** The name. */
     @XmlAttribute(name = "name", required = true)
     protected String name;
 
@@ -67,8 +71,8 @@ public class Site {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Page }
-     * 
-     * 
+     *
+     * @return the page
      */
     public List<Page> getPage() {
         if (page == null) {

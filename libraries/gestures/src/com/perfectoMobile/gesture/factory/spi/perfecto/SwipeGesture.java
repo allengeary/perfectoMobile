@@ -48,7 +48,7 @@ public class SwipeGesture extends AbstractSwipeGesture
 				}
 			}
 
-			PerfectoMobile.instance().gestures().swipe( executionId, deviceName, new PercentagePoint( getSwipeStart().getX(), getSwipeStart().getY() ), new PercentagePoint( getSwipeEnd().getX(), getSwipeEnd().getY() ) );
+			PerfectoMobile.instance().gestures().swipe( executionId, deviceName, new PercentagePoint( getSwipeStart().getX(), getSwipeStart().getY() ), new PercentagePoint( getSwipeEnd().getX(), getSwipeEnd().getY() ), 2 );
 			return true;
 		}
 		else
