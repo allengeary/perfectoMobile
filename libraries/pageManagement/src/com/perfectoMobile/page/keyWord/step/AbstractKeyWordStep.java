@@ -83,7 +83,18 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
 
     /** The device. */
     private String device;
+    
+    private String[] tagNames;
 
+    @Override
+    public void setTagNames( String tagNames )
+    {
+        if ( tagNames != null && !tagNames.isEmpty() )
+        {
+            this.tagNames = tagNames.split( "," );
+        }
+    }
+    
     /*
      * (non-Javadoc)
      * 
@@ -513,6 +524,36 @@ public abstract class AbstractKeyWordStep implements KeyWordStep
                 {
                     if ( log.isInfoEnabled() )
                         log.info( Thread.currentThread().getName() + ": A Required OS of [" + os + "] was specified however the OS of the device was [" + deviceOs.toUpperCase() + "]" );
+                    return true;
+                }
+            }
+            
+            //
+            // Check for tag names
+            //
+            if ( tagNames != null && tagNames.length > 0 && PageManager.instance().getTagNames() != null && PageManager.instance().getTagNames().length > 0 )
+            {
+                boolean tagEnabled = false;
+                for ( String tagName : tagNames )
+                {
+                    for ( String useTag : PageManager.instance().getTagNames() )
+                    {
+                        if ( tagName.equals( useTag ) )
+                        {
+                            tagEnabled = true;
+                            break;
+                        }
+                    }
+                    
+                    if ( tagEnabled )
+                        break;
+                }
+                
+                
+                if ( !tagEnabled )
+                {
+                    if ( log.isInfoEnabled() )
+                        log.info( Thread.currentThread().getName() + ": This required a tag that was not enabled for this test run" );
                     return true;
                 }
             }

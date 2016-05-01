@@ -37,6 +37,10 @@ public interface Gestures extends PerfectoService
     @Operation ( operationName = "command")
     @PerfectoCommand ( commandName = "touch", subCommandName = "swipe")
     public Execution swipe( @ResourceID String executionId, @Parameter ( name = "handsetId" ) String handsetId, @Parameter ( name = "start") PercentagePoint start, @Parameter ( name = "end") PercentagePoint end);
+    
+    @Operation ( operationName = "command")
+    @PerfectoCommand ( commandName = "touch", subCommandName = "swipe")
+    public Execution swipe( @ResourceID String executionId, @Parameter ( name = "handsetId" ) String handsetId, @Parameter ( name = "start") PercentagePoint start, @Parameter ( name = "end") PercentagePoint end, @Parameter ( name = "duration") Integer duration);
 
     /**
      * Zoom.

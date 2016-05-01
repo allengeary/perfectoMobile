@@ -90,9 +90,24 @@ public class PageManager
 
     /** The alt driver source. */
     private SeleniumSessionManager altDriverSource = null;
+    
+    private String[] tagNames;
 
     
-	/**
+	public String[] getTagNames()
+    {
+        return tagNames;
+    }
+
+    public void setTagNames( String tagNames )
+    {
+        if ( tagNames != null && !tagNames.isEmpty() )
+        {
+            this.tagNames = tagNames.split( "," );
+        }
+    }
+
+    /**
 	 * Gets the page cache.
 	 *
 	 * @return the page cache

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>perfectoMobile</groupId>
   <artifactId>com.morelandLabs.driver.TestDriver</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.1-SNAPSHOT</version>
   
   <repositories>
       <repository>
@@ -71,32 +71,32 @@
       <dependency>
          <groupId>perfectoMobile</groupId>
          <artifactId>deviceFramework</artifactId>
-         <version>1.0.0</version>
+         <version>1.0.1-SNAPSHOT</version>
       </dependency>
       <dependency>
          <groupId>perfectoMobile</groupId>
          <artifactId>gestures</artifactId>
-         <version>1.0.0</version>
+         <version>1.0.1-SNAPSHOT</version>
       </dependency>
       <dependency>
          <groupId>perfectoMobile</groupId>
          <artifactId>integrations</artifactId>
-         <version>1.0.0</version>
+         <version>1.0.1-SNAPSHOT</version>
       </dependency>
       <dependency>
          <groupId>perfectoMobile</groupId>
          <artifactId>pageManagement</artifactId>
-         <version>1.0.0</version>
+         <version>1.0.1-SNAPSHOT</version>
       </dependency>
       <dependency>
          <groupId>perfectoMobile</groupId>
          <artifactId>serviceProviderInterface</artifactId>
-         <version>1.0.0</version>
+         <version>1.0.1-SNAPSHOT</version>
       </dependency>
       <dependency>
          <groupId>perfectoMobile</groupId>
          <artifactId>imagingExtensions</artifactId>
-         <version>1.0.0</version>
+         <version>1.0.1-SNAPSHOT</version>
       </dependency>
    </dependencies>
 </project>

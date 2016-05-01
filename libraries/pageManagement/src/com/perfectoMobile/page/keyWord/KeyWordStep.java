@@ -48,6 +48,10 @@ public interface KeyWordStep
 		NOT_EMPTY;
 	}
 
+	public void setTagNames( String tagNames );
+	
+	
+	
 	/**
 	 * Gets the link id.
 	 *

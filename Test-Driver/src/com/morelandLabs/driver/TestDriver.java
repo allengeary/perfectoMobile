@@ -151,6 +151,10 @@ public class TestDriver
 			
 			DeviceManager.instance().setCachingEnabled( Boolean.parseBoolean( configProperties.getProperty( "driver.enableCaching" ) ) );
 			
+			String stepTags = configProperties.getProperty( "driver.stepTags" );
+            if ( stepTags != null && !stepTags.isEmpty() )
+                PageManager.instance().setTagNames( stepTags );
+			
 			String interruptString = configProperties.getProperty( "driver.deviceInterrupts" );
 			if ( interruptString != null && !interruptString.isEmpty() )
 			    DeviceManager.instance().setDeviceInterrupts( interruptString );
