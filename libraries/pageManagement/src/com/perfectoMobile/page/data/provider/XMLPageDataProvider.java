@@ -46,6 +46,8 @@ public class XMLPageDataProvider extends AbstractPageDataProvider
 	
 	/** The resource name. */
 	private String resourceName;
+	
+	private boolean asResource = false;
 
 	/**
 	 * Instantiates a new XML page data provider.
@@ -79,7 +81,10 @@ public class XMLPageDataProvider extends AbstractPageDataProvider
 		{
 			if (log.isInfoEnabled())
 				log.info( "Reading from CLASSPATH as " + resourceName );
+			asResource = true;
 			readElements( getClass().getClassLoader().getResourceAsStream( resourceName ) );
+			
+			populateTrees();
 		}
 		else
 		{
@@ -87,7 +92,10 @@ public class XMLPageDataProvider extends AbstractPageDataProvider
 			{
 				if (log.isInfoEnabled())
 					log.info( "Reading from FILE SYSTEM as [" + fileName + "]" );
+				asResource = false;
 				readElements( new FileInputStream( fileName ) );
+				
+				populateTrees();
 			}
 			catch (FileNotFoundException e)
 			{
@@ -118,9 +126,23 @@ public class XMLPageDataProvider extends AbstractPageDataProvider
 			for (int i = 0; i < nodeList.getLength(); i++)
 				parseType( nodeList.item( i ) );
 			
-			
-			populateTrees();
-			
+			NodeList importList = getNodes( xmlDocument, "//data/import" );
+			if ( importList != null )
+			{
+    			for (int i = 0; i < importList.getLength(); i++)
+    			{
+    			    Node importElement = importList.item( i );
+    			    String fileName = importElement.getAttributes().getNamedItem( "fileName" ).getNodeValue();
+    			    
+    			    if (log.isInfoEnabled())
+                        log.info( "Reading imported data as [" + fileName + "]" );
+    			    
+    			    if ( asResource )
+    			        readElements( getClass().getClassLoader().getResourceAsStream( fileName ) );
+    			    else
+    			        readElements( new FileInputStream( fileName ) );
+    			}
+			}	
 		}
 		catch (Exception e)
 		{
