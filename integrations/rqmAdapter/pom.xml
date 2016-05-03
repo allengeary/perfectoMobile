@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.perfectomobile.integration.rqm</groupId>
 	<artifactId>rqmAdapter</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>rqmAdapter</name>
 	<description>Perfecto Mobile RQM Integration Adapter</description>
 	<repositories>

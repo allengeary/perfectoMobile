@@ -124,8 +124,6 @@ public abstract class AbstractAdapterAction implements AdapterAction
 			if ( log.isDebugEnabled() )
 				log.debug( "Request: " + httpRequest.toString() );
 			
-			System.out.println( httpRequest );
-			
 			OutputStream outputStream = serverSocket.getOutputStream();
 			httpRequest.writeRequest( outputStream );
 			
@@ -137,12 +135,8 @@ public abstract class AbstractAdapterAction implements AdapterAction
 			if ( log.isDebugEnabled() )
 				log.debug( "Response: " + httpResponse.toString() );
 			
-			System.out.println( httpResponse );
-			
 			httpResponse = followRedirect( httpResponse );
-			
-			
-			
+
 			return httpResponse;
 		}
 		finally
@@ -227,8 +221,6 @@ public abstract class AbstractAdapterAction implements AdapterAction
 			serverSocket = getSocket( currentUrl.getHost(), currentUrl.getPort(), true );
 			OutputStream outputStream = serverSocket.getOutputStream();
 			
-			System.out.println( "Request: " + httpRequest.toString() );
-			
 			if ( log.isDebugEnabled() )
 				log.debug( "Request: " + httpRequest.toString() );
 			httpRequest.writeRequest( outputStream );
@@ -237,9 +229,7 @@ public abstract class AbstractAdapterAction implements AdapterAction
 			InputStream inputStream = serverSocket.getInputStream();
 			HttpResponse httpResponse = new HttpResponse();
 			httpResponse.extractResponse( new BufferedInputStream( inputStream ) );
-			
-			System.out.println( "Response: " + httpResponse.toString() );
-			
+
 			if ( log.isDebugEnabled() )
 				log.debug( "Response: " + httpResponse.toString() );
 			return httpResponse;

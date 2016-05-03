@@ -119,6 +119,8 @@ public class HttpResponse
 		StringBuilder httpresponse = new StringBuilder();
 		httpresponse.append( responseDefinition.toString() ).append( CRLF );
 		httpresponse.append( responseHeaders.toString() ).append( CRLF ).append( CRLF );
+		if ( responseBody != null )
+		httpresponse.append(  new String( responseBody  ) );
 		return httpresponse.toString();
 	}
 

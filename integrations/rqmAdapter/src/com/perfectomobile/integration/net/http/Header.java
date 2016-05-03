@@ -76,15 +76,19 @@ public class Header
 		{
 			if ( cookieFlag )
 			{
-				String[] cookieValue = value.split( "=" );
-				HttpCookie cookie = null;
-				if ( cookieValue.length == 1 )
-					cookie = new HttpCookie( cookieValue[0], "" );
-				else
-					cookie = new HttpCookie( cookieValue[0], cookieValue[ 1 ]);
-				
-				cookie.setVersion( 0 );
-				cookieMap.put( cookieValue[0].toLowerCase(), cookie );
+			    String[] cookieList = value.split( ";" );
+			    for ( String currentCookie : cookieList )
+			    {
+    				String[] cookieValue = currentCookie.split( "=" );
+    				HttpCookie cookie = null;
+    				if ( cookieValue.length == 1 )
+    					cookie = new HttpCookie( cookieValue[0], "" );
+    				else
+    					cookie = new HttpCookie( cookieValue[0], cookieValue[ 1 ]);
+    				
+    				cookie.setVersion( 0 );
+    				cookieMap.put( cookieValue[0].toLowerCase(), cookie );
+			    }
 				
 			}
 			
