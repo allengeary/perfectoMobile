@@ -203,13 +203,28 @@ public class KeyWordDriver
 			{
 				if ( !dataMap.containsKey( dataProvider ) )
 				{
-					//
-					// On a function call we only add the page data if it did not already exist
-					//
-					PageData pageData = PageDataManager.instance().getPageData( dataProvider );
-					if (log.isInfoEnabled())
-						log.info( "Adding " + dataProvider + " as " + pageData );
-					dataMap.put( dataProvider, pageData );
+				    //
+                    // On a function call we only add the page data if it did not already exist
+                    //
+				    
+				    PageData pageData = null;
+                    if ( dataProvider.contains( "." ) )
+                    {
+                        String[] typeId = dataProvider.split( "\\." );
+                        if ( typeId.length == 2 )
+                            pageData = PageDataManager.instance().getPageData( typeId[ 0 ], typeId [ 1 ] );
+                        else
+                            pageData = PageDataManager.instance().getPageData( dataProvider );
+                    }
+                    else
+                        pageData = PageDataManager.instance().getPageData( dataProvider );
+                    
+                    if ( pageData == null )
+                        throw new IllegalArgumentException( "Invalid page data value specified.  Ensure that [" + dataProvider + "] exists in your page data definition");
+                    
+                    if (log.isInfoEnabled())
+                        log.info( "Adding " + dataProvider + " as " + pageData );
+                    dataMap.put( dataProvider, pageData );
 				}
 			}
 		}
@@ -300,7 +315,7 @@ public class KeyWordDriver
 				    PageData pageData = null;
 				    if ( dataProvider.contains( "." ) )
 				    {
-				        String[] typeId = dataProvider.split( "." );
+				        String[] typeId = dataProvider.split( "\\." );
 				        if ( typeId.length == 2 )
 				            pageData = PageDataManager.instance().getPageData( typeId[ 0 ], typeId [ 1 ] );
 				        else
