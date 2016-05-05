@@ -130,6 +130,8 @@ public class DefaultPageData implements PageData
 	 */
 	public void addValue( String fieldName, String value )
 	{
+	    if ( fieldName.equals( "name" ) )
+	        recordName = value;
 		recordMap.put( fieldName, value );
 	}
 	
