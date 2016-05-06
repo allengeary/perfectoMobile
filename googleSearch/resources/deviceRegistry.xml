@@ -1,7 +1,0 @@
-<deviceRegistry>
-   <device name="Samsung S4" manufacturer="Samsung" os="Android" model="I545 Galaxy S IV 4.2" active="false" availableDevices="1" />
-   <device name="iPhone 6" manufacturer="Apple" os="iOS" model="iPhone-6" active="true" availableDevices="1" />
-   <device name="Firefox" os="Windows" active="false" availableDevices="1" browserName="Firefox" manufacturer="Mozilla" model="Firefox" />
-   <device name="Note 4" manufacturer="Samsung" os="Android" model="Galaxy Note 4" active="false" availableDevices="1" />
-   <device name="Galaxy S5" manufacturer="Samsung" os="Android" model="Galaxy S5" active="true" availableDevices="1" />
-</deviceRegistry>
