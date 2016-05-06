@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../../css/morelandLabs.css" />
+</head>
+<body>
+	<table width="100%">
+		<tr>
+			<td class="headerContainer">
+				<a href="#usage" class="keywordHeader">Usage</a> - <a href="#xml" class="keywordHeader">XML Configuration</a> - <a href="#excel" class="keywordHeader">Excel Configuration</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="keyword">Data Driven Testing</td>
+		</tr>
+		<tr>
+			<td class="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/index.html?com/perfectoMobile/page/keyWord/step/AbstractKeyWordStep.html">com.perfectoMobile.page.data.PageDataManager</a></td>
+		</tr>
+		<tr>
+			<td class="keywordDescription" id="description">
+			Data-driven testing (DDT) is a term used in the testing of computer software to describe testing done using a table of conditions directly as test inputs and verifiable outputs as well as the process where test environment settings and control are not hard-coded. Data-driven testing is the creation of test scripts to run together with their related data sets in a framework. The framework provides re-usable test logic to reduce maintenance and improve test coverage. Input and result data values can be stored in one or more central data sources.
+			The data comprises variables used for both input values and output verification values. The DDT framework  performs "play back" of harvested data producing a powerful automated regression testing tool.  While a test may use multiple tables from the data source, only one data source may be used 
+			</td>
+		</tr>
+		<tr>
+			<td class="pHeader" id="usage">Usage</td>
+		</tr>
+		<tr>
+			<td class="pText">Once configured page data can be accessed via the PageDataManager singleton class via one of the following methods 
+				<table>
+				 <tr><td class="pName" nowrap="nowrap">getRecord( <span class="pValues">recordType</span> ):</td><td class="pDescription">Retrieves a single record from the named record type.  The records are stored in a FIFO (first in first out) queue and each used record as added back to the end of the queue for reuse.  If the recordType had the locked flag set then this record will not be available again until putPageData is called with this pageData object.  The PageData object that was returned will have access to all of the named fields</td></tr>
+				 <tr><td class="pName" nowrap="nowrap">getRecords( <span class="pValues">recordType</span> ):</td><td class="pDescription">Retrieves all records from the named record type.  All records will be available and the locking logic is ignored</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="pHeader" id="xml">XML Configuration</td>
+		</tr>
+		<tr>
+			<td class="pText">When defining page data using XML the data designer will create record type elements.  A record type element is the same concept as a database table in that it contains a set of records.  
+				<table>
+				 <tr><td class="pName">name:</td><td class="pDescription">The name attribute represents the data source name as it will be referenced within the test cases</td></tr>
+				 <tr><td class="pName">lockrecords:</td><td class="pDescription">Lock records is a flag <span class="pValues">(true/false)</span> indicating if a record can be used in parallel.  When <span class="pValues">true</span> a record will be locked by an individual iteration of a test case and released for reuse upon completion otherwise the records can be reused as requested by the test case</td></tr>
+				</table><br/>
+			</td>
+			</tr>
+			<tr>
+			<td class="pText">The individual contained record elements make up the test data.  Record items may contains any number of named attributes comprising the data in addition to the elements specified below.  The same named attributes/elements must exist throughout all record in the same record type and they will be available for use in the test case.  If you want to create a tiered data structures where page data can contain other page data structures then the pipe character will be used.  When surrounding a value with the pipe character it indicates that this value is actually a reference to another table.  So <span class="pValues">|authData|</span> indicates that this field is a reference to the authData record type and will contain all of the rows.  You can filter the data as well by providing a set of criteria, each contained within a set of square brackets as needed.  <span class="pValues">|authData:[type='user'][age='10']|</span> indicates that this references the authData record type however only the fields that contains the field value of user for type and 10 for age will be selected  
+				<table>
+				 <tr><td class="pName">name:</td><td class="pDescription">The name attribute represents the field name as it will be referenced within the test cases</td></tr>
+				 <tr><td class="pName">active:</td><td class="pDescription">Active is a flag <span class="pValues">(true/false)</span> indicating if this record is active.  Setting a record's active flag to <span class="pValues">false</span> tells the subsystem to ignore it during a run</td></tr>
+				</table><br/>
+			</td>
+		</tr>
+		<tr>
+			<td class="pText">The following table provides authentication data using attributes.  The data will have 2 active records and on inactive record and the records will be locked</td>
+		</tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="100" readonly="readonly" rows="7">
+<data>
+	<recordType name="authData" lockRecords="true">
+		<record name="userOne" userName="rgears" password="aaaaa" />
+		<record name="userTwo" userName="deart" password="bbbbb" />
+		<record name="userThree" userName="pkate" password="aaaacccca" active="false"/>
+	</recordType>
+</data>
+			</textarea></td></tr>
+		<tr>
+			<td class="pText">This example is functionality the same as the above example however it is defined using both attributes and element intermixed to demonstrate the flexibility of the engine</td>
+		</tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="100" readonly="readonly" rows="13">
+<data>
+	<recordType name="authData" lockRecords="true">
+		<record name="userOne" >
+			<userName>rgears</userName>
+			<password>aaaaa</password>
+		</record>
+		<record name="userTwo" >
+			<userName>deart</userName>
+			<password>bbbb</password>
+		</record>
+		<record name="userThree" userName="pkate" password="aaaacccca" active="false"/>
+	</recordType>
+</data>
+			</textarea></td></tr>
+		<tr>
+            <td class="pText">This example contains 2 record types.  userType references authData and is filtered by the user category.  The admins record will contain 2 authData records and the users will contain 1</td>
+        </tr>
+            <tr><td class="eValues"><textarea class="eValues" cols="100" readonly="readonly" rows="7">
+<data>
+    <recordType name="authData" lockRecords="true">
+        <record name="userOne" userName="rgears" password="aaaaa" userType="admin" />
+        <record name="userTwo" userName="deart" password="bbbbb"  userType="user"/>
+        <record name="userThree" userName="pkate" password="aaaacccca" userType="admin"/>
+    </recordType>
+    <recordType name="userType" lockRecords="true">
+        <record name="admins" type="admin" users="|userType:[type='admin']|" />
+        <record name="users" type="user" users="|userType:[type='user']|"/>
+    </recordType>
+</data>
+            </textarea></td></tr>	
+		<tr>
+			<td class="pHeader" id="excel">Excel Configuration</td>
+		</tr>
+		<tr>
+			<td class="pText">When defining page data using Excel each table is represented by a tab.  Each individual field name is specified using the values in the first row of the sheet.  You can use a single Excel file for all of the data tables splitting them in using this format.  If you want to create a tiered data structures where page data can contain other page data structures then the pipe character will be used.  When surrounding a value with the pipe character it indicates that this value is actually a reference to another table.  So <span class="pValues">|authData|</span> indicates that this field is a reference to the authData record type and will contain all of the rows.  You can filter the data as well by providing a set of criteria, each contained within a set of square brackets as needed.  <span class="pValues">|authData:[type='user'][age='10']|</span> indicates that this references the authData record type however only the fields that contains the field value of user for type and 10 for age will be selected 
+
+			</td>
+		</tr>
+		<tr>
+			<td class="pText">The following example specifies authentication data defined in a tab named authData</td>
+		</tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="4">
+TAB NAMED authData
+userName,password
+rgears,aaaaa
+pkate,bbbbb
+			</textarea></td></tr>
+        <tr>
+            <td class="pText">The following example specifies authentication data defined in a tab named authData with a user type table defining the types.</td>
+        </tr>
+            <tr><td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="4">
+TAB NAMED authData
+userName,password,userType
+rgears,aaaaa,admin
+pkate,bbbbb,user
+
+
+TAB NAMED userType
+name,type,users
+admins,admin,|userType:[type='admin']|
+users,user,|userType:[type='user']|
+            </textarea></td></tr>
+		
+	
+		
+	</table>
+</body>
+</html>

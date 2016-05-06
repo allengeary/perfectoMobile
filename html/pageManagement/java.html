@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../css/morelandLabs.css" />
+</head>
+<body>
+    <table width="100%">
+        <tr>
+            <td class="headerContainer"><a href="#usage" class="keywordHeader">Provider Implementations</a> - <a href="#parameters" class="keywordHeader">Element Descriptors</a> - <a href="#pom" class="keywordHeader">Page Object Model</a></td>
+        </tr>
+        <tr>
+            <td class="keyword">Testing in Java</td>
+        </tr>
+        <tr>
+            <td class="keywordDescription" id="description">It is possible to use Java and TestNG out of the box to test your application using this library set.  Combining the individual libraries together gives you access to a reach set of testing features.  There are 3 key components to create the test - they are the Test Class, that Page Interface and the Page Implementation</td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="usage">Test Class</td>
+        </tr>
+        <tr>
+            <td class="pText">A Test Class represent an implementation of a test case or a collection of test cases.  Each test class must directly extends the <a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/com/perfectoMobile/device/ng/AbstractSeleniumTest.html">AbstractSeleniumTest</a> class.  All of your test methods must have the same signature format to ensure proper device management and coverage. In addition, you must not specify a @BeforeMethod or @AfterMethod annotation as they are used by the abstract implementation already.Here we define a method named testDriver
+                <textarea class="eValues" cols="80" readonly="readonly" rows="5">
+@Test( dataProvider = "deviceManager")
+public void testDriver( TestName testName ) throws Throwable
+{
+    //Your test case information here
+}
+                </textarea>   
+            </td>
+            
+        </tr>
+        <tr>
+            <td class="pText">When defining a test you must define a single method with then annotation @BeforeSuite to initialize all of the framework properties.  The following items should be configured in the order specified.  Note that any provider that takes a file name as a parameter can be specifeid as either a fil or a string.  The File is read from the file system where the String is read from the classpath.
+                <table>
+                    <tr>
+                        <td class="pName">Cloud Registry:</td>
+                        <td class="pDescription">You must configure the cloud registry and specify the cloud under test.  Click <a hRef="../deviceManagement/cloud.html">here</a> for details regarding the cloud registry.</td>
+                    </tr>
+                    <tr>
+                        <td class="pName">Device Provider:</td>
+                        <td class="pDescription">You must configure the device provider.  Click <a hRef="../deviceManagement/index.html">here</a> for details regarding the device provider.</td>
+                    </tr>
+                    <tr>
+                        <td class="pName">Application Registry:</td>
+                        <td class="pDescription">You must configure the application registry and define that application under test.  Click <a hRef="../deviceManagement/application.html">here</a> for details regarding the application registry.</td>
+                    </tr>
+                    <tr>
+                        <td class="pName">Gesture Factory:</td>
+                        <td class="pDescription">If you will be using Gestures or Device Actions then the Gesture Provider must be specified.  Currently, there are 2 Gesture Provider implementations that can be used <a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/gestures/com/perfectoMobile/gesture/factory/spi/PerfectoGestureFactory.html">PerfectoGestureFactory</a> and <a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/gestures/com/perfectoMobile/gesture/factory/spi/AppiumGestureFactory.html">AppiumGestureFactory</a> with the Perfecto implementation being that standard.  For accessing information outside of the Perfecto Cloud you may use the Appium implementation.</td>
+                    </tr>
+                    <tr>
+                        <td class="pName">Artifact Production:</td>
+                        <td class="pDescription">Configure automated artifacts and output locations. Click <a hRef="../deviceManagement/artifacts.html">here</a> for details regarding the Artifact Production</td>
+                    </tr>
+                </table>
+                
+                <textarea class="eValues" cols="160" readonly="readonly" rows="34">
+@BeforeSuite
+public void setupSuite()
+{
+	CloudRegistry.instance().setCloudProvider( new XMLCloudProvider( "cloudRegistry.xml" ) );
+	CloudRegistry.instance().setCloud( "partners" );
+	DataProvider dataProvider = new PerfectoMobileDataProvider( new ReservedHandsetValidator(), DriverType.WEB );
+	
+	//
+	// The factory for generating devices Gestures
+	//
+	GestureManager.instance().setGestureFactory( new PerfectoGestureFactory() );
+	
+	//
+	// Application
+	//
+	ApplicationRegistry.instance().setApplicationProvider( new XMLApplicationProvider( "applicationRegistry.xml" ) );
+	ApplicationRegistry.instance().setAUT( "Google" );
+	
+	//
+	// Required to call the "getArtifact" methods on the DeviceWebDriver
+	//
+	DataManager.instance().setArtifactProducer( new PerfectoArtifactProducer() );	
+	
+	//
+	// Optional parameters to automatically download reports upon completion
+	//
+	DataManager.instance().setReportFolder( new File( "c:/tools/report" ) );
+	DataManager.instance().setAutomaticDownloads( new ArtifactType[] { ArtifactType.EXECUTION_REPORT_XML, ArtifactType.FAILURE_SOURCE, ArtifactType.DEVICE_LOG } );
+	DataManager.instance().readData( dataProvider );
+	
+}
+                </textarea>   
+            </td>
+            
+        </tr>
+        <tr>
+            <td class="pHeader">Page Interface &amp; Implementation</td>
+        </tr>
+        <tr>
+            <td class="pTestr">The Page Interface and Implementation objects are required to tie into the rest of the sub system using the page object packages.  For details on their implementation, please see <a hRef="../pageManagement/index.html#pom">here</a></td>
+        </tr>
+        <tr>
+            <td class="pHeader">Example</td>
+        </tr>
+        <tr><td>
+                <textarea class="eValues" cols="160" readonly="readonly" rows="50">
+public class CameraTest extends AbstractSeleniumTest
+{
+    @BeforeSuite
+    public void setupSuite()
+    {
+        CloudRegistry.instance().setCloudProvider( new XMLCloudProvider( "cloudRegistry.xml" ) );
+        CloudRegistry.instance().setCloud( "partners" );
+        DataProvider dataProvider = new PerfectoMobileDataProvider( new ReservedHandsetValidator(), DriverType.WEB );
+        
+        //
+        // The factory for generating devices Gestures
+        //
+        GestureManager.instance().setGestureFactory( new PerfectoGestureFactory() );
+        
+        //
+        // Application
+        //
+        ApplicationRegistry.instance().setApplicationProvider( new XMLApplicationProvider( "applicationRegistry.xml" ) );
+        ApplicationRegistry.instance().setAUT( "Google" );
+        
+        //
+        // Required to call the "getArtifact" methods on the DeviceWebDriver
+        //
+        DataManager.instance().setArtifactProducer( new PerfectoArtifactProducer() );   
+        
+        //
+        // Optional parameters to automatically download reports upon completion
+        //
+        DataManager.instance().setReportFolder( new File( "c:/tools/report" ) );
+        DataManager.instance().setAutomaticDownloads( new ArtifactType[] { ArtifactType.EXECUTION_REPORT_XML, ArtifactType.FAILURE_SOURCE, ArtifactType.DEVICE_LOG } );
+        DataManager.instance().readData( dataProvider );
+        
+    }
+    
+    @Test( dataProvider = "deviceManager")
+    public void testLoginPage( TestName testName ) throws Exception
+    {
+        
+        Camera camera = (Camera) PageManager.instance().createPage( Camera.class, getWebDriver() );
+        
+        System.out.println( System.currentTimeMillis() );
+        Assert.assertTrue( camera.getElement( Camera.MODE ).isPresent() );
+        Assert.assertTrue( camera.getElement( Camera.CAMERA ).isPresent() );
+        
+        boolean result = KeyWordDriver.instance().executeTest( testName.getTestName(), getWebDriver() );
+        
+        Assert.assertTrue( result );
+    } 
+}
+                </textarea>                
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../../../css/morelandLabs.css" />
+</head>
+<body>
+	<table width="100%">
+		<tr>
+			<td class="headerContainer">
+				<a href="#attributes" class="keywordHeader">Attributes</a> - <a href="#parameters" class="keywordHeader">Parameters</a> - <a href="#tokens" class="keywordHeader">Tokens</a>  - <a href="#examples" class="keywordHeader">Examples</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="keyword">LOOP</td>
+		</tr>
+		<tr>
+			<td class="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/page/keyWord/step/spi/KWSAttribute.html">com.perfectoMobile.page.keyWord.step.spi.KWSAttribute</a></td>
+		</tr>
+		<tr>
+			<td class="keywordDescription" id="description">The Loop keyword allows you to loop over a number of iterations, a set of data from a data table or a set of elements found on the page.  Each iteration of a loop will call the named function.  During a loop, the BREAK keyword step can be used in the function to break out of the loop</td>
+		</tr>
+		<tr>
+			<td class="attributeDescription"><div class="attributeHeader" id="attributes">Attribute Overrides</div>
+				<table>
+				 	<tr><td class="attributeName">Name:</td><td class="attributeDescription">In this case, name is only used for reporting purposes and serves no purpose as far as execution is concerned<td></td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="pHeader" id="parameters">Parameters</td>
+		</tr>
+		<tr>
+			<tr>
+			<td class="pText">The loop takes 2 parameters
+				<table>
+				 <tr><td class="pName">1:</td><td class="pDescription">The loop iterator.  The iterator can be in 1 of 3 forms<ul>
+                    <li>If specified as an integer, the loop will iterator the specified amount of times before exiting</li>
+                    <li>If specified using the data tag then the value in the brackets is the table name to loop over.  <span class="pValues">data{authData}</span> will loop over all records in the authData table.  If that value inside of the brackets begins with a period then that indicates that we are looping over data tables inside of the page data supplied to the test.  <span class="pValues">data{.authData.users}</span> will cycle over the records in the users table as part of the authData record passed to the test</li>
+                    <li>If specified as <span class="pValues">_CONTEXT.ELEMENT</span> then the current context element will be used.  This value  can be used for nested loops over elements</li>
+                    <li>If none of the other conditions are met then this value used as the page element name.  The descriptor will be extracted and the values looked up and iterated over.  During the loop, the current selected element will be stored as <span class="pValues">_CONTEXT.ELEMENT</span> for use in your scripts.  Along with the value, the current index will be stored as <span class="pValues">_CONTEXT.ELEMENT.INDEX</span>.  Both of these names can be referenced directly from your scripts to represent the element and index</li>
+                 </ul></td></tr>
+				 <tr><td class="pName">2:</td><td class="pDescription">The name of the function to call for each iteration of a loop.</td></tr>
+				</table>
+			</td>
+
+		</tr>
+		
+		<tr>
+			<td class="eHeader" id="examples">Examples</td>
+		</tr>
+		<tr>
+		<td>
+			<table>
+			<tr><td class="eDescription">Loop 10 times calling the changeUser function</td></tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80" readonly="readonly">
+<step type="LOOP" name="MY_LOOP" page="MENU">
+	<parameter type="STATIC" value="10" />
+    <parameter type="STATIC" value="changeUser" />
+</step> 		
+			</textarea></td></tr>
+			<tr><td class="eDescription">Iterate over all records in a data table name authData</td></tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80" rows="4" readonly="readonly">
+<step type="LOOP" name="MY_LOOP" page="MENU">
+	<parameter type="STATIC" value="10" />
+    <parameter type="STATIC" value="data{authData}" />
+</step> 		
+			</textarea></td></tr>
+            <tr><td class="eDescription">Iterate over all records in a data table name authData passed in the userType record to this test case</td></tr>
+            <tr><td class="eValues"><textarea class="eValues" cols="80" rows="4" readonly="readonly">
+<step type="LOOP" name="MY_LOOP" page="MENU">
+    <parameter type="STATIC" value="10" />
+    <parameter type="STATIC" value="data{.userType.authData}" />
+</step>         
+            </textarea></td></tr>
+            <tr><td class="eDescription">This will loop over all elements defined by the page element name RECORDS on the page USERS</td></tr>
+            <tr><td class="eValues"><textarea class="eValues" cols="80" rows="4" readonly="readonly">
+<step type="LOOP" name="MY_LOOP" page="USERS">
+    <parameter type="STATIC" value="10" />
+    <parameter type="STATIC" value="RECORDS" />
+</step>         
+            </textarea></td></tr>
+			</table>
+			</td>
+		</tr>
+		
+	</table>
+</body>
+</html>

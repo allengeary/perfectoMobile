@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../../../css/morelandLabs.css" />
+</head>
+<body>
+	<table width="100%">
+		<tr>
+			<td class="headerContainer">
+				<a href="#attributes" class="keywordHeader">Attributes</a> - <a href="#parameters" class="keywordHeader">Parameters</a> - <a href="#tokens" class="keywordHeader">Tokens</a>  - <a href="#examples" class="keywordHeader">Examples</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="keyword">ADD_DEVICE</td>
+		</tr>
+		<tr>
+			<td class="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/page/keyWord/step/spi/KWSAddDevice.html">com.perfectoMobile.page.keyWord.step.spi.KWSAddDevice</a></td>
+		</tr>
+		<tr>
+			<td class="keywordDescription" id="description">Allows you to add multiple devices to a single test case for test chaining across multiple devices.  The named device will be added to the running test and available by name using the <span class="pValues">device</span> attribute on a step.  All sub devices will have a separate set of artifacts created.  Upon complete of the root device's test case, all devices will be properly shutdown</td>
+		</tr>
+		<tr>
+			<td class="attributeDescription"><div class="attributeHeader" id="attributes">Attribute Overrides</div>
+				<table>
+				 	<tr><td class="attributeName">N/A</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="pHeader" id="parameters">Parameters</td>
+		</tr>
+		<tr>
+			<td class="ptext">There are two parameters required for this keyword
+				<table>
+				 <tr><td class="pName">1:</td><td class="pDescription">The name of the device.  This is the name used to refer to this device throughout the rest of the test case</td></tr>
+                 <tr><td class="pName">1:</td><td class="pDescription">The device id.  This is the ID of the device that you want to acquire from your cloud instance</td></tr>
+				</table>
+			</td>
+			</tr>
+		<tr>
+			<td class="eHeader" id="examples">Examples</td>
+		</tr>
+		<tr>
+		<td>
+			<table>
+			<tr><td class="eDescription">This will open a device named secondDevice from the cloud with an ID of 12345</td></tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="4">
+<step timed="true" name="OPEN_PHONE" type="ADD_DEVICE" page="HOME" >
+	<parameter type="STATIC" value="secondDevice"/>
+	<parameter type="STATIC" value="12345"/>
+</step>		
+			</textarea></td></tr>
+			<tr><td class="eDescription">The following test opens 2 devices and validates that a text message was sent from one device to the other using the Verizon Messages+ application.</td></tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="120" rows="32" readonly="readonly">
+<test name="SMS" timed="true" active="true" dataProvider="phoneData,messages">
+	<step timed="true" name="SEARCH" type="WAIT_FOR" page="HOME" />
+
+	<step timed="true" name="COMPOSE" type="CLICK" page="HOME" />
+	
+	<step timed="true" name="OPEN_PHONE" type="ADD_DEVICE" page="HOME" >
+		<parameter type="STATIC" value="secondPhone"/>
+		<parameter type="DATA" value="phoneData.phoneID"/>
+	</step>
+	
+	<step timed="true" name="OPEN_APP" type="DEVICE" page="HOME" device="secondPhone" >
+		<parameter type="STATIC" value="Messages+"/>
+	</step>
+	
+	<step timed="true" name="SEARCH" type="WAIT_FOR" page="HOME" device="secondPhone"/>
+	
+	<step timed="true" name="TO" type="SET" page="HOME" >
+		<parameter type="DATA" value="phoneData.phoneNumber"/>
+	</step>
+	
+	<step timed="true" name="MESSAGE" type="SET" page="HOME" >
+		<parameter type="DATA" value="messages.message"/>
+	</step>
+	
+	<step timed="true" name="SEND" type="CLICK" page="HOME" />
+	<step timed="true" name="BACK" type="CLICK" page="MESSAGE" />
+	
+	<step timed="true" name="SENT_MESSAGE" type="WAIT_FOR" page="HOME" device="secondPhone">
+		<token type="DATA" name="messageText" value="messages.message"/>
+	</step>
+</test>		
+			</textarea></td></tr>
+			</table>
+			</td>
+		</tr>
+		
+	</table>
+</body>
+</html>

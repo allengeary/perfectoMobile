@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../../../css/morelandLabs.css" />
+</head>
+<body>
+    <table width="100%">
+        <tr>
+            <td class="headerContainer"><a href="#attributes" class="keywordHeader">Attributes</a> - <a href="#parameters" class="keywordHeader">Parameters</a> - <a href="#tokens" class="keywordHeader">Tokens</a> - <a href="#examples"
+                class="keywordHeader">Examples</a></td>
+        </tr>
+        <tr>
+            <td class="keyword">Compare</td>
+        </tr>
+        <tr>
+            <td class="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/page/keyWord/step/spi/KWSCompare.html">com.perfectoMobile.page.keyWord.step.spi.KWSCompare</a></td>
+        </tr>
+        <tr>
+            <td class="keywordDescription" id="description">The compare keyword will allow you to compare to values and succeed if that are both equivalent. Both values will passd as parameters and extracted using the standard parameter logic</td>
+        </tr>
+        <tr>
+            <td class="attributeDescription"><div class="attributeHeader" id="attributes">Attribute Overrides</div>
+                <table>
+                    <tr>
+                        <td class="attributeName">N/A</td>
+                    </tr>
+                </table></td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="parameters">Parameters</td>
+        </tr>
+        <tr>
+        <tr>
+            <td class="pDescription">Two parameters indicating that his step should compare the result
+                <table>
+                    <tr>
+                        <td class="pName">1:</td>
+                        <td class="pDescription">The first value in the comparison</td>
+                    </tr>
+                    <tr>
+                        <td class="pName">2:</td>
+                        <td class="pDescription">The second value in the comparison</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="eHeader" id="examples">Examples</td>
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td class="eDescription">Compare 2 static values - a truly useless test</td>
+                    </tr>
+                    <tr>
+                        <td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="4">
+<step type="COMPARE" page="MENU">
+	<parameter type="STATIC" value="1" />
+	<parameter type="STATIC" value="1" />
+</step> 		
+			</textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="eDescription">Compare a static value with a value stored in a context variable named SC_SIZE</td>
+                    </tr>
+                    <tr>
+                        <td class="eValues"><textarea class="eValues" cols="80" rows="4" readonly="readonly">
+<step type="COMPARE" page="MENU">
+	<parameter type="STATIC" value="100" />
+	<parameter type="CONTEXT" value="SC_SIZE" />
+</step> 		
+			</textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="eDescription">Compare a value from a data table named <span class="eValues">authData</span> with a previously stored context value</span></td>
+                    </tr>
+                    <tr>
+                        <td class="eValues"><textarea class="eValues" cols="80" rows="4" readonly="readonly">
+<step type="COMPARE" page="MENU">
+	<parameter type="DATA" value="authData.userType" />
+	<parameter type="CONTEXT" value="SC_USER_TYPE" />
+</step> 		
+			</textarea></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

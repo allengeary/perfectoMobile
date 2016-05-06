@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../../../css/morelandLabs.css" />
+</head>
+<body>
+	<table width="100%">
+		<tr>
+			<td class="headerContainer">
+				<a href="#attributes" class="keywordHeader">Attributes</a> - <a href="#parameters" class="keywordHeader">Parameters</a> - <a href="#tokens" class="keywordHeader">Tokens</a>  - <a href="#examples" class="keywordHeader">Examples</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="keyword">Mouse</td>
+		</tr>
+		<tr>
+			<td class="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/page/keyWord/step/spi/KWSMouse.html">com.perfectoMobile.page.keyWord.step.spi.KWSMouse</a></td>
+		</tr>
+		<tr>
+			<td class="keywordDescription" id="description">The mouse step allows control of specific mouse based events</td>
+		</tr>
+		<tr>
+			<td class="attributeDescription"><div class="attributeHeader" id="attributes">Attribute Overrides</div>
+				<table>
+				 	<tr><td class="attributeName">N/A</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="pHeader" id="parameters">Parameters</td>
+		</tr>
+		<tr>
+			<td class="ptext">A single parameter
+				<table>
+				 <tr><td class="pName">1:</td><td class="pDescription">The name of the mouse action.  The supported action are
+                 <ul>
+                 <li><span class="pValues">MOVE_TO</span>: Indicates that the mouse pointer should be moved to the center of the named page element</li>
+                 <li><span class="pValues">PRESS</span>: Press the left mouse button at the center of the named page element</li>
+                 <li><span class="pValues">RELEASE</span>: Releases the left mouse button at the center of the named page element</li>
+                 </ul>
+				</table>
+			</td>
+			</tr>
+		<tr>
+			<td class="eHeader" id="examples">Examples</td>
+		</tr>
+		<tr>
+		<td>
+			<table>
+			<tr><td class="eDescription">Move the mouse to the center of the MY_ELEMENT element on the MENU page</td></tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="4">
+<step type="MOUSE" name="MY_ELEMENT" page="MENU" >
+	<parameter type="STATIC" value="MOVE_TO" />
+</step> 		
+			</textarea></td></tr>
+			</table>
+			</td>
+		</tr>
+		
+	</table>
+</body>
+</html>

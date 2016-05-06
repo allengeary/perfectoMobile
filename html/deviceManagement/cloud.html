@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../css/morelandLabs.css" />
+</head>
+<body>
+    <table width="100%">
+        <tr>
+            <td class="headerContainer"><a href="#usage" class="keywordHeader">Usage</a> - <a href="#xml" class="keywordHeader">XML Configuration</a> - <a href="#excel" class="keywordHeader">Excel Configuration</a></td>
+        </tr>
+        <tr>
+            <td class="keyword">Cloud Registry</td>
+        </tr>
+        <tr>
+            <td class="keywordImplementation"><a hRef="https://rawgit.com/allengeary/javadoc-repo/master/perfectoMobile/deviceFramework/com/perfectoMobile/device/cloud/CloudRegistry.html">com.perfectoMobile.device.cloud.CloudRegistry</a></td>
+        </tr>
+        <tr>
+            <td class="keywordDescription" id="description">The Cloud registry controls access to our various cloud instances.  All access information and credentials are stored here for use by the system</td>
+        </tr>
+        <tr>
+            <td class="pText">
+                <table>
+                    <tr>
+                        <td class="pName">csv</td>
+                        <td class="pDescription"><span type="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/com/perfectoMobile/device/cloud/CSVCloudProvider.html">com.perfectoMobile.device.cloud.CSVCloudProvider</a></span><br />
+                            An comma separated list based cloud registry</td>
+                    </tr>
+                    <tr>
+                        <td class="pName">xml</td>
+                        <td class="pDescription"><span type="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/com/perfectoMobile/device/cloud/XMLCloudProvider.html">com.perfectoMobile.device.cloud.XMLVCloudProvider</a></span><br />
+                            An XML based cloud registry</td>
+                    </tr>
+                    <tr>
+                        <td class="pName">excel</td>
+                        <td class="pDescription"><span type="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/com/perfectoMobile/device/cloud/ExcelCloudProvider.html">com.perfectoMobile.device.cloud.ExcelCloudProvider</a></span><br />
+                            An Excel based cloud registry</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="xml">XML Configuration</td>
+        </tr>
+        <tr>
+            <td class="pText">The cloud registry format is defined using a XML Schema Definition file. This file is located at <span class="pValues">http://www.morelandlabs.com/xsd/deviceManagement/cloudRegistry.xsd</span>.
+                <table>
+                    <tr>
+                        <td class="name">cloudRegistry:</td>
+                        <td class="pDescription">The root element of the cloud registry</td>
+                    </tr>
+                    <tr>
+                        <td class="name">cloud:</td>
+                        <td class="pDescription">Represent a set of device criteria specifying a single device type
+                            <ul>
+                                <li>name: The name of the cloud that</li>
+                                <li>userName: The user name used to connect to the cloud for test execution</li>
+                                <li>password: The password used to connect to the cloud</li>
+                                <li>hostName: The hose name of the cloud instance</li>
+                                <li>grid: A name of another defined cloud instance pointing to a Selenium grid for desktop browsers</li>
+                                <li>proxyHost: An optional proxy host</li>
+                                <li>proxyPort: An optional proxy port</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="pText">The following example defines connections to the DEMO cloud along with a link to a locally hosted selenium desktop grid
+            </td>
+        </tr>
+        <tr>
+            <td class="eValues"><textarea class="eValues" cols="160" readonly="readonly" rows="6">
+<?xml version="1.0" encoding="UTF-8"?>
+<cloudRegistry xmlns="http://www.morelandlabs.com/cloudRegistry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.morelandlabs.com/cloudRegistry http://www.morelandlabs.com/xsd/deviceManagement/cloudRegistry.xsd">
+   <cloud name="demo" userName="user@domain.com" password="password" hostName="demo.perfectomobile.com" proxyHost="" grid="local"/>
+   <cloud name="local" userName="" password="" hostName="127.0.0.1:4444" />
+</cloudRegistry>
+			</textarea></td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="excel">CSV Configuration</td>
+        </tr>
+        <tr>
+            <td class="pText">Defines the clouds using a comma seperate list of values
+                <table>
+                    <tr>
+                        <td class="pDescription">Represent a set of device criteria specifying a single device type
+                            <ul>
+                                <li>1: The name of the cloud that</li>
+                                <li>2: The user name used to connect to the cloud for test execution</li>
+                                <li>3: The password used to connect to the cloud</li>
+                                <li>4: The hose name of the cloud instance</li>
+                                <li>5: An optional proxy host</li>
+                                <li>6: An optional proxy port</li>
+                                <li>7: A name of another defined cloud instance pointing to a Selenium grid for desktop browsers</li>
+                                <li>8: A description of this cloud</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="pText">The following example defines connections to the DEMO cloud along with a link to a locally hosted selenium desktop grid</td>
+        </tr>
+        <tr>
+            <td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="2">
+demo,user@domain.com,password,demo.perfectomobile.com,,,local
+demo,,,127.0.0.1:4444,,,
+			</textarea></td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="excel">Excel Configuration</td>
+        </tr>
+        <tr>
+            <td class="pText">Defines the clouds using a Excel spreadsheet
+                <table>
+                        <td class="pDescription">Represent a set of device criteria specifying a single device type
+                            <ul>
+                                <li>1: The name of the cloud that</li>
+                                <li>2: The user name used to connect to the cloud for test execution</li>
+                                <li>3: The password used to connect to the cloud</li>
+                                <li>4: The hose name of the cloud instance</li>
+                                <li>5: An optional proxy host</li>
+                                <li>6: An optional proxy port</li>
+                                <li>7: A name of another defined cloud instance pointing to a Selenium grid for desktop browsers</li>
+                                <li>8: A description of this cloud</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="pText">The following example defines connections to the DEMO cloud along with a link to a locally hosted selenium desktop grid</td>
+        </tr>
+        <tr>
+            <td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="2">
+demo,user@domain.com,password,demo.perfectomobile.com,,,local
+demo,,,127.0.0.1:4444,,,
+            </textarea></td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="xml">Usage</td>
+        </tr>
+        <tr>
+            <td class="pText">To use the cloud resgistry you must first select your data provider as defined above and set it using the setCloudProvider method then select you cloud instance calling the setCloud method
+                <textarea class="eValues" cols="120" readonly="readonly" rows="6">
+//XML
+CloudRegistry.instance().setCloudProvider( new XMLCloudProvider( "cloudRegistry.xml" ) );
+CloudRegistry.instance().setCloud( "demo" );
+
+//EXCEL
+CloudRegistry.instance().setCloudProvider( new ExcelCloudProvider( "cloudRegistry.xml", ""cloudTab" ) );
+                </textarea>                
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

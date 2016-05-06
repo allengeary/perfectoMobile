@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../css/morelandLabs.css" />
+</head>
+<body>
+    <table width="100%">
+        <tr>
+            <td class="headerContainer"><a href="#usage" class="keywordHeader">Usage</a> - <a href="#xml" class="keywordHeader">XML Configuration</a> - <a href="#excel" class="keywordHeader">Excel Configuration</a></td>
+        </tr>
+        <tr>
+            <td class="keyword">Application Registry</td>
+        </tr>
+        <tr>
+            <td class="keywordImplementation"><a hRef="https://rawgit.com/allengeary/javadoc-repo/master/perfectoMobile/deviceFramework/com/perfectoMobile/device/cloud/CloudRegistry.html">com.perfectoMobile.device.cloud.CloudRegistry</a></td>
+        </tr>
+        <tr>
+            <td class="keywordDescription" id="description">The Application Registry allows for all application details required for testing to be stored in a single place for easy access</td>
+        </tr>
+        <tr>
+            <td class="pText">
+                <table>
+                    <tr>
+                        <td class="pName">csv</td>
+                        <td class="pDescription"><span type="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/serviceProviderInterface/com/morelandLabs/application/CSVApplicationProvider.html">com.morelandLabs.application.CSVApplicationProvider</a></span><br />
+                            An comma separated list based application registry</td>
+                    </tr>
+                    <tr>
+                        <td class="pName">xml</td>
+                        <td class="pDescription"><span type="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/serviceProviderInterface/com/morelandLabs/application/XMLApplicationProvider.html">com.morelandLabs.application.XMLApplicationProvider</a></span><br />
+                            An XML based application registry</td>
+                    </tr>
+                    <tr>
+                        <td class="pName">excel</td>
+                        <td class="pDescription"><span type="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/serviceProviderInterface/com/morelandLabs/application/ExcelApplicationProvider.html">com.morelandLabs.application.ExcelApplicationProvider</a></span><br />
+                            An Excel based application registry</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="xml">XML Configuration</td>
+        </tr>
+        <tr>
+            <td class="pText">The application registry format is defined using a XML Schema Definition file. This file is located at <span class="pValues">http://www.morelandlabs.com/xsd/deviceManagement/applicationRegistry.xsd</span>.
+                <table>
+                    <tr>
+                        <td class="name">applicationRegistry:</td>
+                        <td class="pDescription">The root element of the application registry</td>
+                    </tr>
+                    <tr>
+                        <td class="name">application:</td>
+                        <td class="pDescription">Represents the application specifications or url for web sites
+                            <ul>
+                                <li>name: The name of the application</li>
+                                <li>appPackage: The name of the android package for this application (NATIVE)</li>
+                                <li>bundleId: The name of this IOS bundle for this application (NATIVE)</li>
+                                <li>url: The URL for web applications (WEB)</li>
+                                <li>iosInstall: The Perfecto Cloud location of the IOS Installation file</li>
+                                <li>androidInstall: The Perfecto Cloud location of the Android Installation file</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="name">capabilitiy:</td>
+                        <td class="pDescription">Each application can contain a set of named capabilities in addition to those provided above.
+                            <ul>
+                                <li>name: The name of the capability</li>
+                                <li>class: Specifies the type of value specified in the text content as <span class="pValues">STRING,BOOLEAN,PLATFORM or OBJECT)</span></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="pText">The following example defines connections to the DEMO cloud along with a link to a locally hosted selenium desktop grid
+            </td>
+        </tr>
+        <tr>
+            <td class="eValues"><textarea class="eValues" cols="160" readonly="readonly" rows="9">
+<?xml version="1.0" encoding="UTF-8"?>
+<applicationRegistry xmlns="http://www.morelandlabs.com/applicationRegistry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.morelandlabs.com/applicationRegistry http://www.morelandlabs.com/xsd/deviceManagement/applicationRegistry.xsd">
+   <application name="default" appPackage="" bundleId="" url=""  />
+   <application name="Settings" appPackage="com.android.settings" bundleId="com.apple.settings" url="" />
+   <application name="Google" appPackage="" bundleId="" url="http://www.google.com" >
+        <capability name="test" class="BOOLEAN">true</capability>
+   </application>
+</applicationRegistry>
+			</textarea></td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="excel">CSV Configuration</td>
+        </tr>
+        <tr>
+            <td class="pText">Defines the application using a comma seperate list of values
+                <table>
+                    <tr>
+                        <td class="pDescription">The application data
+                            <ul>
+                                <li>1: The name of the application</li>
+                                <li>2: The name of the android package for this application (NATIVE)</li>
+                                <li>3: The name of this IOS bundle for this application (NATIVE)</li>
+                                <li>4: The URL for web applications (WEB)</li>
+                                <li>5: The Perfecto Cloud location of the IOS Installation file</li>
+                                <li>6: The Perfecto Cloud location of the Android Installation file</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="pText"></td>
+        </tr>
+        <tr>
+            <td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="2">
+default,com.android.settings,com.apple.settings,http://www.google.com,,
+			</textarea></td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="excel">Excel Configuration</td>
+        </tr>
+        <tr>
+            <td class="pText">Defines the application using a
+                <table>
+                    <tr>
+                        <td class="pDescription">The application data
+                            <ul>
+                                <li>1: The name of the application</li>
+                                <li>2: The name of the android package for this application (NATIVE)</li>
+                                <li>3: The name of this IOS bundle for this application (NATIVE)</li>
+                                <li>4: The URL for web applications (WEB)</li>
+                                <li>5: The Perfecto Cloud location of the IOS Installation file</li>
+                                <li>6: The Perfecto Cloud location of the Android Installation file</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="pText"></td>
+        </tr>
+        <tr>
+            <td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="2">
+default,com.android.settings,com.apple.settings,http://www.google.com,,
+			</textarea></td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="xml">Usage</td>
+        </tr>
+        <tr>
+            <td class="pText">To use the application resgistry you must first select your data provider as defined above and set it using the setApplicationProvider method then select you cloud instance calling the setAUT method
+                <textarea class="eValues" cols="120" readonly="readonly" rows="3">
+ApplicationRegistry.instance().setApplicationProvider( new XMLApplicationProvider( "applicationRegistry.xml" ) );
+ApplicationRegistry.instance().setAUT( "Google" );
+                </textarea>                
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

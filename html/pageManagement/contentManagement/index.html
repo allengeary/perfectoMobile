@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../../css/morelandLabs.css" />
+</head>
+<body>
+	<table width="100%">
+		<tr>
+			<td class="headerContainer">
+				<a href="#usage" class="keywordHeader">Usage</a> - <a href="#xml" class="keywordHeader">XML Configuration</a> - <a href="#excel" class="keywordHeader">Excel Configuration</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="keyword">Content Management</td>
+		</tr>
+		<tr>
+			<td class="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/content/ContentManager.html">com.perfectoMobile.content.ContentManager</a></td>
+		</tr>
+		<tr>
+			<td class="keywordDescription" id="description">
+			Localization for a multi-lingual application is every automation engineer’s nightmare.  Internationalization and localization are means of adapting computer software to different languages however automated tests need to be created to handle the different languages.  Content Management is the process of adapting internationalized software for a specific region or language by adding locale-specific components and translating text for use by the automated test scripts.  The engine allows for on the fly content replacement for lookups and verification make multi-lingual support easy to implement.    
+			</td>
+		</tr>
+		<tr>
+			<td class="pHeader" id="usage">Usage</td>
+		</tr>
+		<tr>
+			<td class="pText">When defining a lookup there are a few things to consider.
+				<table>
+				 <tr><td class="pName">key only:</td><td class="pDescription">If you key name provided for lookup contains the name of the key with nothing else, then the value will be located using the first lookup columns value </td></tr>
+				 <tr><td class="pName">key{columnName}</td><td class="pDescription">Using the key followed by the lookup name in curly brackets then that fields value will be used</td></tr>
+				 <tr><td class="pName">key{#num}</td><td class="pDescription">Using the key followed by the pound sign (#) and the index in curly brackets then the fields value indicated by the index will be used</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="pHeader" id="xml">XML Configuration</td>
+		</tr>
+		<tr>
+			<td class="pText">When defining content using Excel you must provide a key column and lookup columns.  They can exist in any position and will be defined.
+				<table>
+				 <tr><td class="pName">key:</td><td class="pDescription">The key column is used to locate the specific row for the lookup value.  The key column is case sensitive and must be unique throughout the column.</td></tr>
+				 <tr><td class="pName">lookup:</td><td class="pDescription">The lookup columns(s) are the columns that contain the value for replacement.  You must provide a minimum of 1 lookup column.</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="pText">The following table could be used to provide an upper and lower case version of the named state</td>
+		</tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="5">
+<content>
+	<model>uppercase,lowercase</model>
+	<record name="Pennsylvania" uppercase="PA" lowercase="pa" />
+	<record name="Georgia" uppercase="GA" lowercase="ga" />
+</content>
+			</textarea></td></tr>
+		<tr>
+			<td class="pHeader" id="excel">Excel Configuration</td>
+		</tr>
+		<tr>
+			<td class="pText">When defining content using XML you must provide a name attribute and lookup attributes.  The lookup attributes can be named anything but must be consistent throughout the records..
+				<table>
+				 <tr><td class="pName">name:</td><td class="pDescription">The represents the key value used to locate the specific XML element</td></tr>
+				 <tr><td class="pName">other attributes</td><td class="pDescription">These are the attributes used to define the replaceable values.  You must provide a minimum of one attribute and each attribute must exist throughout all fo the records.</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="pText">The following table could be used to provide an upper and lower case version of the named state</td>
+		</tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="4">
+key,uppercase,lowercase
+Pennsylvania,PA,pa
+Georgia,GA,ga
+			</textarea></td></tr>
+		<tr>
+			<td class="eHeader" id="examples">Examples</td>
+		</tr>
+		<tr>
+		<td>
+			<table>
+			<tr><td class="eDescription">Find the default value for name key name <span class="eValues">STATE</span></td></tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="2">
+STATE
+			</textarea></td></tr>
+			<tr><td class="eDescription">Find the ENGLISH value for name key name <span class="eValues">STATE</span></td></tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="2">
+STATE{ENGLISH}
+			</textarea></td></tr>
+			<tr><td class="eDescription">Find the value at the first index for the key name <span class="eValues">STATE</span></td></tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="2">
+STATE{#1}
+			</textarea></td></tr>
+			</table>
+			</td>
+		</tr>
+	
+		
+	</table>
+</body>
+</html>

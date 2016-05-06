@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../../../css/morelandLabs.css" />
+</head>
+<body>
+	<table  width="100%">
+		<tr>
+			<td class="headerContainer">
+				<a href="#attributes" class="keywordHeader">Attributes</a> - <a href="#parameters" class="keywordHeader">Steps</a> - <a href="#examples" class="keywordHeader">Examples</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="keyword">Tests and Functions</td>
+		</tr>
+		<tr>
+			<td class="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/page/keyWord/KeyWordTest.html">com.perfectoMobile.page.keyWord.KeywordTest</a></td>
+		</tr>
+		<tr>
+			<td class="keywordDescription">A test defines a collection of steps to run.  Tests and Functions are almost identical.  The only differences as that Tests that are marked active will execute where functions must be called the same as inactive tests.</td>
+		</tr>
+		<tr>
+			<td class="attributeDescription"><div class="attributeHeader">Attributes</div>
+				<table>
+				 	<tr><td class="attributeNameRequired">Name:</td><td class="attributeDescription">Specifies the name of the test case<td></td></tr>
+				 	<tr><td class="attributeName">Active:</td><td class="attributeDescription">A flag <span class="attributeValues">(true/false)</span> indicating if this test is active.  If the value is unspecified or equal to <span class="attributeValues">true</span> then the test will be available for execution.  If a test is marked inactive bus is directly called from another test or function then it will still execute.<td></td></tr>
+				 	<tr><td class="attributeName">dataprovider:</td><td class="attributeDescription">Data providers are used to provide named data sets for use in the test case.  Once a data provider has been supplied to a test it will be available during the execution of the test and all functions or tests that are called from it.  You can specify multiple named data providers for a test case.  One record will be selected from each data provided and made available for the test.  To use a specific record from a data store you can use the following format which will select a specific record.  <span class="pValues">recordType.recordName</span>.  Note that specifying a specific record will bypass any locking algorithm associated with this record type</td></tr>
+				 	<tr><td class="attributeName">datadriver:</td><td class="attributeDescription">The Data Driver uses the same underlying logic as the data provider however the test case will iterate and execute over all o the records in the specified data set as apposed to a single record.  Only a single data driver may be specified here.  You may use data providers and a data driver in the same test case but specifying both attributes.</td></tr>
+				 	<tr><td class="attributeName">timed:</td><td class="attributeDescription">A flag <span class="attributeValues">(true/false)</span> indicating if this test case step should be timed.</td></tr>
+				 	<tr><td class="attributeName">threshold:</td><td class="attributeDescription">A value indicating a maximum amount of milliseconds allowed for the test case step.  If the timed attribute is set to true and the threshold value is great than 0 then the test case would fail if the timed value was greater than the threshold value</td></tr>				 	
+				 	<tr><td class="attributeName">os:</td><td class="attributeDescription">An optional value that when specified indicated that this test should only be executed if the OS value of the device matches the OS specified here.  This test will be marked as skipped if an OS was specified and it did not match</td></tr>
+				 	<tr><td class="attributeName">linkId:</td><td class="attributeDescription">A Link ID is purely for documentation or external integration.  The value is not used by any test.  This attribute can be used for external integration or information purposes</td></tr>
+				 	<tr><td class="attributeName">testtags:</td><td class="attributeDescription">Test Tags are used to allow for test grouping.  By providing a comma separated list of test tags the test executor can then specify a test tag and only test who contain that tag will run.</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="pHeader" id="parameters">Steps</td>
+		</tr>
+		<tr>
+			<td class="pDescription">
+				A test case is made up of a collection of steps.  Each of the steps are executed in sequence.  If any of the test steps fail, the entire test case will fail.
+			</td>
+		</tr>
+		<tr>
+			<td class="eHeader" id="examples">Examples</td>
+		</tr>
+		<tr>
+		<td>
+			<table>
+			<tr><td class="eDescription">This test case will only execute on an IOS device - all others devices will appear as a skipped test</td></tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="4">
+<test name="myTest" os="IOS">
+	<step name="one" />
+	...
+</test>	
+			</textarea></td></tr>
+			<tr><td class="eDescription">This test will use a record from the data provider<span class="eValues">authData</span>.  There is a field named <span class="eValues">userName</span> that we are typing in to a field</td></tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80" rows="6" readonly="readonly">
+<test name="myTest" dataProvider="authData">
+	<step name="one" type="SET" >
+		<parameter type="DATA" value="authData.userName" />
+	</step>
+	...
+</test>			
+			</textarea></td></tr>
+			<tr><td class="eDescription">This test will loop over all of the records data provider<span class="eValues">authData</span>.  It will treat each individual record as a separate test case.  There is a field named <span class="eValues">userName</span> that we are typing in to a field</td></tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80" rows="7" readonly="readonly">
+<test name="myTest" dataDriver="authData">
+	<step name="one" type="SET" >
+		<parameter type="DATA" value="authData.userName" />
+	</step>
+	...
+</test>			
+			</textarea></td></tr>
+			<tr><td class="eDescription">This test is tagged as a regression test.  When executing tests, you can specify sets of tests to run using tags.</td></tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80" rows="6" readonly="readonly">
+<test name="myTest" dataDriver="authData" tagName="regression">
+	<step name="one" type="SET" >
+		<parameter type="DATA" value="authData.userName" />
+	</step>
+	...
+</test>			
+			</textarea></td></tr>
+            <tr><td class="eDescription">This test will refer to a specific record named userOne in the authData record type.  It assumes that a record exists with the name attribute set to userOne</td></tr>
+            <tr><td class="eValues"><textarea class="eValues" cols="80" rows="6" readonly="readonly">
+<test name="myTest" dataDriver="authData.userOne">
+    <step name="one" type="SET" >
+        <parameter type="DATA" value="authData.userName" />
+    </step>
+    ...
+</test>         
+            </textarea></td></tr>
+			</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

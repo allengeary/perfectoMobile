@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../css/morelandLabs.css" />
+</head>
+<body>
+    <table width="100%">
+        <tr>
+            <td class="headerContainer"><a href="#xml" class="keywordHeader">XML Configuration</a> - <a href="#excel" class="keywordHeader">Excel Configuration</a> - <a href="#usage" class="keywordHeader">Usage</a></td>
+        </tr>
+        <tr>
+            <td class="keyword">Device Management</td>
+        </tr>
+        <tr>
+            <td class="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/content/ContentManager.html">com.perfectoMobile.content.ContentManager</a></td>
+        </tr>
+        <tr>
+            <td class="keywordDescription" id="description">The Device Management framework is responsible for acquisition of devices, locking and parallel execution. This library allows access to mobile devices and desktop browsers alike all through
+                a single interface set. Along with device access it also provide artifact production, reporting and integration points for external systems. Using the default Test NG implementation a develop can quickly gain access to a rich feature set
+                out of the box</td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="x">Device Registry</td>
+        </tr>
+        <tr>
+            <td class="pText">
+                <table>
+                    <tr>
+                        <td class="pName">Perfecto:</td>
+                        <td class="pDescription"><span type="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/com/perfectoMobile/device/data/perfectoMobile/PerfectoMobileDataProvider.html">com.perfectoMobile.devicve.data.perfectoMobile.PerfectoMobileDataProvider</a></span>:<br />
+                            Used during script development to specify that your scripts should only run on devices that are reserved to the logged in user or on all available devices in the cloud. Other validators can be registered to allows for different
+                            devices criteria to be included</td>
+                    </tr>
+                    <tr>
+                        <td class="pName">named</td>
+                        <td class="pDescription"><span type="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/com/perfectoMobile/device/data/NamedDataProvider.html">com.perfectoMobile.devicve.data.NamedDataProvider</a></span><br />
+                            Allows the developer to specify a unique device or list of devices by name to use during test execution. Great for development but should be used sparingly as it requires specific device's2</td>
+                    </tr>
+                    <tr>
+                        <td class="pName">csv</td>
+                        <td class="pDescription"><span type="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/com/perfectoMobile/device/data/CSVDataProvider.html">com.perfectoMobile.devicve.data.CVSDataProvider</a></span><br />
+                            Used to feed a list of device characteristics to the Device Registry to allow for a device meeting certain criteria to be used. Using the Device registry allows for a higher rate of execution and true parallel runs. If the <span
+                            class="pValues">availableDevices</span> is specified and the values is greater than one, then the test cases will be split among all of the devices located increasing the speed of execution</td>
+                    </tr>
+                    <tr>
+                        <td class="pName">xml</td>
+                        <td class="pDescription"><span type="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/com/perfectoMobile/device/data/XMLDataProvider.html">com.perfectoMobile.devicve.data.XMLDataProvider</a></span><br />
+                            Used to feed a list of device characteristics to the Device Registry to allow for a device meeting certain criteria to be used. Using the Device registry allows for a higher rate of execution and true parallel runs. If the <span
+                            class="pValues">availableDevices</span> is specified and the values is greater than one, then the test cases will be split among all of the devices located increasing the speed of execution</td>
+                    </tr>
+                    <tr>
+                        <td class="pName">excel</td>
+                        <td class="pDescription"><span type="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/com/perfectoMobile/device/data/ExcelDataProvider.html">com.perfectoMobile.devicve.data.ExcelDataProvider</a></span><br />
+                            Used to feed a list of device characteristics to the Device Registry to allow for a device meeting certain criteria to be used. Using the Device registry allows for a higher rate of execution and true parallel runs. If the <span
+                            class="pValues">availableDevices</span> is specified and the values is greater than one, then the test cases will be split among all of the devices located increasing the speed of execution</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="xml">XML Configuration</td>
+        </tr>
+        <tr>
+            <td class="pText">The device registry format is defined using a XML Schema Definition file. This file is located at <span class="pValues">http://www.morelandlabs.com/xsd/deviceManagement/deviceRegistry.xsd</span>.
+                <table>
+                    <tr>
+                        <td class="name">deviceRegistry:</td>
+                        <td class="pDescription">The root element of the device registry</td>
+                    </tr>
+                    <tr>
+                        <td class="name">device:</td>
+                        <td class="pDescription">Represent a set of device criteria specifying a single device type
+                            <ul>
+                                <li>name: The name of the device used for reporting purposes</li>
+                                <li>manufacturer: The device manufacturer - this is used as criteria and for reporting</li>
+                                <li>model: The device mode - this is used as criteria and for reporting</li>
+                                <li>os: The device os used as criteria</li>
+                                <li>osVersion: The device os version used as criteria</li>
+                                <li>browserName: The name of the browser used as criteria</li>
+                                <li>browserVersion: The the versino of the browser used as criteria</li>
+                                <li>id: A specific device identifier</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="name">capabilitiy:</td>
+                        <td class="pDescription">Each device specification can contain a set of named capabilities in addition to those provided above.
+                            <ul>
+                                <li>name: The name of the capability</li>
+                                <li>class: Specifies the type of value specified in the text content as <span class="pValues">STRING,BOOLEAN,PLATFORM or OBJECT)</span></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="pText">The following example provides a mix of mobile devices and desktop browsers. In this example we have added one capability to the <span class="pValues">Internet Explorer</span> device with a boolean value of true. In
+                addition we have specified 2 available devices for the Samsung S6
+            </td>
+        </tr>
+        <tr>
+            <td class="eValues"><textarea class="eValues" cols="160" readonly="readonly" rows="15">
+<?xml version="1.0" encoding="UTF-8"?>
+<deviceRegistry xmlns="http://www.morelandlabs.com/deviceRegistry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.morelandlabs.com/deviceRegistry http://www.morelandlabs.com/xsd/deviceManagement/deviceRegistry.xsd">
+    <device name="Firefox" browserName="firefox" manufacturer="Mozilla" model="Firefox" os="Windows" active="false" availableDevices="1" />
+    <device name="Internet Explorer" browserName="internet explorer" manufacturer="Microsoft" model="Internet Explorer" os="Windows" active="false" availableDevices="1">
+        <capability name="test" class="BOOLEAN">true</capability>
+    </device>
+    <device name="Samsung S6" manufacturer="Samsung" model="Galaxy S6" os="Android" active="false" availableDevices="2" />
+    <device name="Samsung S5" manufacturer="Samsung" model="Galaxy S5" os="Android" active="true" availableDevices="1" />
+    <device name="iPhone 6" manufacturer="Apple" os="iOS" model="iPhone-6" active="true" availableDevices="1" />
+    <device name="iPhone 5" manufacturer="Apple" os="iOS" model="iPhone-5" active="false" availableDevices="1" />
+    <device name="iPhone 6 Plus" manufacturer="Apple" os="iOS" model="iPhone-6 Plus" active="false" availableDevices="1" />
+</deviceRegistry>
+			</textarea></td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="excel">Excel Configuration</td>
+        </tr>
+        <tr>
+            <td class="pText">TODO</td>
+        </tr>
+        <tr>
+            <td class="pText">The following table could be used to provide an upper and lower case version of the named state</td>
+        </tr>
+        <tr>
+            <td class="eValues"><textarea class="eValues" cols="80" readonly="readonly" rows="4">
+key,uppercase,lowercase
+Pennsylvania,PA,pa
+Georgia,GA,ga
+			</textarea></td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="usage">Usage</td>
+        </tr>
+        <tr>
+            <td class="pText">To use the Device Manager to acquire devices you must register your selected data provider with the <a
+                hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/com/perfectoMobile/device/data/DataManager.html">DataManger</a> singleton instance. From there you will be able to directly call the getDevice method on the <a
+                hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/com/perfectoMobile/device/DeviceManaer.html">DeviceManger</a> singleton class to get access to a connected device. <br />
+            <br />If using TestNG to execute your tests, then you would want your test class to extend the <a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/com/perfectoMobile/device/ng/AbstractSeleniumTest.html">AbstractSeleniumTest</a>
+                class. All of your test methods must have the same signature format to ensure proper device management and coverage.  In addition, you must not specify a @BeforeMethod or @AfterMethod annotation as they are used by the abstract implementation already.  Here we define a method named testDriver
+                <textarea class="eValues" cols="80" readonly="readonly" rows="5">
+@Test( dataProvider = "deviceManager")
+public void testDriver( TestName testName ) throws Throwable
+{
+    //Your test case information here
+}
+                </textarea>                
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="pText">Here is a Example of a TestNG test class</td>
+            </tr>
+            <tr><td>
+                <textarea class="eValues" cols="160" readonly="readonly" rows="50">
+public class CameraTest extends AbstractSeleniumTest
+{
+	@BeforeSuite
+	public void setupSuite()
+	{
+		CloudRegistry.instance().setCloudProvider( new XMLCloudProvider( "cloudRegistry.xml" ) );
+		CloudRegistry.instance().setCloud( "partners" );
+		DataProvider dataProvider = new PerfectoMobileDataProvider( new ReservedHandsetValidator(), DriverType.WEB );
+		
+		//
+		// The factory for generating devices Gestures
+		//
+		GestureManager.instance().setGestureFactory( new PerfectoGestureFactory() );
+		
+		//
+		// Application
+		//
+		ApplicationRegistry.instance().setApplicationProvider( new XMLApplicationProvider( "applicationRegistry.xml" ) );
+		ApplicationRegistry.instance().setAUT( "Google" );
+		
+		//
+		// Required to call the "getArtifact" methods on the DeviceWebDriver
+		//
+		DataManager.instance().setArtifactProducer( new PerfectoArtifactProducer() );	
+		
+		//
+		// Optional parameters to automatically download reports upon completion
+		//
+		DataManager.instance().setReportFolder( new File( "c:/tools/report" ) );
+		DataManager.instance().setAutomaticDownloads( new ArtifactType[] { ArtifactType.EXECUTION_REPORT_XML, ArtifactType.FAILURE_SOURCE, ArtifactType.DEVICE_LOG } );
+		DataManager.instance().readData( dataProvider );
+		
+	}
+	
+	@Test( dataProvider = "deviceManager")
+	public void testLoginPage( TestName testName ) throws Exception
+	{
+		
+		Camera camera = (Camera) PageManager.instance().createPage( Camera.class, getWebDriver() );
+		
+		System.out.println( System.currentTimeMillis() );
+		Assert.assertTrue( camera.getElement( Camera.MODE ).isPresent() );
+		Assert.assertTrue( camera.getElement( Camera.CAMERA ).isPresent() );
+		
+		boolean result = KeyWordDriver.instance().executeTest( testName.getTestName(), getWebDriver() );
+		
+		Assert.assertTrue( result );
+	} 
+}
+                </textarea>                
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

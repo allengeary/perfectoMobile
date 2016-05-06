@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../css/morelandLabs.css" />
+</head>
+<body>
+	<table width="100%">
+		<tr>
+			<td class="headerContainer">
+				<a href="#attributes" class="keywordHeader">Attributes</a> - <a href="#parameters" class="keywordHeader">Parameters</a> - <a href="#tokens" class="keywordHeader">Tokens</a>  - <a href="#examples" class="keywordHeader">Examples</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="keyword">Test Driver</td>
+		</tr>
+		<tr>
+			<td class="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/page/keyWord/step/AbstractKeyWordStep.html">com.perfectoMobile.page.keyWord.step.AbstractKeywordStep</a></td>
+		</tr>
+		<tr>
+			<td class="keywordDescription" id="description">The Test Driver is a project that ties all libraries together for a powerful test execution environment.  The project allows for execution of test using pure XML without any java editor or IDE.  When executing the Test Driver a property file is passed in that allows for full cofnigruation of the test run.</td>
+		</tr>
+		
+		<tr>
+			<td class="text"><div class="header" id="cloud">Driver Configuration</div>
+				<table>
+				 	<tr><td class="name">driver.frameworkType:</td><td class="description">Specifies which driver specification to use.  Valid values are <ul><li>XML: A provider based off of XML</li></ul></td></tr>
+				 	<tr><td class="name">driver.configName:</td><td class="description">Specifies the name of the file used for the provider <span class="attributeValues">XML</span></td></tr>
+				 	<tr><td class="name">driver.propertyAdapters:</td><td class="description">Specifies a comma separated list of fully qualified class names implementing the <a hRef="http://http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/index.html">PropertyAdapter</a> interface.  Property Adapters allow for customer set of properties to be configurable via the test driver configuration file</td></tr>
+				 	<tr><td class="name">driver.personas:</td><td class="description">A comma separated list of persona names.  If supplied this will enabled the Wind Tunnel subsystem and execute the test cases against each named persona</td></tr>
+				 	<tr><td class="name">driver.enableCaching:</td><td class="description">Enables the client side smart caching sub-system.  in application with may static check this can help to increase performance by caching page objects during successive calls</td></tr>
+				 	<tr><td class="name">driver.deviceInterrupts:</td><td class="description">A set of interrupts that are randomly executed during a test.  That valid values are<ul><li>CALL: Initiates a device phone call being received during a test</li><li>SMS: Simulates a text being received during a test case</ul></td></tr>
+				 	<tr><td class="name">driver.validateConfiguration:</td><td class="description">Validates all configuration and reports which test and devices it would run against, but does not execute any tests</ul></td></tr>
+				 	
+				</table>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="text"><div class="header" id="cloud">Cloud Configuration</div>
+			Clouds are collections of devices or browsers used for testing
+				<table>
+				 	<tr><td class="name">cloudRegistry.provider:</td><td class="description">Specifies which cloud configuration provider to use.  Valid values are <ul><li>XML: A provider based off of XML</li><li>CSV: A provider based off of a comma separated list of values</li><li>EXCEL: A provider using Excel</li></ul></td></tr>
+				 	<tr><td class="name">cloudRegistry.fileName:</td><td class="description">Specifies the name of the file used for the providers <span class="attributeValues">XML, EXCEL and CSV</span></td></tr>
+				 	<tr><td class="name">cloudRegistry.tabName:</td><td class="description">Specifies the name of the tab used for the <span class="attributeValues">EXCEL</span> provider</td></tr>
+				 	<tr><td class="name">cloudRegistry.cloudUnderTest:</td><td class="description">The name of the cloud being used for this test</td></tr>
+				</table>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="text"><div class="header" id="app">Application Configuration</div>
+			Applications are items being tested
+				<table>
+				 	<tr><td class="name">applicationRegistry.provider:</td><td class="description">Specifies which application configuration provider to use.  Valid values are <ul><li>XML: A provider based off of XML</li><li>CSV: A provider based off of a comma separated list of values</li><li>EXCEL: A provider using Excel</li></ul></td></tr>
+				 	<tr><td class="name">applicationRegistry.fileName:</td><td class="description">Specifies the name of the file used for the providers <span class="attributeValues">XML, EXCEL and CSV</span></td></tr>
+				 	<tr><td class="name">applicationRegistry.tabName:</td><td class="description">Specifies the name of the tab used for the <span class="attributeValues">EXCEL</span> provider</td></tr>
+				 	<tr><td class="name">applicationRegistry.applicationUnderTest:</td><td class="description">The name of the cloud being used for this test</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="text"><div class="header" id="device">Device Configuration</div>
+			Devices are pulled from the specified cloud and used for testing
+				<table>
+				 	<tr><td class="name">deviceManagement.provider:</td><td class="description">Specifies which device configuration provider to use.  Valid values are 
+				 		<ul>
+				 			<li>RESERVED: This will use the specified cloud and search for any devices that are reserved to the user specified in your cloud configuration</li>
+				 			<li>AVAILABLE: This will use the specified cloud and search for any devices currently available</li>
+				 			<li>NAMED: Allows you to select specific named devices</li>
+				 			<li>XML: A provider based off of a devices defined via XML</li>
+				 			<li>CSV: A provider based off of a comma separated list of values</li>
+				 			<li>EXCEL: A provider using Excel</li>
+				 		</ul></td></tr>
+				 	<tr><td class="name">deviceManagement.driverType:</td><td class="description">Specifies the underlying driver type to be used for this test.  Value values are:
+				 		<ul>
+				 			<li>PERFECTO: This will use the Perfecto Mobile Driver</li>
+				 			<li>APPIUM: Uses the Appium drivers (IOS/ANDROID) for testing Native application on Mobile devices</li>
+				 			<li>WEB: Use the RemoteWebDriver for test web based application on Mobile Devices and Desktop Browsers</li>
+				 		</ul>
+				 	</td></tr>
+				 	<tr><td class="name">deviceManagement.fileName:</td><td class="description">Specifies the name of the file used for the providers <span class="attributeValues">XML, EXCEL and CSV</span></td></tr>
+				 	<tr><td class="name">deviceManagement.tabName:</td><td class="description">Specifies the name of the tab used for the <span class="attributeValues">EXCEL</span> provider</td></tr>
+				 	<tr><td class="name">deviceManagement.deviceList:</td><td class="description">A comma separated list of device identifies used to define mobile device for use in the <span class="attributeValues">NAMED</span> provider</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="text"><div class="header" id="object">Object Repository Configuration</div>
+			An object repository is used to store page object and page elements for use in a test
+				<table>
+				 	<tr><td class="name">pageManagement.provider:</td><td class="description">Specifies which object repository configuration provider to use.  Valid values are <ul><li>XML: A provider based off of XML</li><li>CSV: A provider based off of a comma separated list of values</li><li>EXCEL: A provider using Excel</li></ul></td></tr>
+				 	<tr><td class="name">pageManagement.fileName:</td><td class="description">Specifies the name of the file used for the providers <span class="attributeValues">XML, EXCEL and CSV</span></td></tr>
+				 	<tr><td class="name">pageManagement.siteName:</td><td class="description">Specifies the name of the site under test.  When using the <span class="attributeValues">EXCEL</span> provider this name is also corresponds to the tab name contains the page element data for this site</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="text"><div class="header" id="data">Page Data</div>
+			Page data is used to provide data driven testing
+				<table>
+				 	<tr><td class="name">pageManagement.pageData.provider:</td><td class="description">Specifies which page data configuration provider to use.  Valid values are <ul><li>XML: A provider based off of XML</li><li>EXCEL: A provider using Excel</li></ul></td></tr>
+				 	<tr><td class="name">pageManagement.pageData.fileName:</td><td class="description">Specifies the name of the file used for the providers <span class="attributeValues">XML and CSV</span></td></tr>
+				 	<tr><td class="name">pageManagement.pageData.tabNames:</td><td class="description">Specifies a comma separated list of tab names defining each of the record types for the <span class="attributeValues">EXCEL</span> provider.  Each tab represents a single named record type.</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="text"><div class="header" id="content">Content Management</div>
+			Content Management is used to provide varying content for application testing to support resource file and multi lingual applications
+				<table>
+				 	<tr><td class="name">pageManagement.content.provider:</td><td class="description">Specifies which content management configuration provider to use.  Valid values are <ul><li>XML: A provider based off of XML</li><li>EXCEL: A provider using Excel</li></ul></td></tr>
+				 	<tr><td class="name">pageManagement.content.fileName:</td><td class="description">Specifies the name of the file used for the providers <span class="attributeValues">XML and CSV</span></td></tr>
+				 	<tr><td class="name">pageManagement.content.tabName:</td><td class="description">Specifies the tab name containing the page content for the <span class="attributeValues">EXCEL</span> provider.</td></tr>
+				 	<tr><td class="name">pageManagement.content.keyColumn:</td><td class="description">A zero based index of the column containing the lookup key in the <span class="attributeValues">EXCEL</span> provider.</td></tr>
+				 	<tr><td class="name">pageManagement.content.lookupColumns:</td><td class="description">A comma separated list of zero based indexes of all lookup columns in the <span class="attributeValues">EXCEL</span> provider.</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="text"><div class="header" id="artifact">Artifacts and Reporting</div>
+			Artifacts are details from a test run that are saved for later review
+				<table>
+				 	<tr><td class="name">artifactProducer.parentFolder:</td><td class="description">Specifies the parent folder in which all test artifacts are stored.  This will will contain a folder for each test run using the run time.  Contained will be a folder for ever test case run and then a folder for each device that it was run on</td></tr>
+				 	<tr><td class="name">artifactProducer.storeImages:</td><td class="description">One working with client side imaging this flag specifies if the images are stored locally.  This is used for the WCAG report</span></td></tr>
+				 	<tr><td class="name">artifactProducer.imageLocation:</td><td class="description">Specifies which folder to store images in of the storeImages flag is set to true</td></tr>
+				 	<tr><td class="name">artifactProducer.logLevel:</td><td class="description">Specifies the detail that is written to the Console log when using the <span class="attributeValues">CONSOLE_LOG</span> artifact.  Validvalues are
+				 		<ul>
+				 			<li>FATAL: Severe errors that cause premature termination. Expect these to be immediately visible on a status console</li>
+				 			<li>ERROR: Other runtime errors or unexpected conditions. Expect these to be immediately visible on a status console</li>
+				 			<li>WARN: Use of deprecated APIs, poor use of API, 'almost' errors, other runtime situations that are undesirable or unexpected, but not necessarily "wrong". Expect these to be immediately visible on a status console</li>
+				 			<li>INFO: Interesting runtime events (startup/shutdown). Expect these to be immediately visible on a console, so be conservative and keep to a minimum</li>
+				 			<li>DEBUG: detailed information on the flow through the system</li>
+				 			<li>TRACE: More detailed information on the flow through the system</li>
+				 		</ul>
+				 	</td></tr>
+				 	<tr><td class="name">artifactProducer.automated:</td><td class="description">A list or artifacts that are automatically created at the appropriate times.  These will be stored in the specified out folder for test artifacts.  Valid artifact types are:
+				 		<ul>
+				 			<li>EXECUTION_REPORT_PDF: Gets a copy of the Perfecto Execution report in PDF format</li>
+				 			<li>EXECUTION_REPORT_HTML: Gets a copy of the Perfecto Execution report in HTML format</li>
+				 			<li>EXECUTION_REPORT_CSV: Gets a copy of the Perfecto Execution report in CSV format</li>
+				 			<li>EXECUTION_REPROT_XML: Gets a copy of the Perfecto Execution report in XML format</li>
+				 			<li>FAILURE_SOURCE: Extracts the state of the device and application.  That states is extracted and saved as failureDom.xml to allow for quick debugging of object identification issues</li>
+				 			<li>WCAG_REPORT: If WCAG operations were used (Branding, contrast, etc) then this will contain the extracted images and their operational statistics.</li>
+				 			<li>DEVICE_LOG: Extracts the previous 1000 lines of the device's log file</li>
+				 			<li>CONSOLE_LOG: Writes the console output for the specified test on the specified device.  Only information pertaining to that test/device is stored here</li>
+				 			<li>EXECUTION_RECORD_HTML: Contains a clean execution report of the test steps that were executed.  In addition, a master index file will be created showing the status of all tests executed in this run</li>
+				 			<li>EXECUTION_RECORD_CSV: Contains an CSV based reports of all test steps that were executed</li>
+				 			<li>EXECUTION_TIMING: Contains a small timing report of elements marked as timed</li>
+				 		</ul>
+				 	</td></tr>
+				</table>
+			</td>
+		</tr>
+
+		
+	</table>
+</body>
+</html>

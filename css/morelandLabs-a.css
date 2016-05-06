@@ -1,0 +1,39 @@
+.headerContainer { background-color: #1c75ba; color: #f4c982;  padding-top: 10px; padding-bottom: 10px; padding-left: 5px; padding-right: 5px;}
+.keywordHeader { background-color: #1c75ba; color: #f4c982; padding-top: 10px; padding-bottom: 10px; padding-left: 5px; padding-right: 5px;}
+.keyword { font-size: xx-large; text-transform: uppercase;  font-style: bold}
+.keywordImplementation{ font-size: small; text-decoration: none }
+.keywordDescription{ font: normal; padding-top: 10px; padding-bottom: 10px}
+.attributeHeader{ background-color: #1c75ba; color: #f4c982; font-size: x-large; text-transform: uppercase;  font-style: bold;  padding-top: 15px; padding-bottom: 15px; }
+.attributeNameRequired{ font: x-small; text-transform: lowercase; text-align: right; border-bottom: thin; padding-left: 20px; vertical-align: top;}
+.attributeName{ font: x-small; text-transform: lowercase; font-style: bold; text-align: right;  padding-left: 20px; vertical-align: top;}
+.attributeValues{font-style: italic; }
+.attributeDescription{ font: x-small; border-bottom-color: #f4c982; border-bottom-style: dotted;}
+.attributeText{ font: x-small; border-bottom-color: #f4c982;}
+
+.header{ background-color: #1c75ba; color: #f4c982; padding-top: 15px; padding-bottom: 15px; font-size: x-large; text-transform: uppercase;  font-style: bold }
+.name{ font: x-small; font-style: bold; text-align: right;  padding-left: 20px; vertical-align: top;}
+.values{ #f4c982; font-style: italic; }
+.description{ font: x-small; border-bottom-color: #f4c982; border-bottom-style: dotted;}
+.text{ font: x-small; border-bottom-color: #f4c982; }
+
+.pHeader{ background-color: #1c75ba; color: #f4c982; padding-top: 15px; padding-bottom: 15px; font-size: x-large; text-transform: uppercase;  font-style: bold }
+.pName{ font: x-small; text-transform: uppercase; font-style: bold; text-align: right;  padding-left: 20px; vertical-align: top;}
+.pValues{ #f4c982; font-style: italic; }
+.pDescription{ font: x-small; border-bottom-color: #f4c982; border-bottom-style: dotted;}
+.pText{ font: x-small; border-bottom-color: #f4c982; }
+
+.tHeader{ background-color: #1c75ba; color: #f4c982; font-size: x-large; text-transform: uppercase;  font-style: bold; padding-top: 15px; padding-bottom: 15px;  }
+.tName{  font: x-small; text-transform: lowercase; font-style: bold; text-align: right;  padding-left: 20px; vertical-align: top;}
+.tValues{  font-style: italic; }
+.tDescription{  font: x-small; border-bottom-color: #f4c982; border-bottom-style: dotted;}
+.tText{  font: x-small; border-bottom-color: #f4c982; }
+
+.eHeader{ background-color: #1c75ba; color: #f4c982; padding-top: 15px; padding-bottom: 15px;  font-size: x-large; text-transform: uppercase;  font-style: bold }
+.eName{ font: x-small; text-transform: uppercase; font-style: bold; text-align: right;  padding-left: 20px; vertical-align: top;}
+.eValues{ border: none; padding-bottom: 20px; }
+.eDescription{ font: x-small; border-bottom-color: #f4c982; border-bottom-style: dotted;}
+.eText{ font: x-small; border-bottom-color: #f4c982; border-bottom-style: dotted;}
+
+body { color: #1c75ba; border: none; margin: 0px; padding-bottom: 100px; background-image: url(../images/mll.png); background-position: bottom right; background-repeat: no-repeat; height: 100%}
+
+.bodyHeader{ color: #1c75ba; border: none; margin: 0px; padding-bottom: 100px; background-image: url(../images/mllName.png); background-position: top right; background-repeat: no-repeat}

@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../css/morelandLabs.css" />
+</head>
+<body>
+    <table width="100%">
+        <tr>
+            <td class="headerContainer"><a href="#usage" class="keywordHeader">Provider Implementations</a> - <a href="#parameters" class="keywordHeader">Element Descriptors</a> - <a href="#pom" class="keywordHeader">Page Object Model</a></td>
+        </tr>
+        <tr>
+            <td class="keyword">Object Repositories and the Page Object Model</td>
+        </tr>
+        <tr>
+            <td class="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/page/PageManager.html">com.perfectoMobile.page.PageManager</a></td>
+        </tr>
+        <tr>
+            <td class="keywordDescription" id="description">The Object Repository allows for a powerful yet simple to use repository for storing page and element data. Designed using the concept of Separation of Responsibility, one group can be
+                responsible for select and naming object of interest on the page while another can be responsible for identifying those objects and storing the values using one of the specified element providers below. This library offers many performance
+                enhancements as well including client side caching and more efficient wait concepts.</td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="usage">Element Provider Implementations</td>
+        </tr>
+        <tr>
+            <td class="pText">
+                <table>
+                    <tr>
+                        <td class="pName">csv</td>
+                        <td class="pDescription"><span type="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/page/element/provider/CSVElementProvider.html">com.perfectoMobile.page.element.CSVElementProvider</a></span><br />
+                            The elements will be provided using a CSV file. The comma separated values must be supplied in the following order:
+                            <ol>
+                                <li>Site: The name of the site or application that these pages belong to</li>
+                                <li>Page: The name of the page that this element belongs to</li>
+                                <li>Element Name: The name of the element as it will be referred to in your test cases</li>
+                                <li>Descriptor: The format of the element definition</li>
+                                <li>Value: The value to use for the lookup formatted in accordance with the selected descriptor</li>
+                            </ol> <br />The following example device 6 element on 2 pages using XPATH as the descriptor type <br /> <textarea class="eValues" cols="80" readonly="readonly" rows="6">
+MorelandLabs,Home,LOGIN,XPATH,//*[@id='collapsable-menus']/ul/li[2]/a
+MorelandLabs,Home,PHONE,XPATH,//*[@id='collapsable-menus']/ul/li[1]/a
+MorelandLabs,Home,HEADER,XPATH,//*[@id='content']/div/h1
+MorelandLabs,Login,USER_NAME,XPATH,//*[@id='cred_userid_inputtext']
+MorelandLabs,Login,PASSWORD,XPATH,//*[@id='cred_password_inputtext']
+MorelandLabs,Login,SIGNIN,XPATH,//*[@id='cred_sign_in_button']
+                            </textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="pName">xml</td>
+                        <td class="pText"><span type="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/page/element/provider/XMLElementProvider.html">com.perfectoMobile.page.element.XMLElementProvider</a></span><br />
+                            The elements will be provided using a structured XML file. The file must be in adherence with the XML Schema defined at <span class="pValues">http://www.morelandlabs.com/xsd/pageManagement/pageRegistry.xsd</span>. The elements
+                            will be contained within named SITE and PAGE element and will contain that following named attributes
+                            <table>
+                                <tr>
+                                    <td class="attributeName">Name:</td>
+                                    <td class="attributeDescription">he name of the element as it will be referred to in your test cases</td>
+                                </tr>
+                                <tr>
+                                    <td class="attributeName">Descriptor:</td>
+                                    <td class="attributeDescription">The format of the element definition</td>
+                                </tr>
+                                <tr>
+                                    <td class="attributeName">value:</td>
+                                    <td class="attributeDescription">The value to use for the lookup formatted in accordance with the selected descriptor</td>
+                                </tr>
+                            </table> <br />The following example device 6 element on 2 pages using XPATH as the descriptor type <br /> <textarea class="eValues" cols="168" readonly="readonly" rows="16">
+<?xml version="1.0" encoding="UTF-8"?>
+<elementDefinition xmlns="http://www.morelandlabs.com/pageRegistry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.morelandlabs.com/pageRegistry http://www.morelandlabs.com/xsd/pageManagement/pageRegistry.xsd">
+    <site name="MorelandLabs">
+        <page name="Home">
+            <element name="LOGIN" descriptor="XPATH" value="//*[@id='collapsable-menus']/ul/li[2]/a" />
+            <element name="PHONE" descriptor="XPATH" value="///*[@id='collapsable-menus']/ul/li[1]/a" />
+            <element name="HEADER" descriptor="XPATH" value="//*[@id='content']/div/h1" />
+        </page>
+        <page name="Login">
+            <element name="USER_NAME" descriptor="XPATH" value="//*[@id='cred_userid_inputtext']" />
+            <element name="PASSWORD" descriptor="XPATH" value="//*[@id='cred_password_inputtext']" />
+            <element name="SIGNIN" descriptor="XPATH" value="//*[@id='cred_sign_in_button']" />
+        </page>
+    </site>
+</elementDefinition>
+                            </textarea></td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pName">excel</td>
+                        <td class="pDescription"><span type="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/page/element/provider/ExcelElementProvider.html">com.perfectoMobile.page.element.ExcelElementProvider</a></span><br />
+                            The elements will be provided using an Excel based spreadsheet. When using this provided each site is defined by using a named Tab or Sheet. The format of the data in the named sheet for a site is:
+                            <ol>
+                                <li>Page: The name of the page that this element belongs to</li>
+                                <li>Element Name: The name of the element as it will be referred to in your test cases</li>
+                                <li>Descriptor: The format of the element definition</li>
+                                <li>Value: The value to use for the lookup formatted in accordance with the selected descriptor</li>
+                            </ol> <br />The following example device 6 element on 2 pages using XPATH as the descriptor type on a tab named MorelandLabs <br /> <textarea class="eValues" cols="80" readonly="readonly" rows="6">
+Home,LOGIN,XPATH,//*[@id='collapsable-menus']/ul/li[2]/a
+Home,PHONE,XPATH,//*[@id='collapsable-menus']/ul/li[1]/a
+Home,HEADER,XPATH,//*[@id='content']/div/h1
+Login,USER_NAME,XPATH,//*[@id='cred_userid_inputtext']
+Login,PASSWORD,XPATH,//*[@id='cred_password_inputtext']
+Login,SIGNIN,XPATH,//*[@id='cred_sign_in_button']
+                            </textarea></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="parameters">Element Descriptors</td>
+        </tr>
+        <tr>
+            <td class="pText">Element descriptors define how an element is identified on a page. There are various element descriptor types that can be used
+                <table>
+                    <tr>
+                        <td class="pName">xpath:</td>
+                        <td class="pDescription">Use the <a href="https://en.wikipedia.org/wiki/XPath">XPATH</a> query language to select nodes <br /> <span class="pValues">//*[@id='collapsable-menus']/ul/li[2]/a</span></td>
+                    </tr>
+                    <tr>
+                        <td class="pName">class:</td>
+                        <td class="pDescription">Lookup by CSS class name <br /> <span class="pValues">//*[@id='collapsable-menus']/ul/li[2]/a</span></td>
+                    </tr>
+                    <tr>
+                        <td class="pName">id:</td>
+                        <td class="pDescription">Find an element using the ID attribute <br /> <span class="pValues">collapsable-menus</span></td>
+                    </tr>
+                    <tr>
+                        <td class="pName">link_text:</td>
+                        <td class="pDescription">Find an element by link text <br /> <span class="pValues">Menu</span></td>
+                    </tr>
+                    <tr>
+                        <td class="pName">name:</td>
+                        <td class="pDescription">Find an element using the name attribute<br /> <span class="pValues">menu_name</span></td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pName">tag_name:</td>
+                        <td class="pDescription">Find an element by tag name<br /> <span class="pValues">a</span></td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pName">html:</td>
+                        <td class="pDescription">Find an element using HTML properties similar to the HP UFT HTML Element lookups<br /> <span class="pValues">Link( 'html tag:=a' ).WebElement( 'html tag:=span', 'innerText:=.*Cart.*')</span></td>
+                    </tr>
+                    <tr>
+                        <td class="pName">v_text:</td>
+                        <td class="pDescription">Locate an element using <a href="https://en.wikipedia.org/wiki/Optical_character_recognition">OCR</a>. This is a visual lookup and will use the visual location to identify the underlying element<br />
+                            <span class="pValues">Any Text</span></td>
+                    </tr>
+                    <tr>
+                        <td class="pName">v_image:</td>
+                        <td class="pDescription">Locate an element by image. This will use image comparison to find an image on the screen by loading the named image from the Perfecto Repository<br /> <span class="pValues">PUBLIC:Perfecto/invalidPasscode.png</span></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="pom">Page Object Model</td>
+        </tr>
+        <tr>
+            <td class="pText">The Page Object Model is a design pattern used to populate an Object Repository with the UI Elements that you will be interacting with. Under this model, each "page" should contain a corresponding page interface and
+                implementation which will be responsible for locating elements for use and provide business logic.
+                <table>
+                    <tr>
+                        <td class="pName">Interface:</td>
+                        <td class="pDescription">When defining your page object you must first define a your interface class which must extend the <a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/page/Page.html">Page</a> class.  The name of this interface object must directly match the name of used when defining the page in your element provider including case.  Each element defined in the element provider for this page must also exists as a static variable on this interface with The ElementDescritor annotation specified.  The following example defines 3 elements on a page named Camera and will allow the page registry lookup to occur at runtime.  In addition, we have defined one business logic function and specified that its execution is timed via the TimedMethod annotation and that it should capture a screenshot after its execution via the ScreenShot annotation
+                        <br/><textarea class="eValues" cols="80" readonly="readonly" rows="15">
+public interface Camera extends Page
+{
+    @ElementDefinition
+    public String VIEW = "VIEW";
+    
+    @ElementDefinition
+    public String MODE = "MODE";
+    
+    @ElementDefinition
+    public String CAMERA = "CAMERA";
+    
+    @TimedMethod
+    @Screenshot
+    public boolean validateCamera();
+}                        
+                        </textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pName">Implementation:</td>
+                        <td class="pDescription">You must also define an implementation of this interface to use for any business logic.  There is a very specific naming and package structure require when creating your implementation.  Fist, the name of the class must be identical and spelling and case to the interface that is is implementing and including Impl at the end.  Second, it must exist in a package beneath the interface named spi.  Extending the <a href="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/page/LocalAbstractPage.html">LocalAbstractPage</a> object gives you a slew of functionality to use in your business method
+                        <br/><textarea class="eValues" cols="80" readonly="readonly" rows="17">
+public class CameraImpl extends LocalAbstractPage implements Camera
+{
+	public void initializePage()
+	{
+	}
+	
+	public boolean validateCamera()
+	{
+	    if ( !getElement( "Camera", "VIEW" ).isPresent() )
+	        return false;
+	    
+	    if ( !getElement( "Camera", "VIEW" ).isPresent() )
+	        return false;
+	    
+	    return true;
+	}
+}                       
+                        </textarea>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

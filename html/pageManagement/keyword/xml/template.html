@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../../../css/morelandLabs.css" />
+</head>
+<body>
+	<table width="100%">
+		<tr>
+			<td class="headerContainer">
+				--> <a href="#attributes" class="keywordHeader">Attributes</a> - <a href="#parameters" class="keywordHeader">Parameters</a> - <a href="#tokens" class="keywordHeader">Tokens</a>  - <a href="#examples" class="keywordHeader">Examples</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="keyword">Step</td>
+		</tr>
+		<tr>
+			<td class="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/pageManagement/com/perfectoMobile/page/keyWord/step/AbstractKeyWordStep.html">com.perfectoMobile.page.keyWord.step.AbstractKeywordStep</a></td>
+		</tr>
+		<tr>
+			<td class="keywordDescription" id="description">A step defines a single test action.  A step can one of many different types ranging from testing element values to color verification. A step can also contains steps as sub elements.  Sub steps along with the failureMode attribute defined below can be combined for conditional logic as the sub steps are only executed if the parent element is successful.</td>
+		</tr>
+		<tr>
+			<td class="attributeDescription"><div class="attributeHeader" id="attributes">Attribute Overrides</div>
+				<table>
+				 	<tr><td class="attributeNameRequired">Name:</td><td class="attributeDescription">Specifies the name of the element from the object repository<td></td></tr>
+				 	<tr><td class="attributeName">Active:</td><td class="attributeDescription">A flag <span class="attributeValues">(true/false)</span> indicating if this step is active.  If the value is unspecified or equal to <span class="attributeValues">true</span> then the step will execute otherwise it will be skipped without being logged or throwing an error<td></td></tr>
+				 	<tr><td class="attributeName">context:</td><td class="attributeDescription">Context is used to store the result of the step call into a context variable (attribute value) for later use.  Once set, the context value can be reference later using the same name<td></td></tr>
+				 	<tr><td class="attributeName">inverse:</td><td class="attributeDescription">A flag <span class="attributeValues">(true/false)</span> indicating if the resulting success of this step should be inverted.  An inverted step will return true on failure and false on success.  The is the same concept as a NOT condition</td></tr>
+				 	<tr><td class="attributeName">linkId:</td><td class="attributeDescription">A Link ID is purely for documentation or external integration.  The value is not used by any test.  This attribute can be used for external integration or information purposes</td></tr>
+				 	<tr><td class="attributeName">os:</td><td class="attributeDescription">An optional value that when specified indicated that this step should only be executed if the OS value of the device matches the OS specified here.</td></tr>
+				 	<tr><td class="attributeName">page:</td><td class="attributeDescription">The name of the page object from the object repository in which the named element is a member of.</td></tr>
+				 	<tr><td class="attributeName">poi:</td><td class="attributeDescription">If Wind Tunnel is enabled for this test case, then a point of interest is registered.  For a more detailed description of Wind Tunnel, please refer to Perfecto's Wind Tunnel documentation</td></tr>
+				 	<tr><td class="attributeName">timed:</td><td class="attributeDescription">A flag <span class="attributeValues">(true/false)</span> indicating if this test case step should be timed.</td></tr>
+				 	<tr><td class="attributeName">threshold:</td><td class="attributeDescription">A value indicating a maximum amount of milliseconds allowed for the test case step.  If the timed attribute is set to true and the threshold value is great than 0 then the test case would fail if the timed value was greater than the threshold value</td></tr>
+				 	<tr><td class="attributeName">wait:</td><td class="attributeDescription">Wait is a shorthand implementation of the WAIT step.  This allows you to specify a value in milliseconds that will wait after this step is complete</td></tr>
+				 	<tr><td class="attributeName">failureMode:</td><td class="attributeDescription">Failure Mode allows you to specify what action the step should take following a failure caused by criteria or a error in the step.  By default, any failure will fail the entire test case and stop the execution immediately.  In addition, you can specify <ul><li class="attributeValues">ignore: Ignores the failure and continues on with your test</li><li class="attributeValues">logignore: Logs the failure in the log and continues on with your test</li><li class="attributeValues">error: The default action - this will stop the test and fail</li></ul></td></tr>
+				 	<tr><td class="attributeName">type:</td><td class="attributeDescription">Specifies the step type.  A step type defines the action or implementation</td></tr>
+				 	<tr><td class="attributeName">validationType:</td><td class="attributeDescription">This optional parameter allows you to specify a validation method to use on the return value of this step.  There are multiple types of validation implementations used.  That are defined as: <ul><li class="attributeValues">REGEX: This will read the value in the validation attribute as a regular expression and attempt to match the value to this regular expression</li><li class="attributeValues">EMPTY: This ensumes that the value is empty</li><li class="attributeValues">NON_EMPTY: The ensures that the value is not empty</li></ul>  </td></tr>
+				 	<tr><td class="attributeName">validation:</td><td class="attributeDescription">Used in conjunction with the validationType attribute to perform validation on a field.  When the validationType attribute is REGEX this will be the regular expression that is used</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="pHeader" id="parameters">Parameters</td>
+		</tr>
+		<tr>
+			<td class="pDescription">Parameters are passed to step to further define their action (please refer to the documentation of an individual step to determine its need for parameters).  When you are specifying a parameter you specify both a type and a value.  The contents of the value are dictated by the type specified</span>
+				<table>
+				 <tr><td class="pName">static:</td><td class="pDescription">The value is to be use as is with no change</td></tr>
+				 <tr><td class="pName">data:</td><td class="pDescription">The value is a definition for a field from the Page Data engine that was specified in your test case as a data provider or a data driver.  The value is specified user the following notation <span class="pValues">providerName.fieldName</span> where the <span class="pValues">providerName</span> is the name of the data provider and <span class="pValues">fieldName</span> is then name of the field in that table.</td></tr>
+				 <tr><td class="pName">context:</td><td class="pDescription">The value specified in this type is the the name of the context variable that was previously set using the context attribute on a previous test.  You must match the spelling and case of the context variable name.</td></tr>
+				 <tr><td class="pName">property:</td><td class="pDescription">The value specified in this type is the name of a System Property passed into the execution of the test</td></tr>
+				 <tr><td class="pName">content:</td><td class="pDescription">The value specified in this type refers to a record from the content engine.  That value can be formatted in multiple ways.  If you just specify the key name from the content management defined key column then the first value is returned that matches that name.  If multiple lookup columns were specified then you can specify an individual column using one of two methods.  First, you can specify the column index by using the following format <span class="pValues">keyName{#columnNumber}</span>.  The will find the lookup value array and return the specified column value represented by the index.  Otherwise, you can use the column name as specified by the first row in the content data using the following format: <span class="pValues">keyName{columnName}</span>  </td></tr>
+				</table>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="tHeader" id="tokens">Tokens</td>
+		</tr>
+		<tr>
+			<td class="tDescription">The token engines allows for on the fly token replacement of values.  Any value specified in the Object Repository is subject to token replacement.  Token replacement allows for data driven page element identification reducing the amount of element definition required while enhancing the test case.  When defining a page element you would specify a named token specified as <span class="tValues">{tokenName}</span>.  One defined, you would then specify the token in your test case with that value that it will be replacing.  The token engine will then use the name attribute in the token element to find the named token then use a combination of the type and value attributes to find the value.  You can specify multiple tokens per element and named tokens that are not found will not be replaced.</span>
+				<table>
+				 <tr><td class="tName">static:</td><td class="tDescription">The value is to be use as is with no change</td></tr>
+				 <tr><td class="tName">data:</td><td class="tDescription">The value is a definition for a field from the Page Data engine that was specified in your test case as a data provider or a data driver.  The value is specified user the following notation <span class="tValues">providerName.fieldName</span> where the <span class="pValues">providerName</span> is the name of the data provider and <span class="tValues">fieldName</span> is then name of the field in that table.</td></tr>
+				 <tr><td class="tName">context:</td><td class="tDescription">The value specified in this type is the the name of the context variable that was previously set using the context attribute on a previous test.  You must match the spelling and case of the context variable name.</td></tr>
+				 <tr><td class="tName">property:</td><td class="tDescription">The value specified in this type is the name of a System Property passed into the execution of the test</td></tr>
+				 <tr><td class="tName">content:</td><td class="tDescription">The value specified in this type refers to a record from the content engine.  That value can be formatted in multiple ways.  If you just specify the key name from the content management defined key column then the first value is returned that matches that name.  If multiple lookup columns were specified then you can specify an individual column using one of two methods.  First, you can specify the column index by using the following format <span class="pValues">keyName{#columnNumber}</span>.  The will find the lookup value array and return the specified column value represented by the index.  Otherwise, you can use the column name as specified by the first row in the content data using the following format: <span class="pValues">keyName{columnName}</span>  </td></tr>
+				</table>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="eHeader" id="examples">Examples</td>
+		</tr>
+		<tr>
+		<td>
+			<table>
+			<tr><td class="eDescription">What it does</td></tr>
+			<tr><td class="eValues"><textarea class="eValues" cols="80">
+<test name="allen">
+	<step xxxx />
+</test>			
+			</textarea></td></tr>
+			</table>
+			</td>
+		</tr>
+		
+	</table>
+</body>
+</html>

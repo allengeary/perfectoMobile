@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../css/morelandLabs.css" />
+</head>
+<body>
+    <table width="100%">
+        <tr>
+            <td class="headerContainer"><a href="#usage" class="keywordHeader">Usage</a> - <a href="#xml" class="keywordHeader">XML Configuration</a> - <a href="#excel" class="keywordHeader">Excel Configuration</a></td>
+        </tr>
+        <tr>
+            <td class="keyword">Artifacts and Reporting</td>
+        </tr>
+        <tr>
+            <td class="keywordImplementation"><a hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/com/perfectoMobile/device/artifact/ArtifactProducer.html">com.perfectoMobile.device.artifact.ArtifactProducer</a></td>
+        </tr>
+        <tr>
+            <td class="pHeader" id="xml">Automated Artifacts</td>
+        </tr>
+        <tr>
+            <td class="keywordDescription" id="description">There are a few points of interest when dealing with Test Artifacts and integrations for reporting and result delivery.  There are a handful of prepared reports that are already integrated that can be turned on for automatic delivery.  When defining a test run, you can instruct the <a
+                hRef="http://www.morelandlabs.com/javadoc/perfectoMobile/deviceFramework/com/perfectoMobile/device/data/DataManager.html">DataManger</a> instance to automatically download test artifacts at the appropriate times using the setAutomaticDownloads() method.  The following artifact types can be used as defined by the ArtifactType enum:
+                <ul>
+                    <li>EXECUTION_REPORT_PDF: Gets a copy of the Perfecto Execution report in PDF format</li>
+                    <li>EXECUTION_REPORT_HTML: Gets a copy of the Perfecto Execution report in HTML format</li>
+                    <li>EXECUTION_REPORT_CSV: Gets a copy of the Perfecto Execution report in CSV format</li>
+                    <li>EXECUTION_REPROT_XML: Gets a copy of the Perfecto Execution report in XML format</li>
+                    <li>FAILURE_SOURCE: Extracts the state of the device and application.  That states is extracted and saved as failureDom.xml to allow for quick debugging of object identification issues</li>
+                    <li>WCAG_REPORT: If WCAG operations were used (Branding, contrast, etc) then this will contain the extracted images and their operational statistics.</li>
+                    <li>DEVICE_LOG: Extracts the previous 1000 lines of the device's log file</li>
+                    <li>CONSOLE_LOG: Writes the console output for the specified test on the specified device.  Only information pertaining to that test/device is stored here</li>
+                    <li>EXECUTION_RECORD_HTML: Contains a clean execution report of the test steps that were executed.  In addition, a master index file will be created showing the status of all tests executed in this run</li>
+                    <li>EXECUTION_RECORD_CSV: Contains an CSV based reports of all test steps that were executed</li>
+                    <li>EXECUTION_TIMING: Contains a small timing report of elements marked as timed</li>
+                </ul>
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="pHeader" id="usage">Usage</td>
+        </tr>
+        <tr>
+            <td class="pText">The following example will configuration will configure 3 automated artifacts and dumb them out to a folder named test-output in the current running folder
+                <textarea class="eValues" cols="120" readonly="readonly" rows="3">
+DataManager.instance().setReportFolder( new File( "test-output" ) );
+DataManager.instance().setAutomaticDownloads( new ArtifactType[] { ArtifactType.EXECUTION_REPORT_XML, ArtifactType.FAILURE_SOURCE, ArtifactType.EXECUTION_RECORD_HTML } );
+                </textarea>                
+            </td>
+        </tr>
+        
+    </table>
+</body>
+</html>
