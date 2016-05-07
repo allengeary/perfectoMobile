@@ -26,10 +26,17 @@ public class ThreadedFileHandler extends Handler
         setFormatter( new SimpleFormatter() );
         
         LogManager.getLogManager().getLogger( "" ).addHandler( this );
-        LogManager.getLogManager().getLogger( PERFECTO_NAMESPACE ).setLevel( baseLevel );
-        LogManager.getLogManager().getLogger( PERFECTO_NAMESPACE ).addHandler( this );
-        LogManager.getLogManager().getLogger( MORELAND_NAMESPACE ).setLevel( baseLevel );
-        LogManager.getLogManager().getLogger( MORELAND_NAMESPACE ).addHandler( this );
+        LogManager.getLogManager().getLogger( "" ).setLevel( baseLevel );
+        if ( LogManager.getLogManager().getLogger( PERFECTO_NAMESPACE ) != null )
+        {
+	        LogManager.getLogManager().getLogger( PERFECTO_NAMESPACE ).setLevel( baseLevel );
+	        LogManager.getLogManager().getLogger( PERFECTO_NAMESPACE ).addHandler( this );
+        }
+        if ( LogManager.getLogManager().getLogger( MORELAND_NAMESPACE ) != null )
+        {
+	        LogManager.getLogManager().getLogger( MORELAND_NAMESPACE ).setLevel( baseLevel );
+	        LogManager.getLogManager().getLogger( MORELAND_NAMESPACE ).addHandler( this );
+        }
     }
     
     @Override
