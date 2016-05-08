@@ -29,6 +29,7 @@ public abstract class AbstractArtifactProducer implements ArtifactProducer
 {
     protected static DateFormat timeFormat = new SimpleDateFormat( "HH:mm:ss.SSS");
     protected static DateFormat dateFormat = new SimpleDateFormat( "MM-dd_HH-mm-ss");
+    protected static DateFormat simpleDateFormat = new SimpleDateFormat( "MM-dd-yyyy");
     private static final String COMMA = ",";
     
 	/** The log. */
@@ -42,7 +43,7 @@ public abstract class AbstractArtifactProducer implements ArtifactProducer
 	 * @param connectedDevice the connected device
 	 * @return the artifact
 	 */
-	protected abstract Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice, String testName );
+	protected abstract Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice, String testName, boolean success );
 	
 	/**
 	 * _get artifact.
@@ -53,26 +54,26 @@ public abstract class AbstractArtifactProducer implements ArtifactProducer
 	 * @param connectedDevice the connected device
 	 * @return the artifact
 	 */
-	protected abstract Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, Map<String,String> parameterMap, ConnectedDevice connectedDevice, String testName );
+	protected abstract Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, Map<String,String> parameterMap, ConnectedDevice connectedDevice, String testName, boolean success );
 	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.device.artifact.ArtifactProducer#getArtifact(org.openqa.selenium.WebDriver, com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType, com.perfectoMobile.device.ConnectedDevice)
 	 */
-	public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice, String testName )
+	public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice, String testName, boolean success )
 	{
 		if ( log.isDebugEnabled() )
 			log.debug( "Acquiring an Artifact of type " + aType );
-		return _getArtifact( webDriver, aType, connectedDevice, testName );
+		return _getArtifact( webDriver, aType, connectedDevice, testName, success );
 	}
 
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.device.artifact.ArtifactProducer#getArtifact(org.openqa.selenium.WebDriver, com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType, java.util.Map, com.perfectoMobile.device.ConnectedDevice)
 	 */
-	public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, Map<String, String> parameterMap, ConnectedDevice connectedDevice, String testName )
+	public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, Map<String, String> parameterMap, ConnectedDevice connectedDevice, String testName, boolean success )
 	{
 		if ( log.isDebugEnabled() )
 			log.debug( "Acquiring an Artifact of type " + aType + " using " + parameterMap );
-		return _getArtifact( webDriver, aType, parameterMap, connectedDevice, testName );
+		return _getArtifact( webDriver, aType, parameterMap, connectedDevice, testName, success );
 	}
 	
 	protected Artifact generateHTMLRecord( Device device, String testName, String rootFolder, WebDriver webDriver )

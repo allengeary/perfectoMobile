@@ -354,6 +354,8 @@ public class TestDriver
 				}
 			}
 			
+			artifactList.add( ArtifactType.EXECUTION_DEFINITION );
+			
 			DataManager.instance().setAutomaticDownloads( artifactList.toArray( new ArtifactType[ 0 ] ) );
 			
 		}

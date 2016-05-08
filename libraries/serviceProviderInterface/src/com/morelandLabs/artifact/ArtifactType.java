@@ -44,7 +44,9 @@ public enum ArtifactType
     
     EXECUTION_RECORD( ArtifactTime.NOOP ),
     
-    EXECUTION_TIMING( ArtifactTime.AFTER_TEST );
+    EXECUTION_TIMING( ArtifactTime.AFTER_TEST ),
+    
+    EXECUTION_DEFINITION( ArtifactTime.AFTER_TEST);
     
     /** The time. */
     private ArtifactTime time;
