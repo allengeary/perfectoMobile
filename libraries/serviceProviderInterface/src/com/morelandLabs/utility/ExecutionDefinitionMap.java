@@ -21,7 +21,8 @@ public class ExecutionDefinitionMap
 			for ( Object keyName : props.keySet() )
 			{
 				ExecutionDefinition ed = new ExecutionDefinition( new File( mapFile.getAbsoluteFile().getParentFile(), props.getProperty( keyName + "") ) );
-				definitionMap.put( keyName + "", ed );
+				if ( ed.filesExist() )
+					definitionMap.put( keyName + "", ed );
 
 			}
 			

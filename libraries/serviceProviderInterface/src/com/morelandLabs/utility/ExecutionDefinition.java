@@ -35,14 +35,19 @@ public class ExecutionDefinition
 			model = propertyMap.getProperty( "MODEL" );
 			success = Boolean.parseBoolean( propertyMap.getProperty( "SUCCESS", "false" ) );
 			
-			snapshotFile = new File( propertyFile.getAbsoluteFile(), "failure-screenshot.png" );
-			domFile = new File( propertyFile.getAbsoluteFile(), "failureDOM.xml" );
+			snapshotFile = new File( propertyFile.getParentFile(), "failure-screenshot.png" );
+			domFile = new File( propertyFile.getParentFile(), "failureDOM.xml" );
 			
 		}
 		catch( Exception e )
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public String toString()
+	{
+		return testCase + "-->" + deviceId + " (" + date + ")";
 	}
 
 	public String getDate() {
@@ -77,12 +82,6 @@ public class ExecutionDefinition
 		return propertyMap;
 	}
 
-	@Override
-	public String toString() {
-		return "ExecutionDefinition [date=" + date + ", time=" + time + ", testCase=" + testCase + ", deviceId="
-				+ deviceId + ", success=" + success + ", manufacturer=" + manufacturer + ", model=" + model
-				+ ", snapshotFile=" + snapshotFile + ", domFile=" + domFile + "]";
-	}
 
 	public File getSnapshotFile() {
 		return snapshotFile;
