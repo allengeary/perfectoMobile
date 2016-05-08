@@ -17,6 +17,9 @@ public class ExecutionDefinition
 	private String model;
 	private Properties propertyMap;
 	
+	private File snapshotFile;
+	private File domFile;
+	
 	public ExecutionDefinition( File propertyFile )
 	{
 		try
@@ -31,6 +34,10 @@ public class ExecutionDefinition
 			manufacturer = propertyMap.getProperty( "MANUFACTURER" );
 			model = propertyMap.getProperty( "MODEL" );
 			success = Boolean.parseBoolean( propertyMap.getProperty( "SUCCESS", "false" ) );
+			
+			snapshotFile = new File( propertyFile.getAbsoluteFile(), "failure-screenshot.png" );
+			domFile = new File( propertyFile.getAbsoluteFile(), "failureDOM.xml" );
+			
 		}
 		catch( Exception e )
 		{
@@ -73,9 +80,21 @@ public class ExecutionDefinition
 	@Override
 	public String toString() {
 		return "ExecutionDefinition [date=" + date + ", time=" + time + ", testCase=" + testCase + ", deviceId="
-				+ deviceId + ", success=" + success + ", manufacturer=" + manufacturer + ", model=" + model + "]";
+				+ deviceId + ", success=" + success + ", manufacturer=" + manufacturer + ", model=" + model
+				+ ", snapshotFile=" + snapshotFile + ", domFile=" + domFile + "]";
+	}
+
+	public File getSnapshotFile() {
+		return snapshotFile;
+	}
+
+	public File getDomFile() {
+		return domFile;
 	}
 	
-	
+	public boolean filesExist()
+	{
+		return snapshotFile.exists() && domFile.exists();
+	}
 
 }
