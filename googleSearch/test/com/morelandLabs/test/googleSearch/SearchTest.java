@@ -17,6 +17,7 @@ import com.perfectoMobile.device.cloud.XMLCloudProvider;
 import com.perfectoMobile.device.data.DataManager;
 import com.perfectoMobile.device.data.DataProvider;
 import com.perfectoMobile.device.data.DataProvider.DriverType;
+import com.perfectoMobile.device.data.XMLDataProvider;
 import com.perfectoMobile.device.data.perfectoMobile.PerfectoMobileDataProvider;
 import com.perfectoMobile.device.data.perfectoMobile.ReservedHandsetValidator;
 import com.perfectoMobile.device.logging.ThreadedFileHandler;
@@ -44,6 +45,8 @@ public class SearchTest extends AbstractSeleniumTest
         // We are running in using the RemoteWebDriver with any device reserved to me
         //
         DataProvider dataProvider = new PerfectoMobileDataProvider( new ReservedHandsetValidator(), DriverType.WEB );
+        
+        //DataProvider dataProvider = new XMLDataProvider( "deviceRegistry.xml", DriverType.WEB );
         
         //
         // The factory for generating devices Gestures

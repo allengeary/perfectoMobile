@@ -9,7 +9,6 @@ public class SearchImpl extends LocalAbstractPage implements Search
     public void initializePage()
     {
         // TODO Auto-generated method stub
-
     }
 
 }
