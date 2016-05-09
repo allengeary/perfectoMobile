@@ -646,7 +646,7 @@ public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAw
      * com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType,
      * com.perfectoMobile.device.ConnectedDevice)
      */
-    public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice, String testName )
+    public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice, String testName, boolean success )
     {
         if ( artifactProducer != null )
         {
@@ -655,7 +655,7 @@ public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAw
             parameterMap.put( REPORT_KEY, reportKey );
             parameterMap.put( DEVICE_NAME, deviceName );
             parameterMap.put( WIND_TUNNEL, windTunnelReport );
-            return artifactProducer.getArtifact( webDriver, aType, parameterMap, connectedDevice, testName );
+            return artifactProducer.getArtifact( webDriver, aType, parameterMap, connectedDevice, testName, success );
         }
         else
             return null;
@@ -669,7 +669,7 @@ public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAw
      * com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType,
      * java.util.Map, com.perfectoMobile.device.ConnectedDevice)
      */
-    public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, Map<String, String> parameterMap, ConnectedDevice connectedDevice, String testName )
+    public Artifact getArtifact( WebDriver webDriver, ArtifactType aType, Map<String, String> parameterMap, ConnectedDevice connectedDevice, String testName, boolean success )
     {
         if ( artifactProducer != null )
         {
@@ -681,7 +681,7 @@ public class DeviceWebDriver implements WebDriver, JavascriptExecutor, ContextAw
             parameterMap.put( DEVICE_NAME, deviceName );
             parameterMap.put( WIND_TUNNEL, windTunnelReport );
 
-            return artifactProducer.getArtifact( webDriver, aType, parameterMap, connectedDevice, testName );
+            return artifactProducer.getArtifact( webDriver, aType, parameterMap, connectedDevice, testName, success );
         }
         else
             return null;

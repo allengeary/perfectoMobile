@@ -415,6 +415,9 @@ public abstract class AbstractSeleniumTest
         
         if( DataManager.instance().isArtifactEnabled( ArtifactType.EXECUTION_RECORD_HTML ) )
             RunDetails.instance().writeHTMLIndex( DataManager.instance().getReportFolder() );
+        
+        if( DataManager.instance().isArtifactEnabled( ArtifactType.EXECUTION_DEFINITION ) )
+            RunDetails.instance().writeDefinitionIndex( DataManager.instance().getReportFolder() );
 		
         DeviceManager.instance().clearAllArtifacts();
     }
@@ -470,7 +473,7 @@ public abstract class AbstractSeleniumTest
                             {
                                 try
                                 {
-                                    Artifact currentArtifact = ( ( ArtifactProducer ) webDriver ).getArtifact( webDriver, aType, device, runKey );
+                                    Artifact currentArtifact = ( ( ArtifactProducer ) webDriver ).getArtifact( webDriver, aType, device, runKey, testResult.getStatus() == ITestResult.SUCCESS );
                                     if ( currentArtifact != null )
                                         currentArtifact.writeToDisk( rootFolder );
                                 }
@@ -505,7 +508,7 @@ public abstract class AbstractSeleniumTest
                         {
                             try
                             {
-                                Artifact currentArtifact = ( ( ArtifactProducer ) webDriver ).getArtifact( webDriver, aType, device, runKey );
+                                Artifact currentArtifact = ( ( ArtifactProducer ) webDriver ).getArtifact( webDriver, aType, device, runKey, testResult.getStatus() == ITestResult.SUCCESS );
                                 if ( currentArtifact != null )
                                     currentArtifact.writeToDisk( rootFolder );
                             }

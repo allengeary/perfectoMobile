@@ -104,6 +104,36 @@ public class RunDetails implements RunListener
         
     }
     
+    public synchronized void writeDefinitionIndex( File rootFolder )
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        
+        for ( int i=0; i<detailsList.size(); i++ )
+        {
+        	String runKey = ((String) detailsList.get( i )[0] ).substring( 25 );
+            Device device = (Device) detailsList.get( i )[1];
+            String location = runKey + "/" + device.getKey() + "/";
+        	
+        	stringBuilder.append( runKey ).append( "." ).append( device.getKey() ).append( "=" ).append( location ).append( "executionDefinition.properties" );
+
+        }
+
+        
+        try
+        {
+            File useFile = new File( rootFolder, getRootFolder() + System.getProperty( "file.separator" ) + "executionMap.properties" );
+            useFile.getParentFile().mkdirs();
+            FileWriter fileWriter = new FileWriter( useFile );
+            fileWriter.write( stringBuilder.toString() );
+            fileWriter.close();
+        }
+        catch( Exception e)
+        {
+            e.printStackTrace( );
+        }
+        
+    }
+    
     public File getIndex( File rootFolder )
     {
         return new File( rootFolder, getRootFolder() + System.getProperty( "file.separator" ) + "index.html" );

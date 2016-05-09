@@ -7,9 +7,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 import java.util.Map;
+
 import org.openqa.selenium.WebDriver;
+
 import com.morelandLabs.artifact.ArtifactType;
+import com.morelandLabs.spi.RunDetails;
 import com.perfectoMobile.device.ConnectedDevice;
 import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.artifact.AbstractArtifactProducer;
@@ -57,7 +61,7 @@ public class PerfectoArtifactProducer extends AbstractArtifactProducer
 	 * @see com.perfectoMobile.device.artifact.AbstractArtifactProducer#_getArtifact(org.openqa.selenium.WebDriver, com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType, com.perfectoMobile.device.ConnectedDevice)
 	 */
 	@Override
-	protected Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice, String testName )
+	protected Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice, String testName, boolean success )
 	{
 		return null;
 	}
@@ -94,11 +98,22 @@ public class PerfectoArtifactProducer extends AbstractArtifactProducer
 	 * @see com.perfectoMobile.device.artifact.AbstractArtifactProducer#_getArtifact(org.openqa.selenium.WebDriver, com.perfectoMobile.device.artifact.ArtifactProducer.ArtifactType, java.util.Map, com.perfectoMobile.device.ConnectedDevice)
 	 */
 	@Override
-	protected Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, Map<String, String> parameterMap, ConnectedDevice connectedDevice, String testName )
+	protected Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, Map<String, String> parameterMap, ConnectedDevice connectedDevice, String testName, boolean success )
 	{
 	    String rootFolder = testName + System.getProperty( "file.separator" ) + connectedDevice.getDevice().getKey() + System.getProperty( "file.separator" );
 		switch (aType)
 		{
+			case EXECUTION_DEFINITION:
+				StringBuilder defBuilder = new StringBuilder();
+				defBuilder.append( "DATE=" ).append( simpleDateFormat.format( new Date( System.currentTimeMillis() ) ) ).append( "\r\n");
+				defBuilder.append( "TIME=" ).append( timeFormat.format( new Date( System.currentTimeMillis() ) ) ).append( "\r\n");
+				defBuilder.append( "TEST_CASE=" ).append( testName ).append( "\r\n");
+				defBuilder.append( "DEVICE=" ).append( connectedDevice.getDevice().getKey() ).append( "\r\n");
+				defBuilder.append( "SUCCESS=" ).append( success ).append( "\r\n");
+				defBuilder.append( "MANUFACTURER=" ).append( connectedDevice.getDevice().getManufacturer() ).append( "\r\n");
+				defBuilder.append( "MODEL=" ).append( connectedDevice.getDevice().getModel() ).append( "\r\n");
+				return new Artifact( rootFolder + "executionDefinition.properties", defBuilder.toString().getBytes() );
+				
 			case EXECUTION_REPORT:
 			case EXECUTION_REPORT_PDF:
 			    return generateExecutionReport( "download", parameterMap, "pdf", rootFolder, aType );
@@ -143,7 +158,6 @@ public class PerfectoArtifactProducer extends AbstractArtifactProducer
 				
 			case WCAG_REPORT:
 			    return generateWCAG( connectedDevice.getDevice(), testName, rootFolder );
-				
 			default:
 				return null;
 

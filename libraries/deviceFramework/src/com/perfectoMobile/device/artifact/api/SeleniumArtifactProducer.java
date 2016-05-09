@@ -55,7 +55,7 @@ public class SeleniumArtifactProducer extends AbstractArtifactProducer
      * com.perfectoMobile.device.ConnectedDevice)
      */
     @Override
-    protected Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice, String testName )
+    protected Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, ConnectedDevice connectedDevice, String testName, boolean success )
     {
         return null;
     }
@@ -70,13 +70,24 @@ public class SeleniumArtifactProducer extends AbstractArtifactProducer
      * java.util.Map, com.perfectoMobile.device.ConnectedDevice)
      */
     @Override
-    protected Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, Map<String, String> parameterMap, ConnectedDevice connectedDevice, String testName )
+    protected Artifact _getArtifact( WebDriver webDriver, ArtifactType aType, Map<String, String> parameterMap, ConnectedDevice connectedDevice, String testName, boolean success )
     {
         String rootFolder = testName + System.getProperty( "file.separator" ) + connectedDevice.getDevice().getKey() + System.getProperty( "file.separator" );
         switch ( aType )
         {
             case FAILURE_SOURCE:
                 return new Artifact( rootFolder + "failureDOM.xml", webDriver.getPageSource().getBytes() );
+                
+            case EXECUTION_DEFINITION:
+				StringBuilder defBuilder = new StringBuilder();
+				defBuilder.append( "DATE=" ).append( simpleDateFormat.format( new Date( System.currentTimeMillis() ) ) ).append( "\r\n");
+				defBuilder.append( "TIME=" ).append( timeFormat.format( new Date( System.currentTimeMillis() ) ) ).append( "\r\n");
+				defBuilder.append( "TEST_CASE=" ).append( testName ).append( "\r\n");
+				defBuilder.append( "DEVICE=" ).append( connectedDevice.getDevice().getKey() ).append( "\r\n");
+				defBuilder.append( "SUCCESS=" ).append( success ).append( "\r\n");
+				defBuilder.append( "MANUFACTURER=" ).append( connectedDevice.getDevice().getManufacturer() ).append( "\r\n");
+				defBuilder.append( "MODEL=" ).append( connectedDevice.getDevice().getBrowserName() ).append( "\r\n");
+				return new Artifact( rootFolder + "executionDefinition.properties", defBuilder.toString().getBytes() );
     
             case CONSOLE_LOG:
                 Artifact consoleArtifact = new Artifact( rootFolder + "console.txt", DeviceManager.instance().getLog().getBytes() );
