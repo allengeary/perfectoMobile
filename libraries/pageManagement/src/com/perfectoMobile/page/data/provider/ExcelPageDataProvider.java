@@ -157,6 +157,9 @@ public class ExcelPageDataProvider extends AbstractPageDataProvider
 					    String currentName = getCellValue( firstRow.getCell( x ) );
 		                String currentValue = getCellValue( currentRow.getCell( x ) );
 		                
+		                if ( currentValue == null )
+		                    currentValue = "";
+		                
 		                if ( currentValue.startsWith( PageData.TREE_MARKER ) && currentValue.endsWith( PageData.TREE_MARKER ) )
 		                {
 		                    //

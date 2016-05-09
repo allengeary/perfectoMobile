@@ -1,14 +1,9 @@
 package com.morelandLabs.utility;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import org.htmlcleaner.DomSerializer;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.SimpleXmlSerializer;
 import org.htmlcleaner.TagNode;
@@ -93,19 +88,5 @@ public class XMLEscape
     
     
     
-    public static void main( String[] args ) throws Exception
-    {
-        StringBuilder outputStream = new StringBuilder();
-        BufferedReader r = new BufferedReader( new FileReader( "c:/projects/tools/failureDOM.xml") );
-        
-        HtmlCleaner cleaner = new HtmlCleaner();
-        TagNode node = cleaner.clean( new FileReader( "c:/projects/tools/failureDOM.xml") );
-        
-        new DomSerializer( cleaner.getProperties(), true).createDOM(node).getDocumentElement();
-        
-        ByteArrayOutputStream htmlDocument = new ByteArrayOutputStream();
-        new SimpleXmlSerializer( cleaner.getProperties() ).writeToStream( node, new FileOutputStream( "c:/projects/tools/fixedDOM2.xml" ) );
-        
-
-    }
+    
 }
