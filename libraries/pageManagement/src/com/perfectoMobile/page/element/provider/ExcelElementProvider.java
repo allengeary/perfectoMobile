@@ -28,10 +28,10 @@ public class ExcelElementProvider extends AbstractElementProvider
 	private Map<String,Element> elementMap = new HashMap<String,Element>(20);
 	
 	/** The file name. */
-	private File fileName;
+	private File[] fileName;
 	
 	/** The resource name. */
-	private String resourceName;
+	private String[] resourceName;
 	
 	/** The tab names. */
 	private String tabNames;
@@ -45,23 +45,37 @@ public class ExcelElementProvider extends AbstractElementProvider
 	 */
 	public ExcelElementProvider( File fileName, String tabNames )
 	{
-		this.fileName = fileName;
+		this.fileName = new File[] { fileName };
 		this.tabNames = tabNames;
 		readElements();
 	}
 	
+	
 	/**
-	 * Instantiates a new CSV element provider.
-	 *
-	 * @param resourceName the resource name
-	 * @param tabNames the tab names
-	 */
-	public ExcelElementProvider( String resourceName, String tabNames )
-	{
-		this.resourceName = resourceName;
-		this.tabNames = tabNames;
-		readElements();
-	}
+     * Instantiates a new CSV element provider.
+     *
+     * @param fileName the file name
+     * @param tabNames the tab names
+     */
+    public ExcelElementProvider( File[] fileName, String tabNames )
+    {
+        this.fileName = fileName;
+        this.tabNames = tabNames;
+        readElements();
+    }
+    
+    /**
+     * Instantiates a new CSV element provider.
+     *
+     * @param resourceName the resource name
+     * @param tabNames the tab names
+     */
+    public ExcelElementProvider( String resourceName, String tabNames )
+    {
+        this.resourceName = resourceName.split( "," );
+        this.tabNames = tabNames;
+        readElements();
+    }
 	
 	/**
 	 * Read elements.
@@ -70,17 +84,25 @@ public class ExcelElementProvider extends AbstractElementProvider
 	{
 		if ( fileName == null )
 		{
-			if ( log.isInfoEnabled() )
-				log.info( "Reading from CLASSPATH as " + resourceName );
-			readElements( getClass().getClassLoader().getResourceAsStream( resourceName ) );
+			
+			for ( String resource : resourceName )
+			{
+			    if ( log.isInfoEnabled() )
+	                log.info( "Reading from CLASSPATH as " + resource );
+			    readElements( getClass().getClassLoader().getResourceAsStream( resource ) );
+			}
 		}
 		else
 		{
 			try
 			{
-				if ( log.isInfoEnabled() )
-					log.info( "Reading from FILE SYSTEM as [" + fileName + "]" );
-				readElements( new FileInputStream( fileName ) );
+				
+				for ( File currentFile : fileName )
+				{
+				    if ( log.isInfoEnabled() )
+	                    log.info( "Reading from FILE SYSTEM as [" + fileName + "]" );
+				    readElements( new FileInputStream( currentFile ) );
+				}
 			}
 			catch( FileNotFoundException e )
 			{
@@ -133,6 +155,8 @@ public class ExcelElementProvider extends AbstractElementProvider
 			for ( String tabName : tabs )
 			{
 				XSSFSheet sheet = workbook.getSheet( tabName );
+				if ( sheet == null )
+				    continue;
 	
 				for (int i = 1; i <= sheet.getLastRowNum(); i++)
 				{

@@ -66,6 +66,7 @@ public class RunDetails implements RunListener
     
     public synchronized void writeHTMLIndex( File rootFolder )
     {
+        File useFile = getIndex( rootFolder );
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append( "<html><body><table cellspacing='0' border='1'>" );
         
@@ -87,11 +88,15 @@ public class RunDetails implements RunListener
             stringBuilder.append( "</td></tr>" );
         }
         
+        
+        
+        stringBuilder.append( "<tr><td colSpan='6' align='center'>" ).append( new File( rootFolder, getRootFolder() + System.getProperty( "file.separator" ) + "executionMap.properties" ).getAbsolutePath() ).append( "</td></tr>" );
+        
         stringBuilder.append( "</table></body></html>" );
         
         try
         {
-            File useFile = getIndex( rootFolder );
+            
             useFile.getParentFile().mkdirs();
             FileWriter fileWriter = new FileWriter( useFile );
             fileWriter.write( stringBuilder.toString() );
@@ -114,7 +119,7 @@ public class RunDetails implements RunListener
             Device device = (Device) detailsList.get( i )[1];
             String location = runKey + "/" + device.getKey() + "/";
         	
-        	stringBuilder.append( runKey ).append( "." ).append( device.getKey() ).append( "=" ).append( location ).append( "executionDefinition.properties" );
+        	stringBuilder.append( runKey ).append( "." ).append( device.getKey() ).append( "=" ).append( location ).append( "executionDefinition.properties" ).append( "\r\n" );
 
         }
 

@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import com.morelandLabs.spi.RunDetails;
 
 public class ExecutionDefinitionMap 
 {
@@ -37,13 +38,4 @@ public class ExecutionDefinitionMap
 	{
 		return definitionMap.values();
 	}
-	
-	public static void main(String[] args) 
-	{
-		File x = new File( "C:\\Users\\AJ\\git\\perfectoMobile\\Test-Driver\\test-output\\05-08_08-14-53-600\\executionMap.properties" );
-		
-		ExecutionDefinitionMap y = new ExecutionDefinitionMap( x );
-		System.out.println( y.getExecutions() );
-	}
-	
 }
