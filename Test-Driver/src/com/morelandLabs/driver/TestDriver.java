@@ -329,7 +329,7 @@ public class TestDriver
         {
             String[] auto = automated.split( "," );
             List<ArtifactType> artifactList = new ArrayList<ArtifactType>( 10 );
-
+            artifactList.add( ArtifactType.EXECUTION_DEFINITION );
             for ( String type : auto )
             {
                 try
@@ -372,7 +372,13 @@ public class TestDriver
                 break;
 
             case "EXCEL":
-                PageManager.instance().setElementProvider( new ExcelElementProvider( new File( configProperties.getProperty( PAGE[2] ) ), configProperties.getProperty( PAGE[0] ) ) );
+                String[] fileNames = configProperties.getProperty( PAGE[2] ).split( "," );
+
+                File[] files = new File[fileNames.length];
+                for ( int i = 0; i < fileNames.length; i++ )
+                    files[i] = new File( fileNames[i] );
+
+                PageManager.instance().setElementProvider( new ExcelElementProvider( files, configProperties.getProperty( PAGE[0] ) ) );
                 break;
         }
 
@@ -389,8 +395,14 @@ public class TestDriver
                     break;
 
                 case "EXCEL":
+                    String[] fileNames = configProperties.getProperty( DATA[1] ).split( "," );
+
+                    File[] files = new File[fileNames.length];
+                    for ( int i = 0; i < fileNames.length; i++ )
+                        files[i] = new File( fileNames[i] );
+                    
                     validateProperties( configProperties, new String[] { "pageManagement.pageData.tabNames" } );
-                    PageDataManager.instance().setPageDataProvider( new ExcelPageDataProvider( new File( configProperties.getProperty( DATA[1] ) ), configProperties.getProperty( "pageManagement.pageData.tabNames" ) ) );
+                    PageDataManager.instance().setPageDataProvider( new ExcelPageDataProvider( files, configProperties.getProperty( "pageManagement.pageData.tabNames" ) ) );
                     break;
 
             }

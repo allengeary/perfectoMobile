@@ -29,10 +29,10 @@ public class ExcelPageDataProvider extends AbstractPageDataProvider
 {
 	
 	/** The file name. */
-	private File fileName;
+	private File[] fileName;
 	
 	/** The resource name. */
-	private String resourceName;
+	private String[] resourceName;
 	
 	/** The tab names. */
 	private String tabNames;
@@ -46,8 +46,14 @@ public class ExcelPageDataProvider extends AbstractPageDataProvider
 	public ExcelPageDataProvider( File fileName, String tabNames )
 	{
 		this.tabNames = tabNames;
-		this.fileName = fileName;
+		this.fileName = new File[] { fileName };
 	}
+	
+	public ExcelPageDataProvider( File[] fileName, String tabNames )
+    {
+        this.tabNames = tabNames;
+        this.fileName = fileName;
+    }
 
 	/**
 	 * Instantiates a new XML page data provider.
@@ -58,7 +64,7 @@ public class ExcelPageDataProvider extends AbstractPageDataProvider
 	public ExcelPageDataProvider( String resourceName, String tabNames )
 	{
 		this.tabNames = tabNames;
-		this.resourceName = resourceName;
+		this.resourceName = resourceName.split( "," );
 	}
 
 	/* (non-Javadoc)
@@ -69,17 +75,24 @@ public class ExcelPageDataProvider extends AbstractPageDataProvider
 	{
 		if (fileName == null)
 		{
-			if (log.isInfoEnabled())
-				log.info( "Reading from CLASSPATH as " + resourceName );
-			readElements( getClass().getClassLoader().getResourceAsStream( resourceName ) );
+			for ( String resource : resourceName )
+			{
+			    if (log.isInfoEnabled())
+	                log.info( "Reading from CLASSPATH as " + resource );
+			    readElements( getClass().getClassLoader().getResourceAsStream( resource ) );
+			}
 		}
 		else
 		{
 			try
 			{
-				if (log.isInfoEnabled())
-					log.info( "Reading from FILE SYSTEM as [" + fileName + "]" );
-				readElements( new FileInputStream( fileName ) );
+				
+				for ( File currentFile : fileName )
+				{
+				    if (log.isInfoEnabled())
+	                    log.info( "Reading from FILE SYSTEM as [" + currentFile + "]" );
+				    readElements( new FileInputStream( currentFile ) );
+				}
 			}
 			catch (FileNotFoundException e)
 			{
@@ -137,10 +150,13 @@ public class ExcelPageDataProvider extends AbstractPageDataProvider
 			
 			for ( String tabName : tabs )
 			{
+			    XSSFSheet sheet = workbook.getSheet( tabName );
+			    
+			    if ( sheet == null )
+			        continue;
+			    
 				addRecordType( tabName, false );
 				
-				XSSFSheet sheet = workbook.getSheet( tabName );
-	
 				XSSFRow firstRow = sheet.getRow( 0 );
 				
 				for (int i = 1; i <= sheet.getLastRowNum(); i++)

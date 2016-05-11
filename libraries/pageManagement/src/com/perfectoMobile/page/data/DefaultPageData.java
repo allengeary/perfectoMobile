@@ -132,6 +132,8 @@ public class DefaultPageData implements PageData
 	{
 	    if ( fieldName.equals( "name" ) )
 	        recordName = value;
+	    else if ( fieldName.equals( "active" ) )
+	        active = Boolean.parseBoolean( value );
 		recordMap.put( fieldName, value );
 	}
 	
