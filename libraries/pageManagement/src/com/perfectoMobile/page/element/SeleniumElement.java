@@ -16,11 +16,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.HasInputDevices;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import com.morelandLabs.MorelandNamespaceContext;
 import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.ImageFormat;
 import com.morelandLabs.integrations.perfectoMobile.rest.services.Imaging.MatchMode;
@@ -36,6 +35,7 @@ import com.morelandLabs.utility.html.HTMLElementLookup;
 import com.perfectoMobile.page.BY;
 import com.perfectoMobile.page.ElementDescriptor;
 import com.perfectoMobile.page.PageManager;
+import io.appium.java_client.AppiumDriver;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -490,6 +490,37 @@ public class SeleniumElement extends AbstractElement
 		return returnValue;
 	}
 
+	@Override
+	protected boolean _isFocused()
+	{
+	    long startTime = System.currentTimeMillis();
+        WebElement webElement = (WebElement) getElement();
+        
+        boolean returnValue = false;
+        
+        if ( getNativeDriver() instanceof AppiumDriver )
+        {
+            String focusValue = getAttribute( "focused" );
+
+            if ( focusValue != null )
+                returnValue = Boolean.parseBoolean( focusValue );
+        }
+        else if ( getNativeDriver() instanceof RemoteWebDriver )
+            returnValue = webElement.equals( webDriver.switchTo().activeElement() );
+        
+        PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), getPageName(), getElementName(), "focused", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "", webElement instanceof CachedElement );
+        return returnValue;
+	}
+	
+	private WebDriver getNativeDriver()
+	{
+
+	    if ( webDriver instanceof NativeDriverProvider )
+	        return ( (NativeDriverProvider) webDriver ).getNativeDriver();
+	    else
+	        return webDriver;
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.perfectoMobile.page.element.AbstractElement#_isPresent()
 	 */
@@ -508,14 +539,12 @@ public class SeleniumElement extends AbstractElement
 		{
 			returnValue = Boolean.parseBoolean( PerfectoMobile.instance().imaging().imageExists( getExecutionId(), getDeviceName(), getKey(), (short)30, MatchMode.bounded ).getStatus() );
 			PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), getPageName(), getElementName(), "present", System.currentTimeMillis(), System.currentTimeMillis() - startTime, returnValue ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "", false );
+			return returnValue;
 		}
 		
 		WebElement webElement = getElement();
 		PageManager.instance().addExecutionLog( getExecutionId(), getDeviceName(), getPageName(), getElementName(), "present", System.currentTimeMillis(), System.currentTimeMillis() - startTime, webElement != null ? StepStatus.SUCCESS : StepStatus.FAILURE, getKey(), null, 0, "", webElement instanceof CachedElement );
 		return webElement != null;
-		
-		
-		
 	}
 	
 	/* (non-Javadoc)

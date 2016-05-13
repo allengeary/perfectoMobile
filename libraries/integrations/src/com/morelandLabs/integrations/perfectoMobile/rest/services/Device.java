@@ -126,4 +126,14 @@ public interface Device extends PerfectoService
     @PerfectoCommand( commandName="browser", subCommandName = "execute" )
     public Execution clean( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId  );
 	
+    
+    
+    @Operation( operationName="command" )
+    @PerfectoCommand( commandName="logs", subCommandName = "start" )
+    public Execution startDebug( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId );
+    
+    @Operation( operationName="command" )
+    @PerfectoCommand( commandName="logs", subCommandName = "stop" )
+    public Execution stopDebug( @ResourceID String executionId, @Parameter( name="handsetId" ) String handsetId );
+
 }

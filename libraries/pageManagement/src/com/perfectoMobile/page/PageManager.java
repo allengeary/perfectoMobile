@@ -44,7 +44,6 @@ import com.perfectoMobile.page.listener.ExecutionListener;
  */
 public class PageManager
 {
-	
 	/** The log. */
 	private Log log = LogFactory.getLog( PageManager.class );
 	

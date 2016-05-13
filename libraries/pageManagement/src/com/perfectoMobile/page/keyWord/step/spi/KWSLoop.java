@@ -1,10 +1,8 @@
 package com.perfectoMobile.page.keyWord.step.spi;
 
+import java.util.List;
 import java.util.Map;
-
-import org.apache.xerces.dom.PSVIDOMImplementationImpl;
 import org.openqa.selenium.WebDriver;
-
 import com.perfectoMobile.page.Page;
 import com.perfectoMobile.page.data.PageData;
 import com.perfectoMobile.page.data.PageDataManager;
@@ -98,7 +96,16 @@ public class KWSLoop extends AbstractKeyWordStep
 				    String[] valueSet = tableName.split( "\\." );
 				    if ( valueSet.length == 2 )
 				    {
-				        dataTable = dataMap.get( valueSet[ 0 ] ).getPageData( valueSet[ 1 ] ).toArray( new PageData[ 0 ] );
+				        PageData rootRecord = dataMap.get( valueSet[ 0 ] );
+				        if ( rootRecord == null )
+				            log.error( "The root page data record " + valueSet[ 0 ] + " does not exist" );
+				        
+				        List<PageData> dataArray = rootRecord.getPageData( valueSet[ 1 ] );
+				        
+				        if ( dataArray == null )
+				            log.error( "The sub page data record " + valueSet[ 1 ] + " does not exist in " + valueSet[ 0 ] );
+				        
+				        dataTable = dataArray.toArray( new PageData[ 0 ] );
 				    }
 				}
 				else

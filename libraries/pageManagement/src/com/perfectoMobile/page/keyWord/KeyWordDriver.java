@@ -201,6 +201,7 @@ public class KeyWordDriver
 
 			for (String dataProvider : test.getDataProviders())
 			{
+			    String dpMe = dataProvider;
 				if ( !dataMap.containsKey( dataProvider ) )
 				{
 				    //
@@ -212,7 +213,10 @@ public class KeyWordDriver
                     {
                         String[] typeId = dataProvider.split( "\\." );
                         if ( typeId.length == 2 )
+                        {
                             pageData = PageDataManager.instance().getPageData( typeId[ 0 ], typeId [ 1 ] );
+                            dpMe = typeId[ 0 ];
+                        }
                         else
                             pageData = PageDataManager.instance().getPageData( dataProvider );
                     }
@@ -224,7 +228,7 @@ public class KeyWordDriver
                     
                     if (log.isInfoEnabled())
                         log.info( "Adding " + dataProvider + " as " + pageData );
-                    dataMap.put( dataProvider, pageData );
+                    dataMap.put( dpMe, pageData );
 				}
 			}
 		}
@@ -312,12 +316,16 @@ public class KeyWordDriver
 
 				for (String dataProvider : test.getDataProviders())
 				{
+				    String dpMe = dataProvider;
 				    PageData pageData = null;
 				    if ( dataProvider.contains( "." ) )
 				    {
 				        String[] typeId = dataProvider.split( "\\." );
 				        if ( typeId.length == 2 )
+				        {
+				            dpMe = typeId[ 0 ];
 				            pageData = PageDataManager.instance().getPageData( typeId[ 0 ], typeId [ 1 ] );
+				        }
 				        else
 				            pageData = PageDataManager.instance().getPageData( dataProvider );
 				    }
@@ -325,11 +333,14 @@ public class KeyWordDriver
 				        pageData = PageDataManager.instance().getPageData( dataProvider );
 					
 					if ( pageData == null )
+					{
+					    log.fatal( "Invalid page data value specified.  Ensure that [" + dataProvider + "] exists in your page data definition" );
 						throw new IllegalArgumentException( "Invalid page data value specified.  Ensure that [" + dataProvider + "] exists in your page data definition");
+					}
 					
 					if (log.isInfoEnabled())
 						log.info( "Adding " + dataProvider + " as " + pageData );
-					dataMap.put( dataProvider, pageData );
+					dataMap.put( dpMe, pageData );
 				}
 			}
 

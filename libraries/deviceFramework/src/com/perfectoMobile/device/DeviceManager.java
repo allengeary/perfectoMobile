@@ -644,8 +644,10 @@ public class DeviceManager implements ArtifactListener
     public String getRunKey( Device currentDevice, Method currentMethod, String testContext, boolean success, String personaName )
     {
         String runKey = currentMethod.getDeclaringClass().getSimpleName() + "." + currentMethod.getName() + ( testContext != null ? ( "." + testContext ) : "" );
-        if ( personaName != null && !personaName.isEmpty() )
+        if ( personaName != null && !personaName.isEmpty() && !runKey.endsWith( personaName ) )
+        {
             runKey = runKey + "." + personaName;
+        }
         
         return runKey;
     }
