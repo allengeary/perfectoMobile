@@ -25,6 +25,8 @@ import com.perfectoMobile.device.ng.AbstractSeleniumTest;
 import com.perfectoMobile.gesture.GestureManager;
 import com.perfectoMobile.gesture.factory.spi.PerfectoGestureFactory;
 import com.perfectoMobile.page.PageManager;
+import com.perfectoMobile.page.data.PageDataManager;
+import com.perfectoMobile.page.data.provider.ExcelPageDataProvider;
 import com.perfectoMobile.page.element.Element.WAIT_FOR;
 import com.perfectoMobile.page.element.provider.ExcelElementProvider;
 import com.perfectoMobile.page.keyWord.KeyWordDriver;
@@ -70,6 +72,7 @@ public class SearchTest extends AbstractSeleniumTest
         PageManager.instance().setSiteName( "Google" );
         PageManager.instance().registerExecutionListener( new LoggingExecutionListener() );
         PageManager.instance().setElementProvider( new ExcelElementProvider( "googleSearch.xlsx", "Google" ) );
+        
         
         //
         // Configure the thread logger to separate test case log files

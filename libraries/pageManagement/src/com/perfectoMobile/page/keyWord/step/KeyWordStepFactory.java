@@ -23,6 +23,7 @@ import com.perfectoMobile.page.keyWord.step.spi.KWSDeleteCookies;
 import com.perfectoMobile.page.keyWord.step.spi.KWSDevice;
 import com.perfectoMobile.page.keyWord.step.spi.KWSExecJS;
 import com.perfectoMobile.page.keyWord.step.spi.KWSExists;
+import com.perfectoMobile.page.keyWord.step.spi.KWSFocus;
 import com.perfectoMobile.page.keyWord.step.spi.KWSFork;
 import com.perfectoMobile.page.keyWord.step.spi.KWSFunction;
 import com.perfectoMobile.page.keyWord.step.spi.KWSGesture;
@@ -115,6 +116,7 @@ public class KeyWordStepFactory
 		addKeyWord( "CACHE", KWSCache.class );
 		addKeyWord( "REPORT", KWSReport.class );
                 addKeyWord( "ADD_DEVICE", KWSAddDevice.class );
+                addKeyWord( "HAS_FOCUS", KWSFocus.class );
 	}
 	
 	/**

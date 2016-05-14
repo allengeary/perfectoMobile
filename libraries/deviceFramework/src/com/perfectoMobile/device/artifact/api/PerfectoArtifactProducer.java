@@ -3,17 +3,22 @@
  */
 package com.perfectoMobile.device.artifact.api;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 import java.util.Map;
-
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import org.openqa.selenium.WebDriver;
-
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 import com.morelandLabs.artifact.ArtifactType;
-import com.morelandLabs.spi.RunDetails;
+import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.perfectoMobile.device.ConnectedDevice;
 import com.perfectoMobile.device.DeviceManager;
 import com.perfectoMobile.device.artifact.AbstractArtifactProducer;
@@ -129,11 +134,35 @@ public class PerfectoArtifactProducer extends AbstractArtifactProducer
 			case DEVICE_LOG:
 				try
 				{
-					StringBuilder urlBuilder = new StringBuilder();
-					urlBuilder.append( "https://" ).append( CloudRegistry.instance().getCloud().getHostName() ).append( "/services/executions/" ).append( DeviceManager.instance().getExecutionId() );
-					urlBuilder.append( "?operation=command&user=" ).append( CloudRegistry.instance().getCloud().getUserName() ).append( "&password=" ).append( CloudRegistry.instance().getCloud().getPassword() );
-					urlBuilder.append( "&command=device&subcommand=log&responseFormat=xml&param.tail=1000&param.handsetId=" ).append( connectedDevice.getDevice().getDeviceName() );
-					return new Artifact( rootFolder + "deviceLog.xml", getUrl( new URL( urlBuilder.toString() ) ) );
+				    ByteArrayInputStream inputStream = new ByteArrayInputStream( generateExecutionReport( "download", parameterMap, "xml", rootFolder, aType ).getArtifactData() );
+				    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		            dbFactory.setNamespaceAware( true );
+		            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+		            Document xmlDocument = dBuilder.parse( inputStream );
+		            
+		            NodeList nodeList = getNodes( xmlDocument, "//dataItem[@type='log']/attachment" );
+		            if ( nodeList != null && nodeList.getLength() > 0 )
+		            {
+		                byte[] zipFile = PerfectoMobile.instance().reports().download( parameterMap.get( REPORT_KEY ), nodeList.item( 0 ).getTextContent(), false );
+		                ZipInputStream zipStream = new ZipInputStream( new ByteArrayInputStream( zipFile ) );
+		                ZipEntry entry = zipStream.getNextEntry();
+		                
+		                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		                byte[] bytesIn = new byte[ 512 ];
+		                int bytesRead = 0;
+		                while ( ( bytesRead = zipStream.read( bytesIn ) ) != -1 )
+		                {
+		                    outputStream.write( bytesIn, 0, bytesRead );
+		                }
+		                
+		                zipStream.close();
+		                
+		                return new Artifact( rootFolder + "deviceLog.txt", outputStream.toByteArray() );
+		                
+		            }
+				    
+		            return new Artifact( rootFolder + "deviceLog.txt", "Could not read file".getBytes() );
+					
 				}
 				catch( Exception e )
 				{

@@ -7,9 +7,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.WebDriver;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 import com.morelandLabs.artifact.ArtifactType;
 import com.morelandLabs.page.ExecutionRecord;
 import com.morelandLabs.page.StepStatus;
@@ -31,6 +36,7 @@ public abstract class AbstractArtifactProducer implements ArtifactProducer
     protected static DateFormat dateFormat = new SimpleDateFormat( "MM-dd_HH-mm-ss");
     protected static DateFormat simpleDateFormat = new SimpleDateFormat( "MM-dd-yyyy");
     private static final String COMMA = ",";
+    private XPathFactory xPathFactory = XPathFactory.newInstance();
     
 	/** The log. */
 	protected Log log = LogFactory.getLog( ArtifactProducer.class );
@@ -125,7 +131,7 @@ public abstract class AbstractArtifactProducer implements ArtifactProducer
             stringBuffer.append( "<tr><td align='center' colspan='2'><a href='wcag.html'>WCAG Report</a></td></tr>" );
         
         if ( !success && DataManager.instance().isArtifactEnabled( ArtifactType.DEVICE_LOG ) )
-            stringBuffer.append( "<tr><td align='center' colspan='2'><br/><br/><br/><a href='deviceLog.xml'>Device Log</a></td></tr>" );
+            stringBuffer.append( "<tr><td align='center' colspan='2'><br/><br/><br/><a href='deviceLog.txt'>Device Log</a></td></tr>" );
         
         
         String wtUrl = ( (DeviceWebDriver) webDriver ).getWindTunnelReport();
@@ -203,5 +209,22 @@ public abstract class AbstractArtifactProducer implements ArtifactProducer
         
         return new Artifact( rootFolder + testName + ".csv", stringBuffer.toString().getBytes() );
 	}
+	
+	protected NodeList getNodes( Document xmlDocument, String xPathExpression )
+    {
+        try
+        {
+            if (log.isDebugEnabled())
+                log.debug( "Attempting to return Nodes for [" + xPathExpression + "]" );
+
+            XPath xPath = xPathFactory.newXPath();
+            return ( NodeList ) xPath.evaluate( xPathExpression, xmlDocument, XPathConstants.NODESET );
+        }
+        catch (Exception e)
+        {
+            log.error( "Error parsing xPath Expression [" + xPathExpression + "]" );
+            return null;
+        }
+    }
 
 }

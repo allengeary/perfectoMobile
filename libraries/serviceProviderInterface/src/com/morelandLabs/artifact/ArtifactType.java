@@ -33,7 +33,7 @@ public enum ArtifactType
     WCAG_REPORT ( ArtifactTime.AFTER_TEST ),
     
     /** The device log. */
-    DEVICE_LOG( ArtifactTime.ON_FAILURE ),
+    DEVICE_LOG( ArtifactTime.AFTER_TEST ),
     
     /** The device log. */
     CONSOLE_LOG( ArtifactTime.AFTER_TEST ),

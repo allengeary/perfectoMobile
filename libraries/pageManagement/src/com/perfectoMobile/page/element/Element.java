@@ -110,6 +110,8 @@ public interface Element
 	 */
 	public boolean isPresent();
 	
+	
+	public boolean isFocused();
 	/**
 	 * Wait for visible.
 	 *

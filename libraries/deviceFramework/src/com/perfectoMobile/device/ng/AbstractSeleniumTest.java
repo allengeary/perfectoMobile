@@ -27,6 +27,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import com.morelandLabs.artifact.ArtifactTime;
 import com.morelandLabs.artifact.ArtifactType;
+import com.morelandLabs.integrations.perfectoMobile.rest.PerfectoMobile;
 import com.morelandLabs.spi.Device;
 import com.morelandLabs.spi.RunDetails;
 import com.perfectoMobile.device.ConnectedDevice;
@@ -339,6 +340,10 @@ public abstract class AbstractSeleniumTest
                                                                               true,
                                                                               ( ( TestName ) testArgs[0] ).getPersonaName() );
 
+        
+        if( DataManager.instance().isArtifactEnabled( ArtifactType.DEVICE_LOG ) )
+            PerfectoMobile.instance().device().startDebug( connectedDevice.getExecutionId(), connectedDevice.getDeviceName() );
+        
         TestContext ctx = new TestContext();
         ctx.currentMethod = currentMethod;
         ctx.testArgs = testArgs;
@@ -400,6 +405,9 @@ public abstract class AbstractSeleniumTest
         threadContext.set( null );
         Iterator<String> keys = ((map != null) ? map.keySet().iterator() : null );
 
+        if( DataManager.instance().isArtifactEnabled( ArtifactType.DEVICE_LOG ) )
+            PerfectoMobile.instance().device().startDebug( map.get( DEFAULT ).getExecutionId(), map.get( DEFAULT ).getDeviceName() );
+        
         while(( keys != null ) &&
               ( keys.hasNext() ))
         {

@@ -102,7 +102,7 @@ public abstract class AbstractElement implements Element
 	 */
 	protected abstract boolean _release();
 	
-	
+	protected abstract boolean _isFocused();
 	/**
 	 * _wait for visible.
 	 *
@@ -605,6 +605,11 @@ public abstract class AbstractElement implements Element
     {
         return _release();
     }
+	
+	public boolean isFocused()
+	{
+	    return _isFocused();
+	}
 	
 	
 
