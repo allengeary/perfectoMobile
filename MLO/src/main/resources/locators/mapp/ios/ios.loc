@@ -1,0 +1,27 @@
+#input.box = {\"locator\":\"xpath=//*[@name='Result']\",\"desc\":\"Input box\"}
+#btn.plus = {\"locator\":\"name=add\",\"desc\":\"Plus Button\"}
+#btn.division = {\"locator\":\"name=divide\",\"desc\":\"Division Button\"}
+#btn.minus = {\"locator\":\"name=subtract\",\"desc\":\"Minus Button\"}
+#btn.equal = {\"locator\":\"name=equals\",\"desc\":\"Equal Button\"}
+#btn.clear = {\"locator\":\"xpath=//*[@name='all clear']\",\"desc\":\"Clear Button\"}
+#btn.multiplication = {\"locator\":\"xpath=//*[@name='multiply']\",\"desc\":\"UIAButton\"}
+
+button.login = xpath=//*[text()='LOG IN']
+button.keyboardDone = xpath=//*[@label='Done']
+textfield.userid = xpath=//*[@type='text']
+textfield.password = xpath=//*[@type='password']
+textvalue.username = xpath=//AppiumAUT/UIAApplication[1]/UIAWindow[2]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[2]
+button.dropdownMenu = xpath=//*[@class="button menu right"]//span
+link.logOut = xpath=//*[text()="Log Out"]
+button.logout = xpath=//UIAButton[@label='Log Out']
+button.lifeInsurance = xpath=//a[.//*[text()='Life Insurance']]
+label.lifeInsuranceHeader = xpath=//h2[text() = 'LIFE INSURANCE']
+button.disabilityInsurance = xpath=//a[.//*[text()='Disability Income Insurance']]
+label.disabilityInsuranceHeader = xpath=//h2[text() = 'DISABILITY INCOME INSURANCE']
+button.backButton = xpath=//a[@class="button back"]
+
+
+#MetLife Online
+mlo.text.userid = xpath=//*[@id="userNameId"]
+mlo.text.password = xpath=//*[@id="passwordId"]
+mlo.button.login = xpath=//*[@id="dijit_form_Button_0_label"]

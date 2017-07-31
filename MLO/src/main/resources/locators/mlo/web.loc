@@ -1,0 +1,9 @@
+#MetLife Online Home Page
+mlo.text.userid = xpath=//*[@id="userNameId"]
+mlo.text.password = xpath=//*[@id="passwordId"]
+mlo.button.login = xpath=//*[@id="dijit_form_Button_0_label"]
+mlo.link.logout = xpath=//a[span[text() = 'Log Out']]|//a[text() = 'Log Out']
+
+mlo.label.dentalHeader = xpath=//h1[text()='Dental Insurance']
+mlo.link.findDentist = //div[@class='dentalInsurance']//select
+

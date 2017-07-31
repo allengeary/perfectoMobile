@@ -1,0 +1,33 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="MetLife Demo Suite" verbose="0" parallel="tests">
+    <listeners>
+        <listener class-name="com.quantum.listerners.QuantumReportiumListener"/>
+    </listeners>
+    
+    <test name="IOS MetLife Test" enabled="true">
+        <parameter name="perfecto.capabilities.os" value="iOS"></parameter>
+        <parameter name="perfecto.capabilities.model" value="iPhone.*"></parameter>
+
+        <groups>
+            <run>
+                <include name="@mlo_TC003"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.qmetry.qaf.automation.step.client.gherkin.GherkinScenarioFactory"/>
+        </classes>
+    </test>
+    <test name="Android MetLife Test" enabled="false">
+        <parameter name="perfecto.capabilities.os" value="Android"></parameter>
+        <parameter name="perfecto.capabilities.model" value="Galaxy.*"></parameter>
+        
+        <groups>
+            <run>
+                <include name="@mlo_TC001"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.qmetry.qaf.automation.step.client.gherkin.GherkinScenarioFactory"/>
+        </classes>
+    </test>
+</suite>

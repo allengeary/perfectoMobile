@@ -1,0 +1,21 @@
+#input.box = {\"locator\":\"id=com.sec.android.app.popupcalculator:id/txtCalc\",\"desc\":\"Input box\"}
+#btn.plus = {\"locator\":\"id=com.sec.android.app.popupcalculator:id/bt_add\",\"desc\":\"Plus Button\"}
+#btn.multiplication = {\"locator\":\"xpath=//*[@resource-id='com.sec.android.app.popupcalculator:id/bt_mul']\",\"desc\":\"Multiplication Button\"}
+#btn.division = {\"locator\":\"name=\u00F7\",\"desc\":\"Division Button\"}
+#btn.minus = {\"locator\":\"name=-\",\"desc\":\"Minus Button\"}
+#btn.equal = {\"locator\":\"id=com.sec.android.app.popupcalculator:id/bt_equal\",\"desc\":\"Equal Button\"}
+#btn.clear = {\"locator\":\"id=com.sec.android.app.popupcalculator:id/bt_clear\",\"desc\":\"Clear Button\"}
+
+
+textfield.userid = xpath=//*[@type='text']
+textfield.password = xpath=//*[@type='password']
+button.login = xpath=//*[text()='LOG IN']
+textvalue.username = xpath=//*[@class='padding15 sentenceCase ng-binding']
+button.dropdownMenu = xpath=//*[@class='button menu right']//span
+link.logOut = xpath=//*[text()='Log Out']
+button.logout = xpath=//*[@resource-id='android:id/button2']
+button.lifeInsurance = xpath=//a[.//*[text()='Life Insurance']]
+label.lifeInsuranceHeader = xpath=//h2[text() = 'LIFE INSURANCE']
+button.disabilityInsurance = xpath=//a[.//*[text()='Disability Income Insurance']]
+label.disabilityInsuranceHeader = xpath=//h2[text() = 'DISABILITY INCOME INSURANCE']
+button.backButton = xpath=//a[@class="button back"]
